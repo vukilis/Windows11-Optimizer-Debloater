@@ -11,7 +11,7 @@ Start-Transcript $ENV:TEMP\Windows11_Optimizer_Debloater.log -Append
 
 # $xamlFile="M:\Windows11-Optimizer&Debloater\MainWindow.xaml" #uncomment for development
 # $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-$inputXAML = (new-object Net.WebClient).DownloadString("") #uncomment for Production
+$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
 [XML]$XAML=$inputXAML
