@@ -140,6 +140,16 @@ Function Get-Author {
     Write-Host "`n"
 }
 
+function Art {
+    param ($artN, $ch)
+    for ($i=0;$i -lt $artN.length;$i++) {
+        $ch
+        write-host $artN[$i] -NoNewline -ForegroundColor $ch
+    }
+    Write-Host "`n"
+    return $artN, $ch
+}
+
 ### Get all variables from form
 # Get-Variable wpf_*
 
@@ -942,9 +952,11 @@ $wpf_Updatesdefault.Add_Click({
     Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" -Name "BranchReadinessLevel" -ErrorAction SilentlyContinue
     Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" -Name "DeferFeatureUpdatesPeriodInDays" -ErrorAction SilentlyContinue
     Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" -Name "DeferQualityUpdatesPeriodInDays " -ErrorAction SilentlyContinue
-    Write-Host "================================="
-    Write-Host "---  Updates Set to Default   ---"
-    Write-Host "================================="
+    Art -artN "
+==================================
+----- Updates Set to Default -----
+==================================
+" -ch Cyan
 })
 
 $wpf_Updatessecurity.Add_Click({
@@ -980,9 +992,11 @@ $wpf_Updatessecurity.Add_Click({
     $MessageIcon = [System.Windows.MessageBoxImage]::Information
 
     [System.Windows.MessageBox]::Show($Messageboxbody, $MessageboxTitle, $ButtonType, $MessageIcon)
-    Write-Host "================================="
-    Write-Host "-- Updates Set to Recommended ---"
-    Write-Host "================================="
+    Art -artN "
+==================================
+--- Updates Set to Recommended ---
+==================================
+" -ch Cyan
 })
 
 $wpf_Updatesdisable.Add_Click({
@@ -1007,9 +1021,11 @@ $wpf_Updatesdisable.Add_Click({
         Write-Host "Setting $service StartupType to Disabled"
         Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled
     }
-    Write-Host "================================="
-    Write-Host "---  Updates ARE DISABLED     ---"
-    Write-Host "================================="
+    Art -artN "
+==================================
+------ Updates ARE DISABLED ------
+==================================
+" -ch DarkRed
 })
 
 $wpf_FixesUpdate.Add_Click({
