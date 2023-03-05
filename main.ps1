@@ -164,9 +164,16 @@ $wpf_cpuInfo.Content=$cpuInfo.Name
 $gpuInfo=Get-CimInstance -ClassName win32_VideoController | Select-Object *
 $wpf_gpuInfo.Content=$gpuInfo.Name[0]
 
-$ramInfo=(Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property capacity -Sum).sum /1gb
+# $ramInfo=(Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property capacity -Sum).sum /1gb
+# $ramSpeed=Get-WmiObject Win32_PhysicalMemory | Select-Object *
+# $wpf_ramInfo.Content=$ramSpeed.Manufacturer[0]+" "+ $ramInfo+"GB" +" "+ $ramSpeed.ConfiguredClockSpeed[0]+"MT/s"
+
+$ramInfo = get-wmiobject -class Win32_ComputerSystem
+$ramInfoGB=[math]::Ceiling($ramInfo.TotalPhysicalMemory / 1024 / 1024 / 1024)
+#$ramInfoGB=[math]::Ceiling((Get-WMIObject Win32_OperatingSystem).TotalVisibleMemorySize / 1MB)
 $ramSpeed=Get-WmiObject Win32_PhysicalMemory | Select-Object *
-$wpf_ramInfo.Content=$ramSpeed.Manufacturer[0]+" "+ $ramInfo+"GB" +" "+ $ramSpeed.ConfiguredClockSpeed[0]+"MT/s"
+$wpf_ramInfo.Content=[string]$ramInfoGB+"GB"+" "+ $ramSpeed.ConfiguredClockSpeed[0]+"MT/s"
+
 
 $mbInfo=Get-CimInstance -ClassName win32_baseboard | Select-Object *
 $wpf_mbInfo.Content=$mbInfo.Product
