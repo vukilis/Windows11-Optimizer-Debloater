@@ -162,7 +162,7 @@ $cpuInfo=Get-CimInstance -ClassName CIM_Processor | Select-Object *
 $wpf_cpuInfo.Content=$cpuInfo.Name
 
 $gpuInfo=Get-CimInstance -ClassName win32_VideoController | Select-Object *
-$wpf_gpuInfo.Content=$gpuInfo.Name
+$wpf_gpuInfo.Content=$gpuInfo.Name[0]
 
 $ramInfo=(Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property capacity -Sum).sum /1gb
 $ramSpeed=Get-WmiObject Win32_PhysicalMemory | Select-Object *
