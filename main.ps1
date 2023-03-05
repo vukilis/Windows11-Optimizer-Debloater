@@ -1130,6 +1130,11 @@ $wpf_FixesUpdate.Add_Click({
     Write-Host "================================="
     Write-Host "-- Reset ALL Updates to Factory -"
     Write-Host "================================="
+    Art -artN "
+==================================
+-- Reset ALL Updates to Factory --
+==================================
+" -ch DarkGreen
 })
 
 ########################################### /UPDATES ########################################### 

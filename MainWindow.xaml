@@ -302,10 +302,10 @@
                                 <Label Content="MB:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
                             </StackPanel>
                             <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="-290,20,10,10" Grid.Row="1" Grid.ColumnSpan="2">
-                                <Label Name="cpuInfo" Content="MAG Z690 TOMAHAWK WIFI (MS-7D32)" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                <Label Name="gpuInfo" Content="MAG Z690 TOMAHAWK WIFI (MS-7D32)" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                <Label Name="ramInfo" Content="MAG Z690 TOMAHAWK WIFI (MS-7D32)" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                <Label Name="mbInfo" Content="MAG Z690 TOMAHAWK WIFI (MS-7D32)" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
+                                <Label Name="cpuInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
+                                <Label Name="gpuInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
+                                <Label Name="ramInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
+                                <Label Name="mbInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
                             </StackPanel>
                             <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="35,55,35,10" Grid.Row="2" Grid.ColumnSpan="1">
                                 <TextBlock FontSize="16" FontFamily="Helvetica" Margin="20,0,20,0" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" HorizontalAlignment="Left" FontWeight="Bold">OS<LineBreak/>INFO</TextBlock>
@@ -317,10 +317,10 @@
                                 <Label Content="LICENCE:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
                             </StackPanel>
                             <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="-230,20,10,10" Grid.Row="2" Grid.ColumnSpan="2">
-                                <Label Name="osInfo" Content="Microsoft Windows 11 Pro" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                <Label Name="verInfo" Content="22621" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                <Label Name="installTimeInfo" Content="1.31.2023 11:01 po podne" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                <Label Name="licenceInfo" Content="Active" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
+                                <Label Name="osInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
+                                <Label Name="verInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
+                                <Label Name="installTimeInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
+                                <Label Name="licenceInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
                             </StackPanel>
                             <StackPanel SnapsToDevicePixels="True" Grid.Column="3" Margin="-45,55,35,10" Grid.Row="1" Grid.ColumnSpan="1">
                                 <TextBlock FontSize="16" FontFamily="Helvetica" Margin="20,0,20,0" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" HorizontalAlignment="Left" FontWeight="Bold">DISK<LineBreak/>INFO</TextBlock>
@@ -332,8 +332,8 @@
                             </StackPanel>
                             <StackPanel SnapsToDevicePixels="True" Grid.Column="4" Margin="-80,20,10,10" Grid.Row="1" Grid.ColumnSpan="2">
                                 <ComboBox x:Name="diskNameInfo" Width="290" Margin="0,0,0,0" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold"/>
-                                <Label Name="diskStatus" Content="a" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,20,0,0" />
-                                <Label Name="diskStyle" Content="a" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
+                                <Label Name="diskStatus" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,20,0,0" />
+                                <Label Name="diskStyle" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
                             </StackPanel>
                             <StackPanel SnapsToDevicePixels="True" Grid.Column="3" Margin="-45,55,35,10" Grid.Row="2" Grid.ColumnSpan="1">
                                 <TextBlock FontSize="16" FontFamily="Helvetica" Margin="20,0,20,0" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" HorizontalAlignment="Left" FontWeight="Bold">DISK<LineBreak/>SIZE</TextBlock>
@@ -345,8 +345,8 @@
                             </StackPanel>
                             <StackPanel SnapsToDevicePixels="True" Grid.Column="4" Margin="-80,20,10,10" Grid.Row="2" Grid.ColumnSpan="2">
                                 <ComboBox x:Name="diskName" Width="120" Margin="0,0,0,0" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold"/>
-                                <Label Name="diskMaxSize" Content="a" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,20,0,0" />
-                                <Label Name="diskFreeSize" Content="a" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
+                                <Label Name="diskMaxSize" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,20,0,0" />
+                                <Label Name="diskFreeSize" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
                             </StackPanel>
                         </Grid>
                     </TabItem>
