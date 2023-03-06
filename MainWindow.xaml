@@ -303,7 +303,8 @@
                             </StackPanel>
                             <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="-290,20,10,10" Grid.Row="1" Grid.ColumnSpan="2">
                                 <Label Name="cpuInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                <Label Name="gpuInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
+                                <!--<Label Name="gpuInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />-->
+                                <ComboBox x:Name="gpuInfo" Width="290" Margin="0,0,0,0" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" SelectedIndex="0"/>
                                 <Label Name="ramInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
                                 <Label Name="mbInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
                             </StackPanel>

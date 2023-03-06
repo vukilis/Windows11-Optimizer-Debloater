@@ -161,8 +161,10 @@ $wpf_pcName.Content="Welcome $pcName"
 $cpuInfo=Get-CimInstance -ClassName CIM_Processor | Select-Object *
 $wpf_cpuInfo.Content=$cpuInfo.Name
 
-$gpuInfo=Get-CimInstance -ClassName win32_VideoController | Select-Object *
-$wpf_gpuInfo.Content=$gpuInfo.Name[0]
+# $gpuInfo=Get-CimInstance -ClassName win32_VideoController | Select-Object *
+# $wpf_gpuInfo.Content=$gpuInfo.Name[0]
+
+Get-CimInstance -ClassName win32_VideoController | ForEach-Object {$wpf_gpuInfo.Items.Add($_.VideoProcessor)}
 
 # $ramInfo=(Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property capacity -Sum).sum /1gb
 # $ramSpeed=Get-WmiObject Win32_PhysicalMemory | Select-Object *
