@@ -174,8 +174,13 @@ $ramInfo = get-wmiobject -class Win32_ComputerSystem
 $ramInfoGB=[math]::Ceiling($ramInfo.TotalPhysicalMemory / 1024 / 1024 / 1024)
 #$ramInfoGB=[math]::Ceiling((Get-WMIObject Win32_OperatingSystem).TotalVisibleMemorySize / 1MB)
 $ramSpeed=Get-WmiObject Win32_PhysicalMemory | Select-Object *
-$wpf_ramInfo.Content=[string]$ramInfoGB+"GB"+" "+ $ramSpeed.ConfiguredClockSpeed[0]+"MT/s"
-
+if ($IsVirtual -like 'False'){
+    Write-Output "This Machine is Physical Platform"
+    $wpf_ramInfo.Content=[string]$ramInfoGB+"GB"+" "+ $ramSpeed.ConfiguredClockSpeed[0]+"MT/s"
+} else{
+    Write-Output "This Machine is Virtual Platform"
+    $wpf_ramInfo.Content=[string]$ramInfoGB+"GB"
+}
 
 $mbInfo=Get-CimInstance -ClassName win32_baseboard | Select-Object *
 $wpf_mbInfo.Content=$mbInfo.Product

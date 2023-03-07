@@ -304,7 +304,7 @@
                             <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="-290,20,10,10" Grid.Row="1" Grid.ColumnSpan="2">
                                 <Label Name="cpuInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
                                 <!--<Label Name="gpuInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />-->
-                                <ComboBox x:Name="gpuInfo" Width="290" Margin="0,0,0,0" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" SelectedIndex="0"/>
+                                <ComboBox x:Name="gpuInfo" Width="290" Margin="0,2,0,2" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" SelectedIndex="0"/>
                                 <Label Name="ramInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
                                 <Label Name="mbInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
                             </StackPanel>
@@ -332,7 +332,7 @@
                                 <Label Content="STYLE:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
                             </StackPanel>
                             <StackPanel SnapsToDevicePixels="True" Grid.Column="4" Margin="-80,20,10,10" Grid.Row="1" Grid.ColumnSpan="2">
-                                <ComboBox x:Name="diskNameInfo" Width="290" Margin="0,0,0,0" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold"/>
+                                <ComboBox x:Name="diskNameInfo" Text="Select Disk" IsEditable="True" IsReadOnly="True" Width="290" Margin="0,0,0,0" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" SelectedIndex="-1"/>
                                 <Label Name="diskStatus" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,20,0,0" />
                                 <Label Name="diskStyle" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
                             </StackPanel>
@@ -345,7 +345,7 @@
                                 <Label Content="FREE SIZE:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
                             </StackPanel>
                             <StackPanel SnapsToDevicePixels="True" Grid.Column="4" Margin="-80,20,10,10" Grid.Row="2" Grid.ColumnSpan="2">
-                                <ComboBox x:Name="diskName" Width="120" Margin="0,0,0,0" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold"/>
+                                <ComboBox x:Name="diskName" Text="Select Disk" IsEditable="True" IsReadOnly="True" Width="120" Margin="0,0,0,0" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" SelectedIndex="-1"/>
                                 <Label Name="diskMaxSize" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,20,0,0" />
                                 <Label Name="diskFreeSize" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
                             </StackPanel>
