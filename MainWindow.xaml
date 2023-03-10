@@ -297,7 +297,7 @@
                             </StackPanel>
                             <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="-100,20,10,10" Grid.Row="1" Grid.ColumnSpan="2">
                                 <Label Content="CPU:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                <Label Content="GPU:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFFBE39B" />
+                                <Label Content="GPU:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
                                 <Label Content="RAM:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
                                 <Label Content="MB:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
                             </StackPanel>
@@ -352,7 +352,31 @@
                         </Grid>
                     </TabItem>
                     <TabItem Header="DEBLOAT" Visibility="Collapsed" Name="Tab2">
-                        <Grid Background="#3F3F3F"/>
+                        <Grid Background="#3F3F3F">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                <Button Name="debloatALL" Content="Remove ALL MS Store Apps" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#FF9E5050" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
+                            </StackPanel>
+                            <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
+                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFFBE3B6"><Bold Foreground="#FF9E5050">USE WITH CAUTION!!!!!</Bold><LineBreak Foreground="#FF9E5050"/><LineBreak/>This will remove ALL Microsoft store apps other than the essentials to make winget work. <LineBreak/><LineBreak/>Games installed by MS Store <Bold Foreground="#FF9E5050">ARE INCLUDED!</Bold><LineBreak/><LineBreak/></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FFFBE3B6"/>
+                            </StackPanel>
+                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                <Button Name="debloatGaming" Content="GAMING (XBOX)" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
+                            </StackPanel>
+                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
+                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFFBE3B6">This will remove ALL Microsoft store apps other than the essentials to make winget and xbox work. <LineBreak/><LineBreak/>Games installed by MS Store <Bold Foreground="#FF2CD027">ARE NOT INCLUDED!</Bold></TextBlock>
+                            </StackPanel>
+                        </Grid>
                     </TabItem>
                     <TabItem Header="OPTIMIZATION" Visibility="Collapsed" Name="Tab3">
                         <Grid Background="#3F3F3F">
