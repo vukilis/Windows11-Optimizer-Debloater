@@ -164,7 +164,7 @@ $wpf_cpuInfo.Content=$cpuInfo.Name
 # $gpuInfo=Get-CimInstance -ClassName win32_VideoController | Select-Object *
 # $wpf_gpuInfo.Content=$gpuInfo.Name[0]
 
-Get-CimInstance -ClassName win32_VideoController | ForEach-Object {$wpf_gpuInfo.Items.Add($_.VideoProcessor)}
+Get-CimInstance -ClassName win32_VideoController | ForEach-Object {[void]$wpf_gpuInfo.Items.Add($_.VideoProcessor)}
 
 # $ramInfo=(Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property capacity -Sum).sum /1gb
 # $ramSpeed=Get-WmiObject Win32_PhysicalMemory | Select-Object *
@@ -208,7 +208,7 @@ if ($licenceCheckInfo -eq 1) {
 $wpf_licenceInfo.Content=$licenceCheckInfo
 
 #DISK INFO
-Get-Disk | ForEach-Object {$wpf_diskNameInfo.Items.Add($_.FriendlyName)}
+Get-Disk | ForEach-Object {[void]$wpf_diskNameInfo.Items.Add($_.FriendlyName)}
 function Get-DiskInfo {
     $diskSelected=$wpf_diskNameInfo.SelectedItem
     $details=Get-Disk -FriendlyName "$diskSelected" | Select-Object *
@@ -216,7 +216,7 @@ function Get-DiskInfo {
     $wpf_diskStyle.Content=$details.PartitionStyle
 }
 
-Get-WmiObject -Class win32_logicaldisk | ForEach-Object {$wpf_diskName.Items.Add($_.DeviceId)}
+Get-WmiObject -Class win32_logicaldisk | ForEach-Object {[void]$wpf_diskName.Items.Add($_.DeviceId)}
 function Get-DiskSize {
     $diskSelected=$wpf_diskName.SelectedItem
     $details=Get-WmiObject -Class win32_logicaldisk -Filter  "DeviceID = '$diskSelected'" | Select-Object *
@@ -448,7 +448,7 @@ $wpf_normal.Add_Click({
     cmd /c services.msc
 })
 
-Get-Service | ForEach-Object {$wpf_ddlServices.Items.Add($_.Name)}
+Get-Service | ForEach-Object {[void]$wpf_ddlServices.Items.Add($_.Name)}
 function Get-Services {
     $ServiceName=$wpf_ddlServices.SelectedItem
     $details=Get-Service -Name $ServiceName | Select-Object *
