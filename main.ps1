@@ -374,7 +374,11 @@ $wpf_debloatGaming.Add_Click({
         $proc = Start-Process -FilePath $FilePath -Args $ProcessArgs -PassThru
         $proc.WaitForExit()
     }
-    Write-Host "Apps removed"
+    Art -artN "
+=========================
+----- Apps removed -----
+========================
+" -ch Cyan
 })
 
 $wpf_debloatALL.Add_Click({
@@ -492,7 +496,11 @@ $wpf_debloatALL.Add_Click({
         $proc = Start-Process -FilePath $FilePath -Args $ProcessArgs -PassThru
         $proc.WaitForExit()
     }
-    Write-Host "Apps removed"
+    Art -artN "
+=========================
+----- Apps removed -----
+========================
+" -ch Cyan
 })
 
 ########################################### /DEBLOAT ###########################################   
