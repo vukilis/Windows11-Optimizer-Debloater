@@ -365,7 +365,7 @@
                                 <Button Name="debloatALL" Content="Remove ALL MS Store Apps" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#FF9E5050" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
                             </StackPanel>
                             <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
-                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFFBE3B6"><Bold Foreground="#FF9E5050">USE WITH CAUTION!!!!!</Bold><LineBreak Foreground="#FF9E5050"/><LineBreak/>This will remove ALL Microsoft store apps other than the essentials to make winget work. <LineBreak/><LineBreak/>Games installed by MS Store <Bold Foreground="#FF9E5050">ARE INCLUDED!</Bold><LineBreak/><LineBreak/></TextBlock>
+                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFFBE3B6"><Bold Foreground="#FF9E5050">USE WITH CAUTION!!!!!</Bold><LineBreak Foreground="#FF9E5050"/><LineBreak/>This will remove ALL Microsoft store apps other than the essentials to make winget work. <LineBreak/><LineBreak/>Games installed by MS Store <Bold Foreground="#FF9E5050">ARE INCLUDED!</Bold><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
                                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FFFBE3B6"/>
@@ -715,7 +715,43 @@
                         </Grid>
                     </TabItem>
                     <TabItem Header="CONFIG" Visibility="Collapsed" Name="Tab6">
-                        <Grid Background="#3F3F3F"/>
+                        <Grid Background="#3F3F3F">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                <Button Name="PanelControl" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Control Panel" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelPnF" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Programs and Feauters" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelNetwork" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Network Connections" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelPower" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Power Plan" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelSound" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Sound Settings" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelSystem" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="System Properties" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                            </StackPanel>
+                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                <Button Name="PanelUser" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="User Accounts" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelServices" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Services" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelWindowsFirewall" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Windows Firewall" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelDeviceManager" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Device Manager" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelExplorerOption" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="File Explorer Options" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelRegedit" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Registry Editor" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                            </StackPanel>
+                            <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                <Button Name="PanelScheduler" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Task Scheduler" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelResourceMonitor" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Resource Monitor" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelSysConf" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="System Configuration" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelEvent" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Event Viewer" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelSysInfo" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="System Information" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                <Button Name="PanelDiskManagement" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Disk Management" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                            </StackPanel>
+                        </Grid>
                     </TabItem>
                 </TabControl>
             </Grid>

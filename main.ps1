@@ -62,7 +62,7 @@ function Invoke-Button {
     <#
     
         .DESCRIPTION
-        Meant to make creating buttons easier. There is a section below in the gui that will assign this function to every button.
+        Meant to make creating buttons easier.
         This way you can dictate what each button does from this function. 
     
         Input will be the name of the button that is clicked. 
@@ -71,10 +71,11 @@ function Invoke-Button {
     Param ([string]$Button) 
 
     #Use this to get the name of the button
-    #[System.Windows.MessageBox]::Show("$Button","Chris Titus Tech's Windows Utility","OK","Info")
+    #[System.Windows.MessageBox]::Show("$Button","Windows11-OptimizerDebloater","OK","Info")
 
     Switch -Wildcard ($Button){
 
+        "wpf_Tab?BT" {Invoke-Tabs $Button}
         "wpf_debloatALL" {Invoke-debloatALL}
         "wpf_debloatGaming" {Invoke-debloatGaming}
         "wpf_optimizationButton" {Invoke-optimizationButton}
@@ -109,55 +110,30 @@ function Invoke-Button {
 ################################
 ####  Navigation Controls  #####
 ################################
+function Invoke-Tabs {
 
-$wpf_Tab1BT.Add_Click({
-    $wpf_TabNav.Items[0].IsSelected = $true
-    $wpf_TabNav.Items[1].IsSelected = $false
-    $wpf_TabNav.Items[2].IsSelected = $false
-    $wpf_TabNav.Items[3].IsSelected = $false
-    $wpf_TabNav.Items[4].IsSelected = $false
-    $wpf_TabNav.Items[5].IsSelected = $false
-})
-$wpf_Tab2BT.Add_Click({
-    $wpf_TabNav.Items[0].IsSelected = $false
-    $wpf_TabNav.Items[1].IsSelected = $true
-    $wpf_TabNav.Items[2].IsSelected = $false
-    $wpf_TabNav.Items[3].IsSelected = $false
-    $wpf_TabNav.Items[4].IsSelected = $false
-    $wpf_TabNav.Items[5].IsSelected = $false
-})
-$wpf_Tab3BT.Add_Click({
-    $wpf_TabNav.Items[0].IsSelected = $false
-    $wpf_TabNav.Items[1].IsSelected = $false
-    $wpf_TabNav.Items[2].IsSelected = $true
-    $wpf_TabNav.Items[3].IsSelected = $false
-    $wpf_TabNav.Items[4].IsSelected = $false
-    $wpf_TabNav.Items[5].IsSelected = $false
-})
-$wpf_Tab4BT.Add_Click({
-    $wpf_TabNav.Items[0].IsSelected = $false
-    $wpf_TabNav.Items[1].IsSelected = $false
-    $wpf_TabNav.Items[2].IsSelected = $false
-    $wpf_TabNav.Items[3].IsSelected = $true
-    $wpf_TabNav.Items[4].IsSelected = $false
-    $wpf_TabNav.Items[5].IsSelected = $false
-})
-$wpf_Tab5BT.Add_Click({
-    $wpf_TabNav.Items[0].IsSelected = $false
-    $wpf_TabNav.Items[1].IsSelected = $false
-    $wpf_TabNav.Items[2].IsSelected = $false
-    $wpf_TabNav.Items[3].IsSelected = $false
-    $wpf_TabNav.Items[4].IsSelected = $true
-    $wpf_TabNav.Items[5].IsSelected = $false
-})
-$wpf_Tab6BT.Add_Click({
-    $wpf_TabNav.Items[0].IsSelected = $false
-    $wpf_TabNav.Items[1].IsSelected = $false
-    $wpf_TabNav.Items[2].IsSelected = $false
-    $wpf_TabNav.Items[3].IsSelected = $false
-    $wpf_TabNav.Items[4].IsSelected = $false
-    $wpf_TabNav.Items[5].IsSelected = $true
-})
+    <#
+    
+        .DESCRIPTION
+        Sole purpose of this fuction reduce duplicated code for switching between tabs. 
+    
+    #>
+
+    Param ($ClickedTab)
+    $Tabs = Get-Variable wpf_Tab?BT
+    $TabNav = Get-Variable wpf_TabNav
+    $x = [int]($ClickedTab -replace "wpf_Tab","" -replace "BT","") - 1
+
+    0..($Tabs.Count -1 ) | ForEach-Object {
+        
+        if ($x -eq $psitem){
+            $TabNav.value.Items[$psitem].IsSelected = $true
+        }
+        else{
+            $TabNav.value.Items[$psitem].IsSelected = $false
+        }
+    }
+}
 
 ################################
 #########  Functions  ##########
