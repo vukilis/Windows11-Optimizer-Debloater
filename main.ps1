@@ -48,7 +48,62 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     catch {
         throw
     }
+}
+
+$buttons = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "Button"}
+foreach ($button in $buttons){
+    $button.value.Add_Click({
+        [System.Object]$Sender = $args[0]
+        Invoke-Button "wpf_$($Sender.name)"
+    })
+}
+function Invoke-Button {
+
+    <#
     
+        .DESCRIPTION
+        Meant to make creating buttons easier. There is a section below in the gui that will assign this function to every button.
+        This way you can dictate what each button does from this function. 
+    
+        Input will be the name of the button that is clicked. 
+    #>
+    
+    Param ([string]$Button) 
+
+    #Use this to get the name of the button
+    #[System.Windows.MessageBox]::Show("$Button","Chris Titus Tech's Windows Utility","OK","Info")
+
+    Switch -Wildcard ($Button){
+
+        "wpf_debloatALL" {Invoke-debloatALL}
+        "wpf_debloatGaming" {Invoke-debloatGaming}
+        "wpf_optimizationButton" {Invoke-optimizationButton}
+        "wpf_recommended" {Invoke-recommended}
+        "wpf_gaming" {Invoke-gaming}
+        "wpf_normal" {Invoke-normal}
+        "wpf_PanelControl" {Invoke-Configs -Panel $button}
+        "wpf_PanelPnF" {Invoke-Configs -Panel $button}
+        "wpf_PanelNetwork" {Invoke-Configs -Panel $button}
+        "wpf_PanelPower" {Invoke-Configs -Panel $button}
+        "wpf_PanelSound" {Invoke-Configs -Panel $button}
+        "wpf_PanelSystem" {Invoke-Configs -Panel $button}
+        "wpf_PanelUser" {Invoke-Configs -Panel $button}
+        "wpf_PanelServices" {Invoke-Configs -Panel $button}
+        "wpf_PanelWindowsFirewall" {Invoke-Configs -Panel $button}
+        "wpf_PanelDeviceManager" {Invoke-Configs -Panel $button}
+        "wpf_PanelExplorerOption" {Invoke-Configs -Panel $button}
+        "wpf_PanelRegedit" {Invoke-Configs -Panel $button}
+        "wpf_PanelScheduler" {Invoke-Configs -Panel $button}
+        "wpf_PanelResourceMonitor" {Invoke-Configs -Panel $button}
+        "wpf_PanelSysConf" {Invoke-Configs -Panel $button}
+        "wpf_PanelEvent" {Invoke-Configs -Panel $button}
+        "wpf_PanelSysInfo" {Invoke-Configs -Panel $button}
+        "wpf_PanelDiskManagement" {Invoke-Configs -Panel $button}
+        "wpf_Updatesdefault" {Invoke-UpdatesDefault}
+        "wpf_FixesUpdate" {Invoke-FixesUpdate}
+        "wpf_Updatesdisable" {Invoke-UpdatesDisable}
+        "wpf_Updatessecurity" {Invoke-UpdatesSecurity}
+    }
 }
 
 ################################
@@ -259,7 +314,7 @@ function Remove-WinUtilAPPX {
         Write-Warning $psitem.Exception.StackTrace 
     }
 }
-$wpf_debloatGaming.Add_Click({
+function Invoke-debloatGaming{
     $appx = @(
         "Microsoft.Microsoft3DViewer"
         "Microsoft.AppConnector"
@@ -379,9 +434,8 @@ $wpf_debloatGaming.Add_Click({
 ----- Apps removed -----
 ========================
 " -ch Cyan
-})
-
-$wpf_debloatALL.Add_Click({
+}
+function Invoke-debloatALL{
     $appx = @(
         "Microsoft.Microsoft3DViewer"
         "Microsoft.AppConnector"
@@ -501,7 +555,7 @@ $wpf_debloatALL.Add_Click({
 ----- Apps removed -----
 ========================
 " -ch Cyan
-})
+}
 
 ########################################### /DEBLOAT ###########################################   
 ########################################### SERVICES ###########################################    
@@ -511,7 +565,7 @@ $wpf_pBar.Visibility = "Hidden"
 $wpf_recommended.Add_MouseLeave({
     $wpf_pBar.Visibility = "Hidden"
 })
-$wpf_recommended.Add_Click({
+function Invoke-recommended{
     # Set-Presets "recommended"
     $services = @(
         "ALG"                                          # Application Layer Gateway Service(Provides support for 3rd party protocol plug-ins for Internet Connection Sharing)
@@ -596,12 +650,16 @@ $wpf_recommended.Add_Click({
         Write-Host "Setting $service StartupType to Manual"
         Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue
     }
-})
-
+    Art -artN "
+======================================
+-- Services set to Recommended Mode --
+======================================
+" -ch Cyan
+}
 $wpf_gaming.Add_MouseLeave({
     $wpf_pBar.Visibility = "Hidden"
 })
-$wpf_gaming.Add_Click({
+function Invoke-gaming{
     # Set-Presets "gaming"
     $services_m = @(
         "BcastDVRUserService_48486de"                  # GameDVR and Broadcast is used for Game Recordings and Live Broadcasts
@@ -720,12 +778,16 @@ $wpf_gaming.Add_Click({
         Write-Host "Setting $service StartupType to Disabled"
         Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue
     }
-})
-
-$wpf_normal.Add_Click({
+    Art -artN "
+=======================================
+----- Services set to Gaming Mode -----
+=======================================
+" -ch Cyan
+}
+function Invoke-normal{
     #Set-Presets "normal"
     cmd /c services.msc
-})
+}
 
 Get-Service | ForEach-Object {[void]$wpf_ddlServices.Items.Add($_.Name)}
 function Get-Services {
@@ -760,7 +822,7 @@ function Get-Services {
 ########################################### /SERVICES ########################################### 
 ########################################### OPTIMIZATION ########################################### 
 
-$wpf_optimizationButton.Add_Click({
+function Invoke-optimizationButton{
     # Essential Tweaks
     If ( $wpf_DblTelemetry.IsChecked -eq $true ) {
         Write-Host "Disabling Telemetry..."
@@ -1097,7 +1159,7 @@ $wpf_optimizationButton.Add_Click({
         $wpf_DblGameBar.IsChecked = $false
     }
     If ( $wpf_DblDeBloatW11Apps.IsChecked -eq $true ) {}
-})
+}
 
 function Get-AppsUseLightTheme{
     return (Get-ItemProperty -path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize').AppsUseLightTheme
@@ -1211,7 +1273,7 @@ $wpf_megaPresetButton.Add_Click({
 ########################################### /OPTIMIZATION ########################################### 
 ########################################### UPDATES ########################################### 
 
-$wpf_Updatesdefault.Add_Click({
+function Invoke-UpdatesDefault{
     If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU")) {
         New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Force | Out-Null
     }
@@ -1251,9 +1313,8 @@ $wpf_Updatesdefault.Add_Click({
 ----- Updates Set to Default -----
 ==================================
 " -ch Cyan
-})
-
-$wpf_Updatessecurity.Add_Click({
+}
+function Invoke-UpdatesSecurity{
     Write-Host "Disabling driver offering through Windows Update..."
     If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata")) {
         New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" -Force | Out-Null
@@ -1291,9 +1352,8 @@ $wpf_Updatessecurity.Add_Click({
 --- Updates Set to Recommended ---
 ==================================
 " -ch Cyan
-})
-
-$wpf_Updatesdisable.Add_Click({
+}
+function Invoke-UpdatesDisable{
     If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU")) {
         New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Force | Out-Null
     }
@@ -1320,9 +1380,8 @@ $wpf_Updatesdisable.Add_Click({
 ------ Updates ARE DISABLED ------
 ==================================
 " -ch DarkRed
-})
-
-$wpf_FixesUpdate.Add_Click({
+}
+function Invoke-FixesUpdate{
     ### Reset Windows Update Script - reregister dlls, services, and remove registry entires.
     Write-Host "1. Stopping Windows Update Services..." 
     Stop-Service -Name BITS 
@@ -1429,10 +1488,42 @@ $wpf_FixesUpdate.Add_Click({
 -- Reset ALL Updates to Factory --
 ==================================
 " -ch DarkGreen
-})
+}
 
 ########################################### /UPDATES ########################################### 
+########################################### CONFIG ############################################
+function Invoke-Configs {
+    <#
 
+    .DESCRIPTION
+    Simple Switch for lagacy windows
+
+#>
+param($Panel)
+
+switch ($Panel){
+    "wpf_PanelControl"              {cmd /c control}
+    "wpf_PanelPnF"                  {cmd /c appwiz.cpl}
+    "wpf_PanelNetwork"              {cmd /c ncpa.cpl}
+    "wpf_PanelPower"                {cmd /c powercfg.cpl}
+    "wpf_PanelSound"                {cmd /c mmsys.cpl}
+    "wpf_PanelSystem"               {cmd /c sysdm.cpl}
+    "wpf_PanelUser"                 {cmd /c "control userpasswords2"}
+    "wpf_PanelServices"             {cmd /c services.msc}
+    "wpf_PanelWindowsFirewall"      {cmd /c firewall.cpl}
+    "wpf_PanelDeviceManager"        {cmd /c devmgmt.msc}
+    "wpf_PanelExplorerOption"       {cmd /c control folders}
+    "wpf_PanelRegedit"              {cmd /c regedit}
+    "wpf_PanelScheduler"            {cmd /c taskschd.msc}
+    "wpf_PanelResourceMonitor"      {cmd /c resmon}
+    "wpf_PanelSysConf"              {cmd /c msconfig}
+    "wpf_PanelEvent"                {cmd /c taskschd.msc}
+    "wpf_PanelSysInfo"              {cmd /c msinfo32}
+    "wpf_PanelDiskManagement"       {cmd /c diskmgmt.msc}
+}
+}
+
+########################################### /CONFIG ########################################### 
 Get-Author
 $wpf_diskNameInfo.Add_SelectionChanged({Get-DiskInfo})
 $wpf_diskName.Add_SelectionChanged({Get-DiskSize})
