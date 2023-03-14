@@ -18,14 +18,14 @@ If you are having TLS 1.2 Issues or You cannot find or resolve `tinyurl.com/win1
 - **Debloat**
   > Removes unnecessary preinstalled apps.
 - **Optimization**
-  > Optimizes windows and reduces running processes  
+  > Optimizes Windows and reduces running processes  
   > Has different presets
 - **Services**
   > Sets services to disabled or manual  
   > Has three modes - recommended, gaming, normal  
   > Shows services status
 - **Updates**
-  > Fixes the default windows update scheme  
+  > Fixes the default Windows update scheme  
   > Reset Windows Update to factory settings
 - **Config**
   > Quick configurations for Windows Installs  
