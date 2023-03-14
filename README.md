@@ -1,5 +1,5 @@
 # Windows11-Optimizer-Debloater
-Windows Utility - Tweaks, Fixes, and Updates
+This Utility show basic system information, debloat and optimize windows with tweaks, troubleshoot with config, and fix Windows updates.
 
 Requires you to launch PowerShell or Windows Terminal As ADMINISTRATOR!
 
@@ -12,3 +12,21 @@ If you are having TLS 1.2 Issues or You cannot find or resolve `tinyurl.com/win1
 ```
 [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12;iex(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/main.ps1')
 ```
+## What Script Do?
+- **Info**
+  > Shows system information
+- **Debloat**
+  > Removes unnecessary preinstalled apps.
+- **Optimization**
+  > Optimizes windows and reduces running processes
+  > Has different presets
+- **Services**
+  > Sets services to disabled or manual  
+  > Has three modes - recommended, gaming, normal  
+  > Shows services status
+- **Updates**
+  > Fixes the default windows update scheme
+  > Reset Windows Update to factory settings
+- **Config**
+  > Quick configurations for Windows Installs
+  > Has old legacy panels from Windows 7
