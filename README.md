@@ -1,5 +1,5 @@
 # Windows11-Optimizer-Debloater
-This Utility show basic system information, debloat and optimize windows with tweaks, troubleshoot with config, and fix Windows updates.
+This Utility show basic system information, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates.
 
 Requires you to launch PowerShell or Windows Terminal As ADMINISTRATOR!
 
