@@ -1085,6 +1085,7 @@ function Invoke-optimizationButton{
         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" -Name "VisualFXSetting" -Type DWord -Value 3
         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\DWM" -Name "EnableAeroPeek" -Type DWord -Value 1
         Write-Host "Adjusted visual effects for performance"
+        $wpf_DblDisplay.IsChecked = $false
     }
     If ( $wpf_DblUTC.IsChecked -eq $true ) {
         Write-Host "Setting BIOS time to UTC..."
