@@ -58,16 +58,14 @@ foreach ($button in $buttons){
     })
 }
 function Invoke-Button {
-
     <#
-    
         .DESCRIPTION
         Meant to make creating buttons easier.
         This way you can dictate what each button does from this function. 
     
         Input will be the name of the button that is clicked. 
     #>
-    
+
     Param ([string]$Button) 
 
     #Use this to get the name of the button
@@ -113,12 +111,10 @@ function Invoke-Button {
 ####  Navigation Controls  #####
 ################################
 function Invoke-Tabs {
-
     <#
     
         .DESCRIPTION
         Sole purpose of this fuction reduce duplicated code for switching between tabs. 
-    
     #>
 
     Param ($ClickedTab)
@@ -262,12 +258,10 @@ function Get-DiskSize {
 
 function Remove-WinUtilAPPX {
     <#
-    
         .DESCRIPTION
         This function will remove any of the provided APPX names
         .EXAMPLE
         Remove-WinUtilAPPX -Name "Microsoft.Microsoft3DViewer"
-    
     #>
     param (
         $Name
@@ -1473,10 +1467,8 @@ function Invoke-FixesUpdate{
 ########################################### CONFIG ############################################
 function Invoke-Configs {
     <#
-
     .DESCRIPTION
     Simple Switch for lagacy windows
-
 #>
 param($Panel)
 
