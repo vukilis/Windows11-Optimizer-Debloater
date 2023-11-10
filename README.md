@@ -1,4 +1,5 @@
 # Windows11-Optimizer-Debloater
+![version](https://img.shields.io/badge/version%20-1.1-lighgreen)
 This Utility show basic system information, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates.
 
 Requires you to launch PowerShell or Windows Terminal As ADMINISTRATOR!
