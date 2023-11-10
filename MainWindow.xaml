@@ -556,17 +556,17 @@
                                 </CheckBox>
                             </StackPanel>
                             <StackPanel Background="#777777" SnapsToDevicePixels="True" Grid.Column="4" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
-                                <CheckBox Name="DblGameMode" Content="Enable Game Mode" Width="140" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                <CheckBox Name="DblGameMode" Content="Enable Game Mode" Width="140" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="This option may increase performance in some games and offer more consistent gaming experience.">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
-                                <CheckBox Name="DblGameBar" Content="Disable Game Bar" Width="140" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                <CheckBox Name="DblGameBar" Content="Disable Game Bar" Width="140" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="If you are not playing xbox game you can disable game bar.">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
-                                <CheckBox Content="-" Width="140" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                <CheckBox Name="DblPersonalize" Content="Personalisation Settings" Width="140" Margin="5,5" FontSize="11" FontFamily="Gadugi"  ToolTip="Hide search icon, show transparency effect, color adjustment, lock screen adjustment and turn off the display to 20min.">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>

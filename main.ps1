@@ -4,7 +4,7 @@ Add-Type -AssemblyName PresentationFramework
 .NOTES
     Author      : Vuk1lis
     GitHub      : https://github.com/vukilis
-    Version 1.0.0
+    Version 1.1
 #>
 
 Start-Transcript $ENV:TEMP\Windows11_Optimizer_Debloater.log -Append
@@ -1131,7 +1131,73 @@ function Invoke-optimizationButton{
         If (Test-Path "HKCU:\Software\Microsoft\GameBar") {Get-Item "HKCU:\Software\Microsoft\GameBar"|Set-ItemProperty -Name "UseNexusForGameBarEnabled" -Value 0 -Verbose -Force}
         $wpf_DblGameBar.IsChecked = $false
     }
-    If ( $wpf_DblDeBloatW11Apps.IsChecked -eq $true ) {}
+    If ( $wpf_DblPersonalize.IsChecked -eq $true ) {
+        #hide search icon, show transparency effect, colors, lock screen, power
+        Write-Host "Adjusting personalisation settings..."
+        New-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "HideTaskViewButton" -PropertyType "DWord" -Value 1 -Force
+        New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "HideTaskViewButton" -PropertyType "DWord" -Value 1 -Force
+        
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "EnableTransparency" -PropertyType "DWord" -Value 1 -Force
+        
+        New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "AutoColorization" -PropertyType "DWord" -Value 0 -Force
+        New-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Name "AccentColorMenu" -PropertyType "DWord" -Force -Value 0xffd47800
+        #New-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Name "AccentPalette" -PropertyType "BINARY" -Force -Value '99,eb,ff,00,4c,c2,ff,00,00,91,f8,00,00,78,d4,00,00,67,c0,00,00,3e,92,00,00,1a,68,00,f7,63,0c,00'
+        
+        #Accent Palette Key
+        $RegPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent"
+        $AccentPaletteKey = @{
+            Key   = 'AccentPalette';
+            Type  = "BINARY";
+            Value = '99,eb,ff,00,4c,c2,ff,00,00,91,f8,00,00,78,d4,00,00,67,c0,00,00,3e,92,00,00,1a,68,00,f7,63,0c,00'
+        }
+        $hexified = $AccentPaletteKey.Value.Split(',') | ForEach-Object { "0x$_" }
+
+        If ($Null -eq (Get-ItemProperty -Path $RegPath -Name $AccentPaletteKey.Key -ErrorAction SilentlyContinue))
+        {
+            New-ItemProperty -Path $RegPath -Name $AccentPaletteKey.Key -PropertyType Binary -Value ([byte[]]$hexified)
+        }
+        Else
+        {
+            Set-ItemProperty -Path $RegPath -Name $AccentPaletteKey.Key -Value ([byte[]]$hexified) -Force
+        }
+        New-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Name "StartColorMenu" -PropertyType "DWord" -Force -Value 0xffc06700
+        
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "ColorPrevalence" -PropertyType "DWord" -Value 0 -Force
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\DWM" -Name "ColorPrevalence" -PropertyType "DWord" -Value 0 -Force
+
+        New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization"
+        New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "NoLockScreen" -PropertyType "DWord" -Force -Value 1
+        New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "NoLockScreenSlideshow" -PropertyType "DWord" -Force -Value 1
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "FeatureManagementEnabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "OemPreInstalledAppsEnabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "PreInstalledAppsEnabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "RotatingLockScreenEnabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "RotatingLockScreenOverlayEnabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SoftLandingEnabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SystemPaneSuggestionsEnabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContentEnabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "ContentDeliveryAllowed" -PropertyType "DWord" -Force -Value 1
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SilentInstalledAppsEnabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "PreInstalledAppsEverEnabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "RemediationRequired" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338387Enabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338388Enabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338389Enabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-310093Enabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338393Enabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-314563Enabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-353698Enabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-353694Enabled" -PropertyType "DWord" -Force -Value 0
+        New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "DisableLogonBackgroundImage" -PropertyType "DWord" -Force -Value 0
+        
+        powercfg -x -disk-timeout-ac 0
+        powercfg -x -disk-timeout-dc 0
+        powercfg -x -monitor-timeout-ac 20
+        powercfg -x -monitor-timeout-dc 20
+
+
+        $wpf_DblPersonalize.IsChecked = $false
+    }
 }
 
 function Get-AppsUseLightTheme{
@@ -1178,6 +1244,7 @@ $wpf_fastPresetButton.Add_Click({
         $wpf_DblExt.IsChecked=$true
         $wpf_DblDisplay.IsChecked=$true
         $wpf_DblDisableMouseAcceleration.IsChecked=$true
+        $wpf_DblPersonalize.IsChecked=$true
     }
     if ($DarkMoveValue -ne 0){
         $wpf_DblTelemetry.IsChecked=$false
@@ -1192,6 +1259,7 @@ $wpf_fastPresetButton.Add_Click({
         $wpf_DblExt.IsChecked=$false
         $wpf_DblDisplay.IsChecked=$false
         $wpf_DblDisableMouseAcceleration.IsChecked=$false
+        $wpf_DblPersonalize.IsChecked=$false
     }
     Write-Host $(If ( $EnableDarkMode ) {"Enabled"} Else {"Disabled"})
     }
@@ -1219,6 +1287,7 @@ $wpf_megaPresetButton.Add_Click({
         $wpf_DblRemoveCortana.IsChecked=$true
         $wpf_DblRightClickMenu.IsChecked=$true
         $wpf_DblDisableUAC.IsChecked=$true
+        $wpf_DblPersonalize.IsChecked=$true
     }
     if ($DarkMoveValue -ne 0){
         $wpf_DblTelemetry.IsChecked=$false
@@ -1238,6 +1307,7 @@ $wpf_megaPresetButton.Add_Click({
         $wpf_DblRemoveCortana.IsChecked=$false
         $wpf_DblRightClickMenu.IsChecked=$false
         $wpf_DblDisableUAC.IsChecked=$false
+        $wpf_DblPersonalize.IsChecked=$false
     }
     Write-Host $(If ( $EnableDarkMode ) {"Enabled"} Else {"Disabled"})
     }
