@@ -363,6 +363,7 @@ function Invoke-debloatGaming{
         "*AdobePhotoshopExpress*"
         "*HotspotShieldFreeVPN*"
         "*Microsoft.Advertising.Xaml*"
+        "*Windows.DevHome*"
     )
 
     foreach ($app in $appx) {
@@ -484,6 +485,7 @@ function Invoke-debloatALL{
         "*AdobePhotoshopExpress*"
         "*HotspotShieldFreeVPN*"
         "*Microsoft.Advertising.Xaml*"
+        "*Windows.DevHome*"
     )
 
     foreach ($app in $appx) {
