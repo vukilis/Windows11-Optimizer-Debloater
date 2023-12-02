@@ -1051,23 +1051,10 @@ function Invoke-optimizationButton{
         Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power" -Name "HiberbootEnabled" -Type DWord -Value 0000000
         $wpf_DblPower.IsChecked = $false 
     }
-    If ( $wpf_DblNum.IsChecked -eq $true ) {
-        Write-Host "Enabling NumLock after startup..."
-        If (!(Test-Path "HKU:")) {
-            New-PSDrive -Name HKU -PSProvider Registry -Root HKEY_USERS | Out-Null
-        }
-        Set-ItemProperty -Path "HKU:\.DEFAULT\Control Panel\Keyboard" -Name "InitialKeyboardIndicators" -Type DWord -Value 2
-        $wpf_DblNum.IsChecked = $false
-    }
-    If ( $wpf_DblExt.IsChecked -eq $true ) {
-        Write-Host "Showing known file extensions..."
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt" -Type DWord -Value 0
-        $wpf_DblExt.IsChecked = $false
-    }
     If ( $wpf_DblDisplay.IsChecked -eq $true ) {
         # https://www.tenforums.com/tutorials/6377-change-visual-effects-settings-windows-10-a.html
         # https://superuser.com/questions/1244934/reg-file-to-modify-windows-10-visual-effects
-        Write-Host "Adjusting visual effects for performance..."
+        Write-Host "Adjusted visual effects for performance"
         Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "DragFullWindows" -Type String -Value 1
         Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "MenuShowDelay" -Type String -Value 0
         Set-ItemProperty -Path 'HKCU:\Control Panel\Desktop' -Name "FontSmoothing" -Value 2
@@ -1080,7 +1067,7 @@ function Invoke-optimizationButton{
         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "IconsOnly" -Type DWord -Value 0
         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" -Name "VisualFXSetting" -Type DWord -Value 3
         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\DWM" -Name "EnableAeroPeek" -Type DWord -Value 1
-        Write-Host "Adjusted visual effects for performance"
+
         $wpf_DblDisplay.IsChecked = $false
     }
     If ( $wpf_DblUTC.IsChecked -eq $true ) {
@@ -1101,13 +1088,6 @@ function Invoke-optimizationButton{
         New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\PushNotifications" -Name "ToastEnabled" -PropertyType "DWord" -Value 0 -force
         $wpf_DblDisableNotifications.IsChecked = $false
     }
-    If ( $wpf_DblDisableMouseAcceleration.IsChecked -eq $true ) {
-        Write-Host "Disabling mouse acceleration..."
-        Set-ItemProperty -Path "HKCU:\Control Panel\Mouse" -Name "MouseSpeed" -Type String -Value 0
-        Set-ItemProperty -Path "HKCU:\Control Panel\Mouse" -Name "MouseThreshold1" -Type String -Value 0
-        Set-ItemProperty -Path "HKCU:\Control Panel\Mouse" -Name "MouseThreshold2" -Type String -Value 0
-        $wpf_DblDisableMouseAcceleration.IsChecked = $false
-    }
     If ( $wpf_DblRemoveCortana.IsChecked -eq $true ) {
         Write-Host "Removing Cortana..."
         Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage
@@ -1122,11 +1102,6 @@ function Invoke-optimizationButton{
         Write-Host "Enabling Game Mode..."
         If (Test-Path HKCU:\Software\Microsoft\GameBar) {Get-Item HKCU:\Software\Microsoft\GameBar|Set-ItemProperty -Name AllowAutoGameMode -Value 1 -Verbose -Force}
         $wpf_DblGameMode.IsChecked -eq $false
-    }
-    If ( $wpf_DblGameBar.IsChecked -eq $true ) {
-        Write-Host "Disabling Game Bar..."
-        If (Test-Path "HKCU:\Software\Microsoft\GameBar") {Get-Item "HKCU:\Software\Microsoft\GameBar"|Set-ItemProperty -Name "UseNexusForGameBarEnabled" -Value 0 -Verbose -Force}
-        $wpf_DblGameBar.IsChecked = $false
     }
     If ( $wpf_DblGameBar.IsChecked -eq $true ) {
         Write-Host "Disabling Game Bar..."
@@ -1200,6 +1175,93 @@ function Invoke-optimizationButton{
 
         $wpf_DblPersonalize.IsChecked = $false
     }
+    If ( $wpf_DblRemoveEdge.IsChecked -eq $true ) {
+        # Standalone script by AveYo Source: https://raw.githubusercontent.com/AveYo/fox/main/Edge_Removal.bat
+
+        curl.exe "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/edgeremoval.bat" -o $ENV:temp\\edgeremoval.bat
+        Start-Process $ENV:temp\\edgeremoval.bat
+
+        $wpf_DblRemoveEdge.IsChecked= $false
+    }
+    If ( $wpf_DblOneDrive.IsChecked -eq $true ) {
+        Write-Host "Kill OneDrive process"
+        taskkill.exe /F /IM "OneDrive.exe"
+        taskkill.exe /F /IM "explorer.exe"
+
+        Write-Host "Copy all OneDrive to Root UserProfile"
+        Start-Process -FilePath robocopy -ArgumentList "$env:USERPROFILE\OneDrive $env:USERPROFILE /e /xj" -NoNewWindow -Wait
+
+        Write-Host "Remove OneDrive"
+        Start-Process -FilePath winget -ArgumentList "uninstall -e --purge --force --silent Microsoft.OneDrive " -NoNewWindow -Wait
+
+        Write-Host "Removing OneDrive leftovers"
+        Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$env:localappdata\Microsoft\OneDrive"
+        Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$env:programdata\Microsoft OneDrive"
+        Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$env:systemdrive\OneDriveTemp"
+
+        # check if directory is empty before removing:
+        If ((Get-ChildItem "$env:userprofile\OneDrive" -Recurse | Measure-Object).Count -eq 0) {
+            Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$env:userprofile\OneDrive"
+        }
+
+        # On clean installs or upgrades that never had one drive removed, that sidebar entry doesn't get removed
+        # For now it break windows!!!
+
+        # Write-Host "Remove Onedrive from explorer sidebar"
+        # Set-ItemProperty -Path "HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" -Name "System.IsPinnedToNameSpaceTree" -Value 0
+        # Set-ItemProperty -Path "HKCR:\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" -Name "System.IsPinnedToNameSpaceTree" -Value 0
+
+        Write-Host "Removing run hook for new users"
+        reg load "hku\Default" "C:\Users\Default\NTUSER.DAT"
+        reg delete "HKEY_USERS\Default\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "OneDriveSetup" /f
+        reg unload "hku\Default"
+
+        Write-Host "Removing startmenu entry"
+        Remove-Item -Force -ErrorAction SilentlyContinue "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk"
+
+        Write-Host "Removing scheduled task"
+        Get-ScheduledTask -TaskPath '\\' -TaskName 'OneDrive*' -ea SilentlyContinue | Unregister-ScheduledTask -Confirm:$false
+
+        # Add Shell folders restoring default locations
+        Write-Host "Shell Fixing"
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "AppData" -Value "$env:userprofile\AppData\Roaming" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Cache" -Value "$env:userprofile\AppData\Local\Microsoft\Windows\INetCache" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Cookies" -Value "$env:userprofile\AppData\Local\Microsoft\Windows\INetCookies" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Favorites" -Value "$env:userprofile\Favorites" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "History" -Value "$env:userprofile\AppData\Local\Microsoft\Windows\History" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Local AppData" -Value "$env:userprofile\AppData\Local" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Music" -Value "$env:userprofile\Music" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Video" -Value "$env:userprofile\Videos" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "NetHood" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Network Shortcuts" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "PrintHood" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Printer Shortcuts" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Programs" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Recent" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Recent" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "SendTo" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\SendTo" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Start Menu" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Startup" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Templates" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Templates" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}" -Value "$env:userprofile\Downloads" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Desktop" -Value "$env:userprofile\Desktop" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Pictures" -Value "$env:userprofile\Pictures" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Personal" -Value "$env:userprofile\Documents" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{F42EE2D3-909F-4907-8871-4C22FC0BF756}" -Value "$env:userprofile\Documents" -Type ExpandString
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{0DDD015D-B06C-45D5-8C4C-F59713854639}" -Value "$env:userprofile\Pictures" -Type ExpandString
+
+        Write-Host "Restarting explorer"
+        Start-Process "explorer.exe"
+
+        Write-Host "Waiting for explorer to complete loading"
+        Write-Host "Please Note - OneDrive folder may still have items in it. You must manually delete it, but all the files should already be copied to the base user folder."
+        Start-Sleep 5
+
+        $wpf_DblOneDrive.IsChecked = $false
+    }
+    $ButtonType = [System.Windows.MessageBoxButton]::OK
+    $MessageboxTitle = "Tweaks Are Finished"
+    $Messageboxbody = ("Done")
+    $MessageIcon = [System.Windows.MessageBoxImage]::Information
+
+    [System.Windows.MessageBox]::Show($Messageboxbody, $MessageboxTitle, $ButtonType, $MessageIcon)
 }
 
 function Get-AppsUseLightTheme{
@@ -1210,30 +1272,30 @@ function Get-SystemUsesLightTheme{
     return (Get-ItemProperty -path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize').SystemUsesLightTheme
 }
 
+# Toggle Tweaks
 $wpf_ToggleDarkMode.IsChecked = $(If ($(Get-AppsUseLightTheme) -eq 0 -And $(Get-SystemUsesLightTheme) -eq 0) {$true} Else {$false})
-
 $wpf_ToggleDarkMode.Add_Click({    
     $EnableDarkMode = $wpf_ToggleDarkMode.IsChecked
-    $DarkMoveValue = $(If ( $EnableDarkMode ) {0} Else {1})
-    Write-Host $(If ( $EnableDarkMode ) {"Enabling Dark Mode"} Else {"Disabling Dark Mode"})
+    $ToggleValue = $(If ( $EnableDarkMode ) {0} Else {1})
     $Theme = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"
-    If ($DarkMoveValue -ne $(Get-AppsUseLightTheme))
+    If ($ToggleValue -ne $(Get-AppsUseLightTheme))
     {
-        Set-ItemProperty $Theme AppsUseLightTheme -Value $DarkMoveValue
+        Set-ItemProperty $Theme AppsUseLightTheme -Value $ToggleValue
     }
-    If ($DarkMoveValue -ne $(Get-SystemUsesLightTheme))
+    If ($ToggleValue -ne $(Get-SystemUsesLightTheme))
     {
-        Set-ItemProperty $Theme SystemUsesLightTheme -Value $DarkMoveValue
+        Set-ItemProperty $Theme SystemUsesLightTheme -Value $ToggleValue
     }
-    Write-Host $(If ( $EnableDarkMode ) {"Enabled"} Else {"Disabled"})
+    Write-Host $(If ( $EnableDarkMode ) {"Enabling Dark Mode"} Else {"Disabling Dark Mode"})
     }
 )
 
 $wpf_fastPresetButton.Add_Click({    
-    $EnableDarkMode = $wpf_fastPresetButton.IsChecked
-    $DarkMoveValue = $(If ( $EnableDarkMode ) {0} Else {1})
-    Write-Host $(If ( $EnableDarkMode ) {"Enabling Tweak Preset"} Else {"Disabling Tweak Preset"})
-    If ($DarkMoveValue -ne 1){
+    $EnableMode = $wpf_fastPresetButton.IsChecked
+    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
+    If ($ToggleValue -ne 1){
+        $wpf_megaPresetButton.IsEnabled = $false
+        $wpf_megaPresetButton.Style = $wpf_megaPresetButton.TryFindResource("ToggleSwitchStyleDisabled")
         $wpf_DblTelemetry.IsChecked=$true
         $wpf_DblWifi.IsChecked=$true
         $wpf_DblAH.IsChecked=$true
@@ -1242,13 +1304,12 @@ $wpf_fastPresetButton.Add_Click({
         $wpf_DblHiber.IsChecked=$true
         $wpf_DblDVR.IsChecked=$true
         $wpf_DblPower.IsChecked=$true
-        $wpf_DblNum.IsChecked=$true
-        $wpf_DblExt.IsChecked=$true
         $wpf_DblDisplay.IsChecked=$true
-        $wpf_DblDisableMouseAcceleration.IsChecked=$true
         $wpf_DblPersonalize.IsChecked=$true
     }
-    if ($DarkMoveValue -ne 0){
+    if ($ToggleValue -ne 0){
+        $wpf_megaPresetButton.IsEnabled = $true
+        $wpf_megaPresetButton.Style = $wpf_megaPresetButton.TryFindResource("ToggleSwitchStylePurple")
         $wpf_DblTelemetry.IsChecked=$false
         $wpf_DblWifi.IsChecked=$false
         $wpf_DblAH.IsChecked=$false
@@ -1257,21 +1318,20 @@ $wpf_fastPresetButton.Add_Click({
         $wpf_DblHiber.IsChecked=$false
         $wpf_DblDVR.IsChecked=$false
         $wpf_DblPower.IsChecked=$false
-        $wpf_DblNum.IsChecked=$false
-        $wpf_DblExt.IsChecked=$false
         $wpf_DblDisplay.IsChecked=$false
-        $wpf_DblDisableMouseAcceleration.IsChecked=$false
         $wpf_DblPersonalize.IsChecked=$false
     }
-    Write-Host $(If ( $EnableDarkMode ) {"Enabled"} Else {"Disabled"})
+    Write-Host $(If ( $EnableMode ) {"Enabling Fast Preset"} Else {"Disabling Fast Preset"})
     }
 )
 
 $wpf_megaPresetButton.Add_Click({    
-    $EnableDarkMode = $wpf_megaPresetButton.IsChecked
-    $DarkMoveValue = $(If ( $EnableDarkMode ) {0} Else {1})
-    Write-Host $(If ( $EnableDarkMode ) {"Enabling Tweak Preset"} Else {"Disabling Tweak Preset"})
-    If ($DarkMoveValue -ne 1){
+    $EnableMode = $wpf_megaPresetButton.IsChecked
+    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
+    If ($ToggleValue -ne 1){
+        $wpf_fastPresetButton.IsEnabled = $false
+        $wpf_fastPresetButton.Style = $wpf_fastPresetButton.TryFindResource("ToggleSwitchStyleDisabled")
+        $wpf_fastPresetButton.Cursor = "No"
         $wpf_DblTelemetry.IsChecked=$true
         $wpf_DblWifi.IsChecked=$true
         $wpf_DblAH.IsChecked=$true
@@ -1282,16 +1342,16 @@ $wpf_megaPresetButton.Add_Click({
         $wpf_DblHiber.IsChecked=$true
         $wpf_DblDVR.IsChecked=$true
         $wpf_DblPower.IsChecked=$true
-        $wpf_DblNum.IsChecked=$true
-        $wpf_DblExt.IsChecked=$true
         $wpf_DblDisplay.IsChecked=$true
-        $wpf_DblDisableMouseAcceleration.IsChecked=$true
         $wpf_DblRemoveCortana.IsChecked=$true
         $wpf_DblRightClickMenu.IsChecked=$true
         $wpf_DblDisableUAC.IsChecked=$true
         $wpf_DblPersonalize.IsChecked=$true
     }
-    if ($DarkMoveValue -ne 0){
+    if ($ToggleValue -ne 0){
+        $wpf_fastPresetButton.IsEnabled = $true
+        $wpf_fastPresetButton.Style = $wpf_fastPresetButton.TryFindResource("ToggleSwitchStyleGreen")
+        $wpf_fastPresetButton.Cursor = "Hand"
         $wpf_DblTelemetry.IsChecked=$false
         $wpf_DblWifi.IsChecked=$false
         $wpf_DblAH.IsChecked=$false
@@ -1302,16 +1362,95 @@ $wpf_megaPresetButton.Add_Click({
         $wpf_DblHiber.IsChecked=$false
         $wpf_DblDVR.IsChecked=$false
         $wpf_DblPower.IsChecked=$false
-        $wpf_DblNum.IsChecked=$false
-        $wpf_DblExt.IsChecked=$false
         $wpf_DblDisplay.IsChecked=$false
-        $wpf_DblDisableMouseAcceleration.IsChecked=$false
         $wpf_DblRemoveCortana.IsChecked=$false
         $wpf_DblRightClickMenu.IsChecked=$false
         $wpf_DblDisableUAC.IsChecked=$false
         $wpf_DblPersonalize.IsChecked=$false
     }
-    Write-Host $(If ( $EnableDarkMode ) {"Enabled"} Else {"Disabled"})
+    Write-Host $(If ( $EnableMode ) {"Enabling Mega Preset"} Else {"Disabling Mega Preset"})
+    }
+)
+
+$wpf_ToggleBingSearchMenu.IsChecked = $(If ((Get-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search').BingSearchEnabled -eq 0 -And $(Get-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search').BingSearchEnabled -eq 0) {$false} Else {$true})
+$wpf_ToggleBingSearchMenu.Add_Click({    
+    $EnableMode = $wpf_ToggleBingSearchMenu.IsChecked
+    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
+    If ($ToggleValue -ne 1){
+        $Path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search"
+        Set-ItemProperty -Path $Path -Name BingSearchEnabled -Value 1
+    }
+    if ($ToggleValue -ne 0){
+        $Path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search"
+        Set-ItemProperty -Path $Path -Name BingSearchEnabled -Value 0
+    }
+    Write-Host $(If ( $EnableMode ) {"Enabled Bing Search"} Else {"Disabling Bing Search"})
+    }
+)
+
+$wpf_ToggleNumLock.IsChecked = $(If ((Get-ItemProperty -path 'HKCU:\Control Panel\Keyboard').InitialKeyboardIndicators -eq 2 -And $(Get-ItemProperty -path 'HKCU:\Control Panel\Keyboard').InitialKeyboardIndicators -ne 0) {$true} Else {$false})
+$wpf_ToggleNumLock.Add_Click({    
+    $EnableMode = $wpf_ToggleNumLock.IsChecked
+    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
+    If ($ToggleValue -ne 1){
+        $Path = "HKCU:\Control Panel\Keyboard"
+        Set-ItemProperty -Path $Path -Name InitialKeyboardIndicators -Value 2
+    }
+    if ($ToggleValue -ne 0){
+        $Path = "HKCU:\Control Panel\Keyboard"
+        Set-ItemProperty -Path $Path -Name InitialKeyboardIndicators -Value 0
+    }
+    Write-Host $(If ( $EnableMode ) {"Enabling Numlock on startup"} Else {"Disabling Numlock on startup"})
+    }
+)
+
+$wpf_ToggleExt.IsChecked = $(If ((Get-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced').HideFileExt -eq 1 -And $(Get-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced').HideFileExt -ne 0) {$false} Else {$true})
+$wpf_ToggleExt.Add_Click({    
+    $EnableMode = $wpf_ToggleExt.IsChecked
+    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
+    If ($ToggleValue -ne 1){
+        $Path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+        Set-ItemProperty -Path $Path -Name HideFileExt -Value 0
+    }
+    if ($ToggleValue -ne 0){
+        $Path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+        Set-ItemProperty -Path $Path -Name HideFileExt -Value 1
+    }
+    Write-Host $(If ( $EnableMode ) {"Showing file extentions"} Else {"Hiding file extensions"})
+    }
+)
+
+$wpf_ToggleMouseAcceleration.IsChecked = $(If ((Get-ItemProperty -path 'HKCU:\Control Panel\Mouse').MouseSpeed -eq 1 -And $(Get-ItemProperty -path 'HKCU:\Control Panel\Mouse').MouseThreshold1 -eq 6 -And $(Get-ItemProperty -path 'HKCU:\Control Panel\Mouse').MouseThreshold2 -eq 10) {$true} Else {$false})
+$wpf_ToggleMouseAcceleration.Add_Click({    
+    $EnableMode = $wpf_ToggleMouseAcceleration.IsChecked
+    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
+    If ($ToggleValue -ne 1){
+        $Path = "HKCU:\Control Panel\Mouse"
+        Set-ItemProperty -Path $Path -Name MouseSpeed -Value 1
+        Set-ItemProperty -Path $Path -Name MouseThreshold1 -Value 6
+        Set-ItemProperty -Path $Path -Name MouseThreshold2 -Value 10
+    }
+    if ($ToggleValue -ne 0){
+        $Path = "HKCU:\Control Panel\Mouse"
+        Set-ItemProperty -Path $Path -Name MouseSpeed -Value 0
+        Set-ItemProperty -Path $Path -Name MouseThreshold1 -Value 0
+        Set-ItemProperty -Path $Path -Name MouseThreshold2 -Value 0
+    }
+    Write-Host $(If ( $EnableMode ) {"Enabling Mouse Acceleration"} Else {"Disabling Mouse Acceleration"})
+    }
+)
+
+$wpf_TogglefIPv6.IsChecked = $(If ((Get-NetAdapterBinding -Name 'Ethernet' -ComponentID ms_tcpip6).Enabled -eq "True" -And $(Get-NetAdapterBinding -Name 'Ethernet' -ComponentID ms_tcpip6).Enabled -eq "False") {$true} Else {$false})
+$wpf_TogglefIPv6.Add_Click({    
+    $EnableMode = $wpf_TogglefIPv6.IsChecked
+    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
+    If ($ToggleValue -ne 1){
+        Enable-NetAdapterBinding -Name "Ethernet" -ComponentID ms_tcpip6
+    }
+    if ($ToggleValue -ne 0){
+        Disable-NetAdapterBinding -Name "Ethernet" -ComponentID ms_tcpip6
+    }
+    Write-Host $(If ( $EnableMode ) {"Enabling IPv6"} Else {"Disabling IPv6"})
     }
 )
 
