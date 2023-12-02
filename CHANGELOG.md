@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Known Issues]
+
+- **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
+
+
+## [1.3] - 2023-12-02
+
+### Added
+
+- MessageBox when tweaks are finished.
+- Toggle tweak to disable/enable bing in start menu  - **Bing Search In Start Menu**.
+- Toggle tweak to disable/enable IPv6 - **IPv6**.
+- New optimization tweak to remove Microsoft Edge - **Remove Microsoft Edge**.
+- New optimization tweak to remove OneDrive - **Remove OneDrive**.
+
+### Changed
+
+- optimization tweak **NumLock On Startup** is now toggle tweak.
+- optimization tweak **Show File Extensions** is now toggle tweak.
+- optimization tweak **Mouse Acceleration** is now toggle tweak.
+- on hover cursor from **Arrow** to **Hand** on all buttons, checkboxes and select elements 
+- some visual and functionality fixes
+
 ## [1.2] - 2023-11-20
 
 ### Added
