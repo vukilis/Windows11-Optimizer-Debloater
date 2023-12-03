@@ -939,6 +939,13 @@ function Invoke-optimizationButton{
         # Remove "News and Interest" from taskbar
         Set-ItemProperty -Path  "HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds" -Name "ShellFeedsTaskbarViewMode" -Type DWord -Value 2
 
+        # remove "Widgets" button from taskbar
+        Write-Host "Disable Widgets"
+        If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh")) {
+            New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" | Out-Null
+        }
+        Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" -Name "AllowNewsAndInterests" -Type DWord -Value 0
+        
         # remove "Meet Now" button from taskbar
 
         If (!(Test-Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer")) {
@@ -1420,6 +1427,23 @@ $wpf_ToggleExt.Add_Click({
     }
 )
 
+$getHiddenFileValue = Get-ItemPropertyValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Hidden'
+$wpf_ToggleHiddenFiles.IsChecked = $(If ( $getHiddenFileValue -eq 1 -And $getHiddenFileValue -eq 0) {$false} Else {$true})
+$wpf_ToggleHiddenFiles.Add_Click({    
+    $EnableMode = $wpf_ToggleHiddenFiles.IsChecked
+    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
+    If ($ToggleValue -ne 1){
+        $Path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+        Set-ItemProperty -Path $Path -Name "Hidden" -Value 1 -Force
+    }
+    if ($ToggleValue -ne 0){
+        $Path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+        Set-ItemProperty -Path $Path -Name "Hidden" -Value 0 -Force
+    }
+    Write-Host $(If ( $EnableMode ) {"Showing hidden files"} Else {"Hide hidden files"})
+    }
+)
+
 $wpf_ToggleMouseAcceleration.IsChecked = $(If ((Get-ItemProperty -path 'HKCU:\Control Panel\Mouse').MouseSpeed -eq 1 -And $(Get-ItemProperty -path 'HKCU:\Control Panel\Mouse').MouseThreshold1 -eq 6 -And $(Get-ItemProperty -path 'HKCU:\Control Panel\Mouse').MouseThreshold2 -eq 10) {$true} Else {$false})
 $wpf_ToggleMouseAcceleration.Add_Click({    
     $EnableMode = $wpf_ToggleMouseAcceleration.IsChecked
@@ -1451,6 +1475,22 @@ $wpf_TogglefIPv6.Add_Click({
         Disable-NetAdapterBinding -Name "Ethernet" -ComponentID ms_tcpip6
     }
     Write-Host $(If ( $EnableMode ) {"Enabling IPv6"} Else {"Disabling IPv6"})
+    }
+)
+
+$wpf_ToggleSearch.IsChecked = $(If ((Get-ItemProperty -path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search').SearchBoxTaskbarMode -eq 0 -And $(Get-ItemProperty -path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search').SearchBoxTaskbarMode -ne 2) {$true} Else {$false})
+$wpf_ToggleSearch.Add_Click({    
+    $EnableMode = $wpf_ToggleSearch.IsChecked
+    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
+    If ($ToggleValue -ne 1){
+        $Path = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search"
+        Set-ItemProperty -Path $Path -Name SearchBoxTaskbarMode -Value 0
+    }
+    if ($ToggleValue -ne 0){
+        $Path = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search"
+        Set-ItemProperty -Path $Path -Name SearchBoxTaskbarMode -Value 2
+    }
+    Write-Host $(If ( $EnableMode ) {"Hiding search box"} Else {"Showing search box"})
     }
 )
 
