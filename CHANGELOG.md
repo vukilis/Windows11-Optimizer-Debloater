@@ -8,6 +8,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [1.4] - 2023-12-03
+
+### Added
+
+- Toggle tweak to show/hide hidden files  - **Show Hidden Files**.
+- Toggle tweak to show/hide search box - **Hide Search Box**.
+
+### Changed
+
+- Tweak **Disable Telemetry** now disable widgets.
 
 ## [1.3] - 2023-12-02
 
