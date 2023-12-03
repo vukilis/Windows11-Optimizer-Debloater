@@ -714,58 +714,69 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
-                                
                             </StackPanel>
                             <StackPanel Background="#777777" SnapsToDevicePixels="True" Grid.Column="1" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="2">
                                 <Label Content="⚠️ - I suggest to leave uncheck or check only on fresh windows" Foreground="DarkRed" FontSize="14" HorizontalAlignment="Center" Margin="0,2,0,0" Style="{StaticResource chfont}" FontWeight="Bold"/>
                             </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="1" Margin="10,5,10,10">
-                                <Label Content="Fast Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,20,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="1" Margin="10,20,10,10">
+                                <Label Content="Fast Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,0,0,5"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                     <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     <CheckBox Name="fastPresetButton" Style="{StaticResource ToggleSwitchStyleGreen}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
                                     <Label Content="On" Foreground="#2eb50d" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                 </StackPanel>
-                                <Label Content="Bing Search In Start Menu" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,20,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label Content="Bing Search In Start Menu" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                     <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     <CheckBox Name="ToggleBingSearchMenu" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
                                     <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                 </StackPanel>
-                                <Label Content="NumLock On Startup" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,20,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label Content="NumLock On Startup" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                     <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     <CheckBox Name="ToggleNumLock" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
                                     <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                 </StackPanel>
-                                <Label Content="IPv6" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,20,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label Content="IPv6" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                     <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     <CheckBox Name="TogglefIPv6" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
                                     <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                 </StackPanel>
+                                <Label Content="Hide Search Box" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                    <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    <CheckBox Name="ToggleSearch" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                    <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                </StackPanel>
                             </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Grid.Row="1" Margin="10,5,10,10">
-                                <Label Content="Mega Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#ca35de" Margin="0,20,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Grid.Row="1" Margin="10,20,10,10">
+                                <Label Content="Mega Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#ca35de" Margin="0,0,0,5"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                     <Label Content="Off" Foreground="#ca35de" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     <CheckBox Name="megaPresetButton" Style="{StaticResource ToggleSwitchStylePurple}" Cursor="Hand" Margin="2.5,0"/>
                                     <Label Content="On" Foreground="#ca35de" FontWeight="UltraBold" FontSize="14" FontFamily="Gadugi"/>
                                 </StackPanel>
-                                <Label Content="Dark Theme" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,20,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label Content="Dark Theme" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                     <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     <CheckBox Name="ToggleDarkMode" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
                                     <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                 </StackPanel>
-                                <Label Content="Show File Extensions" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,20,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label Content="Show File Extensions" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                     <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     <CheckBox Name="ToggleExt" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
                                     <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                 </StackPanel>
-                                <Label Content="Mouse Acceleration" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,20,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label Content="Show Hidden Files" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                    <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    <CheckBox Name="ToggleHiddenFiles" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                    <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                </StackPanel>
+                                <Label Content="Mouse Acceleration" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                     <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     <CheckBox Name="ToggleMouseAcceleration" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
                                     <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
