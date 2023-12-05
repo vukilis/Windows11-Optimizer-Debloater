@@ -797,7 +797,7 @@ function Invoke-normal{
 Get-Service -ErrorAction SilentlyContinue | ForEach-Object {[void]$wpf_ddlServices.Items.Add($_.Name)}
 function Get-Services {
     $ServiceName=$wpf_ddlServices.SelectedItem
-    $details=Get-Service -Name $ServiceName | Select-Object *
+    $details=Get-Service -Name $ServiceName -ErrorAction SilentlyContinue | Select-Object *
     $wpf_lblName.Content=$details.DisplayName
     $wpf_lblStatus.Content=$details.Status
     $wpf_lblStartupType.Content=$details.StartupType
