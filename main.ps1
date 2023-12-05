@@ -4,12 +4,12 @@ Add-Type -AssemblyName PresentationFramework
 .NOTES
     Author      : Vuk1lis
     GitHub      : https://github.com/vukilis
-    Version 1.1
+    Version 1.5
 #>
 
 Start-Transcript $ENV:TEMP\Windows11_Optimizer_Debloater.log -Append
 
-# $xamlFile="M:\Windows11-Optimizer&Debloater\MainWindow.xaml" #uncomment for development
+# $xamlFile="path\to\your\MainWindow.xaml" #uncomment for development
 # $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
 $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
@@ -182,6 +182,47 @@ function Art {
 ### Get all variables from form
 # Get-Variable wpf_*
 
+function Set-RestorePoint {
+    <#
+    
+        .DESCRIPTION
+        Purpose of this fuction is to create restore point. 
+    
+    #>
+    
+    # Check if the user has administrative privileges
+    if (-Not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+        Write-Host "Please run this script as an administrator."
+        return
+    }
+
+    # Check if System Restore is enabled for the main drive
+    try {
+        # Try getting restore points to check if System Restore is enabled
+        Enable-ComputerRestore -Drive "$env:SystemDrive"
+    } catch {
+        Write-Host "An error occurred while enabling System Restore: $_"
+    }
+
+    # Check if the SystemRestorePointCreationFrequency value exists
+    $exists = Get-ItemProperty -path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" -name "SystemRestorePointCreationFrequency" -ErrorAction SilentlyContinue
+    if($null -eq $exists){
+        write-host 'Changing system to allow multiple restore points per day'
+        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" -Name "SystemRestorePointCreationFrequency" -Value "0" -Type DWord -Force -ErrorAction Stop | Out-Null
+    }
+
+    # Get all the restore points for the current day
+    $existingRestorePoints = Get-ComputerRestorePoint | Where-Object { $_.CreationTime.Date -eq (Get-Date).Date }
+
+    # Check if there is already a restore point created today
+    if ($existingRestorePoints.Count -eq 0) {
+        $description = "System Restore Point created by Windows11-Optimizer-Debloater"
+
+        Checkpoint-Computer -Description $description -RestorePointType "MODIFY_SETTINGS"
+        Write-Host -ForegroundColor Green "System Restore Point Created Successfully"
+    }
+}
+
 ########################################### INFO ###########################################    
 # HARDWARE INFO
 $pcName=[System.Net.Dns]::GetHostName()
@@ -190,18 +231,10 @@ $wpf_pcName.Content="Welcome $pcName"
 $cpuInfo=Get-CimInstance -ClassName CIM_Processor | Select-Object *
 $wpf_cpuInfo.Content=$cpuInfo.Name
 
-# $gpuInfo=Get-CimInstance -ClassName win32_VideoController | Select-Object *
-# $wpf_gpuInfo.Content=$gpuInfo.Name[0]
-
 Get-CimInstance -ClassName win32_VideoController | ForEach-Object {[void]$wpf_gpuInfo.Items.Add($_.VideoProcessor)}
-
-# $ramInfo=(Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property capacity -Sum).sum /1gb
-# $ramSpeed=Get-WmiObject Win32_PhysicalMemory | Select-Object *
-# $wpf_ramInfo.Content=$ramSpeed.Manufacturer[0]+" "+ $ramInfo+"GB" +" "+ $ramSpeed.ConfiguredClockSpeed[0]+"MT/s"
 
 $ramInfo = get-wmiobject -class Win32_ComputerSystem
 $ramInfoGB=[math]::Ceiling($ramInfo.TotalPhysicalMemory / 1024 / 1024 / 1024)
-#$ramInfoGB=[math]::Ceiling((Get-WMIObject Win32_OperatingSystem).TotalVisibleMemorySize / 1MB)
 $ramSpeed=Get-WmiObject Win32_PhysicalMemory | Select-Object *
 $IsVirtual=$ramInfo.Model.Contains("Virtual")
 if ($IsVirtual -like 'False'){
@@ -216,8 +249,6 @@ $mbInfo=Get-CimInstance -ClassName win32_baseboard | Select-Object *
 $wpf_mbInfo.Content=$mbInfo.Product
 
 # OS INFO
-# $osInfo=systeminfo /fo csv | ConvertFrom-Csv | Select-Object *
-# $wpf_osInfo.Content=$osInfo."OS Name"
 $osInfo=(Get-CimInstance -class Win32_OperatingSystem).Caption
 $wpf_osInfo.Content=$osInfo
 
@@ -763,7 +794,7 @@ function Invoke-normal{
     cmd /c services.msc
 }
 
-Get-Service | ForEach-Object {[void]$wpf_ddlServices.Items.Add($_.Name)}
+Get-Service -ErrorAction SilentlyContinue | ForEach-Object {[void]$wpf_ddlServices.Items.Add($_.Name)}
 function Get-Services {
     $ServiceName=$wpf_ddlServices.SelectedItem
     $details=Get-Service -Name $ServiceName | Select-Object *
@@ -797,6 +828,8 @@ function Get-Services {
 ########################################### OPTIMIZATION ########################################### 
 
 function Invoke-optimizationButton{
+    # Invoke restore point
+    Set-RestorePoint
     # Essential Tweaks
     If ( $wpf_DblTelemetry.IsChecked -eq $true ) {
         Write-Host "Disabling Telemetry..."
@@ -1379,72 +1412,59 @@ $wpf_megaPresetButton.Add_Click({
     }
 )
 
-$wpf_ToggleBingSearchMenu.IsChecked = $(If ((Get-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search').BingSearchEnabled -eq 0 -And $(Get-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search').BingSearchEnabled -eq 0) {$false} Else {$true})
-$wpf_ToggleBingSearchMenu.Add_Click({    
-    $EnableMode = $wpf_ToggleBingSearchMenu.IsChecked
+function Get-ToggleValue {
+    param (
+        [string]$Path,
+        [string]$Name
+    )
+
+    return (Get-ItemProperty -Path $Path).$Name -ne 0
+}
+function Set-RegistryValue {
+    param (
+        [string]$Path,
+        [string]$Name,
+        [int]$Value
+    )
+    Set-ItemProperty -Path $Path -Name $Name -Value $Value
+}
+function Toggle-RegistryValue {
+    param (
+        [System.Windows.Controls.CheckBox]$CheckBox,
+        [string]$Path,
+        [string]$Name,
+        [int]$TrueValue,
+        [int]$FalseValue,
+        [string]$EnableMessage,
+        [string]$DisableMessage
+    )
+
+    $EnableMode = $CheckBox.IsChecked
     $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
+
     If ($ToggleValue -ne 1){
-        $Path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search"
-        Set-ItemProperty -Path $Path -Name BingSearchEnabled -Value 1
+        Set-RegistryValue -Path $Path -Name $Name -Value $TrueValue
+        Write-Host $EnableMessage
     }
     if ($ToggleValue -ne 0){
-        $Path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search"
-        Set-ItemProperty -Path $Path -Name BingSearchEnabled -Value 0
+        Set-RegistryValue -Path $Path -Name $Name -Value $FalseValue
+        Write-Host $DisableMessage
     }
-    Write-Host $(If ( $EnableMode ) {"Enabled Bing Search"} Else {"Disabling Bing Search"})
-    }
-)
+}
+$wpf_ToggleBingSearchMenu.IsChecked = Get-ToggleValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled'
+$wpf_ToggleBingSearchMenu.Add_Click({
+    Toggle-RegistryValue -CheckBox $wpf_ToggleBingSearchMenu -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled' -TrueValue 1 -FalseValue 0 -EnableMessage "Enabled Bing Search" -DisableMessage "Disabling Bing Search"
+})
 
-$wpf_ToggleNumLock.IsChecked = $(If ((Get-ItemProperty -path 'HKCU:\Control Panel\Keyboard').InitialKeyboardIndicators -eq 2 -And $(Get-ItemProperty -path 'HKCU:\Control Panel\Keyboard').InitialKeyboardIndicators -ne 0) {$true} Else {$false})
-$wpf_ToggleNumLock.Add_Click({    
-    $EnableMode = $wpf_ToggleNumLock.IsChecked
-    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
-    If ($ToggleValue -ne 1){
-        $Path = "HKCU:\Control Panel\Keyboard"
-        Set-ItemProperty -Path $Path -Name InitialKeyboardIndicators -Value 2
-    }
-    if ($ToggleValue -ne 0){
-        $Path = "HKCU:\Control Panel\Keyboard"
-        Set-ItemProperty -Path $Path -Name InitialKeyboardIndicators -Value 0
-    }
-    Write-Host $(If ( $EnableMode ) {"Enabling Numlock on startup"} Else {"Disabling Numlock on startup"})
-    }
-)
-
-$wpf_ToggleExt.IsChecked = $(If ((Get-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced').HideFileExt -eq 1 -And $(Get-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced').HideFileExt -ne 0) {$false} Else {$true})
-$wpf_ToggleExt.Add_Click({    
-    $EnableMode = $wpf_ToggleExt.IsChecked
-    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
-    If ($ToggleValue -ne 1){
-        $Path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-        Set-ItemProperty -Path $Path -Name HideFileExt -Value 0
-    }
-    if ($ToggleValue -ne 0){
-        $Path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-        Set-ItemProperty -Path $Path -Name HideFileExt -Value 1
-    }
-    Write-Host $(If ( $EnableMode ) {"Showing file extentions"} Else {"Hiding file extensions"})
-    }
-)
-
-$getHiddenFileValue = Get-ItemPropertyValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Hidden'
-$wpf_ToggleHiddenFiles.IsChecked = $(If ( $getHiddenFileValue -eq 1 -And $getHiddenFileValue -eq 0) {$false} Else {$true})
-$wpf_ToggleHiddenFiles.Add_Click({    
-    $EnableMode = $wpf_ToggleHiddenFiles.IsChecked
-    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
-    If ($ToggleValue -ne 1){
-        $Path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-        Set-ItemProperty -Path $Path -Name "Hidden" -Value 1 -Force
-    }
-    if ($ToggleValue -ne 0){
-        $Path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-        Set-ItemProperty -Path $Path -Name "Hidden" -Value 0 -Force
-    }
-    Write-Host $(If ( $EnableMode ) {"Showing hidden files"} Else {"Hide hidden files"})
-    }
-)
-
-$wpf_ToggleMouseAcceleration.IsChecked = $(If ((Get-ItemProperty -path 'HKCU:\Control Panel\Mouse').MouseSpeed -eq 1 -And $(Get-ItemProperty -path 'HKCU:\Control Panel\Mouse').MouseThreshold1 -eq 6 -And $(Get-ItemProperty -path 'HKCU:\Control Panel\Mouse').MouseThreshold2 -eq 10) {$true} Else {$false})
+$wpf_ToggleNumLock.IsChecked = Get-ToggleValue -Path 'HKCU:\Control Panel\Keyboard' -Name 'InitialKeyboardIndicators'
+$wpf_ToggleNumLock.Add_Click({
+    Toggle-RegistryValue -CheckBox $wpf_ToggleNumLock -Path 'HKCU:\Control Panel\Keyboard' -Name 'InitialKeyboardIndicators' -TrueValue 2 -FalseValue 0 -EnableMessage "Enabling Numlock on startup" -DisableMessage "Disabling Numlock on startup"
+})
+$wpf_ToggleExt.IsChecked = (Get-ToggleValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'HideFileExt') -eq 0
+$wpf_ToggleExt.Add_Click({
+    Toggle-RegistryValue -CheckBox $wpf_ToggleExt -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'HideFileExt' -TrueValue 0 -FalseValue 1 -EnableMessage "Showing file extentions" -DisableMessage "Hiding file extensions"
+})
+$wpf_ToggleMouseAcceleration.IsChecked = (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseSpeed') -and (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold1') -and (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold2')
 $wpf_ToggleMouseAcceleration.Add_Click({    
     $EnableMode = $wpf_ToggleMouseAcceleration.IsChecked
     $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
@@ -1463,7 +1483,6 @@ $wpf_ToggleMouseAcceleration.Add_Click({
     Write-Host $(If ( $EnableMode ) {"Enabling Mouse Acceleration"} Else {"Disabling Mouse Acceleration"})
     }
 )
-
 $wpf_TogglefIPv6.IsChecked = $(If ((Get-NetAdapterBinding -Name 'Ethernet' -ComponentID ms_tcpip6).Enabled -eq "True" -And $(Get-NetAdapterBinding -Name 'Ethernet' -ComponentID ms_tcpip6).Enabled -eq "False") {$true} Else {$false})
 $wpf_TogglefIPv6.Add_Click({    
     $EnableMode = $wpf_TogglefIPv6.IsChecked
@@ -1477,22 +1496,15 @@ $wpf_TogglefIPv6.Add_Click({
     Write-Host $(If ( $EnableMode ) {"Enabling IPv6"} Else {"Disabling IPv6"})
     }
 )
-
-$wpf_ToggleSearch.IsChecked = $(If ((Get-ItemProperty -path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search').SearchBoxTaskbarMode -eq 0 -And $(Get-ItemProperty -path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search').SearchBoxTaskbarMode -ne 2) {$true} Else {$false})
-$wpf_ToggleSearch.Add_Click({    
-    $EnableMode = $wpf_ToggleSearch.IsChecked
-    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
-    If ($ToggleValue -ne 1){
-        $Path = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search"
-        Set-ItemProperty -Path $Path -Name SearchBoxTaskbarMode -Value 0
-    }
-    if ($ToggleValue -ne 0){
-        $Path = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search"
-        Set-ItemProperty -Path $Path -Name SearchBoxTaskbarMode -Value 2
-    }
-    Write-Host $(If ( $EnableMode ) {"Hiding search box"} Else {"Showing search box"})
-    }
-)
+$getValue = Get-ItemPropertyValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Hidden'
+$wpf_ToggleHiddenFiles.IsChecked = $(If ($getValue -eq 0) {$false} Else {$true})
+$wpf_ToggleHiddenFiles.Add_Click({
+    Toggle-RegistryValue -CheckBox $wpf_ToggleHiddenFiles -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Hidden' -TrueValue 1 -FalseValue 0 -EnableMessage "Showing hidden files" -DisableMessage "Hide hidden files"
+})
+$wpf_ToggleSearch.IsChecked = (Get-ToggleValue -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'SearchBoxTaskbarMode') -eq 0
+$wpf_ToggleSearch.Add_Click({
+    Toggle-RegistryValue -CheckBox $wpf_ToggleSearch -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'SearchBoxTaskbarMode' -TrueValue 0 -FalseValue 2 -EnableMessage "Hiding search box" -DisableMessage "Showing search box"
+})
 
 ########################################### /OPTIMIZATION ########################################### 
 ########################################### UPDATES ########################################### 
