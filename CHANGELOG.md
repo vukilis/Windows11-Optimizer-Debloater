@@ -7,6 +7,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Known Issues]
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
+- I'm not sure how to show ASCII output in .log
+
+## [1.5] - 2023-12-05
+
+### Added
+
+- Create restore point before run optimization tweaking 
+
+### Changed
+
+- Improved Code Quality
+- removed garbage code 
+
+## Fix
+
+- No more output error for some services 
 
 ## [1.4] - 2023-12-03
 
