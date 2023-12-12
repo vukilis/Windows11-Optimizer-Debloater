@@ -104,6 +104,12 @@ function Invoke-Button {
         "wpf_Updatessecurity" {Invoke-UpdatesSecurity}
         "wpf_FeatureInstall" {Invoke-FeatureInstall}
         "wpf_PanelAutologin" {Invoke-PanelAutologin}
+        "wpf_PanelRegion" {Invoke-Configs -Panel $button}
+        "wpf_DblInstall" {Invoke-installButton}
+        "wpf_DblGetInstalled" {Invoke-getInstallButton}
+        "wpf_DblUninstall" {Invoke-UninstallButton}
+        "wpf_DblUpgrade" {Invoke-UpgradeButton}
+        "wpf_DblClearPrograms" {Invoke-ClearProgramsButton}
     }
 }
 
@@ -1754,6 +1760,7 @@ switch ($Panel){
     "wpf_PanelEvent"                {cmd /c taskschd.msc}
     "wpf_PanelSysInfo"              {cmd /c msinfo32}
     "wpf_PanelDiskManagement"       {cmd /c diskmgmt.msc}
+    "wpf_PanelRegion"               {cmd /c intl.cpl}
 }
 }
 function Invoke-FeatureInstall {
@@ -1819,6 +1826,716 @@ function Invoke-PanelAutologin {
     cmd /c $env:temp\autologin.exe
 }
 ########################################### /CONFIG ########################################### 
+########################################### INSTALL ###########################################
+function Invoke-InstallMessage {
+    param (
+        [string]$msg
+    )
+
+    $MessageboxTitle = switch ($msg) {
+        "install"  { "Installs are finished" }
+        "uninstall" { "Uninstalls are finished" }
+        "upgrade"   { "Upgrading are finished" }
+        default     {
+            Write-Warning "Unknown message type: $msg"
+            return
+        }
+    }
+
+    [System.Windows.MessageBox]::Show("Done", $MessageboxTitle, [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+}
+
+function Invoke-ManageInstall {
+    param(
+            $program,
+            $PackageName,
+            $manage 
+        )
+
+    if($manage -eq "Installing"){
+        Write-Host "Installing $name package" -ForegroundColor Green
+        Start-Process -FilePath winget -ArgumentList "install -e --accept-source-agreements --accept-package-agreements --silent $PackageName" -NoNewWindow -Wait
+    }
+    if($manage -eq "Uninstalling"){
+        Write-Host "Uninstalling $name package" -ForegroundColor Red
+        Start-Process -FilePath winget -ArgumentList "uninstall -e --purge --force --silent $PackageName" -NoNewWindow -Wait
+    }
+    if($manage -eq "Upgrading"){
+        Write-Host "Upgrading $name package" -ForegroundColor Blue
+        Start-Process -FilePath winget -ArgumentList "upgrade --silent $PackageName" -NoNewWindow -Wait
+    }
+
+}
+
+$programs = @(
+    '{
+        "id": "DblInstallDockerdesktop",
+        "name": "Docker Desktop",
+        "winget": "Docker.DockerDesktop"
+    }',
+    '{
+        "id": "DblInstallGit",
+        "name": "Git",
+        "winget": "Git.Git"
+    }',
+    '{
+        "id": "DblInstallGitextensions",
+        "name": "Git Extensions",
+        "winget": "GitExtensionsTeam.GitExtensions"
+    }',
+    '{
+        "id": "DblInstallGithubdesktop",
+        "name": "GitHub Desktop",
+        "winget": "GitHub.GitHubDesktop"
+    }',
+    '{
+        "id": "DblInstallGolang",
+        "name": "Go Programming Language",
+        "winget": "GoLang.Go"
+    }',
+    '{
+        "id": "DblInstallNodejs",
+        "name": "Node.js",
+        "winget": "OpenJS.NodeJS"
+    }',
+    '{
+        "id": "DblInstallNodejslts",
+        "name": "Node.js LTS",
+        "winget": "OpenJS.NodeJS.LTS"
+    }',
+    '{
+        "id": "DblInstallNodemanager",
+        "name": "Node Version Manager (NVM)",
+        "winget": "CoreyButler.NVMforWindows"
+    }',
+    '{
+        "id": "DblInstallJava8",
+        "name": "Java 8",
+        "winget": "EclipseAdoptium.Temurin.8.JRE"
+    }',
+    '{
+        "id": "DblInstallJava16",
+        "name": "Java 16",
+        "winget": "AdoptOpenJDK.OpenJDK.16"
+    }',
+    '{
+        "id": "DblInstallJava18",
+        "name": "Java 18",
+        "winget": "EclipseAdoptium.Temurin.18.JRE"
+    }',
+    '{
+        "id": "DblInstallOhmyposh",
+        "name": "Oh My Posh",
+        "winget": "JanDeDobbeleer.OhMyPosh"
+    }',
+    '{
+        "id": "DblInstallPython3",
+        "name": "Python 3",
+        "winget": "Python.Python.3.12"
+    }',
+    '{
+        "id": "DblInstallPostman",
+        "name": "Postman",
+        "winget": "Postman.Postman"
+    }',
+    '{
+        "id": "DblInstallRust",
+        "name": "Rust",
+        "winget": "Rustlang.Rust.MSVC"
+    }',
+    '{
+        "id": "DblInstallVisualstudio2022",
+        "name": "Visual Studio 2022",
+        "winget": "Microsoft.VisualStudio.2022.Community"
+    }',
+    '{
+        "id": "DblInstallCode",
+        "name": "Visual Studio Code",
+        "winget": "Microsoft.VisualStudioCode"
+    }',
+    '{
+        "id": "DblInstallDotnet3",
+        "name": ".NET Core 3",
+        "winget": "Microsoft.DotNet.DesktopRuntime.3_1"
+    }',
+    '{
+        "id": "DblInstallDotnet5",
+        "name": ".NET 5",
+        "winget": "Microsoft.DotNet.DesktopRuntime.5"
+    }',
+    '{
+        "id": "DblInstallDotnet6",
+        "name": ".NET 6",
+        "winget": "Microsoft.DotNet.DesktopRuntime.6"
+    }',
+    '{
+        "id": "DblInstallDotnet7",
+        "name": ".NET 7",
+        "winget": "Microsoft.DotNet.DesktopRuntime.7"
+    }',
+    '{
+        "id": "DblInstallPowershell",
+        "name": "PowerShell",
+        "winget": "Microsoft.PowerShell"
+    }',
+    '{
+        "id": "DblInstallPowertoys",
+        "name": "PowerToys",
+        "winget": "Microsoft.PowerToys"
+    }',
+    '{
+        "id": "DblInstallvc2015_64",
+        "name": "Visual 2015 Redistributable (64-bit)",
+        "winget": "Microsoft.VCRedist.2015+.x64"
+    }',
+    '{
+        "id": "DblInstallvc2015_32",
+        "name": "Visual 2015 Redistributable (32-bit)",
+        "winget": "Microsoft.VCRedist.2015+.x86"
+    }',
+    '{
+        "id": "DblInstallTerminal",
+        "name": "Windows Terminal",
+        "winget": "Microsoft.WindowsTerminal"
+    }',
+    '{
+        "id": "DblInstallBrave",
+        "name": "Brave",
+        "winget": "Brave.Brave"
+    }',
+    '{
+        "id": "DblInstallChrome",
+        "name": "Google Chrome",
+        "winget": "Google.Chrome"
+    }',
+    '{
+        "id": "DblInstallChromium",
+        "name": "Chromium",
+        "winget": "eloston.ungoogled-chromium"
+    }',
+    '{
+        "id": "DblInstallFirefox",
+        "name": "Mozilla Firefox",
+        "winget": "Mozilla.Firefox"
+    }',
+    '{
+        "id": "DblInstallLibrewolf",
+        "name": "Librewolf",
+        "winget": "Librewolf.Librewolf"
+    }',
+    '{
+        "id": "DblInstallThorium",
+        "name": "Thorium",
+        "winget": "Alex313031.Thorium"
+    }',
+    '{
+        "id": "DblInstallDiscord",
+        "name": "Discord",
+        "winget": "Discord.Discord"
+    }',
+    '{
+        "id": "DblInstallMatrix",
+        "name": "Element (Matrix)",
+        "winget": "Element.Element"
+    }',
+    '{
+        "id": "DblInstallSkype",
+        "name": "Skype",
+        "winget": "Microsoft.Skype"
+    }',
+    '{
+        "id": "DblInstallSlack",
+        "name": "Slack",
+        "winget": "SlackTechnologies.Slack"
+    }',
+    '{
+        "id": "DblInstallTeams",
+        "name": "Microsoft Teams",
+        "winget": "Microsoft.Teams"
+    }',
+    '{
+        "id": "DblInstallTelegram",
+        "name": "Telegram",
+        "winget": "Telegram.TelegramDesktop"
+    }',
+    '{
+        "id": "DblInstallViber",
+        "name": "Viber",
+        "winget": "Viber.Viber"
+    }',
+    '{
+        "id": "DblInstallZoom",
+        "name": "Zoom",
+        "winget": "Zoom.Zoom"
+    }',
+    '{
+        "id": "DblInstallEaapp",
+        "name": "EA Desktop App",
+        "winget": "ElectronicArts.EADesktop"
+    }',
+    '{
+        "id": "DblInstallEpicgames",
+        "name": "Epic Games Store",
+        "winget": "EpicGames.EpicGamesLauncher"
+    }',
+    '{
+        "id": "DblInstallGeforcenow",
+        "name": "NVIDIA GeForce NOW",
+        "winget": "Nvidia.GeforceNOW"
+    }',
+    '{
+        "id": "DblInstallGog",
+        "name": "GOG Galaxy",
+        "winget": "GOG.Galaxy"
+    }',
+    '{
+        "id": "DblInstallPrism",
+        "name": "Prism Launcher",
+        "winget": "PrismLauncher.PrismLauncher"
+    }',
+    '{
+        "id": "DblInstallSteam",
+        "name": "Steam",
+        "winget": "Valve.Steam"
+    }',
+    '{
+        "id": "DblInstallUbisoft",
+        "name": "Ubisoft Connect",
+        "winget": "Ubisoft.Connect"
+    }',
+    '{
+        "id": "DblInstallAudacity",
+        "name": "Audacity",
+        "winget": "Audacity.Audacity"
+    }',
+    '{
+        "id": "DblInstallBlender",
+        "name": "Blender",
+        "winget": "BlenderFoundation.Blender"
+    }',
+    '{
+        "id": "DblInstallCider",
+        "name": "Cider",
+        "winget": "CiderCollective.Cider"
+    }',
+    '{
+        "id": "DblInstallGreenshot",
+        "name": "Greenshot",
+        "winget": "Greenshot.Greenshot"
+    }',
+    '{
+        "id": "DblInstallHandbrake",
+        "name": "Handbrake",
+        "winget": "HandBrake.HandBrake"
+    }',
+    '{
+        "id": "DblInstallImageglass",
+        "name": "ImageGlass",
+        "winget": "DuongDieuPhap.ImageGlass"
+    }',
+    '{
+        "id": "DblInstallKodi",
+        "name": "Kodi",
+        "winget": "XBMCFoundation.Kodi"
+    }',
+    '{
+        "id": "DblInstallKlite",
+        "name": "K-Lite Codec Pack",
+        "winget": "CodecGuide.K-LiteCodecPack.Standard"
+    }',
+    '{
+        "id": "DblInstallObs",
+        "name": "OBS Studio",
+        "winget": "OBSProject.OBSStudio"
+    }',
+    '{
+        "id": "DblInstallSharex",
+        "name": "ShareX",
+        "winget": "ShareX.ShareX"
+    }',
+    '{
+        "id": "DblInstallVlc",
+        "name": "VLC Media Player",
+        "winget": "VideoLAN.VLC"
+    }',
+    '{
+        "id": "DblInstallAnki",
+        "name": "Anki",
+        "winget": "Anki.Anki"
+    }',
+    '{
+        "id": "DblInstallAdobe",
+        "name": "Adobe",
+        "winget": "Adobe.Acrobat.Reader.64-bit"
+    }',
+    '{
+        "id": "DblInstallJoplin",
+        "name": "Joplin",
+        "winget": "Joplin.Joplin"
+    }',
+    '{
+        "id": "DblInstallLibreoffice",
+        "name": "LibreOffice",
+        "winget": "TheDocumentFoundation.LibreOffice"
+    }',
+    '{
+        "id": "DblInstallNotepadplus",
+        "name": "Notepad",
+        "winget": "Notepad++.Notepad++"
+    }',
+    '{
+        "id": "DblInstallObsidian",
+        "name": "Obsidian",
+        "winget": "Obsidian.Obsidian"
+    }',
+    '{
+        "id": "DblInstallOnlyoffice",
+        "name": "OnlyOffice",
+        "winget": "ONLYOFFICE.DesktopEditors"
+    }',
+    '{
+        "id": "DblInstallSumatra",
+        "name": "Sumatra",
+        "winget": "SumatraPDF.SumatraPDF"
+    }',
+    '{
+        "id": "DblInstallWinmerge",
+        "name": "WinMerge",
+        "winget": "WinMerge.WinMerge"
+    }',
+    '{
+        "id": "DblInstall7zip",
+        "name": "7-zip",
+        "winget": "7zip.7zip"
+    }',
+    '{
+        "id": "DblInstallAlacritty",
+        "name": "Alacritty",
+        "winget": "Alacritty.Alacritty"
+    }',
+    '{
+        "id": "DblInstallAutohotkey",
+        "name": "AutoHotkey",
+        "winget": "autohotkey"
+    }',
+    '{
+        "id": "DblInstallCpuz",
+        "name": "CPU-Z",
+        "winget": "CPUID.CPU-Z"
+    }',
+    '{
+        "id": "DblInstallClasicMixer",
+        "name": "ClassicVolumeMixer",
+        "winget": "PopeenCom.ClassicVolumeMixer"
+    }',
+    '{
+        "id": "DblInstallDdu",
+        "name": "Display Driver Uninstaller",
+        "winget": "ddu"
+    }',
+    '{
+        "id": "DblInstallEsearch",
+        "name": "Everything",
+        "winget": "oidtools.Everything"
+    }',
+    '{
+        "id": "DblInstallGpuz",
+        "name": "GPU-Z",
+        "winget": "TechPowerUp.GPU-Z"
+    }',
+    '{
+        "id": "DblInstallGsudo",
+        "name": "gsudo",
+        "winget": "gerardog.gsudo"
+    }',
+    '{
+        "id": "DblInstallHwinfo",
+        "name": "HWiNFO",
+        "winget": "REALiX.HWiNFO"
+    }',
+    '{
+        "id": "DblInstallJdownloader",
+        "name": "JDownloader",
+        "winget": "AppWork.JDownloader"
+    }',
+    '{
+        "id": "DblInstallKeepass",
+        "name": "KeePassXC",
+        "winget": "KeePassXCTeam.KeePassXC"
+    }',
+    '{
+        "id": "DblInstallMsiafterburner",
+        "name": "Afterburner",
+        "winget": "Guru3D.Afterburner"
+    }',
+    '{
+        "id": "DblInstallNanazip",
+        "name": "NanaZip",
+        "winget": "M2Team.NanaZip"
+    }',
+    '{
+        "id": "DblInstallNvclean",
+        "name": "NVCleanstall",
+        "winget": "TechPowerUp.NVCleanstall"
+    }',
+    '{
+        "id": "DblInstallOVirtualBox",
+        "name": "VirtualBox",
+        "winget": "Oracle.VirtualBox"
+    }',
+    '{
+        "id": "DblInstallOpenrgb",
+        "name": "OpenRGB",
+        "winget": "CalcProgrammer1.OpenRGB"
+    }',
+    '{
+        "id": "DblInstallProcesslasso",
+        "name": "Process Lasso",
+        "winget": "BitSum.ProcessLasso"
+    }',
+    '{
+        "id": "DblInstallQbittorrent",
+        "name": "qBittorrent",
+        "winget": "qBittorrent.qBittorrent"
+    }',
+    '{
+        "id": "DblInstallRevo",
+        "name": "Revo",
+        "winget": "RevoUninstaller.RevoUninstaller"
+    }',
+    '{
+        "id": "DblInstallRufus",
+        "name": "Rufus",
+        "winget": "Rufus.Rufus"
+    }',
+    '{
+        "id": "DblInstallTtaskbar",
+        "name": "Ttaskbar",
+        "winget": "9PF4KZ2VN4W9"
+    }',
+    '{
+        "id": "DblInstallWinrar",
+        "name": "WinRAR",
+        "winget": "RARLab.WinRAR"
+    }'
+)
+
+function jsonChecker {
+    param(
+        $name
+    )
+
+    foreach ($jsonString in $name) {
+        try {
+            $programObject = $jsonString | ConvertFrom-Json
+            Write-Host "Successfully converted JSON: $jsonString"
+        } catch {
+            Write-Host "Failed to convert JSON: $jsonString"
+            Write-Host "Error: $_"
+        }
+    }
+}
+
+function Invoke-installButton {
+
+    foreach ($program in $programs) {
+        # Convert JSON string to PowerShell object
+        $appDetails = $program | ConvertFrom-Json
+
+        # Extract application details
+        $id = $appDetails.id
+        $name = $appDetails.name
+        $winget = $appDetails.winget
+
+        $checkBox = $psform.FindName("$id")
+        $isChecked = $checkBox.IsChecked
+
+        if ($isChecked -eq $true) {
+            Invoke-ManageInstall -manage "Installing" -program $name -PackageName $winget
+        } else {
+            continue
+        }
+        #$i++
+    }
+    
+    Invoke-InstallMessage -msg "install"
+}
+
+function Invoke-getInstallButton {
+
+    winget export -o "$ENV:TEMP\package.json"
+    $jsonFilePath = "$ENV:TEMP\package.json"
+    $jsonContent = Get-Content -Raw -Path $jsonFilePath
+    $jsonObject = $jsonContent | ConvertFrom-Json
+    foreach ($jsonObject in $jsonObject.Sources.Packages) {
+        foreach ($program in $programs) {
+            $appDetails = $program | ConvertFrom-Json
+            $id = $appDetails.id
+            $name = $appDetails.name
+            $winget = $appDetails.winget
+            $checkBox = $psform.FindName("$id")
+            if ($jsonObject.PackageIdentifier -eq $winget) {
+                #Write-Host "Match found for PackageIdentifier $($jsonObject.PackageIdentifier) and id $($appDetails.id)"
+                $checkBox.IsChecked = $true
+                #Write-Host $checkBox
+            }
+        }
+    }
+    Remove-Item -Path $jsonFilePath -Force
+}
+
+function Invoke-UninstallButton {
+    foreach ($program in $programs) {
+        $appDetails = $program | ConvertFrom-Json
+
+        # Extract application details
+        $id = $appDetails.id
+        $name = $appDetails.name
+        $winget = $appDetails.winget
+
+        $checkBox = $psform.FindName("$id")
+        $isChecked = $checkBox.IsChecked
+
+        if ($isChecked -eq $true) {    
+            Invoke-ManageInstall -manage "Uninstalling" -program $name -PackageName $winget
+        } else {
+            continue
+        }
+    }
+    
+    Invoke-InstallMessage -msg "uninstall"
+}
+
+function Invoke-UpgradeButton {
+    foreach ($program in $programs) {
+        $appDetails = $program | ConvertFrom-Json
+
+        # Extract application details
+        $id = $appDetails.id
+        $name = $appDetails.name
+        $winget = $appDetails.winget
+
+        $checkBox = $psform.FindName("$id")
+        $isChecked = $checkBox.IsChecked
+
+        if ($isChecked -eq $true) {
+            Invoke-ManageInstall -manage "Upgrading" -program $name -PackageName $winget
+        } else {
+            continue
+        }
+    }
+    
+    Invoke-InstallMessage -msg "upgrade"
+}
+
+function Invoke-ClearProgramsButton {
+    
+    $presets = @($wpf_ToggleLitePreset, $wpf_ToggleDevPreset, $wpf_ToggleGamingPreset)
+    $styles = @("ToggleSwitchStyleGreen", "ToggleSwitchStylePurple", "ToggleSwitchStyleBlue")
+
+    for ($i = 0; $i -lt $presets.Count; $i++) {
+        $presets[$i].IsEnabled = $true
+        $presets[$i].IsChecked = $false
+        $presets[$i].Style = $presets[$i].TryFindResource($styles[$i])
+    }
+
+    foreach ($program in $programs) {
+        $appDetails = $program | ConvertFrom-Json
+        $id = $appDetails.id
+        $checkBox = $psform.FindName("$id")
+        
+        $checkBox.IsChecked = $IsChecked = $false
+    }
+    Write-Host "Selection cleared" -ForegroundColor Green
+}
+
+function Invoke-ToggleLitePreset {
+    $IsChecked = $wpf_ToggleLitePreset.IsChecked
+
+    $wpf_ToggleDevPreset.IsEnabled = !$IsChecked; $wpf_ToggleDevPreset.Style = $wpf_ToggleDevPreset.TryFindResource(('ToggleSwitchStyle' + ('Purple', 'Disabled')[$IsChecked]))
+    $wpf_ToggleGamingPreset.IsEnabled = !$IsChecked; $wpf_ToggleGamingPreset.Style = $wpf_ToggleGamingPreset.TryFindResource(('ToggleSwitchStyle' + ('Blue', 'Disabled')[$IsChecked]))
+
+    foreach ($program in $programs) {
+        $appDetails = $program | ConvertFrom-Json
+        $id = $appDetails.id
+        $checkBox = $psform.FindName("$id")
+        
+        $checkBox.IsChecked = $IsChecked -and @(
+            "Git", "Java8", "Ohmyposh", "Code", "Powershell", 
+            "vc2015_64", "vc2015_32", "Terminal", "Thorium", 
+            "Discord", "Steam", "Greenshot", "Imageglass", "Klite", 
+            "Vlc", "Notepadplus", "Sumatra", "7zip", "Cpuz", 
+            "ClasicMixer", "Hwinfo", "Jdownloader", "Msiafterburner", 
+            "Qbittorrent", "Ttaskbar"
+        ) -contains $checkBox.Name.Replace("DblInstall", "") 
+    }
+
+    if ($IsChecked) { Write-Host "Enabling Lite Preset" -ForegroundColor Green } else { Write-Host "Disabling Lite Preset" -ForegroundColor Red }
+}
+
+function Invoke-ToggleDevPreset {
+    $IsChecked = $wpf_ToggleDevPreset.IsChecked
+
+    $wpf_ToggleLitePreset.IsEnabled = !$IsChecked; $wpf_ToggleLitePreset.Style = $wpf_ToggleLitePreset.TryFindResource(('ToggleSwitchStyle' + ('Green', 'Disabled')[$IsChecked]))
+    $wpf_ToggleGamingPreset.IsEnabled = !$IsChecked; $wpf_ToggleGamingPreset.Style = $wpf_ToggleGamingPreset.TryFindResource(('ToggleSwitchStyle' + ('Blue', 'Disabled')[$IsChecked]))
+
+    foreach ($program in $programs) {
+        $appDetails = $program | ConvertFrom-Json
+        $id = $appDetails.id
+        $checkBox = $psform.FindName("$id")
+
+        $checkBox.IsChecked = $IsChecked -and @(
+            "Githubdesktop", "Nodemanager", "Java8", "Ohmyposh",
+            "Python3", "Postman", "Visualstudio2022", "Code",
+            "Dotnet3", "Dotnet5", "Dotnet6", "Dotnet7",
+            "Powershell", "vc2015_64", "vc2015_32", "Terminal",
+            "Thorium", "Discord", "Slack", "Teams", "Zoom",
+            "Steam", "Greenshot", "Imageglass", "Klite", "Vlc",
+            "Notepadplus", "7zip", "Cpuz", "ClasicMixer", "Hwinfo",
+            "Jdownloader", "Msiafterburner", "OVirtualBox", "Qbittorrent",
+            "Ttaskbar", "Winrar", "Sumatra"
+        ) -contains $checkBox.Name.Replace("DblInstall", "")
+
+    }
+
+    if ($IsChecked) { Write-Host "Enabling Dev Preset" -ForegroundColor Green } else { Write-Host "Disabling Dev Preset" -ForegroundColor Red }
+}
+
+function Invoke-ToggleGamingPreset {
+    $IsChecked = $wpf_ToggleGamingPreset.IsChecked
+
+    $wpf_ToggleLitePreset.IsEnabled = !$IsChecked; $wpf_ToggleLitePreset.Style = $wpf_ToggleLitePreset.TryFindResource(('ToggleSwitchStyle' + ('Green', 'Disabled')[$IsChecked]))
+    $wpf_ToggleDevPreset.IsEnabled = !$IsChecked; $wpf_ToggleDevPreset.Style = $wpf_ToggleDevPreset.TryFindResource(('ToggleSwitchStyle' + ('Purple', 'Disabled')[$IsChecked]))
+
+    foreach ($program in $programs) {
+        $appDetails = $program | ConvertFrom-Json
+        $id = $appDetails.id
+        $checkBox = $psform.FindName("$id")
+
+        $checkBox.IsChecked = $IsChecked -and @(
+            "Git", "Dotnet3", "Dotnet5", "Dotnet6",
+            "Dotnet7", "vc2015_64", "vc2015_32", "Thorium",
+            "Discord", "Eaapp", "Epicgames", "Steam",
+            "Ubisoft", "Greenshot", "Imageglass", "Obs",
+            "Notepadplus", "Sumatra", "7zip", "Cpuz",
+            "ClasicMixer", "Hwinfo", "Msiafterburner", "Qbittorrent"
+        ) -contains $checkBox.Name.Replace("DblInstall", "")
+
+    }
+
+    if ($IsChecked) { Write-Host "Enabling Gaming Preset" -ForegroundColor Green } else { Write-Host "Disabling Gaming Preset" -ForegroundColor Red }
+}
+
+$wpf_ToggleLitePreset.Add_Click({
+    Invoke-ToggleLitePreset
+})
+$wpf_ToggleDevPreset.Add_Click({
+    Invoke-ToggleDevPreset
+})
+$wpf_ToggleGamingPreset.Add_Click({
+    Invoke-ToggleGamingPreset
+})
+########################################### /INSTALL ########################################## 
 Get-Author
 $wpf_diskNameInfo.Add_SelectionChanged({Get-DiskInfo})
 $wpf_diskName.Add_SelectionChanged({Get-DiskSize})
