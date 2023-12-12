@@ -1,5 +1,5 @@
 # Windows11-Optimizer-Debloater
-![version](https://img.shields.io/badge/version%20-1.5-lighgreen)
+![version](https://img.shields.io/badge/version%20-1.6-lighgreen)
 [![changelog](https://img.shields.io/badge/📋-release%20notes-00B2EE.svg)](https://github.com/vukilis/Windows11-Optimizer-Debloater/blob/main/CHANGELOG.md)  
 This Utility show basic system information, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates.
 
@@ -17,6 +17,8 @@ If you are having TLS 1.2 Issues or You cannot find or resolve `tinyurl.com/win1
 ## What Script Do?
 - **Info**
   > Shows system information
+- **Install**
+  > Install applications from winget.
 - **Debloat**
   > Removes unnecessary preinstalled apps.
 - **Optimization**
