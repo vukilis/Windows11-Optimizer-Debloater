@@ -9,6 +9,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 - I'm not sure how to show ASCII output in .log
 
+## [1.6] - 2023-12-05
+
+### Added
+
+- Added **Install** tab to install winget applications.
+- Added presets for faster installation.
+- Added **region** settings to **config** tab
+- Added possibility to scrolling.
+
+### Changed
+
+- Background and text color in **optimization** tab are adjusted to new **Install** tab.
+
 ## [1.5] - 2023-12-05
 
 ### Added
