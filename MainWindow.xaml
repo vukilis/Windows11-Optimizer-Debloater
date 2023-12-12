@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Windows11_Optimizer_Debloater"
         mc:Ignorable="d"
-        Title="Windows11-OptimizerDebloater" Height="562" Width="1200">
+        Title="Windows11-OptimizerDebloater" Height="562" Width="1250">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -390,6 +390,76 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="ToggleSwitchStyleBlue" TargetType="CheckBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel>
+                            <Grid>
+                                <Border Width="45" 
+                                        Height="20"
+                                        Background="#a5dbfa" 
+                                        CornerRadius="10" 
+                                        Margin="5,0"
+                                />
+                                <Border Name="ToggleSwitchButton"
+                                        Width="25" 
+                                        Height="25"
+                                        Background="#a5dbfa" 
+                                        CornerRadius="12.5" 
+                                        HorizontalAlignment="Left"
+                                />
+                                <ContentPresenter Name="ToggleSwitchContent"
+                                                  Margin="10,0,0,0"
+                                                  Content="{TemplateBinding Content}"
+                                                  VerticalAlignment="Center"
+                                />
+                            </Grid>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="false">
+                                <Trigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="ToggleSwitchLeft" />
+                                    <BeginStoryboard x:Name="ToggleSwitchRight">
+                                        <Storyboard>
+                                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                    Storyboard.TargetName="ToggleSwitchButton"
+                                                    Duration="0:0:0:0"
+                                                    From="0,0,0,0"
+                                                    To="28,0,0,0">
+                                            </ThicknessAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                                <Setter TargetName="ToggleSwitchButton"
+                                        Property="Background"
+                                        Value="#fff9f4f4"
+                                />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Trigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="ToggleSwitchRight" />
+                                    <BeginStoryboard x:Name="ToggleSwitchLeft">
+                                        <Storyboard>
+                                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                    Storyboard.TargetName="ToggleSwitchButton"
+                                                    Duration="0:0:0:0"
+                                                    From="28,0,0,0"
+                                                    To="0,0,0,0">
+                                            </ThicknessAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                                <Setter TargetName="ToggleSwitchButton"
+                                        Property="Background"
+                                        Value="#66c0f4"
+                                />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="ComboBoxTextBoxStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -463,10 +533,87 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Grid x:Name="Grid">
+                            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Fill="Transparent" />
+                            <Border x:Name="Rectangle1" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto"  Background="{TemplateBinding Background}" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Tag" Value="Horizontal">
+                                <Setter TargetName="Rectangle1" Property="Width" Value="Auto" />
+                                <Setter TargetName="Rectangle1" Property="Height" Value="7" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+            <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+            <Setter Property="Foreground" Value="#a69f6c" />
+            <Setter Property="Background" Value="#1f1f21" />
+            <Setter Property="Width" Value="6" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid x:Name="GridRoot" Width="7" Background="{TemplateBinding Background}" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.00001*" />
+                            </Grid.RowDefinitions>
+
+                            <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="false">
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" Style="{DynamicResource ScrollThumbs}" />
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="false" />
+                                </Track.IncreaseRepeatButton>
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton x:Name="PageDown" Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="false" />
+                                </Track.DecreaseRepeatButton>
+                            </Track>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
+                                <Setter Value="#fcc256" TargetName="Thumb" Property="Background" />
+                            </Trigger>
+                            <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
+                                <Setter Value="#fcd895" TargetName="Thumb" Property="Background" />
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter TargetName="GridRoot" Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Width" Value="Auto" />
+                                <Setter Property="Height" Value="8" />
+                                <Setter TargetName="Thumb" Property="Tag" Value="Horizontal" />
+                                <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand" />
+                                <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
-    <Border Name="dummy" Grid.Column="0" Grid.Row="0" Background="#3F3F3F" >
+    <Border Name="dummy" Grid.Column="0" Grid.Row="0" Background="#2d2d30" >
         <Viewbox Stretch="Uniform" VerticalAlignment="Top">
-            <Grid Background="#3F3F3F" ShowGridLines="False" Name="MainGrid" Width="1200">
+            <Grid Background="#2d2d30" ShowGridLines="False" Name="MainGrid" Width="1250">
                 <Grid.RowDefinitions>
                     <RowDefinition Height=".1*"/>
                     <RowDefinition Height=".9*"/>
@@ -475,478 +622,994 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <DockPanel Background="#777777" SnapsToDevicePixels="True" Grid.Row="0" >
-                    <Image Height="50" Width="100" Name="Icon" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/portfolio/main/portfolio/static/images/logo.png" Margin="0,10,0,10"/>
+                    <Image Height="70" Width="70" Name="Icon" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png" Margin="0,0,0,0"/>
                     <Button Content="INFO" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource RoundedButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#444444" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#fac664" Name="Tab1BT" Margin="0,0,30,0"/>
-                    <Button Content="DEBLOAT" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource RoundedButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#444444" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#fac664" Name="Tab2BT" Margin="0,0,30,0"/>
-                    <Button Content="OPTIMIZATION" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource RoundedButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#444444" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#fac664" Name="Tab3BT" Margin="0,0,30,0"/>
-                    <Button Content="SERVICES" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource RoundedButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#444444" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#fac664" Name="Tab4BT" Margin="0,0,30,0"/>
-                    <Button Content="UPDATES" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource RoundedButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#444444" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#fac664" Name="Tab5BT" Margin="0,0,30,0"/>
-                    <Button Content="CONFIG" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource RoundedButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#444444" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#fac664" Name="Tab6BT" Margin="0,0,30,0"/>
+                    <Button Content="INSTALL" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource RoundedButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#444444" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#fac664" Name="Tab2BT" Margin="0,0,30,0"/>
+                    <Button Content="DEBLOAT" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource RoundedButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#444444" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#fac664" Name="Tab3BT" Margin="0,0,30,0"/>
+                    <Button Content="OPTIMIZATION" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource RoundedButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#444444" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#fac664" Name="Tab4BT" Margin="0,0,30,0"/>
+                    <Button Content="SERVICES" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource RoundedButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#444444" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#fac664" Name="Tab5BT" Margin="0,0,30,0"/>
+                    <Button Content="UPDATES" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource RoundedButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#444444" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#fac664" Name="Tab6BT" Margin="0,0,30,0"/>
+                    <Button Content="CONFIG" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource RoundedButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#444444" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#fac664" Name="Tab7BT" Margin="0,0,30,0"/>
                 </DockPanel>
-                <TabControl Grid.Row="1" Padding="-1" Name="TabNav" Background="#252424">
-                    <TabItem Header="INFO" Visibility="Collapsed" Name="Tab1">
-                        <Grid Background="#3F3F3F">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                
-                            </Grid.RowDefinitions>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,20,10,10" Grid.Row="0" Grid.ColumnSpan="3">
-                                <Label Name="pcName" Content="Welcome $NAME" FontSize="24"  HorizontalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource chfont}" Foreground="#FFFAC664" FontWeight="Bold"/>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,55,10,10" Grid.Row="1" Grid.ColumnSpan="1">
-                                <TextBlock FontSize="16" FontFamily="Helvetica" Margin="20,0,20,0" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" HorizontalAlignment="Left" FontWeight="Bold">HARDWARE<LineBreak/>INFO</TextBlock>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="-100,20,10,10" Grid.Row="1" Grid.ColumnSpan="2">
-                                <Label Content="CPU:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                <Label Content="GPU:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                <Label Content="RAM:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                <Label Content="MB:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="-290,20,10,10" Grid.Row="1" Grid.ColumnSpan="2">
-                                <Label Name="cpuInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                <!--<Label Name="gpuInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />-->
-                                <ComboBox x:Name="gpuInfo" Width="auto" Margin="0,2,0,2" FontSize="16" HorizontalAlignment="Left" ForceCursor="true" Cursor="Hand" FontWeight="Bold" SelectedIndex="0"/>
-                                <Label Name="ramInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                <Label Name="mbInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="35,55,35,10" Grid.Row="2" Grid.ColumnSpan="1">
-                                <TextBlock FontSize="16" FontFamily="Helvetica" Margin="20,0,20,0" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" HorizontalAlignment="Left" FontWeight="Bold">OS<LineBreak/>INFO</TextBlock>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="-100,20,10,10" Grid.Row="2" Grid.ColumnSpan="2">
-                                <Label Content="NAME:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                <Label Content="BUILD:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                <Label Content="INSTALLED:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                <Label Content="LICENCE:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="-230,20,10,10" Grid.Row="2" Grid.ColumnSpan="2">
-                                <Label Name="osInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                <Label Name="verInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                <Label Name="installTimeInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                <Label Name="licenceInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="3" Margin="-45,55,35,10" Grid.Row="1" Grid.ColumnSpan="1">
-                                <TextBlock FontSize="16" FontFamily="Helvetica" Margin="20,0,20,0" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" HorizontalAlignment="Left" FontWeight="Bold">DISK<LineBreak/>INFO</TextBlock>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="3" Margin="30,20,10,10" Grid.Row="1" Grid.ColumnSpan="2">
-                                <Label Content="SELECT DISK:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B"/>
-                                <Label Content="STATUS:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,20,0,0" />
-                                <Label Content="STYLE:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="4" Margin="-80,20,10,10" Grid.Row="1" Grid.ColumnSpan="2">
-                                <ComboBox x:Name="diskNameInfo" Text="Select Disk" IsEditable="True" IsReadOnly="True" Width="auto" ForceCursor="true" Cursor="Hand" Margin="0,0,0,0" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" SelectedIndex="-1"/>
-                                <Label Name="diskStatus" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,20,0,0" />
-                                <Label Name="diskStyle" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="3" Margin="-45,55,35,10" Grid.Row="2" Grid.ColumnSpan="1">
-                                <TextBlock FontSize="16" FontFamily="Helvetica" Margin="20,0,20,0" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" HorizontalAlignment="Left" FontWeight="Bold">DISK<LineBreak/>SIZE</TextBlock>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="3" Margin="30,20,10,10" Grid.Row="2" Grid.ColumnSpan="2">
-                                <Label Content="SELECT DISK:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B"/>
-                                <Label Content="DISK SIZE:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,20,0,0" />
-                                <Label Content="FREE SIZE:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="4" Margin="-80,20,10,10" Grid.Row="2" Grid.ColumnSpan="2">
-                                <ComboBox x:Name="diskName" Text="Select Disk" IsEditable="True" IsReadOnly="True" Width="auto" ForceCursor="true" Cursor="Hand" Margin="0,0,0,0" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" SelectedIndex="-1"/>
-                                <Label Name="diskMaxSize" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,20,0,0" />
-                                <Label Name="diskFreeSize" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
-                            </StackPanel>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="DEBLOAT" Visibility="Collapsed" Name="Tab2">
-                        <Grid Background="#3F3F3F">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
-                                <Button Name="debloatALL" Content="Remove ALL MS Store Apps" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#FF9E5050" ForceCursor="true" Cursor="Hand" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
-                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFFBE3B6"><Bold Foreground="#FF9E5050">USE WITH CAUTION!!!!!</Bold><LineBreak Foreground="#FF9E5050"/><LineBreak/>This will remove ALL Microsoft store apps other than the essentials to make winget work. <LineBreak/><LineBreak/>Games installed by MS Store <Bold Foreground="#FF9E5050">ARE INCLUDED!</Bold><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/></TextBlock>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
-                                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FFFBE3B6"/>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
-                                <Button Name="debloatGaming" Content="GAMING (XBOX)" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" ForceCursor="true" Cursor="Hand" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
-                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFFBE3B6">This will remove ALL Microsoft store apps other than the essentials to make winget and xbox work. <LineBreak/><LineBreak/>Games installed by MS Store <Bold Foreground="#FF2CD027">ARE NOT INCLUDED!</Bold></TextBlock>
-                            </StackPanel>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="OPTIMIZATION" Visibility="Collapsed" Name="Tab3">
-                        <Grid Background="#3F3F3F">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <StackPanel Background="#777777" SnapsToDevicePixels="True" Grid.Column="0" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
-                                <Label Content="Essential Tweaks" FontSize="18"  HorizontalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource chfont}" FontWeight="Bold"/>
-                            </StackPanel>
-                            <StackPanel Background="#777777" SnapsToDevicePixels="True" Grid.Column="0" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
-                                <CheckBox Name="DblTelemetry" Content="Disable Telemetry" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Disables Microsoft Telemetry. Note: This will lock many Edge Browser settings. Microsoft spys heavily on you when using the Edge browser.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblWifi" Content="Disable Wifi-Sense" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Wifi Sense is a spying service that phones home all nearby scaned wifi networks and your current geo location.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblAH" Content="Disable Activity History" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="This erases recent docs, clipboard, and run history.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblDeleteTempFiles" Content="Delete Temporary Files" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Erases TEMP Folders">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblDiskCleanup" Content="Run Disk Cleanup" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Runs Disk Cleanup on Drive C: and removes old Windows Updates.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblLocTrack" Content="Disable LocationTracking" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Disables Location Tracking...DUH!">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblStorage" Content="Disable Storage Sense" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Storage Sense is supposed to delete temp files automatically, but often runs at wierd times and mostly doesn't do much. Although when it was introduced in Win 10 (1809 Version) it deleted people's documents... So there is that.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblHiber" Content="Disable Hibernation" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Hibernation is really meant for laptops as it saves whats in memory before turning the pc off. It really should never be used, but some people are lazy and rely on it. Don't be like Bob. Bob likes hibernation.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblDVR" Content="Disable GameDVR" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="GameDVR is a Windows App that is a dependancy for some Store Games. I've never met someone that likes it, but it's there for the XBOX crowd.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                            </StackPanel>
-                            <StackPanel Background="#777777" SnapsToDevicePixels="True" Grid.Column="3" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
-                                <Label Content="Misc. Tweaks" FontSize="18"  HorizontalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource chfont}" FontWeight="Bold"/>
-                            </StackPanel>
-                            <StackPanel Background="#777777" SnapsToDevicePixels="True" Grid.Column="3" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="2">
-                                <CheckBox Name="DblPower" Content="Disable Power Throttling" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="This is mainly for Laptops, It disables Power Throttling and will use more battery.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblDisplay" Content="Set Display Performance" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Sets the system preferences to performance. You can do this manually with sysdm.cpl as well.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblUTC" Content="Time UTC (Dual Boot)" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Essential for computers that are dual booting. Fixes the time sync with Linux Systems.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblDisableUAC" Content="Disable UAC" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Disables User Account Control. Only recommended for Expert Users.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblDisableNotifications" Content="Disable Notification" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Disables all Notifications">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblRemoveCortana" Content="Remove Cortana" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Removes Cortana, but often breaks search... if you are a heavy windows search users, this is NOT recommended.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblRightClickMenu" Content="Classic Right-Click Menu" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Great Windows 11 tweak to bring back good context menus when right clicking things in explorer.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblGameMode" Content="Enable Game Mode" Width="auto" HorizontalAlignment="Left" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="This option may increase performance in some games and offer more consistent gaming experience.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblGameBar" Content="Disable Game Bar" Width="auto" HorizontalAlignment="Left" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="If you are not playing xbox game you can disable game bar.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblPersonalize" Content="Personalisation Settings" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi"  ToolTip="Hide search icon, show transparency effect, color adjustment, lock screen adjustment and turn off the display to 20min.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblRemoveEdge" Content="Remove Microsoft Edge ⚠️" Foreground="DarkRed" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi"  ToolTip="Removes Microsoft Edge when it gets reinstalld by updates. If you reinstall, it may not work. NOT RECOMMENDED❗">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblOneDrive" Content="Remove OneDrive ⚠️" Foreground="DarkRed" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi"  ToolTip="Copies OneDrive file to default home folders and uninstalls it. RECOMMENDED ON FRESH WINDOWS❗">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                            </StackPanel>
-                            <StackPanel Background="#777777" SnapsToDevicePixels="True" Grid.Column="1" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="2">
-                                <Label Content="⚠️ - I suggest to leave uncheck or check only on fresh windows" Foreground="DarkRed" FontSize="14" HorizontalAlignment="Center" Margin="0,2,0,0" Style="{StaticResource chfont}" FontWeight="Bold"/>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="1" Margin="10,20,10,10">
-                                <Label Content="Fast Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,0,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                    <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                    <CheckBox Name="fastPresetButton" Style="{StaticResource ToggleSwitchStyleGreen}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                    <Label Content="On" Foreground="#2eb50d" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                <ScrollViewer MaxHeight="460" Grid.Row="1" Padding="-1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" Background="Transparent">
+                    <TabControl Grid.Row="1" Padding="-1" BorderThickness="0" Name="TabNav" Background="#252424" Width="1250" Height="auto">
+                        <TabItem Header="INFO" Visibility="Collapsed" Name="Tab1">
+                            <Grid Background="#2d2d30">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+
+                                </Grid.RowDefinitions>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,20,10,10" Grid.Row="0" Grid.ColumnSpan="3">
+                                    <Label Name="pcName" Content="Welcome $NAME" FontSize="24"  HorizontalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource chfont}" Foreground="#FFFAC664" FontWeight="Bold"/>
                                 </StackPanel>
-                                <Label Content="Bing Search In Start Menu" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                    <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                    <CheckBox Name="ToggleBingSearchMenu" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                    <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,55,10,10" Grid.Row="1" Grid.ColumnSpan="1">
+                                    <TextBlock FontSize="16" FontFamily="Helvetica" Margin="20,0,20,0" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" HorizontalAlignment="Left" FontWeight="Bold">HARDWARE<LineBreak/>INFO</TextBlock>
                                 </StackPanel>
-                                <Label Content="NumLock On Startup" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                    <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                    <CheckBox Name="ToggleNumLock" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                    <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="-100,20,10,10" Grid.Row="1" Grid.ColumnSpan="2">
+                                    <Label Content="CPU:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
+                                    <Label Content="GPU:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
+                                    <Label Content="RAM:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
+                                    <Label Content="MB:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
                                 </StackPanel>
-                                <Label Content="IPv6" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                    <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                    <CheckBox Name="TogglefIPv6" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                    <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="-290,20,10,10" Grid.Row="1" Grid.ColumnSpan="2">
+                                    <Label Name="cpuInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
+                                    <!--<Label Name="gpuInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />-->
+                                    <ComboBox x:Name="gpuInfo" Width="auto" Margin="0,2,0,2" FontSize="16" HorizontalAlignment="Left" ForceCursor="true" Cursor="Hand" FontWeight="Bold" SelectedIndex="0"/>
+                                    <Label Name="ramInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
+                                    <Label Name="mbInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
                                 </StackPanel>
-                                <Label Content="Hide Search Box" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                    <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                    <CheckBox Name="ToggleSearch" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                    <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="35,55,35,10" Grid.Row="2" Grid.ColumnSpan="1">
+                                    <TextBlock FontSize="16" FontFamily="Helvetica" Margin="20,0,20,0" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" HorizontalAlignment="Left" FontWeight="Bold">OS<LineBreak/>INFO</TextBlock>
                                 </StackPanel>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Grid.Row="1" Margin="10,20,10,10">
-                                <Label Content="Mega Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#ca35de" Margin="0,0,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                    <Label Content="Off" Foreground="#ca35de" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                    <CheckBox Name="megaPresetButton" Style="{StaticResource ToggleSwitchStylePurple}" Cursor="Hand" Margin="2.5,0"/>
-                                    <Label Content="On" Foreground="#ca35de" FontWeight="UltraBold" FontSize="14" FontFamily="Gadugi"/>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="-100,20,10,10" Grid.Row="2" Grid.ColumnSpan="2">
+                                    <Label Content="NAME:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
+                                    <Label Content="BUILD:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
+                                    <Label Content="INSTALLED:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
+                                    <Label Content="LICENCE:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
                                 </StackPanel>
-                                <Label Content="Dark Theme" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                    <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                    <CheckBox Name="ToggleDarkMode" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                    <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="-230,20,10,10" Grid.Row="2" Grid.ColumnSpan="2">
+                                    <Label Name="osInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
+                                    <Label Name="verInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
+                                    <Label Name="installTimeInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
+                                    <Label Name="licenceInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
                                 </StackPanel>
-                                <Label Content="Show File Extensions" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                    <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                    <CheckBox Name="ToggleExt" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                    <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="3" Margin="-45,55,35,10" Grid.Row="1" Grid.ColumnSpan="1">
+                                    <TextBlock FontSize="16" FontFamily="Helvetica" Margin="20,0,20,0" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" HorizontalAlignment="Left" FontWeight="Bold">DISK<LineBreak/>INFO</TextBlock>
                                 </StackPanel>
-                                <Label Content="Show Hidden Files" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                    <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                    <CheckBox Name="ToggleHiddenFiles" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                    <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="3" Margin="30,20,10,10" Grid.Row="1" Grid.ColumnSpan="2">
+                                    <Label Content="SELECT DISK:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B"/>
+                                    <Label Content="STATUS:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,20,0,0" />
+                                    <Label Content="STYLE:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
                                 </StackPanel>
-                                <Label Content="Mouse Acceleration" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                    <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                    <CheckBox Name="ToggleMouseAcceleration" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                    <Label Content="On" Foreground="#0f1112" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="4" Margin="-80,20,10,10" Grid.Row="1" Grid.ColumnSpan="2">
+                                    <ComboBox x:Name="diskNameInfo" Text="Select Disk" IsEditable="True" IsReadOnly="True" Width="auto" ForceCursor="true" Cursor="Hand" Margin="0,0,0,0" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" SelectedIndex="-1"/>
+                                    <Label Name="diskStatus" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,20,0,0" />
+                                    <Label Name="diskStyle" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
                                 </StackPanel>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="1" Height="200">
-                                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FFFBE3B6"/>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,20,-40,10">
-                                <StackPanel Margin="-10,30,0,0" HorizontalAlignment="Left">
-                                    <Button Name="optimizationButton" Style="{DynamicResource TweakButtonStyle}" Content="RUN OPTIMIZATION"  ForceCursor="true" Cursor="Hand" Padding="10" Width="110" Foreground="#FFFFFF" Background="#777777" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold"/>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="3" Margin="-45,55,35,10" Grid.Row="2" Grid.ColumnSpan="1">
+                                    <TextBlock FontSize="16" FontFamily="Helvetica" Margin="20,0,20,0" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" HorizontalAlignment="Left" FontWeight="Bold">DISK<LineBreak/>SIZE</TextBlock>
                                 </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="SERVICES" Visibility="Collapsed" Name="Tab4">
-                        <Grid Background="#3F3F3F">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <WrapPanel SnapsToDevicePixels="True" Margin="10,20,10,10" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="4">
-                                <Button x:Name="recommended" Content="RECOMMENDED" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#777777" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#ffffff" Margin="0,0,35,0"/>
-                                <Button x:Name="gaming" Content="GAMING (XBOX)" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#777777" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#ffffff" Margin="0,0,35,0"/>
-                                <Button x:Name="normal" Content="NORMAL" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#777777" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#ffffff" Margin="0,0,35,0"/>
-                            </WrapPanel>
-                            <WrapPanel SnapsToDevicePixels="True" Margin="10,80,10,10" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="4">
-                                <ProgressBar x:Name="pBar" HorizontalAlignment="Left" Height="10" VerticalAlignment="Top" Width="354" Cursor="Arrow" LargeChange="0"/>
-                            </WrapPanel>
-                            <WrapPanel SnapsToDevicePixels="True" Margin="120,50,10,10" Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2">
-                                <Label Content="Services : " Foreground="#FFFAF3F3" FontSize="14"/>
-                                <Label Content="DisplayName : " Foreground="#FFFAF3F3" Margin="0,25,0,0" FontSize="14"/>
-                                <Label Content="Status : "  Foreground="#FFFAF3F3" FontSize="14"/>
-                                <Label Content="StartupType : "  Grid.RowSpan="2" Foreground="#FFFAF3F3" FontSize="14"/>
-                            </WrapPanel>
-                            <WrapPanel SnapsToDevicePixels="True" Margin="-50,50,30,10" Orientation="Vertical" Grid.Row="1" Width="280" Grid.ColumnSpan="3">
-                                <ComboBox x:Name="ddlServices" Text="Select Service"  Width="auto" ForceCursor="true" Cursor="Hand" Margin="0,5,0,5" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" IsEditable="True" IsReadOnly="True" SelectedIndex="-1"/>
-                                <Label x:Name="lblName" Content=""  MaxWidth="280" Foreground="#FFFAF3F3" Margin="0,25,0,0" FontSize="14" HorizontalAlignment="Left"/>
-                                <Label x:Name="lblStatus" Content="" Foreground="#FFFAF3F3" FontSize="14"/>
-                                <Label x:Name="lblStartupType" Content="" Grid.RowSpan="2" Foreground="#FFFAF3F3" FontSize="14"/>
-                            </WrapPanel>
-                            <WrapPanel SnapsToDevicePixels="True" Margin="10,50,150,10" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.ColumnSpan="4">
-                                <Viewbox Grid.RowSpan="2" Width="400">
-                                    <StackPanel Orientation="Vertical" Width="400" RenderTransformOrigin="0.537,0.012" Background="Snow">
-                                        <TextBox   x:Name="lblServicesDesc" FontSize="14" TextWrapping="Wrap" Foreground="Black"
-	                Text="" Cursor="Arrow" IsReadOnly="True"  Height="181" Width="400" VerticalScrollBarVisibility="Auto" SelectionBrush="Transparent" Background="#FFE6DBDB" BorderBrush="#FFE6DBDB"  />
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="3" Margin="30,20,10,10" Grid.Row="2" Grid.ColumnSpan="2">
+                                    <Label Content="SELECT DISK:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B"/>
+                                    <Label Content="DISK SIZE:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,20,0,0" />
+                                    <Label Content="FREE SIZE:" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="4" Margin="-80,20,10,10" Grid.Row="2" Grid.ColumnSpan="2">
+                                    <ComboBox x:Name="diskName" Text="Select Disk" IsEditable="True" IsReadOnly="True" Width="auto" ForceCursor="true" Cursor="Hand" Margin="0,0,0,0" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" SelectedIndex="-1"/>
+                                    <Label Name="diskMaxSize" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,20,0,0" />
+                                    <Label Name="diskFreeSize" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" Margin="0,0,0,0" />
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="INSTALL" Visibility="Collapsed" Name="Tab2">
+                            <Grid Background="#2d2d30">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Margin="10">
+                                    <Label Content="Development" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                    <CheckBox Name="DblInstallDockerdesktop" Content="Docker Desktop" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallGit" Content="Git" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallGitextensions" Content="Git Extensions" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallGithubdesktop" Content="GitHub Desktop" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallGolang" Content="GoLang" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallNodejs" Content="NodeJS" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallNodejslts" Content="NodeJS LTS" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallNodemanager" Content="Node Version Manager" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallJava8" Content="OpenJDK Java 8" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallJava16" Content="OpenJDK Java 16" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallJava18" Content="Oracle Java 18" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallOhmyposh" Content="Oh My Posh (Promt)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallPython3" Content="Python3" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallPostman" Content="Postman" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallRust" Content="Rust" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallVisualstudio2022" Content="Visual Studio 2022" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallCode" Content="VS Code" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <Label Content="Microsoft Tools" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                    <CheckBox Name="DblInstallDotnet3" Content=".NET Desktop Runtime 3.1" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallDotnet5" Content=".NET Desktop Runtime 5" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallDotnet6" Content=".NET Desktop Runtime 6" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallDotnet7" Content=".NET Desktop Runtime 7" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallPowershell" Content="PowerShell" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallPowertoys" Content="Powertoys" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallvc2015_64" Content="Visual C++ 2015-2022 64-bit" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallvc2015_32" Content="Visual C++ 2015-2022 32-bit" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallTerminal" Content="Windows Terminal" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                </StackPanel>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="1" Margin="10">
+                                    <Label Content="Browsers" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                    <CheckBox Name="DblInstallBrave" Content="Brave" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallChrome" Content="Chrome" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallChromium" Content="Chromium" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallFirefox" Content="Firefox" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallLibrewolf" Content="LibreWolf" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallThorium" Content="Thorium Browser" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <Label Content="Communications" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                    <CheckBox Name="DblInstallDiscord" Content="Discord" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallMatrix" Content="Matrix" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallSkype" Content="Skype" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallSlack" Content="Slack" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallTeams" Content="Teams" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallTelegram" Content="Telegram" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallViber" Content="Viber" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallZoom" Content="Zoom" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <Label Content="Gaming Launchers" FontSize="18" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                    <CheckBox Name="DblInstallEaapp" Content="EA App" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallEpicgames" Content="Epic Games Launcher" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallGeforcenow" Content="GeForce NOW" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallGog" Content="GOG Galaxy" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallPrism" Content="Prism Launcher" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallSteam" Content="Steam" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallUbisoft" Content="Ubisoft Connect" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="2" Margin="10">
+                                    <Label Content="Lite Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="ToggleLitePreset" Style="{StaticResource ToggleSwitchStyleGreen}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#2eb50d" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
-                                </Viewbox>
-                            </WrapPanel>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="UPDATES" Visibility="Collapsed" Name="Tab5">
-                        <Grid Background="#3F3F3F">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
-                                <Button Name="Updatesdefault" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Default (Out of Box) Settings" Cursor="Hand" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
-                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFFBE3B6">This is the default settings that come with Windows. <LineBreak/><LineBreak/> No modifications are made and will remove any custom windows update settings.</TextBlock>
-                                <Separator Width="350"/>
-                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="25,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="320" Foreground="#FFFBE3B6">Note: If you still encounter update errors, reset all updates with button below. That will restore ALL Microsoft Update Services from their servers and reinstall them to default settings.</TextBlock>
-                                <Button Name="FixesUpdate" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777"  Content="Fix Windows Update" Cursor="Hand" Margin="-25,20,0,10" Padding="10" HorizontalAlignment = "Center" Foreground="White"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
-                                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FFFBE3B6"/>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
-                                <Button Name="Updatessecurity" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Security (Recommended) Settings" Cursor="Hand" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
-                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFFBE3B6">This is my recommended setting I use on all computers.<LineBreak/><LineBreak/> It will delay feature updates by 2 years and will install security updates 4 days after release.<LineBreak/><LineBreak/>Feature Updates: Adds features and often bugs to systems when they are released. You want to delay these as long as possible.<LineBreak/><LineBreak/>Security Updates: Typically these are pressing security flaws that need to be patched quickly. You only want to delay these a couple of days just to see if they are safe and don't break other systems. You don't want to go without these for ANY extended periods of time.</TextBlock>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="1">
-                                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FFFBE3B6"/>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
-                                <Button Name="Updatesdisable" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#FF9E5050" Content="Disable ALL Updates (NOT RECOMMENDED!)" Cursor="Hand" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
-                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFFBE3B6">This completely disables ALL Windows Updates and is NOT RECOMMENDED.<LineBreak/><LineBreak/> However, it can be suitable if you use your system for a select purpose and do not actively browse the internet. <LineBreak/><LineBreak/>Note: Your system will be easier to hack and infect without security updates.</TextBlock>
-                            </StackPanel>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="CONFIG" Visibility="Collapsed" Name="Tab6">
-                        <Grid Background="#3F3F3F">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
-                                <Button Name="PanelControl" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Control Panel" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelPnF" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Programs and Feauters" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelNetwork" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Network Connections" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelPower" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Power Plan" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelSound" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Sound Settings" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelSystem" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="System Properties" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
-                                <Button Name="PanelUser" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="User Accounts" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelServices" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Services" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelWindowsFirewall" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Windows Firewall" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelDeviceManager" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Device Manager" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelExplorerOption" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="File Explorer Options" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelRegedit" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Registry Editor" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
-                                <Button Name="PanelScheduler" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Task Scheduler" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelResourceMonitor" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Resource Monitor" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelSysConf" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="System Configuration" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelEvent" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Event Viewer" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelSysInfo" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="System Information" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                                <Button Name="PanelDiskManagement" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Disk Management" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,-50,0">
-                                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FFFBE3B6" Margin="2,40,2,40"/>
-                            </StackPanel>
-                            <StackPanel SnapsToDevicePixels="True" Grid.Column="3" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-                                <Label Content="Features" FontFamily="Helvetica" FontWeight="Bold" FontSize="24" Foreground="#FFFBE3B6" HorizontalAlignment="Center"/>
-                                <CheckBox Name="FeaturesDotnet" Width="auto" Content="All .Net Framework (2,3,4)" Cursor="Hand" HorizontalAlignment="Left" Margin="5,5" FontSize="11" FontFamily="Gadugi" Foreground="White">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="FeaturesHyperv" Width="auto" Content="HyperV Virtualization" Cursor="Hand" Margin="5,5" HorizontalAlignment="Left" FontSize="11" FontFamily="Gadugi" Foreground="White">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="FeaturesLegacymedia" Width="auto" Content="Legacy Media (WMP, DirectPlay)" Cursor="Hand" HorizontalAlignment="Left" Margin="5,5" FontSize="11" FontFamily="Gadugi" Foreground="White">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="FeatureNfs" Width="auto" Content="NFS - Network File System" Cursor="Hand" HorizontalAlignment="Left" Margin="5,5" FontSize="11" FontFamily="Gadugi" Foreground="White">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="FeatureWsl" Width="auto" Content="Windows Subsystem for Linux" Cursor="Hand" HorizontalAlignment="Left" Margin="5,5" FontSize="11" FontFamily="Gadugi" Foreground="White">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <Button Name="FeatureInstall" Content="Install Features" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777"  Width="160" Margin="0,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
-                                <Button Name="PanelAutologin" Content="Set Up Autologin" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777"  Width="160" Margin="0,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
-                            </StackPanel>
-                        </Grid>
-                    </TabItem>
-                </TabControl>
+                                    <Label Content="Dev Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#ca35de" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="ToggleDevPreset" Style="{StaticResource ToggleSwitchStylePurple}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#ca35de" FontWeight="UltraBold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Gaming Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#66c0f4 " Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="ToggleGamingPreset" Style="{StaticResource ToggleSwitchStyleBlue}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#66c0f4 " FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="-30,10,0,5" HorizontalAlignment="Center">
+                                        <Button x:Name="DblInstall" Content="INSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}"  Height="40" Width="70" Background="#777777" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#ffffff" Margin="0,0,18,0"/>
+                                        <Button x:Name="DblGetInstalled" Content="GET INSTALLED" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Height="40" Width="70" Background="#777777" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#ffffff" Margin="18,0,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="-30,0,0,5" HorizontalAlignment="Center">
+                                        <Button x:Name="DblUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Height="40" Width="70" Background="#777777" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#ffffff" Margin="0,0,18,0"/>
+                                        <Button x:Name="DblUninstall" Content="UNINSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}"  Height="40" Width="70" Background="#777777" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#ffffff" Margin="18,0,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="-30,0,0,5" HorizontalAlignment="Center">
+                                        <Button x:Name="DblClearPrograms" Content="CLEAR SELECTION" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Height="25" Width="176" Background="#777777" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#ffffff" Margin="18,0,18,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="3" Margin="10">
+                                    <Label Content="Document" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                    <CheckBox Name="DblInstallAnki" Content="Anki" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallAdobe" Content="Adobe Reader DC" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallJoplin" Content="Joplin (FOSS Notes)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallLibreoffice" Content="LibreOffice" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallNotepadplus" Content="Notepad++" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallObsidian" Content="Obsidian" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallOnlyoffice" Content="ONLYOffice Desktop" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallSumatra" Content="Sumatra PDF" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallWinmerge" Content="WinMerge" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <Label Content="Multimedia Tools" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                    <CheckBox Name="DblInstallAudacity" Content="Audacity" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallBlender" Content="Blender (3D Graphics)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallCider" Content="Cider (FOSS Music Player)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallGreenshot" Content="Greenshot (Screenshots)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallHandbrake" Content="HandBrake" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallImageglass" Content="ImageGlass (Image Viewer)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallKodi" Content="Kodi Media Center" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallKlite" Content="K-Lite Codec Standard" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallObs" Content="OBS Studio" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallSharex" Content="ShareX (Screenshots)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallVlc" Content="VLC (Video Player)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                </StackPanel>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="4" Margin="10">
+                                    <Label Content="Utilities" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                    <CheckBox Name="DblInstall7zip" Content="7-Zip" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallAlacritty" Content="Alacritty Terminal" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallAutohotkey" Content="AutoHotkey" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallCpuz" Content="CPU-Z" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallClasicMixer" Content="Classic Volume Mixer" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallDdu" Content="Display Driver Uninstaller" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallEsearch" Content="Everything Search" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallGpuz" Content="GPU-Z" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallGsudo" Content="Gsudo" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallHwinfo" Content="HWInfo" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallJdownloader" Content="J Download Manager" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallKeepass" Content="KeePassXC" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallMsiafterburner" Content="MSI Afterburner" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallNanazip" Content="NanaZip" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallNvclean" Content="NVCleanstall" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallOVirtualBox" Content="Oracle VirtualBox" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallOpenrgb" Content="OpenRGB" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallProcesslasso" Content="Process Lasso" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallQbittorrent" Content="qBittorrent" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallRevo" Content="RevoUninstaller" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallRufus" Content="Rufus Imager" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallTtaskbar" Content="Translucent Taskbar" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallWinrar" Content="WinRAR" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="DEBLOAT" Visibility="Collapsed" Name="Tab3">
+                            <Grid Background="#2d2d30">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                    <Button Name="debloatALL" Content="Remove ALL MS Store Apps" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#FF9E5050" ForceCursor="true" Cursor="Hand" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
+                                    <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFFBE3B6"><Bold Foreground="#FF9E5050">USE WITH CAUTION!!!!!</Bold><LineBreak Foreground="#FF9E5050"/><LineBreak/>This will remove ALL Microsoft store apps other than the essentials to make winget work. <LineBreak/><LineBreak/>Games installed by MS Store <Bold Foreground="#FF9E5050">ARE INCLUDED!</Bold><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FFFBE3B6"/>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                    <Button Name="debloatGaming" Content="GAMING (XBOX)" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" ForceCursor="true" Cursor="Hand" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
+                                    <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFFBE3B6">This will remove ALL Microsoft store apps other than the essentials to make winget and xbox work. <LineBreak/><LineBreak/>Games installed by MS Store <Bold Foreground="#FF2CD027">ARE NOT INCLUDED!</Bold></TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="OPTIMIZATION" Visibility="Collapsed" Name="Tab4">
+                            <Grid Background="#2d2d30">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Column="0" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                    <Label Content="Essential Tweaks" FontSize="18"  Foreground="#FFF4AB51" HorizontalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource chfont}" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Column="0" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
+                                    <CheckBox Name="DblTelemetry" Content="Disable Telemetry" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Disables Microsoft Telemetry. Note: This will lock many Edge Browser settings. Microsoft spys heavily on you when using the Edge browser.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblWifi" Content="Disable Wifi-Sense" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Wifi Sense is a spying service that phones home all nearby scaned wifi networks and your current geo location.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblAH" Content="Disable Activity History" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="This erases recent docs, clipboard, and run history.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblDeleteTempFiles" Content="Delete Temporary Files" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Erases TEMP Folders">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblDiskCleanup" Content="Run Disk Cleanup" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Runs Disk Cleanup on Drive C: and removes old Windows Updates.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblLocTrack" Content="Disable LocationTracking" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Disables Location Tracking...DUH!">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblStorage" Content="Disable Storage Sense" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Storage Sense is supposed to delete temp files automatically, but often runs at wierd times and mostly doesn't do much. Although when it was introduced in Win 10 (1809 Version) it deleted people's documents... So there is that.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblHiber" Content="Disable Hibernation" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Hibernation is really meant for laptops as it saves whats in memory before turning the pc off. It really should never be used, but some people are lazy and rely on it. Don't be like Bob. Bob likes hibernation.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblDVR" Content="Disable GameDVR" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="GameDVR is a Windows App that is a dependancy for some Store Games. I've never met someone that likes it, but it's there for the XBOX crowd.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                </StackPanel>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Column="3" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                    <Label Content="Misc. Tweaks" FontSize="18"  Foreground="#FFF4AB51" HorizontalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource chfont}" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Column="3" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="2">
+                                    <CheckBox Name="DblPower" Content="Disable Power Throttling" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="This is mainly for Laptops, It disables Power Throttling and will use more battery.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblDisplay" Content="Set Display Performance" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Sets the system preferences to performance. You can do this manually with sysdm.cpl as well.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblUTC" Content="Time UTC (Dual Boot)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Essential for computers that are dual booting. Fixes the time sync with Linux Systems.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblDisableUAC" Content="Disable UAC" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Disables User Account Control. Only recommended for Expert Users.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblDisableNotifications" Content="Disable Notification" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Disables all Notifications">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblRemoveCortana" Content="Remove Cortana" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Removes Cortana, but often breaks search... if you are a heavy windows search users, this is NOT recommended.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblRightClickMenu" Content="Classic Right-Click Menu" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="Great Windows 11 tweak to bring back good context menus when right clicking things in explorer.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblGameMode" Content="Enable Game Mode" Width="auto" Foreground="#a69f6c" HorizontalAlignment="Left" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="This option may increase performance in some games and offer more consistent gaming experience.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblGameBar" Content="Disable Game Bar" Width="auto" Foreground="#a69f6c" HorizontalAlignment="Left" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi" ToolTip="If you are not playing xbox game you can disable game bar.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblPersonalize" Content="Personalisation Settings" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi"  ToolTip="Hide search icon, show transparency effect, color adjustment, lock screen adjustment and turn off the display to 20min.">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblRemoveEdge" Content="Remove Microsoft Edge ⚠️" Foreground="DarkRed" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi"  ToolTip="Removes Microsoft Edge when it gets reinstalld by updates. If you reinstall, it may not work. NOT RECOMMENDED❗">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblOneDrive" Content="Remove OneDrive ⚠️" Foreground="DarkRed" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="5,5" FontSize="11" FontFamily="Gadugi"  ToolTip="Copies OneDrive file to default home folders and uninstalls it. RECOMMENDED ON FRESH WINDOWS❗">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                </StackPanel>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Column="1" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="2">
+                                    <Label Content="⚠️ - I suggest to leave uncheck or check only on fresh windows" Foreground="DarkRed" FontSize="14" HorizontalAlignment="Center" Margin="0,2,0,0" Style="{StaticResource chfont}" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="1" Margin="10,20,10,10">
+                                    <Label Content="Fast Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="fastPresetButton" Style="{StaticResource ToggleSwitchStyleGreen}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#2eb50d" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Bing Search In Start Menu" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="ToggleBingSearchMenu" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="NumLock On Startup" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="ToggleNumLock" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="IPv6" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="TogglefIPv6" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Hide Search Box" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="ToggleSearch" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Grid.Row="1" Margin="10,20,10,10">
+                                    <Label Content="Mega Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#ca35de" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="megaPresetButton" Style="{StaticResource ToggleSwitchStylePurple}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#ca35de" FontWeight="UltraBold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Dark Theme" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="ToggleDarkMode" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Show File Extensions" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="ToggleExt" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Show Hidden Files" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="ToggleHiddenFiles" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Mouse Acceleration" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="ToggleMouseAcceleration" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="1" Height="200">
+                                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FFFBE3B6"/>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,20,-40,10">
+                                    <StackPanel Margin="-10,30,0,0" HorizontalAlignment="Left">
+                                        <Button Name="optimizationButton" Style="{DynamicResource TweakButtonStyle}" Content="RUN OPTIMIZATION"  ForceCursor="true" Cursor="Hand" Padding="10" Width="110" Foreground="#FFFFFF" Background="#777777" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="SERVICES" Visibility="Collapsed" Name="Tab5">
+                            <Grid Background="#2d2d30">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <WrapPanel SnapsToDevicePixels="True" Margin="10,20,10,10" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="4">
+                                    <Button x:Name="recommended" Content="RECOMMENDED" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#777777" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#ffffff" Margin="0,0,35,0"/>
+                                    <Button x:Name="gaming" Content="GAMING (XBOX)" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#777777" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#ffffff" Margin="0,0,35,0"/>
+                                    <Button x:Name="normal" Content="NORMAL" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" HorizontalAlignment="Left" Height="40" Width="80" Background="#777777" BorderThickness="0,0,0,0" FontWeight="Bold" Foreground="#ffffff" Margin="0,0,35,0"/>
+                                </WrapPanel>
+                                <WrapPanel SnapsToDevicePixels="True" Margin="10,80,10,10" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="4">
+                                    <ProgressBar x:Name="pBar" HorizontalAlignment="Left" Height="10" VerticalAlignment="Top" Width="354" Cursor="Arrow" LargeChange="0"/>
+                                </WrapPanel>
+                                <WrapPanel SnapsToDevicePixels="True" Margin="120,50,10,10" Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2">
+                                    <Label Content="Services : " Foreground="#FFFAF3F3" FontSize="14"/>
+                                    <Label Content="DisplayName : " Foreground="#FFFAF3F3" Margin="0,25,0,0" FontSize="14"/>
+                                    <Label Content="Status : "  Foreground="#FFFAF3F3" FontSize="14"/>
+                                    <Label Content="StartupType : "  Grid.RowSpan="2" Foreground="#FFFAF3F3" FontSize="14"/>
+                                </WrapPanel>
+                                <WrapPanel SnapsToDevicePixels="True" Margin="-50,50,30,10" Orientation="Vertical" Grid.Row="1" Width="280" Grid.ColumnSpan="3">
+                                    <ComboBox x:Name="ddlServices" Text="Select Service"  Width="auto" ForceCursor="true" Cursor="Hand" Margin="0,5,0,5" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" IsEditable="True" IsReadOnly="True" SelectedIndex="-1"/>
+                                    <Label x:Name="lblName" Content=""  MaxWidth="280" Foreground="#FFFAF3F3" Margin="0,25,0,0" FontSize="14" HorizontalAlignment="Left"/>
+                                    <Label x:Name="lblStatus" Content="" Foreground="#FFFAF3F3" FontSize="14"/>
+                                    <Label x:Name="lblStartupType" Content="" Grid.RowSpan="2" Foreground="#FFFAF3F3" FontSize="14"/>
+                                </WrapPanel>
+                                <WrapPanel SnapsToDevicePixels="True" Margin="10,50,150,10" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.ColumnSpan="4">
+                                    <Viewbox Grid.RowSpan="2" Width="400">
+                                        <StackPanel Orientation="Vertical" Width="400" RenderTransformOrigin="0.537,0.012" Background="Snow">
+                                            <TextBox   x:Name="lblServicesDesc" FontSize="14" TextWrapping="Wrap" Foreground="Black"
+	                Text="" Cursor="Arrow" IsReadOnly="True"  Height="181" Width="400" VerticalScrollBarVisibility="Auto" SelectionBrush="Transparent" Background="#FFE6DBDB" BorderBrush="#FFE6DBDB"  />
+                                        </StackPanel>
+                                    </Viewbox>
+                                </WrapPanel>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="UPDATES" Visibility="Collapsed" Name="Tab6">
+                            <Grid Background="#2d2d30">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                    <Button Name="Updatesdefault" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Default (Out of Box) Settings" Cursor="Hand" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
+                                    <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFFBE3B6">This is the default settings that come with Windows. <LineBreak/><LineBreak/> No modifications are made and will remove any custom windows update settings.</TextBlock>
+                                    <Separator Width="350"/>
+                                    <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="25,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="320" Foreground="#FFFBE3B6">Note: If you still encounter update errors, reset all updates with button below. That will restore ALL Microsoft Update Services from their servers and reinstall them to default settings.</TextBlock>
+                                    <Button Name="FixesUpdate" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777"  Content="Fix Windows Update" Cursor="Hand" Margin="-25,20,0,10" Padding="10" HorizontalAlignment = "Center" Foreground="White"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FFFBE3B6"/>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                    <Button Name="Updatessecurity" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Security (Recommended) Settings" Cursor="Hand" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
+                                    <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFFBE3B6">This is my recommended setting I use on all computers.<LineBreak/><LineBreak/> It will delay feature updates by 2 years and will install security updates 4 days after release.<LineBreak/><LineBreak/>Feature Updates: Adds features and often bugs to systems when they are released. You want to delay these as long as possible.<LineBreak/><LineBreak/>Security Updates: Typically these are pressing security flaws that need to be patched quickly. You only want to delay these a couple of days just to see if they are safe and don't break other systems. You don't want to go without these for ANY extended periods of time.</TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="1">
+                                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FFFBE3B6"/>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                    <Button Name="Updatesdisable" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#FF9E5050" Content="Disable ALL Updates (NOT RECOMMENDED!)" Cursor="Hand" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="10,5,10,10" Grid.Row="1" Grid.ColumnSpan="1">
+                                    <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFFBE3B6">This completely disables ALL Windows Updates and is NOT RECOMMENDED.<LineBreak/><LineBreak/> However, it can be suitable if you use your system for a select purpose and do not actively browse the internet. <LineBreak/><LineBreak/>Note: Your system will be easier to hack and infect without security updates.</TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="CONFIG" Visibility="Collapsed" Name="Tab7">
+                            <Grid Background="#2d2d30">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                    <Button Name="PanelControl" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Control Panel" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelPnF" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Programs and Feauters" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelNetwork" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Network Connections" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelPower" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Power Plan" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelSound" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Sound Settings" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelSystem" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="System Properties" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                    <Button Name="PanelUser" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="User Accounts" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelServices" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Services" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelWindowsFirewall" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Windows Firewall" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelDeviceManager" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Device Manager" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelExplorerOption" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="File Explorer Options" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelRegedit" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Registry Editor" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="2" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="1">
+                                    <Button Name="PanelScheduler" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Task Scheduler" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelResourceMonitor" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Resource Monitor" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelSysConf" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="System Configuration" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelEvent" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Event Viewer" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelSysInfo" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="System Information" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                    <Button Name="PanelDiskManagement" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777" Content="Disk Management" Width="160" Margin="30,10,0,10" Padding="10" HorizontalAlignment="Left" Foreground="White"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,-50,0">
+                                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="#FFFBE3B6" Margin="2,40,2,40"/>
+                                </StackPanel>
+                                <StackPanel SnapsToDevicePixels="True" Grid.Column="3" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                                    <Label Content="Features" FontFamily="Helvetica" FontWeight="Bold" FontSize="24" Foreground="#FFFBE3B6" HorizontalAlignment="Center"/>
+                                    <CheckBox Name="FeaturesDotnet" Width="auto" Content="All .Net Framework (2,3,4)" Cursor="Hand" HorizontalAlignment="Left" Margin="5,5" FontSize="11" FontFamily="Gadugi" Foreground="White">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="FeaturesHyperv" Width="auto" Content="HyperV Virtualization" Cursor="Hand" Margin="5,5" HorizontalAlignment="Left" FontSize="11" FontFamily="Gadugi" Foreground="White">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="FeaturesLegacymedia" Width="auto" Content="Legacy Media (WMP, DirectPlay)" Cursor="Hand" HorizontalAlignment="Left" Margin="5,5" FontSize="11" FontFamily="Gadugi" Foreground="White">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="FeatureNfs" Width="auto" Content="NFS - Network File System" Cursor="Hand" HorizontalAlignment="Left" Margin="5,5" FontSize="11" FontFamily="Gadugi" Foreground="White">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="FeatureWsl" Width="auto" Content="Windows Subsystem for Linux" Cursor="Hand" HorizontalAlignment="Left" Margin="5,5" FontSize="11" FontFamily="Gadugi" Foreground="White">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <Button Name="FeatureInstall" Content="Install Features" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777"  Width="160" Margin="0,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
+                                    <Button Name="PanelAutologin" Content="Set Up Autologin" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777"  Width="160" Margin="0,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
+                                    <Button Name="PanelRegion" Content="Region" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource TweakButtonStyle}" Background="#777777"  Width="160" Margin="0,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </ScrollViewer>
             </Grid>
         </Viewbox>
     </Border>
