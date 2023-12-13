@@ -4,7 +4,7 @@ Add-Type -AssemblyName PresentationFramework
 .NOTES
     Author      : Vuk1lis
     GitHub      : https://github.com/vukilis
-    Version 1.5
+    Version 1.7
 #>
 
 Start-Transcript $ENV:TEMP\Windows11_Optimizer_Debloater.log -Append
@@ -50,69 +50,6 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$buttons = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "Button"}
-foreach ($button in $buttons){
-    $button.value.Add_Click({
-        [System.Object]$Sender = $args[0]
-        Invoke-Button "wpf_$($Sender.name)"
-    })
-}
-function Invoke-Button {
-    <#
-        .DESCRIPTION
-        Meant to make creating buttons easier.
-        This way you can dictate what each button does from this function. 
-    
-        Input will be the name of the button that is clicked. 
-    #>
-
-    Param ([string]$Button) 
-
-    #Use this to get the name of the button
-    #[System.Windows.MessageBox]::Show("$Button","Windows11-OptimizerDebloater","OK","Info")
-
-    Switch -Wildcard ($Button){
-
-        "wpf_Tab?BT" {Invoke-Tabs $Button}
-        "wpf_debloatALL" {Invoke-debloatALL}
-        "wpf_debloatGaming" {Invoke-debloatGaming}
-        "wpf_optimizationButton" {Invoke-optimizationButton}
-        "wpf_recommended" {Invoke-recommended}
-        "wpf_gaming" {Invoke-gaming}
-        "wpf_normal" {Invoke-normal}
-        "wpf_PanelControl" {Invoke-Configs -Panel $button}
-        "wpf_PanelPnF" {Invoke-Configs -Panel $button}
-        "wpf_PanelNetwork" {Invoke-Configs -Panel $button}
-        "wpf_PanelPower" {Invoke-Configs -Panel $button}
-        "wpf_PanelSound" {Invoke-Configs -Panel $button}
-        "wpf_PanelSystem" {Invoke-Configs -Panel $button}
-        "wpf_PanelUser" {Invoke-Configs -Panel $button}
-        "wpf_PanelServices" {Invoke-Configs -Panel $button}
-        "wpf_PanelWindowsFirewall" {Invoke-Configs -Panel $button}
-        "wpf_PanelDeviceManager" {Invoke-Configs -Panel $button}
-        "wpf_PanelExplorerOption" {Invoke-Configs -Panel $button}
-        "wpf_PanelRegedit" {Invoke-Configs -Panel $button}
-        "wpf_PanelScheduler" {Invoke-Configs -Panel $button}
-        "wpf_PanelResourceMonitor" {Invoke-Configs -Panel $button}
-        "wpf_PanelSysConf" {Invoke-Configs -Panel $button}
-        "wpf_PanelEvent" {Invoke-Configs -Panel $button}
-        "wpf_PanelSysInfo" {Invoke-Configs -Panel $button}
-        "wpf_PanelDiskManagement" {Invoke-Configs -Panel $button}
-        "wpf_Updatesdefault" {Invoke-UpdatesDefault}
-        "wpf_FixesUpdate" {Invoke-FixesUpdate}
-        "wpf_Updatesdisable" {Invoke-UpdatesDisable}
-        "wpf_Updatessecurity" {Invoke-UpdatesSecurity}
-        "wpf_FeatureInstall" {Invoke-FeatureInstall}
-        "wpf_PanelAutologin" {Invoke-PanelAutologin}
-        "wpf_PanelRegion" {Invoke-Configs -Panel $button}
-        "wpf_DblInstall" {Invoke-installButton}
-        "wpf_DblGetInstalled" {Invoke-getInstallButton}
-        "wpf_DblUninstall" {Invoke-UninstallButton}
-        "wpf_DblUpgrade" {Invoke-UpgradeButton}
-        "wpf_DblClearPrograms" {Invoke-ClearProgramsButton}
-    }
-}
-
 ################################
 ####  Navigation Controls  #####
 ################################
@@ -136,6 +73,113 @@ function Invoke-Tabs {
         else{
             $TabNav.value.Items[$psitem].IsSelected = $false
         }
+    }
+}
+
+$buttons = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "Button"}
+foreach ($button in $buttons){
+    $button.value.Add_Click({
+        [System.Object]$Sender = $args[0]
+        Invoke-Button "wpf_$($Sender.name)"
+    })
+}
+
+$checkbox = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "CheckBox"}
+foreach ($box in $checkbox){
+    $box.value.Add_Click({
+        [System.Object]$Sender = $args[0]
+        Invoke-Checkbox "wpf_$($Sender.name)"
+    })
+}
+
+function Invoke-Button {
+
+    <#
+    
+        .DESCRIPTION
+        Meant to make creating buttons easier. There is a section below in the gui that will assign this function to every button.
+        This way you can dictate what each button does from this function. 
+    
+        Input will be the name of the button that is clicked. 
+    #>
+    
+    Param ([string]$Button) 
+
+    #Use this to get the name of the button
+    #[System.Windows.MessageBox]::Show("$Button","Chris Titus Tech's Windows Utility","OK","Info")
+
+    Switch -Wildcard ($Button){
+
+        "wpf_Tab?BT" {Invoke-Tabs $Button}
+        "wpf_debloatALL" {Invoke-debloatALL}
+        "wpf_debloatGaming" {Invoke-debloatGaming}
+        "wpf_optimizationButton" {Invoke-optimizationButton}
+        "wpf_recommended" {Invoke-recommended}
+        "wpf_gaming" {Invoke-gaming}
+        "wpf_normal" {Invoke-normal}
+        "wpf_Updatesdefault" {Invoke-UpdatesDefault}
+        "wpf_FixesUpdate" {Invoke-FixesUpdate}
+        "wpf_Updatesdisable" {Invoke-UpdatesDisable}
+        "wpf_Updatessecurity" {Invoke-UpdatesSecurity}
+        "wpf_PanelControl" {Invoke-Configs -Panel $button}
+        "wpf_PanelPnF" {Invoke-Configs -Panel $button}
+        "wpf_PanelNetwork" {Invoke-Configs -Panel $button}
+        "wpf_PanelPower" {Invoke-Configs -Panel $button}
+        "wpf_PanelSound" {Invoke-Configs -Panel $button}
+        "wpf_PanelSystem" {Invoke-Configs -Panel $button}
+        "wpf_PanelUser" {Invoke-Configs -Panel $button}
+        "wpf_PanelServices" {Invoke-Configs -Panel $button}
+        "wpf_PanelWindowsFirewall" {Invoke-Configs -Panel $button}
+        "wpf_PanelDeviceManager" {Invoke-Configs -Panel $button}
+        "wpf_PanelExplorerOption" {Invoke-Configs -Panel $button}
+        "wpf_PanelRegedit" {Invoke-Configs -Panel $button}
+        "wpf_PanelScheduler" {Invoke-Configs -Panel $button}
+        "wpf_PanelResourceMonitor" {Invoke-Configs -Panel $button}
+        "wpf_PanelSysConf" {Invoke-Configs -Panel $button}
+        "wpf_PanelEvent" {Invoke-Configs -Panel $button}
+        "wpf_PanelSysInfo" {Invoke-Configs -Panel $button}
+        "wpf_PanelDiskManagement" {Invoke-Configs -Panel $button}
+        "wpf_FeatureInstall" {Invoke-FeatureInstall}
+        "wpf_PanelAutologin" {Invoke-PanelAutologin}
+        "wpf_PanelRegion" {Invoke-Configs -Panel $button}
+        "wpf_DblInstall" {Invoke-installButton}
+        "wpf_DblGetInstalled" {Invoke-getInstallButton}
+        "wpf_DblUninstall" {Invoke-UninstallButton}
+        "wpf_DblUpgrade" {Invoke-UpgradeButton}
+        "wpf_DblClearPrograms" {Invoke-ClearProgramsButton}
+    }
+}
+
+function Invoke-Checkbox {
+    <#
+    
+        .DESCRIPTION
+        Meant to make creating checkboxes easier. There is a section below in the gui that will assign this function to every button.
+        This way you can dictate what each checkbox does from this function. 
+    
+        Input will be the name of the checkbox that is clicked. 
+    #>
+
+    Param ([string]$checkbox) 
+
+    #Use this to get the name of the checkbox
+    #[System.Windows.MessageBox]::Show("$checkbox","Vuk1lis's Windows Utility","OK","Info")
+
+    Switch -Wildcard ($checkbox){
+        "wpf_fastPresetButton" {Invoke-ToggleFastPreset}
+        "wpf_megaPresetButton" {Invoke-ToggleMegaPreset}
+        "wpf_ToggleLitePreset" {Invoke-ToggleLitePreset}
+        "wpf_ToggleDevPreset" {Invoke-ToggleDevPreset}
+        "wpf_ToggleGamingPreset" {Invoke-ToggleGamingPreset}
+        "wpf_ToggleDarkMode" {Invoke-ToggleDarkMode}
+
+        "wpf_ToggleBingSearchMenu" {Invoke-ToggleBingSearchMenu}
+        "wpf_ToggleNumLock" {Invoke-ToggleNumLock}
+        "wpf_ToggleExt" {Invoke-ToggleExt}
+        "wpf_ToggleMouseAcceleration" {Invoke-ToggleMouseAcceleration}
+        "wpf_TogglefIPv6" {Invoke-TogglefIPv6}
+        "wpf_ToggleHiddenFiles" {Invoke-ToggleHiddenFiles}
+        "wpf_ToggleSearch" {Invoke-ToggleSearch}
     }
 }
 
@@ -835,7 +879,7 @@ function Get-Services {
 
 function Invoke-optimizationButton{
     # Invoke restore point
-    Set-RestorePoint
+    #Set-RestorePoint
     # Essential Tweaks
     If ( $wpf_DblTelemetry.IsChecked -eq $true ) {
         Write-Host "Disabling Telemetry..."
@@ -984,7 +1028,7 @@ function Invoke-optimizationButton{
             New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" | Out-Null
         }
         Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" -Name "AllowNewsAndInterests" -Type DWord -Value 0
-        
+
         # remove "Meet Now" button from taskbar
 
         If (!(Test-Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer")) {
@@ -1224,7 +1268,7 @@ function Invoke-optimizationButton{
     If ( $wpf_DblRemoveEdge.IsChecked -eq $true ) {
         # Standalone script by AveYo Source: https://raw.githubusercontent.com/AveYo/fox/main/Edge_Removal.bat
 
-        curl.exe "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/edgeremoval.bat" -o $ENV:temp\\edgeremoval.bat
+        curl.exe "https://raw.githubusercontent.com/ChrisTitusTech/winutil/main/edgeremoval.bat" -o $ENV:temp\\edgeremoval.bat
         Start-Process $ENV:temp\\edgeremoval.bat
 
         $wpf_DblRemoveEdge.IsChecked= $false
@@ -1309,114 +1353,51 @@ function Invoke-optimizationButton{
 
     [System.Windows.MessageBox]::Show($Messageboxbody, $MessageboxTitle, $ButtonType, $MessageIcon)
 }
+function Invoke-ToggleFastPreset {
+    $IsChecked = $wpf_fastPresetButton.IsChecked
 
-function Get-AppsUseLightTheme{
-    return (Get-ItemProperty -path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize').AppsUseLightTheme
+    $wpf_megaPresetButton.IsEnabled = !$IsChecked; $wpf_megaPresetButton.Style = $wpf_megaPresetButton.TryFindResource(('ToggleSwitchStyle' + ('Purple', 'Disabled')[$IsChecked]))
+
+    $tabItemName = "Tab4"
+    $tabItem = $psform.FindName($tabItemName)
+
+    if ($tabItem -eq $null) {
+        Write-Host "TabItem not found"
+        return
+    }
+
+    $checkBoxNames = "Telemetry", "Wifi", "AH", "DeleteTempFiles", "LocTrack", "Storage", "Hiber", "DVR", "Power", "Display", "Personalize"
+    $checkBoxes = $checkBoxNames | ForEach-Object { $tabItem.FindName("Dbl$_") }
+
+    foreach ($checkBox in $checkBoxes) {
+        $checkBox.IsChecked = $IsChecked
+    }
+
+    if ($IsChecked) { Write-Host "Enabling Fast Preset" -ForegroundColor Green } else { Write-Host "Disabling Fast Preset" -ForegroundColor Red }
 }
+function Invoke-ToggleMegaPreset {
+    $IsChecked = $wpf_megaPresetButton.IsChecked
 
-function Get-SystemUsesLightTheme{
-    return (Get-ItemProperty -path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize').SystemUsesLightTheme
+    $wpf_fastPresetButton.IsEnabled = !$IsChecked; $wpf_fastPresetButton.Style = $wpf_fastPresetButton.TryFindResource(('ToggleSwitchStyle' + ('Green', 'Disabled')[$IsChecked]))
+
+    $tabItemName = "Tab4"
+    $tabItem = $psform.FindName($tabItemName)
+
+    if ($tabItem -eq $null) {
+        Write-Host "TabItem not found"
+        return
+    }
+
+    $checkBoxNames = "Telemetry", "Wifi", "AH", "DeleteTempFiles", "DiskCleanup", "LocTrack", "Storage", "Hiber", "DVR",
+                    "Power", "Display", "RemoveCortana", "RightClickMenu", "DisableUAC", "Personalize"
+    $checkBoxes = $checkBoxNames | ForEach-Object { $tabItem.FindName("Dbl$_") }
+
+    foreach ($checkBox in $checkBoxes) {
+        $checkBox.IsChecked = $IsChecked
+    }
+
+    if ($IsChecked) { Write-Host "Enabling Fast Preset" -ForegroundColor Green } else { Write-Host "Disabling Fast Preset" -ForegroundColor Red }
 }
-
-# Toggle Tweaks
-$wpf_ToggleDarkMode.IsChecked = $(If ($(Get-AppsUseLightTheme) -eq 0 -And $(Get-SystemUsesLightTheme) -eq 0) {$true} Else {$false})
-$wpf_ToggleDarkMode.Add_Click({    
-    $EnableDarkMode = $wpf_ToggleDarkMode.IsChecked
-    $ToggleValue = $(If ( $EnableDarkMode ) {0} Else {1})
-    $Theme = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"
-    If ($ToggleValue -ne $(Get-AppsUseLightTheme))
-    {
-        Set-ItemProperty $Theme AppsUseLightTheme -Value $ToggleValue
-    }
-    If ($ToggleValue -ne $(Get-SystemUsesLightTheme))
-    {
-        Set-ItemProperty $Theme SystemUsesLightTheme -Value $ToggleValue
-    }
-    Write-Host $(If ( $EnableDarkMode ) {"Enabling Dark Mode"} Else {"Disabling Dark Mode"})
-    }
-)
-
-$wpf_fastPresetButton.Add_Click({    
-    $EnableMode = $wpf_fastPresetButton.IsChecked
-    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
-    If ($ToggleValue -ne 1){
-        $wpf_megaPresetButton.IsEnabled = $false
-        $wpf_megaPresetButton.Style = $wpf_megaPresetButton.TryFindResource("ToggleSwitchStyleDisabled")
-        $wpf_DblTelemetry.IsChecked=$true
-        $wpf_DblWifi.IsChecked=$true
-        $wpf_DblAH.IsChecked=$true
-        $wpf_DblLocTrack.IsChecked=$true
-        $wpf_DblStorage.IsChecked=$true
-        $wpf_DblHiber.IsChecked=$true
-        $wpf_DblDVR.IsChecked=$true
-        $wpf_DblPower.IsChecked=$true
-        $wpf_DblDisplay.IsChecked=$true
-        $wpf_DblPersonalize.IsChecked=$true
-    }
-    if ($ToggleValue -ne 0){
-        $wpf_megaPresetButton.IsEnabled = $true
-        $wpf_megaPresetButton.Style = $wpf_megaPresetButton.TryFindResource("ToggleSwitchStylePurple")
-        $wpf_DblTelemetry.IsChecked=$false
-        $wpf_DblWifi.IsChecked=$false
-        $wpf_DblAH.IsChecked=$false
-        $wpf_DblLocTrack.IsChecked=$false
-        $wpf_DblStorage.IsChecked=$false
-        $wpf_DblHiber.IsChecked=$false
-        $wpf_DblDVR.IsChecked=$false
-        $wpf_DblPower.IsChecked=$false
-        $wpf_DblDisplay.IsChecked=$false
-        $wpf_DblPersonalize.IsChecked=$false
-    }
-    Write-Host $(If ( $EnableMode ) {"Enabling Fast Preset"} Else {"Disabling Fast Preset"})
-    }
-)
-
-$wpf_megaPresetButton.Add_Click({    
-    $EnableMode = $wpf_megaPresetButton.IsChecked
-    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
-    If ($ToggleValue -ne 1){
-        $wpf_fastPresetButton.IsEnabled = $false
-        $wpf_fastPresetButton.Style = $wpf_fastPresetButton.TryFindResource("ToggleSwitchStyleDisabled")
-        $wpf_fastPresetButton.Cursor = "No"
-        $wpf_DblTelemetry.IsChecked=$true
-        $wpf_DblWifi.IsChecked=$true
-        $wpf_DblAH.IsChecked=$true
-        $wpf_DblDeleteTempFiles.IsChecked=$true
-        $wpf_DblDiskCleanup.IsChecked=$true
-        $wpf_DblLocTrack.IsChecked=$true
-        $wpf_DblStorage.IsChecked=$true
-        $wpf_DblHiber.IsChecked=$true
-        $wpf_DblDVR.IsChecked=$true
-        $wpf_DblPower.IsChecked=$true
-        $wpf_DblDisplay.IsChecked=$true
-        $wpf_DblRemoveCortana.IsChecked=$true
-        $wpf_DblRightClickMenu.IsChecked=$true
-        $wpf_DblDisableUAC.IsChecked=$true
-        $wpf_DblPersonalize.IsChecked=$true
-    }
-    if ($ToggleValue -ne 0){
-        $wpf_fastPresetButton.IsEnabled = $true
-        $wpf_fastPresetButton.Style = $wpf_fastPresetButton.TryFindResource("ToggleSwitchStyleGreen")
-        $wpf_fastPresetButton.Cursor = "Hand"
-        $wpf_DblTelemetry.IsChecked=$false
-        $wpf_DblWifi.IsChecked=$false
-        $wpf_DblAH.IsChecked=$false
-        $wpf_DblDeleteTempFiles.IsChecked=$false
-        $wpf_DblDiskCleanup.IsChecked=$false
-        $wpf_DblLocTrack.IsChecked=$false
-        $wpf_DblStorage.IsChecked=$false
-        $wpf_DblHiber.IsChecked=$false
-        $wpf_DblDVR.IsChecked=$false
-        $wpf_DblPower.IsChecked=$false
-        $wpf_DblDisplay.IsChecked=$false
-        $wpf_DblRemoveCortana.IsChecked=$false
-        $wpf_DblRightClickMenu.IsChecked=$false
-        $wpf_DblDisableUAC.IsChecked=$false
-        $wpf_DblPersonalize.IsChecked=$false
-    }
-    Write-Host $(If ( $EnableMode ) {"Enabling Mega Preset"} Else {"Disabling Mega Preset"})
-    }
-)
 
 function Get-ToggleValue {
     param (
@@ -1457,21 +1438,63 @@ function Toggle-RegistryValue {
         Write-Host $DisableMessage
     }
 }
-$wpf_ToggleBingSearchMenu.IsChecked = Get-ToggleValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled'
-$wpf_ToggleBingSearchMenu.Add_Click({
-    Toggle-RegistryValue -CheckBox $wpf_ToggleBingSearchMenu -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled' -TrueValue 1 -FalseValue 0 -EnableMessage "Enabled Bing Search" -DisableMessage "Disabling Bing Search"
-})
 
-$wpf_ToggleNumLock.IsChecked = Get-ToggleValue -Path 'HKCU:\Control Panel\Keyboard' -Name 'InitialKeyboardIndicators'
-$wpf_ToggleNumLock.Add_Click({
+function Get-WindowsTheme {
+    $themeRegistryPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize'
+
+    $appsTheme = Get-ItemProperty -Path $themeRegistryPath -Name 'AppsUseLightTheme'
+    $systemTheme = Get-ItemProperty -Path $themeRegistryPath -Name 'SystemUsesLightTheme'
+
+    if ($appsTheme.AppsUseLightTheme -eq 1) {
+        return $false
+    } else {
+        return $true
+    }
+}
+$wpf_ToggleDarkMode.IsChecked = Get-WindowsTheme
+function Invoke-ToggleDarkMode {
+    $themeRegistryPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize'
+    $EnableDarkMode = $wpf_ToggleDarkMode.IsChecked
+    $appsTheme = Get-ItemProperty -Path $themeRegistryPath -Name 'AppsUseLightTheme'
+    $systemTheme = Get-ItemProperty -Path $themeRegistryPath -Name 'SystemUsesLightTheme'
+
+    if ($appsTheme.AppsUseLightTheme -eq 1) {
+        # Dark theme is currently active, switch to light theme
+        Set-ItemProperty -Path $themeRegistryPath -Name 'AppsUseLightTheme' -Value 0
+        Set-ItemProperty -Path $themeRegistryPath -Name 'SystemUsesLightTheme' -Value 0
+        #Write-Host "Switched to Dark Theme."
+    } else {
+        # Light theme is currently active, switch to dark theme
+        Set-ItemProperty -Path $themeRegistryPath -Name 'AppsUseLightTheme' -Value 1
+        Set-ItemProperty -Path $themeRegistryPath -Name 'SystemUsesLightTheme' -Value 1
+        #Write-Host "Switched to Light Theme."
+    }
+    Write-Host $(If ( $EnableDarkMode ) {"Enabling Dark Mode"} Else {"Disabling Dark Mode"})
+}
+function Get-CheckerTweaks{
+    $a = $wpf_ToggleBingSearchMenu.IsChecked = Get-ToggleValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled'
+    $b = $wpf_ToggleNumLock.IsChecked = Get-ToggleValue -Path 'HKCU:\Control Panel\Keyboard' -Name 'InitialKeyboardIndicators'
+    $c = $wpf_ToggleExt.IsChecked = (Get-ToggleValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'HideFileExt') -eq 0
+    $d = $wpf_ToggleMouseAcceleration.IsChecked = (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseSpeed') -and (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold1') -and (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold2')
+    $getValue = Get-ItemPropertyValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Hidden'
+    $e = $wpf_ToggleHiddenFiles.IsChecked = $(If ($getValue -eq 0) {$false} Else {$true})
+    $f = $wpf_ToggleSearch.IsChecked = (Get-ToggleValue -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'SearchBoxTaskbarMode') -eq 0
+    $g = $wpf_TogglefIPv6.IsChecked = $(If ((Get-NetAdapterBinding -Name 'Ethernet' -ComponentID ms_tcpip6).Enabled -eq "True" -And $(Get-NetAdapterBinding -Name 'Ethernet' -ComponentID ms_tcpip6).Enabled -eq "False") {$true} Else {$false})
+
+    return $a -and $b -and $c -and $d -and $e -and $f -and $g
+}
+Get-CheckerTweaks
+
+function Invoke-ToggleBingSearchMenu{
+    Toggle-RegistryValue -CheckBox $wpf_ToggleBingSearchMenu -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled' -TrueValue 1 -FalseValue 0 -EnableMessage "Enabled Bing Search" -DisableMessage "Disabling Bing Search"
+}
+function Invoke-ToggleNumLock{
     Toggle-RegistryValue -CheckBox $wpf_ToggleNumLock -Path 'HKCU:\Control Panel\Keyboard' -Name 'InitialKeyboardIndicators' -TrueValue 2 -FalseValue 0 -EnableMessage "Enabling Numlock on startup" -DisableMessage "Disabling Numlock on startup"
-})
-$wpf_ToggleExt.IsChecked = (Get-ToggleValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'HideFileExt') -eq 0
-$wpf_ToggleExt.Add_Click({
+}
+function Invoke-ToggleExt{
     Toggle-RegistryValue -CheckBox $wpf_ToggleExt -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'HideFileExt' -TrueValue 0 -FalseValue 1 -EnableMessage "Showing file extentions" -DisableMessage "Hiding file extensions"
-})
-$wpf_ToggleMouseAcceleration.IsChecked = (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseSpeed') -and (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold1') -and (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold2')
-$wpf_ToggleMouseAcceleration.Add_Click({    
+}
+function Invoke-ToggleMouseAcceleration{    
     $EnableMode = $wpf_ToggleMouseAcceleration.IsChecked
     $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
     If ($ToggleValue -ne 1){
@@ -1488,9 +1511,7 @@ $wpf_ToggleMouseAcceleration.Add_Click({
     }
     Write-Host $(If ( $EnableMode ) {"Enabling Mouse Acceleration"} Else {"Disabling Mouse Acceleration"})
     }
-)
-$wpf_TogglefIPv6.IsChecked = $(If ((Get-NetAdapterBinding -Name 'Ethernet' -ComponentID ms_tcpip6).Enabled -eq "True" -And $(Get-NetAdapterBinding -Name 'Ethernet' -ComponentID ms_tcpip6).Enabled -eq "False") {$true} Else {$false})
-$wpf_TogglefIPv6.Add_Click({    
+function Invoke-TogglefIPv6{    
     $EnableMode = $wpf_TogglefIPv6.IsChecked
     $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
     If ($ToggleValue -ne 1){
@@ -1501,16 +1522,12 @@ $wpf_TogglefIPv6.Add_Click({
     }
     Write-Host $(If ( $EnableMode ) {"Enabling IPv6"} Else {"Disabling IPv6"})
     }
-)
-$getValue = Get-ItemPropertyValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Hidden'
-$wpf_ToggleHiddenFiles.IsChecked = $(If ($getValue -eq 0) {$false} Else {$true})
-$wpf_ToggleHiddenFiles.Add_Click({
+function Invoke-ToggleHiddenFiles{
     Toggle-RegistryValue -CheckBox $wpf_ToggleHiddenFiles -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Hidden' -TrueValue 1 -FalseValue 0 -EnableMessage "Showing hidden files" -DisableMessage "Hide hidden files"
-})
-$wpf_ToggleSearch.IsChecked = (Get-ToggleValue -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'SearchBoxTaskbarMode') -eq 0
-$wpf_ToggleSearch.Add_Click({
+}
+function Invoke-ToggleSearch{
     Toggle-RegistryValue -CheckBox $wpf_ToggleSearch -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'SearchBoxTaskbarMode' -TrueValue 0 -FalseValue 2 -EnableMessage "Hiding search box" -DisableMessage "Showing search box"
-})
+}
 
 ########################################### /OPTIMIZATION ########################################### 
 ########################################### UPDATES ########################################### 
@@ -1845,26 +1862,58 @@ function Invoke-InstallMessage {
     [System.Windows.MessageBox]::Show("Done", $MessageboxTitle, [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
 }
 
+function Start-Sleep($seconds) {
+    $doneDT = (Get-Date).AddSeconds($seconds)
+    while($doneDT -gt (Get-Date)) {
+        $secondsLeft = $doneDT.Subtract((Get-Date)).TotalSeconds
+        $percent = ($seconds - $secondsLeft) / $seconds * 100
+        Write-Progress -Activity "Loading" -Status "Loading..." -SecondsRemaining $secondsLeft -PercentComplete $percent
+        [System.Threading.Thread]::Sleep(500)
+    }
+    Write-Progress -Activity "Loading" -Status "Loading..." -SecondsRemaining 0 -Completed
+}
+
 function Invoke-ManageInstall {
     param(
             $program,
+            $PackageManger,
             $PackageName,
             $manage 
         )
 
-    if($manage -eq "Installing"){
+    if($manage -eq "Installing" -and $PackageManger -eq "pip"){
+        Write-Host "Installing $name package" -ForegroundColor Green
+        python -m pip install --no-input --quiet --upgrade pip
+        pip install --no-input --quiet $PackageName
+    }elseif($manage -eq "Installing" -and $PackageManger -eq "winget"){
         Write-Host "Installing $name package" -ForegroundColor Green
         Start-Process -FilePath winget -ArgumentList "install -e --accept-source-agreements --accept-package-agreements --silent $PackageName" -NoNewWindow -Wait
-    }
-    if($manage -eq "Uninstalling"){
-        Write-Host "Uninstalling $name package" -ForegroundColor Red
-        Start-Process -FilePath winget -ArgumentList "uninstall -e --purge --force --silent $PackageName" -NoNewWindow -Wait
-    }
-    if($manage -eq "Upgrading"){
-        Write-Host "Upgrading $name package" -ForegroundColor Blue
-        Start-Process -FilePath winget -ArgumentList "upgrade --silent $PackageName" -NoNewWindow -Wait
+    }elseif($manage -eq "Installing" -and $PackageManger -eq "choco"){
+        Write-Host "Installing $name package" -ForegroundColor Green
+        Start-Process -FilePath choco -ArgumentList "install $PackageName -y" -NoNewWindow -Wait
     }
 
+    if($manage -eq "Uninstalling" -and $PackageManger -eq "pip"){
+        Write-Host "Uninstalling $name package" -ForegroundColor Red
+        pip uninstall --yes --quiet $PackageName
+    }elseif($manage -eq "Uninstalling" -and $PackageManger -eq "winget"){
+        Write-Host "Uninstalling $name package" -ForegroundColor Green
+        Start-Process -FilePath winget -ArgumentList "uninstall -e --purge --force --silent $PackageName" -NoNewWindow -Wait
+    }elseif($manage -eq "Uninstalling" -and $PackageManger -eq "choco"){
+        Write-Host "Uninstalling $name package" -ForegroundColor Green
+        Start-Process -FilePath choco -ArgumentList "uninstall $PackageName -y" -NoNewWindow -Wait
+    }
+
+    if($manage -eq "Upgrading" -and $PackageManger -eq "pip"){
+        Write-Host "Upgrading $name package" -ForegroundColor Blue
+        pip install --no-input --quiet $PackageName --upgrade
+    }elseif($manage -eq "Upgrading" -and $PackageManger -eq "winget"){
+        Write-Host "Upgrading $name package" -ForegroundColor Green
+        Start-Process -FilePath winget -ArgumentList "upgrade --silent $PackageName" -NoNewWindow -Wait
+    }elseif($manage -eq "Upgrading" -and $PackageManger -eq "choco"){
+        Write-Host "Upgrading $name package" -ForegroundColor Green
+        Start-Process -FilePath choco -ArgumentList "upgrade $PackageName -y" -NoNewWindow -Wait
+    }
 }
 
 $programs = @(
@@ -2099,6 +2148,16 @@ $programs = @(
         "winget": "Valve.Steam"
     }',
     '{
+        "id": "DblInstallHeroic",
+        "name": "Heroic Games Launcher",
+        "winget": "HeroicGamesLauncher.HeroicGamesLauncher"
+    }',
+    '{
+        "id": "DblPythonEpicCLI",
+        "name": "Legendary Epic (Python)",
+        "pip": "legendary-gl"
+    }',
+    '{
         "id": "DblInstallUbisoft",
         "name": "Ubisoft Connect",
         "winget": "Ubisoft.Connect"
@@ -2112,6 +2171,11 @@ $programs = @(
         "id": "DblInstallBlender",
         "name": "Blender",
         "winget": "BlenderFoundation.Blender"
+    }',
+    '{
+        "id": "DblInstallFigma",
+        "name": "Figma",
+        "winget": "Figma.Figma"
     }',
     '{
         "id": "DblInstallCider",
@@ -2147,6 +2211,11 @@ $programs = @(
         "id": "DblInstallObs",
         "name": "OBS Studio",
         "winget": "OBSProject.OBSStudio"
+    }',
+    '{
+        "id": "DblChocoSpotify",
+        "name": "Spotify",
+        "choco": "spotify"
     }',
     '{
         "id": "DblInstallSharex",
@@ -2345,60 +2414,110 @@ function Invoke-installButton {
         # Extract application details
         $id = $appDetails.id
         $name = $appDetails.name
+
         $winget = $appDetails.winget
+
+        $idPython = $($id -Like "DblPython*")
+        $pipPackage = $appDetails.pip
+
+        $idChoco = $($id -Like "DblChoco*")
+        $choco = $appDetails.choco
 
         $checkBox = $psform.FindName("$id")
         $isChecked = $checkBox.IsChecked
 
-        if ($isChecked -eq $true) {
-            Invoke-ManageInstall -manage "Installing" -program $name -PackageName $winget
-        } else {
+        if ($isChecked -eq $true -and $idPython) {
+            Invoke-ManageInstall -PackageManger "pip" -manage "Installing" -program $name -PackageName $pipPackage
+        }elseif ($isChecked -eq $true -and $idChoco){
+            Invoke-ManageInstall -PackageManger "choco" -manage "Installing" -program $name -PackageName $choco
+        }elseif ($isChecked -eq $true){
+            Invoke-ManageInstall -PackageManger "winget" -manage "Installing" -program $name -PackageName $winget
+        }else {
             continue
         }
-        #$i++
     }
     
     Invoke-InstallMessage -msg "install"
 }
 
 function Invoke-getInstallButton {
+    
+    # Export winget package information to a JSON file
+    $wingetExportPath = Join-Path $env:TEMP "wingetPackage.json"
+    Start-Process -FilePath winget -ArgumentList "export -o $wingetExportPath" -NoNewWindow -RedirectStandardOutput "$process.StandardOutput.ReadToEnd()"
+    Start-Sleep (2)
+    # Read and parse the JSON file
+    $jsonObject = Get-Content -Raw -Path $wingetExportPath | ConvertFrom-Json
 
-    winget export -o "$ENV:TEMP\package.json"
-    $jsonFilePath = "$ENV:TEMP\package.json"
-    $jsonContent = Get-Content -Raw -Path $jsonFilePath
-    $jsonObject = $jsonContent | ConvertFrom-Json
-    foreach ($jsonObject in $jsonObject.Sources.Packages) {
-        foreach ($program in $programs) {
-            $appDetails = $program | ConvertFrom-Json
-            $id = $appDetails.id
-            $name = $appDetails.name
-            $winget = $appDetails.winget
-            $checkBox = $psform.FindName("$id")
-            if ($jsonObject.PackageIdentifier -eq $winget) {
-                #Write-Host "Match found for PackageIdentifier $($jsonObject.PackageIdentifier) and id $($appDetails.id)"
+    # Export Choco packages to a text file
+    $chocoExportPath = Join-Path $env:TEMP "chocoPackage.json"
+    Start-Process -FilePath choco -ArgumentList "export -o $chocoExportPath" -NoNewWindow -RedirectStandardOutput "$process.StandardOutput.ReadToEnd()"
+    Start-Sleep (2)
+    $chocoObject = Get-Content -Path $chocoExportPath
+    $xml = [xml]$chocoObject
+
+    # Export Python packages to a text file
+    pip freeze | Out-File -FilePath "$env:TEMP\pipPackage.txt"
+    $PIPpackage = "$env:TEMP\PIPpackage.txt" 
+
+    # Process winget packages and Python packages in a single loop
+    foreach ($program in $programs) {
+        $appDetails = $program | ConvertFrom-Json
+        $id = $appDetails.id
+        $checkBox = $psform.FindName($id)
+
+        # Process winget packages
+        foreach ($package in $jsonObject.Sources.Packages) {
+            if ($package.PackageIdentifier -eq $appDetails.winget) {
                 $checkBox.IsChecked = $true
-                #Write-Host $checkBox
+            }
+        }
+
+        # Process Python packages
+        foreach ($line in Get-Content -Path $PIPpackage) {
+            $index = $line.IndexOf('=')
+            $result = $line.Substring(0, $index).Trim()
+            if ($result -eq $appDetails.python) {
+                $checkBox.IsChecked = $true
+            }
+        }
+
+        # Process Choco packages
+        foreach ($package in $xml.packages.package) {
+            if ($package.id -eq $appDetails.choco) {
+                $checkBox.IsChecked = $true
             }
         }
     }
-    Remove-Item -Path $jsonFilePath -Force
 }
 
 function Invoke-UninstallButton {
     foreach ($program in $programs) {
+        # Convert JSON string to PowerShell object
         $appDetails = $program | ConvertFrom-Json
 
         # Extract application details
         $id = $appDetails.id
         $name = $appDetails.name
+
         $winget = $appDetails.winget
+
+        $idPython = $($id -Like "DblPython*")
+        $pipPackage = $appDetails.pip
+
+        $idChoco = $($id -Like "DblChoco*")
+        $choco = $appDetails.choco
 
         $checkBox = $psform.FindName("$id")
         $isChecked = $checkBox.IsChecked
 
-        if ($isChecked -eq $true) {    
-            Invoke-ManageInstall -manage "Uninstalling" -program $name -PackageName $winget
-        } else {
+        if ($isChecked -eq $true -and $idPython) {
+            Invoke-ManageInstall -PackageManger "pip" -manage "Uninstalling" -program $name -PackageName $pipPackage
+        }elseif ($isChecked -eq $true -and $idChoco){
+            Invoke-ManageInstall -PackageManger "winget" -manage "Uninstalling" -program $name -PackageName $choco
+        }elseif ($isChecked -eq $true){
+            Invoke-ManageInstall -PackageManger "winget" -manage "Uninstalling" -program $name -PackageName $winget
+        }else {
             continue
         }
     }
@@ -2408,19 +2527,31 @@ function Invoke-UninstallButton {
 
 function Invoke-UpgradeButton {
     foreach ($program in $programs) {
+        # Convert JSON string to PowerShell object
         $appDetails = $program | ConvertFrom-Json
 
         # Extract application details
         $id = $appDetails.id
         $name = $appDetails.name
+
         $winget = $appDetails.winget
+
+        $idPython = $($id -Like "DblPython*")
+        $pipPackage = $appDetails.pip
+
+        $idChoco = $($id -Like "DblChoco*")
+        $choco = $appDetails.choco
 
         $checkBox = $psform.FindName("$id")
         $isChecked = $checkBox.IsChecked
 
-        if ($isChecked -eq $true) {
-            Invoke-ManageInstall -manage "Upgrading" -program $name -PackageName $winget
-        } else {
+        if ($isChecked -eq $true -and $idPython) {
+            Invoke-ManageInstall -PackageManger "pip" -manage "Upgrading" -program $name -PackageName $pipPackage
+        }elseif ($isChecked -eq $true -and $idChoco){
+            Invoke-ManageInstall -PackageManger "winget" -manage "Upgrading" -program $name -PackageName $choco
+        }elseif ($isChecked -eq $true){
+            Invoke-ManageInstall -PackageManger "winget" -manage "Upgrading" -program $name -PackageName $winget
+        }else {
             continue
         }
     }
