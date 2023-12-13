@@ -9,7 +9,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 - I'm not sure how to show ASCII output in .log
 
-## [1.6] - 2023-12-05
+## [1.7] - 2023-12-14
+
+### Added
+
+- Added possibility to install applications with **pip**
+- Added legendary, heroic, spotify, and Figma to **Install** tab
+
+### Changed
+
+- Improved Code Quality
+
+## [1.6] - 2023-12-12
 
 ### Added
 
