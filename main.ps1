@@ -50,30 +50,12 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-################################
-####  Navigation Controls  #####
-################################
-function Invoke-Tabs {
-    <#
-    
-        .DESCRIPTION
-        Sole purpose of this fuction reduce duplicated code for switching between tabs. 
-    #>
-
-    Param ($ClickedTab)
-    $Tabs = Get-Variable wpf_Tab?BT
-    $TabNav = Get-Variable wpf_TabNav
-    $x = [int]($ClickedTab -replace "wpf_Tab","" -replace "BT","") - 1
-
-    0..($Tabs.Count -1 ) | ForEach-Object {
-        
-        if ($x -eq $psitem){
-            $TabNav.value.Items[$psitem].IsSelected = $true
-        }
-        else{
-            $TabNav.value.Items[$psitem].IsSelected = $false
-        }
-    }
+$radioButtons = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "RadioButton"}
+foreach ($radioButton in $radioButtons){
+    $radioButton.value.Add_Click({
+        [System.Object]$Sender = $args[0]
+        Invoke-Tabs "wpf_$($Sender.name)"
+    })
 }
 
 $buttons = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "Button"}
@@ -147,6 +129,7 @@ function Invoke-Button {
         "wpf_DblUninstall" {Invoke-UninstallButton}
         "wpf_DblUpgrade" {Invoke-UpgradeButton}
         "wpf_DblClearPrograms" {Invoke-ClearProgramsButton}
+        "wpf_ResetButton" {Invoke-ResetButton}
     }
 }
 
@@ -182,6 +165,39 @@ function Invoke-Checkbox {
         "wpf_ToggleSearch" {Invoke-ToggleSearch}
     }
 }
+################################
+####  Navigation Controls  #####
+################################
+function Invoke-Tabs {
+
+    <#
+    
+        .DESCRIPTION
+        Sole purpose of this fuction reduce duplicated code for switching between tabs. 
+    
+    #>
+
+    Param ($ClickedTab)
+    $Tabs = Get-Variable wpf_Tab?BT
+    $TabNav = Get-Variable wpf_TabNav
+    $x = [int]($ClickedTab -replace "wpf_Tab","" -replace "BT","") - 1
+
+    $TabSearchName = "Tab2"
+    $TabSearchItem = $psform.FindName($TabSearchName)
+
+    0..($Tabs.Count -1 ) | ForEach-Object {
+        
+        if ($x -eq $psitem){
+            $TabNav.value.Items[$psitem].IsSelected = $true
+        }
+        else{
+            $TabNav.value.Items[$psitem].IsSelected = $false
+        }
+    }
+
+    $isVisible = if ($TabSearchItem.isSelected) {"Visible"} else {"Collapsed"}; $wpf_CheckboxFilter.Visibility = $isVisible; $wpf_ResetButton.Visibility = $isVisible
+}
+Invoke-Tabs "wpf_Tab1BT"
 
 ################################
 #########  Functions  ##########
@@ -337,12 +353,12 @@ function Get-DiskSize {
 ########################################### /INFO ###########################################    
 ########################################### /DEBLOAT ###########################################    
 
-function Remove-WinUtilAPPX {
+function Remove-WinDebloatAPPX {
     <#
         .DESCRIPTION
         This function will remove any of the provided APPX names
         .EXAMPLE
-        Remove-WinUtilAPPX -Name "Microsoft.Microsoft3DViewer"
+        Remove-WinDebloatAPPX -Name "Microsoft.Microsoft3DViewer"
     #>
     param (
         $Name
@@ -448,7 +464,7 @@ function Invoke-debloatGaming{
     )
 
     foreach ($app in $appx) {
-        Remove-WinUtilAPPX $app
+        Remove-WinDebloatAPPX $app
     }
     
     $TeamsPath = [System.IO.Path]::Combine($env:LOCALAPPDATA, 'Microsoft', 'Teams')
@@ -570,7 +586,7 @@ function Invoke-debloatALL{
     )
 
     foreach ($app in $appx) {
-        Remove-WinUtilAPPX $app
+        Remove-WinDebloatAPPX $app
     }
     
     $TeamsPath = [System.IO.Path]::Combine($env:LOCALAPPDATA, 'Microsoft', 'Teams')
@@ -1268,7 +1284,7 @@ function Invoke-optimizationButton{
     If ( $wpf_DblRemoveEdge.IsChecked -eq $true ) {
         # Standalone script by AveYo Source: https://raw.githubusercontent.com/AveYo/fox/main/Edge_Removal.bat
 
-        curl.exe "https://raw.githubusercontent.com/ChrisTitusTech/winutil/main/edgeremoval.bat" -o $ENV:temp\\edgeremoval.bat
+        curl.exe "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/edgeremoval.bat" -o $ENV:temp\\edgeremoval.bat
         Start-Process $ENV:temp\\edgeremoval.bat
 
         $wpf_DblRemoveEdge.IsChecked= $false
@@ -1897,10 +1913,10 @@ function Invoke-ManageInstall {
         Write-Host "Uninstalling $name package" -ForegroundColor Red
         pip uninstall --yes --quiet $PackageName
     }elseif($manage -eq "Uninstalling" -and $PackageManger -eq "winget"){
-        Write-Host "Uninstalling $name package" -ForegroundColor Green
+        Write-Host "Uninstalling $name package" -ForegroundColor Red
         Start-Process -FilePath winget -ArgumentList "uninstall -e --purge --force --silent $PackageName" -NoNewWindow -Wait
     }elseif($manage -eq "Uninstalling" -and $PackageManger -eq "choco"){
-        Write-Host "Uninstalling $name package" -ForegroundColor Green
+        Write-Host "Uninstalling $name package" -ForegroundColor Red
         Start-Process -FilePath choco -ArgumentList "uninstall $PackageName -y" -NoNewWindow -Wait
     }
 
@@ -1908,10 +1924,10 @@ function Invoke-ManageInstall {
         Write-Host "Upgrading $name package" -ForegroundColor Blue
         pip install --no-input --quiet $PackageName --upgrade
     }elseif($manage -eq "Upgrading" -and $PackageManger -eq "winget"){
-        Write-Host "Upgrading $name package" -ForegroundColor Green
+        Write-Host "Upgrading $name package" -ForegroundColor Blue
         Start-Process -FilePath winget -ArgumentList "upgrade --silent $PackageName" -NoNewWindow -Wait
     }elseif($manage -eq "Upgrading" -and $PackageManger -eq "choco"){
-        Write-Host "Upgrading $name package" -ForegroundColor Green
+        Write-Host "Upgrading $name package" -ForegroundColor Blue
         Start-Process -FilePath choco -ArgumentList "upgrade $PackageName -y" -NoNewWindow -Wait
     }
 }
@@ -2268,6 +2284,11 @@ $programs = @(
         "winget": "SumatraPDF.SumatraPDF"
     }',
     '{
+        "id": "DblChocoWPS",
+        "name": "WPS Office",
+        "choco": "wps-office-free"
+    }',
+    '{
         "id": "DblInstallWinmerge",
         "name": "WinMerge",
         "winget": "WinMerge.WinMerge"
@@ -2514,7 +2535,7 @@ function Invoke-UninstallButton {
         if ($isChecked -eq $true -and $idPython) {
             Invoke-ManageInstall -PackageManger "pip" -manage "Uninstalling" -program $name -PackageName $pipPackage
         }elseif ($isChecked -eq $true -and $idChoco){
-            Invoke-ManageInstall -PackageManger "winget" -manage "Uninstalling" -program $name -PackageName $choco
+            Invoke-ManageInstall -PackageManger "choco" -manage "Uninstalling" -program $name -PackageName $choco
         }elseif ($isChecked -eq $true){
             Invoke-ManageInstall -PackageManger "winget" -manage "Uninstalling" -program $name -PackageName $winget
         }else {
@@ -2548,7 +2569,7 @@ function Invoke-UpgradeButton {
         if ($isChecked -eq $true -and $idPython) {
             Invoke-ManageInstall -PackageManger "pip" -manage "Upgrading" -program $name -PackageName $pipPackage
         }elseif ($isChecked -eq $true -and $idChoco){
-            Invoke-ManageInstall -PackageManger "winget" -manage "Upgrading" -program $name -PackageName $choco
+            Invoke-ManageInstall -PackageManger "choco" -manage "Upgrading" -program $name -PackageName $choco
         }elseif ($isChecked -eq $true){
             Invoke-ManageInstall -PackageManger "winget" -manage "Upgrading" -program $name -PackageName $winget
         }else {
@@ -2666,6 +2687,52 @@ $wpf_ToggleDevPreset.Add_Click({
 $wpf_ToggleGamingPreset.Add_Click({
     Invoke-ToggleGamingPreset
 })
+
+function Invoke-Filter {
+    
+    foreach ($program in $programs) {
+        $appDetails = $program | ConvertFrom-Json
+        $id = $appDetails.id
+        
+        $filter = $wpf_CheckboxFilter.Text
+        $checkBoxes = $psform.FindName("$id")
+
+        Foreach ($CheckBox in $CheckBoxes) {
+            if ($CheckBox.Content.ToLower().Contains($filter)) {
+                $CheckBox.Visibility = "Visible"
+                #Write-Host "Match found: $name"
+            }
+            elseif($CheckBox.Content.Contains($filter)){
+                $CheckBox.Visibility = "Visible"
+            }
+            elseif($CheckBox.Content.ToUpper().Contains($filter)){
+                $CheckBox.Visibility = "Visible"
+            }
+            else {
+                $CheckBox.Visibility = "Collapsed"
+            }
+        }
+    }
+}
+$wpf_CheckboxFilter.Add_TextChanged({
+    Invoke-Filter
+})
+
+function Invoke-ResetButton {
+    $wpf_CheckboxFilter.Text = "Search"
+
+    foreach ($program in $programs) {
+        $appDetails = $program | ConvertFrom-Json
+        $id = $appDetails.id
+        
+        $checkBoxes = $psform.FindName("$id")
+
+        Foreach ($CheckBox in $CheckBoxes) {
+            $CheckBox.Visibility = "Visible"
+            $CheckBox.isChecked = $false    
+        }
+    }
+}
 ########################################### /INSTALL ########################################## 
 Get-Author
 $wpf_diskNameInfo.Add_SelectionChanged({Get-DiskInfo})
