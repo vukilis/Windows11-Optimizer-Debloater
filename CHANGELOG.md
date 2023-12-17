@@ -7,14 +7,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Known Issues]
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
-- I'm not sure how to show ASCII output in .log
+- I'm not sure how to show ASCII output in .log.
+- When launch script, **Info** tab button is not visually selected.
+
+## [1.8] - 2023-12-18
+
+### Added
+
+- **Search bar** to filter applications. It's hided if not selected **Install** tab.
+- **Reset** button to reset search filter.
+
+### Changed
+
+- **UI** and improved. 
+- Tab buttons to **radioButtons** and now have color effects. 
+- The colors for the general **buttons**.
+- Appearance for checkboxes and comboboxes.
+
+## Fix
+
+- Uninstall and upgrade with **choco** package manager.
+- Color output for uninstall and upgrade packages. 
 
 ## [1.7] - 2023-12-14
 
 ### Added
 
-- Added possibility to install applications with **pip**
-- Added legendary, heroic, spotify, and Figma to **Install** tab
+- Possibility to install applications with **pip**.
+- Legendary, heroic, spotify, and Figma to **Install** tab.
 
 ### Changed
 
@@ -24,10 +44,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
-- Added **Install** tab to install winget applications.
-- Added presets for faster installation.
-- Added **region** settings to **config** tab
-- Added possibility to scrolling.
+- **Install** tab to install winget applications.
+- Presets for faster installation.
+- **region** settings to **config** tab.
+- Possibility to scrolling.
 
 ### Changed
 
@@ -37,16 +57,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
-- Create restore point before run optimization tweaking 
+- Create restore point before run optimization tweaking.
 
 ### Changed
 
-- Improved Code Quality
-- removed garbage code 
+- Improved Code Quality.
+- removed garbage code.
 
 ### Fix
 
-- No more output error for some services 
+- No more output error for some services. 
 
 ## [1.4] - 2023-12-03
 
@@ -71,17 +91,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- optimization tweak **NumLock On Startup** is now toggle tweak.
-- optimization tweak **Show File Extensions** is now toggle tweak.
-- optimization tweak **Mouse Acceleration** is now toggle tweak.
-- on hover cursor from **Arrow** to **Hand** on all buttons, checkboxes and select elements 
-- some visual and functionality fixes
+- Optimization tweak **NumLock On Startup** is now toggle tweak.
+- Optimization tweak **Show File Extensions** is now toggle tweak.
+- Optimization tweak **Mouse Acceleration** is now toggle tweak.
+- On hover cursor from **Arrow** to **Hand** on all buttons, checkboxes and select elements. 
+- Some visual and functionality fixes.
 
 ## [1.2] - 2023-11-20
 
 ### Added
 
-- Removes new unnecessary preinstalled app - **Dev Home**
+- Removes new unnecessary preinstalled app - **Dev Home**.
 
 ## [1.1] - 2023-11-10
 
