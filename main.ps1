@@ -2678,16 +2678,6 @@ function Invoke-ToggleGamingPreset {
     if ($IsChecked) { Write-Host "Enabling Gaming Preset" -ForegroundColor Green } else { Write-Host "Disabling Gaming Preset" -ForegroundColor Red }
 }
 
-$wpf_ToggleLitePreset.Add_Click({
-    Invoke-ToggleLitePreset
-})
-$wpf_ToggleDevPreset.Add_Click({
-    Invoke-ToggleDevPreset
-})
-$wpf_ToggleGamingPreset.Add_Click({
-    Invoke-ToggleGamingPreset
-})
-
 function Invoke-Filter {
     
     foreach ($program in $programs) {
