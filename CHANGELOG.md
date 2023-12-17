@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - I'm not sure how to show ASCII output in .log.
 - When launch script, **Info** tab button is not visually selected.
 
-## [1.8] - 2023-12-18
+## [1.8] - 2023-12-17
 
 ### Added
 
@@ -24,7 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - The colors for the general **buttons**.
 - Appearance for checkboxes and comboboxes.
 
-## Fix
+### Fix
 
 - Uninstall and upgrade with **choco** package manager.
 - Color output for uninstall and upgrade packages. 
