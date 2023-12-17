@@ -1906,7 +1906,7 @@ function Invoke-ManageInstall {
         Start-Process -FilePath winget -ArgumentList "install -e --accept-source-agreements --accept-package-agreements --silent $PackageName" -NoNewWindow -Wait
     }elseif($manage -eq "Installing" -and $PackageManger -eq "choco"){
         Write-Host "Installing $name package" -ForegroundColor Green
-        Start-Process -FilePath choco -ArgumentList "install $PackageName -y" -NoNewWindow -Wait
+        Start-Process -FilePath choco -ArgumentList "install $PackageName --ignore-checksums -y" -NoNewWindow -Wait
     }
 
     if($manage -eq "Uninstalling" -and $PackageManger -eq "pip"){
