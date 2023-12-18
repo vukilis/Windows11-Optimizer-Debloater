@@ -1287,7 +1287,7 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
-                                    <CheckBox Name="DblChocoWPS" Content="WPS Office" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                    <CheckBox Name="DblInstallWPS" Content="WPS Office" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
