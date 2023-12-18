@@ -895,7 +895,7 @@ function Get-Services {
 
 function Invoke-optimizationButton{
     # Invoke restore point
-    #Set-RestorePoint
+    Set-RestorePoint
     # Essential Tweaks
     If ( $wpf_DblTelemetry.IsChecked -eq $true ) {
         Write-Host "Disabling Telemetry..."
@@ -1900,21 +1900,21 @@ function Invoke-ManageInstall {
     if($manage -eq "Installing" -and $PackageManger -eq "pip"){
         Write-Host "Installing $name package" -ForegroundColor Green
         python -m pip install --no-input --quiet --upgrade pip
-        pip install --no-input --quiet $PackageName
+        pip install $PackageName --no-input --quiet 
     }elseif($manage -eq "Installing" -and $PackageManger -eq "winget"){
         Write-Host "Installing $name package" -ForegroundColor Green
-        Start-Process -FilePath winget -ArgumentList "install -e --accept-source-agreements --accept-package-agreements --silent $PackageName" -NoNewWindow -Wait
+        Start-Process -FilePath winget -ArgumentList "install --id $PackageName -e --accept-source-agreements --accept-package-agreements --disable-interactivity --silent" -NoNewWindow -Wait
     }elseif($manage -eq "Installing" -and $PackageManger -eq "choco"){
         Write-Host "Installing $name package" -ForegroundColor Green
-        Start-Process -FilePath choco -ArgumentList "install $PackageName --ignore-checksums -y" -NoNewWindow -Wait
+        Start-Process -FilePath choco -ArgumentList "install $PackageName -y" -NoNewWindow -Wait
     }
 
     if($manage -eq "Uninstalling" -and $PackageManger -eq "pip"){
         Write-Host "Uninstalling $name package" -ForegroundColor Red
-        pip uninstall --yes --quiet $PackageName
+        pip uninstall $PackageName --yes --quiet --no-input
     }elseif($manage -eq "Uninstalling" -and $PackageManger -eq "winget"){
         Write-Host "Uninstalling $name package" -ForegroundColor Red
-        Start-Process -FilePath winget -ArgumentList "uninstall -e --purge --force --silent $PackageName" -NoNewWindow -Wait
+        Start-Process -FilePath winget -ArgumentList "uninstall --id $PackageName -e --purge --force --disable-interactivity --silent" -NoNewWindow -Wait
     }elseif($manage -eq "Uninstalling" -and $PackageManger -eq "choco"){
         Write-Host "Uninstalling $name package" -ForegroundColor Red
         Start-Process -FilePath choco -ArgumentList "uninstall $PackageName -y" -NoNewWindow -Wait
@@ -1922,10 +1922,10 @@ function Invoke-ManageInstall {
 
     if($manage -eq "Upgrading" -and $PackageManger -eq "pip"){
         Write-Host "Upgrading $name package" -ForegroundColor Blue
-        pip install --no-input --quiet $PackageName --upgrade
+        pip install --upgrade $PackageName --no-input --quiet --no-cache
     }elseif($manage -eq "Upgrading" -and $PackageManger -eq "winget"){
         Write-Host "Upgrading $name package" -ForegroundColor Blue
-        Start-Process -FilePath winget -ArgumentList "upgrade --silent $PackageName" -NoNewWindow -Wait
+        Start-Process -FilePath winget -ArgumentList "upgrade --id $PackageName -e --accept-source-agreements --accept-package-agreements --disable-interactivity --silent --force" -NoNewWindow -Wait
     }elseif($manage -eq "Upgrading" -and $PackageManger -eq "choco"){
         Write-Host "Upgrading $name package" -ForegroundColor Blue
         Start-Process -FilePath choco -ArgumentList "upgrade $PackageName -y" -NoNewWindow -Wait
@@ -2284,9 +2284,9 @@ $programs = @(
         "winget": "SumatraPDF.SumatraPDF"
     }',
     '{
-        "id": "DblChocoWPS",
+        "id": "DblInstallWPS",
         "name": "WPS Office",
-        "choco": "wps-office-free"
+        "winget": "Kingsoft.WPSOffice"
     }',
     '{
         "id": "DblInstallWinmerge",
