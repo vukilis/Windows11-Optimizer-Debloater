@@ -4,26 +4,17 @@ Add-Type -AssemblyName PresentationFramework
 .NOTES
     Author      : Vuk1lis
     GitHub      : https://github.com/vukilis
-    Version 1.7
+    Version 1.9
 #>
 
 Start-Transcript $ENV:TEMP\Windows11_Optimizer_Debloater.log -Append
 
-# $xamlFile="path\to\your\MainWindow.xaml" #uncomment for development
-# $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/MainWindow.xaml") #uncomment for Production
+$xamlFile="MainWindow.xaml" #uncomment for development
+$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
+#$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
 [XML]$XAML=$inputXAML
-
-# Check if chocolatey is installed and get its version
-if ((Get-Command -Name choco -ErrorAction Ignore) -and ($chocoVersion = (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion)) {
-    Write-Output "Chocolatey Version $chocoVersion is already installed"
-}else {
-    Write-Output "Seems Chocolatey is not installed, installing now"
-    Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-    powershell choco feature enable -n allowGlobalConfirmation
-}
 
 $reader = New-Object System.Xml.XmlNodeReader $XAML
 try {
@@ -130,6 +121,11 @@ function Invoke-Button {
         "wpf_DblUpgrade" {Invoke-UpgradeButton}
         "wpf_DblClearPrograms" {Invoke-ClearProgramsButton}
         "wpf_ResetButton" {Invoke-ResetButton}
+        "wpf_DblAppInstallerUpgrade" {Invoke-AppInstaller}
+        "wpf_DblChocoInstall" {Invoke-ChocoInstall}
+        "wpf_DblChocoUpgrade" {Invoke-ChocoUpgrade}
+        "wpf_DblChocoUninstall" {Invoke-ChocoUninstall}
+        "wpf_DblWingetFix" {Invoke-FixesWinget}
     }
 }
 
@@ -895,7 +891,7 @@ function Get-Services {
 
 function Invoke-optimizationButton{
     # Invoke restore point
-    Set-RestorePoint
+    #Set-RestorePoint
     # Essential Tweaks
     If ( $wpf_DblTelemetry.IsChecked -eq $true ) {
         Write-Host "Disabling Telemetry..."
@@ -2722,6 +2718,57 @@ function Invoke-ResetButton {
             $CheckBox.isChecked = $false    
         }
     }
+}
+
+function Invoke-ChocoInstall {
+    #Check if chocolatey is installed and get its version
+    if ((Get-Command -Name choco -ErrorAction Ignore) -and ($chocoVersion = (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion)) {
+        Write-Host "Chocolatey Version $chocoVersion is already installed" -ForegroundColor Green
+    }else {
+        Write-Host "Seems Chocolatey is not installed, installing now" -ForegroundColor Purple
+        Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+        powershell choco feature enable -n allowGlobalConfirmation
+    }
+    Invoke-InstallMessage -msg "install"
+}
+
+function Invoke-ChocoUpgrade {
+    Write-Host "Upgrading chocolatey package" -ForegroundColor Blue
+    Start-Process -FilePath choco -ArgumentList "upgrade chocolatey -y" -NoNewWindow -Wait
+    Invoke-InstallMessage -msg "upgrade"
+}
+
+function Invoke-ChocoUninstall {
+    Write-Host "Uninstalling chocolatey package" -ForegroundColor Red
+    $chocoPath = $env:ChocolateyInstall
+    # Remove the folder
+    Remove-Item -Path $chocoPath -Recurse -Force
+    # Specify the name of the environment variable you want to remove
+    $chocoEnv = "ChocolateyInstall"
+    $chocoUpdateEnv = "ChocolateyLastPathUpdate"
+    # Remove the environment variable
+    [Environment]::SetEnvironmentVariable($chocoEnv, $null, [System.EnvironmentVariableTarget]::Machine)
+    [Environment]::SetEnvironmentVariable($chocoUpdateEnv, $null, [System.EnvironmentVariableTarget]::User)
+    Invoke-InstallMessage -msg "uninstall"
+}
+
+function Invoke-AppInstaller {
+    Write-Host "Upgrading App Installer" -ForegroundColor Green
+    #Add-AppxPackage https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
+    $AppInstaller = "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command { Add-AppxPackage '$AppInstaller' }" -NoNewWindow -Wait
+    Invoke-InstallMessage -msg "upgrade"
+}
+
+function Invoke-FixesWinget {
+
+    <#
+
+    .SYNOPSIS
+        Fixes Winget by running choco install winget
+    #>
+
+    Start-Process -FilePath "choco" -ArgumentList "install winget -y" -NoNewWindow -Wait
 }
 ########################################### /INSTALL ########################################## 
 Get-Author
