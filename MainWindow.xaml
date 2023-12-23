@@ -960,7 +960,23 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Margin="10">
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Margin="10,10,10,0">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,0" HorizontalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,360,0" HorizontalAlignment="Left">
+                                            <Label Content="CHOCO:" FontSize="14" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51"/>
+                                            <Button x:Name="DblChocoInstall" Content="INSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,0,0"/>
+                                            <Button x:Name="DblChocoUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,0,0"/>
+                                            <Button x:Name="DblChocoUninstall" Content="UNINSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,55,0" HorizontalAlignment="Right">
+                                            <Label Content="App Installer:" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" Foreground="#FFF4AB51"/>
+                                            <Button x:Name="DblAppInstallerUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,2,0" ToolTip="Winget is supported through App Installer starting on Windows 10 1809."/>
+                                            <Label Content="WINGET:" FontSize="14" FontWeight="Bold" Margin="45,0,5,0" Foreground="#FFF4AB51"/>
+                                            <Button x:Name="DblWingetFix" Content="FIX" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,2,0" ToolTip="If you encounter a problem with Winget, you can fix Winget with Choco."/>
+                                        </StackPanel>
+                                        </StackPanel>
+                                </StackPanel>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="0" Margin="10">
                                     <Label Content="Development" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
                                     <CheckBox Name="DblInstallDockerdesktop" Content="Docker Desktop" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
@@ -1094,7 +1110,7 @@
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
                                 </StackPanel>
-                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="1" Margin="10">
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="1" Margin="10">
                                     <Label Content="Browsers" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
                                     <CheckBox Name="DblInstallBrave" Content="Brave" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
@@ -1214,7 +1230,7 @@
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
                                 </StackPanel>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="2" Margin="10">
+                                <StackPanel SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="2" Margin="10">
                                     <Label Content="Lite Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
@@ -1245,7 +1261,7 @@
                                         <Button x:Name="DblClearPrograms" Content="CLEAR SELECTION" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="25" Width="204" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="30,0,0,0"/>
                                     </StackPanel>
                                 </StackPanel>
-                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="3" Margin="10">
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="3" Margin="10">
                                     <Label Content="Document" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
                                     <CheckBox Name="DblInstallAnki" Content="Anki" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
@@ -1364,7 +1380,7 @@
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
                                 </StackPanel>
-                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="4" Margin="10">
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="4" Margin="10">
                                     <Label Content="Utilities" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
                                     <CheckBox Name="DblInstall7zip" Content="7-Zip" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
