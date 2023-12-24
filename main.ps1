@@ -747,6 +747,7 @@ function Invoke-recommended{
 -- Services set to Recommended Mode --
 ======================================
 " -ch Cyan
+    Invoke-InstallMessage "tweak"
 }
 $wpf_gaming.Add_MouseLeave({
     $wpf_pBar.Visibility = "Hidden"
@@ -881,6 +882,7 @@ function Invoke-gaming{
 ----- Services set to Gaming Mode -----
 =======================================
 " -ch Cyan
+    Invoke-InstallMessage "tweak"
 }
 function Invoke-normal{
     <#
@@ -891,6 +893,7 @@ function Invoke-normal{
 
     #Set-Presets "normal"
     cmd /c services.msc
+    Invoke-InstallMessage "tweak"
 }
 
 Get-Service -ErrorAction SilentlyContinue | ForEach-Object {[void]$wpf_ddlServices.Items.Add($_.Name)}
