@@ -21,6 +21,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 - No more installing **Chocolatey** automatically. 
+- Improved Code Quality
+
+### Fix
+
+- Code for **Debloat**, now it's working with **pwsh**.
 
 ## [1.8] - 2023-12-17
 
