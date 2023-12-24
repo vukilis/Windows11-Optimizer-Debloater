@@ -17,6 +17,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Buttons to install, upgrade and uninstall **chocolatey**.
 - Button to upgrade **App Installer**.
 - Button to fix **winget**.
+- Button to fix **Microsoft Store**.
+- MessageBox when debloat, tweaking updates and services are finished.
 
 ### Changed
 
