@@ -960,22 +960,24 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Margin="10,10,10,0">
-                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,0" HorizontalAlignment="Center">
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,360,0" HorizontalAlignment="Left">
+                                <Grid Background="#1f1f21" SnapsToDevicePixels="True" Width="Auto" Grid.Row="0" Grid.Column="0" Margin="10" Grid.ColumnSpan="5">
+                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                                             <Label Content="CHOCO:" FontSize="14" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51"/>
                                             <Button x:Name="DblChocoInstall" Content="INSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,0,0"/>
                                             <Button x:Name="DblChocoUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,0,0"/>
                                             <Button x:Name="DblChocoUninstall" Content="UNINSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="1" Margin="0,0,15,0">
+                                            <Label Content="Microsoft Store:" FontSize="14" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51"/>
+                                            <Button x:Name="DblMsStoreFix" Content="Fix" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,0,0"/>
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,55,0" HorizontalAlignment="Right">
+                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Margin="0,0,10,0">
                                             <Label Content="App Installer:" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" Foreground="#FFF4AB51"/>
-                                            <Button x:Name="DblAppInstallerUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,2,0" ToolTip="Winget is supported through App Installer starting on Windows 10 1809."/>
-                                            <Label Content="WINGET:" FontSize="14" FontWeight="Bold" Margin="45,0,5,0" Foreground="#FFF4AB51"/>
+                                            <Button x:Name="DblAppInstallerUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,82,0" ToolTip="Winget is supported through App Installer starting on Windows 10 1809."/>
+                                            <Label Content="WINGET:" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" Foreground="#FFF4AB51"/>
                                             <Button x:Name="DblWingetFix" Content="FIX" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,2,0" ToolTip="If you encounter a problem with Winget, you can fix Winget with Choco."/>
-                                        </StackPanel>
-                                        </StackPanel>
-                                </StackPanel>
+                                    </StackPanel>
+                                </Grid>
                                 <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="0" Margin="10">
                                     <Label Content="Development" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
                                     <CheckBox Name="DblInstallDockerdesktop" Content="Docker Desktop" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
