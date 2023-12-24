@@ -362,8 +362,8 @@ function Remove-WinDebloatAPPX {
 
     Try{
         Write-Host "Removing $Name"
-        Get-AppxPackage "*$Name*" | Remove-AppxPackage -ErrorAction SilentlyContinue
-        Get-AppxProvisionedPackage -Online | Where-Object DisplayName -like "*$Name*" | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue
+        Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command Get-AppxPackage | Where-Object {`$_.Name -like '*$Name*'} | Remove-AppxPackage -ErrorAction SilentlyContinue" -NoNewWindow
+        Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command Get-AppxProvisionedPackage -Online | Where-Object {`$_.DisplayName -like '*$Name*'} | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue" -NoNewWindow -Wait
     }
     Catch [System.Exception] {
         if($psitem.Exception.Message -like "*The requested operation requires elevation*"){
@@ -381,18 +381,20 @@ function Remove-WinDebloatAPPX {
 }
 function Invoke-debloatGaming{
     $appx = @(
-        "Microsoft.Microsoft3DViewer"
+        "MicrosoftCorporationII.QuickAssist"
+        "Clipchamp.Clipchamp"
+        "Microsoft.OutlookForWindows"
+        "Microsoft.PowerAutomateDesktop"
+        "Microsoft.Todos"
         "Microsoft.AppConnector"
         "Microsoft.BingFinance"
         "Microsoft.BingNews"
         "Microsoft.BingSports"
         "Microsoft.BingTranslator"
-        #"Microsoft.BingWeather"
         "Microsoft.BingFoodAndDrink"
         "Microsoft.BingHealthAndFitness"
         "Microsoft.BingTravel"
         "Microsoft.MinecraftUWP"
-        #"Microsoft.GamingServices"
         "Microsoft.GetHelp"
         "Microsoft.Getstarted"
         "Microsoft.Messaging"
@@ -415,19 +417,13 @@ function Invoke-debloatGaming{
         "Microsoft.WindowsMaps"
         "Microsoft.WindowsPhone"
         "Microsoft.WindowsSoundRecorder"
-        #"Microsoft.XboxApp"
         "Microsoft.ConnectivityStore"
         "Microsoft.CommsPhone"
         "Microsoft.ScreenSketch"
-        #"Microsoft.Xbox.TCUI"
-        #"Microsoft.XboxGameOverlay"
-        #"Microsoft.XboxGameCallableUI"
-        #"Microsoft.XboxSpeechToTextOverlay"
         "Microsoft.MixedReality.Portal"
-        #"Microsoft.XboxIdentityProvider"
-        #"Microsoft.ZuneMusic"
-        #"Microsoft.ZuneVideo"
+        "Microsoft.YourPhone"
         "Microsoft.Getstarted"
+        "Microsoft.Family"
         "Microsoft.MicrosoftOfficeHub"
         "Microsoft.MicrosoftStickyNotes"
         "*EclipseManager*"
@@ -500,10 +496,15 @@ function Invoke-debloatGaming{
 ----- Apps removed -----
 ========================
 " -ch Cyan
+    Invoke-InstallMessage -msg "debloat"
 }
 function Invoke-debloatALL{
     $appx = @(
-        "Microsoft.Microsoft3DViewer"
+        "MicrosoftCorporationII.QuickAssist"
+        "Clipchamp.Clipchamp"
+        "Microsoft.OutlookForWindows"
+        "Microsoft.PowerAutomateDesktop"
+        "Microsoft.Todos"
         "Microsoft.AppConnector"
         "Microsoft.BingFinance"
         "Microsoft.BingNews"
@@ -543,13 +544,16 @@ function Invoke-debloatALL{
         "Microsoft.ScreenSketch"
         "Microsoft.Xbox.TCUI"
         "Microsoft.XboxGameOverlay"
+        "Microsoft.XboxGamingOverlay"
         "Microsoft.XboxGameCallableUI"
         "Microsoft.XboxSpeechToTextOverlay"
-        "Microsoft.MixedReality.Portal"
         "Microsoft.XboxIdentityProvider"
+        "Microsoft.MixedReality.Portal"
+        "Microsoft.YourPhone"
         "Microsoft.ZuneMusic"
         "Microsoft.ZuneVideo"
         "Microsoft.Getstarted"
+        "Microsoft.Family"
         "Microsoft.MicrosoftOfficeHub"
         "Microsoft.MicrosoftStickyNotes"
         "*EclipseManager*"
@@ -622,6 +626,7 @@ function Invoke-debloatALL{
 ----- Apps removed -----
 ========================
 " -ch Cyan
+    Invoke-InstallMessage -msg "debloat"
 }
 
 ########################################### /DEBLOAT ###########################################   
@@ -1358,12 +1363,7 @@ function Invoke-optimizationButton{
 
         $wpf_DblOneDrive.IsChecked = $false
     }
-    $ButtonType = [System.Windows.MessageBoxButton]::OK
-    $MessageboxTitle = "Tweaks Are Finished"
-    $Messageboxbody = ("Done")
-    $MessageIcon = [System.Windows.MessageBoxImage]::Information
-
-    [System.Windows.MessageBox]::Show($Messageboxbody, $MessageboxTitle, $ButtonType, $MessageIcon)
+    Invoke-InstallMessage -msg "tweak"
 }
 function Invoke-ToggleFastPreset {
     $IsChecked = $wpf_fastPresetButton.IsChecked
@@ -1865,6 +1865,8 @@ function Invoke-InstallMessage {
         "install"  { "Installs are finished" }
         "uninstall" { "Uninstalls are finished" }
         "upgrade"   { "Upgrading are finished" }
+        "tweak"   { "Tweaking are finished" }
+        "debloat"   { "Debloating are finished" }
         default     {
             Write-Warning "Unknown message type: $msg"
             return
@@ -1894,37 +1896,61 @@ function Invoke-ManageInstall {
         )
 
     if($manage -eq "Installing" -and $PackageManger -eq "pip"){
-        Write-Host "Installing $name package" -ForegroundColor Green
-        python -m pip install --no-input --quiet --upgrade pip
-        pip install $PackageName --no-input --quiet 
+        if (Get-Command python -ErrorAction Ignore) {
+            Write-Host "Installing $name package" -ForegroundColor Green
+            python -m pip install --no-input --quiet --upgrade pip
+            pip install $PackageName --no-input --quiet 
+        } else {
+            Write-Host "Python is not installed." -ForegroundColor Red
+        }
     }elseif($manage -eq "Installing" -and $PackageManger -eq "winget"){
         Write-Host "Installing $name package" -ForegroundColor Green
         Start-Process -FilePath winget -ArgumentList "install --id $PackageName -e --accept-source-agreements --accept-package-agreements --disable-interactivity --silent" -NoNewWindow -Wait
     }elseif($manage -eq "Installing" -and $PackageManger -eq "choco"){
-        Write-Host "Installing $name package" -ForegroundColor Green
-        Start-Process -FilePath choco -ArgumentList "install $PackageName -y" -NoNewWindow -Wait
+        if ((Get-Command -Name choco -ErrorAction Ignore) -and (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion) {
+            Write-Host "Installing $name package" -ForegroundColor Green
+            Start-Process -FilePath choco -ArgumentList "install $PackageName -y" -NoNewWindow -Wait
+        }else{
+            Write-Host "Seems Chocolatey is not installed" -ForegroundColor Red
+        }
     }
 
     if($manage -eq "Uninstalling" -and $PackageManger -eq "pip"){
-        Write-Host "Uninstalling $name package" -ForegroundColor Red
-        pip uninstall $PackageName --yes --quiet --no-input
+        if (Get-Command python -ErrorAction Ignore) {
+            Write-Host "Uninstalling $name package" -ForegroundColor Red
+            pip uninstall $PackageName --yes --quiet --no-input
+        } else {
+            Write-Host "Python is not installed." -ForegroundColor Red
+        }
     }elseif($manage -eq "Uninstalling" -and $PackageManger -eq "winget"){
         Write-Host "Uninstalling $name package" -ForegroundColor Red
         Start-Process -FilePath winget -ArgumentList "uninstall --id $PackageName -e --purge --force --disable-interactivity --silent" -NoNewWindow -Wait
     }elseif($manage -eq "Uninstalling" -and $PackageManger -eq "choco"){
-        Write-Host "Uninstalling $name package" -ForegroundColor Red
-        Start-Process -FilePath choco -ArgumentList "uninstall $PackageName -y" -NoNewWindow -Wait
+        if ((Get-Command -Name choco -ErrorAction Ignore) -and (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion) {
+            Write-Host "Uninstalling $name package" -ForegroundColor Red
+            Start-Process -FilePath choco -ArgumentList "uninstall $PackageName -y" -NoNewWindow -Wait
+        }else{
+            Write-Host "Seems Chocolatey is not installed" -ForegroundColor Red
+        }
     }
 
     if($manage -eq "Upgrading" -and $PackageManger -eq "pip"){
-        Write-Host "Upgrading $name package" -ForegroundColor Blue
-        pip install --upgrade $PackageName --no-input --quiet --no-cache
+        if (Get-Command python -ErrorAction Ignore) {
+            Write-Host "Upgrading $name package" -ForegroundColor Blue
+            pip install --upgrade $PackageName --no-input --quiet --no-cache
+        } else {
+            Write-Host "Python is not installed." -ForegroundColor Red
+        }
     }elseif($manage -eq "Upgrading" -and $PackageManger -eq "winget"){
         Write-Host "Upgrading $name package" -ForegroundColor Blue
         Start-Process -FilePath winget -ArgumentList "upgrade --id $PackageName -e --accept-source-agreements --accept-package-agreements --disable-interactivity --silent --force" -NoNewWindow -Wait
     }elseif($manage -eq "Upgrading" -and $PackageManger -eq "choco"){
-        Write-Host "Upgrading $name package" -ForegroundColor Blue
-        Start-Process -FilePath choco -ArgumentList "upgrade $PackageName -y" -NoNewWindow -Wait
+        if ((Get-Command -Name choco -ErrorAction Ignore) -and (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion) {
+            Write-Host "Upgrading $name package" -ForegroundColor Blue
+            Start-Process -FilePath choco -ArgumentList "upgrade $PackageName -y" -NoNewWindow -Wait
+        }else{
+            Write-Host "Seems Chocolatey is not installed" -ForegroundColor Red
+        }
     }
 }
 
@@ -2725,7 +2751,7 @@ function Invoke-ChocoInstall {
     if ((Get-Command -Name choco -ErrorAction Ignore) -and ($chocoVersion = (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion)) {
         Write-Host "Chocolatey Version $chocoVersion is already installed" -ForegroundColor Green
     }else {
-        Write-Host "Seems Chocolatey is not installed, installing now" -ForegroundColor Purple
+        Write-Host "Seems Chocolatey is not installed, installing now" -ForegroundColor Magenta
         Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
         powershell choco feature enable -n allowGlobalConfirmation
     }
@@ -2733,23 +2759,31 @@ function Invoke-ChocoInstall {
 }
 
 function Invoke-ChocoUpgrade {
-    Write-Host "Upgrading chocolatey package" -ForegroundColor Blue
-    Start-Process -FilePath choco -ArgumentList "upgrade chocolatey -y" -NoNewWindow -Wait
-    Invoke-InstallMessage -msg "upgrade"
+    if ((Get-Command -Name choco -ErrorAction Ignore) -and (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion) {
+        Write-Host "Upgrading chocolatey package" -ForegroundColor Blue
+        Start-Process -FilePath choco -ArgumentList "upgrade chocolatey -y" -NoNewWindow -Wait
+        Invoke-InstallMessage -msg "upgrade"
+    }else{
+        Write-Host "Seems Chocolatey is not installed" -ForegroundColor Red
+    }
 }
 
 function Invoke-ChocoUninstall {
-    Write-Host "Uninstalling chocolatey package" -ForegroundColor Red
-    $chocoPath = $env:ChocolateyInstall
-    # Remove the folder
-    Remove-Item -Path $chocoPath -Recurse -Force
-    # Specify the name of the environment variable you want to remove
-    $chocoEnv = "ChocolateyInstall"
-    $chocoUpdateEnv = "ChocolateyLastPathUpdate"
-    # Remove the environment variable
-    [Environment]::SetEnvironmentVariable($chocoEnv, $null, [System.EnvironmentVariableTarget]::Machine)
-    [Environment]::SetEnvironmentVariable($chocoUpdateEnv, $null, [System.EnvironmentVariableTarget]::User)
-    Invoke-InstallMessage -msg "uninstall"
+    if ((Get-Command -Name choco -ErrorAction Ignore) -and (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion) {
+        Write-Host "Uninstalling chocolatey package" -ForegroundColor Red
+        $chocoPath = $env:ChocolateyInstall
+        # Remove the folder
+        Remove-Item -Path $chocoPath -Recurse -Force
+        # Specify the name of the environment variable you want to remove
+        $chocoEnv = "ChocolateyInstall"
+        $chocoUpdateEnv = "ChocolateyLastPathUpdate"
+        # Remove the environment variable
+        [Environment]::SetEnvironmentVariable($chocoEnv, $null, [System.EnvironmentVariableTarget]::Machine)
+        [Environment]::SetEnvironmentVariable($chocoUpdateEnv, $null, [System.EnvironmentVariableTarget]::User)
+        Invoke-InstallMessage -msg "uninstall"
+    }else{
+        Write-Host "Seems Chocolatey is not installed" -ForegroundColor Red
+    }
 }
 
 function Invoke-AppInstaller {
