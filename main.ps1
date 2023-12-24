@@ -78,9 +78,6 @@ function Invoke-Button {
     
     Param ([string]$Button) 
 
-    #Use this to get the name of the button
-    #[System.Windows.MessageBox]::Show("$Button","Chris Titus Tech's Windows Utility","OK","Info")
-
     Switch -Wildcard ($Button){
 
         "wpf_Tab?BT" {Invoke-Tabs $Button}
@@ -126,6 +123,7 @@ function Invoke-Button {
         "wpf_DblChocoUpgrade" {Invoke-ChocoUpgrade}
         "wpf_DblChocoUninstall" {Invoke-ChocoUninstall}
         "wpf_DblWingetFix" {Invoke-FixesWinget}
+        "wpf_DblMsStoreFix" {Invoke-MsStoreFix}
     }
 }
 
@@ -140,9 +138,6 @@ function Invoke-Checkbox {
     #>
 
     Param ([string]$checkbox) 
-
-    #Use this to get the name of the checkbox
-    #[System.Windows.MessageBox]::Show("$checkbox","Vuk1lis's Windows Utility","OK","Info")
 
     Switch -Wildcard ($checkbox){
         "wpf_fastPresetButton" {Invoke-ToggleFastPreset}
@@ -232,6 +227,11 @@ Function Get-Author {
 }
 
 function Art {
+    <#
+        .SYNOPSIS
+        This function will remove any of the provided APPX names
+    #>
+
     param ($artN, $ch)
     for ($i=0;$i -lt $artN.length;$i++) {
         $ch
@@ -352,7 +352,7 @@ function Get-DiskSize {
 function Remove-WinDebloatAPPX {
     <#
         .DESCRIPTION
-        This function will remove any of the provided APPX names
+        This handler function will remove any of the provided APPX names
         .EXAMPLE
         Remove-WinDebloatAPPX -Name "Microsoft.Microsoft3DViewer"
     #>
@@ -380,6 +380,13 @@ function Remove-WinDebloatAPPX {
     }
 }
 function Invoke-debloatGaming{
+    <#
+
+    .SYNOPSIS
+        Remove all provided APPX
+        Remove teams
+    #>
+
     $appx = @(
         "MicrosoftCorporationII.QuickAssist"
         "Clipchamp.Clipchamp"
@@ -499,6 +506,13 @@ function Invoke-debloatGaming{
     Invoke-InstallMessage -msg "debloat"
 }
 function Invoke-debloatALL{
+    <#
+
+    .SYNOPSIS
+        Remove APPX except XBOX 
+        Remove teams
+    #>
+
     $appx = @(
         "MicrosoftCorporationII.QuickAssist"
         "Clipchamp.Clipchamp"
@@ -638,6 +652,12 @@ $wpf_recommended.Add_MouseLeave({
     $wpf_pBar.Visibility = "Hidden"
 })
 function Invoke-recommended{
+    <#
+
+    .SYNOPSIS
+        Set all services to manual startup 
+    #>
+
     # Set-Presets "recommended"
     $services = @(
         "ALG"                                          # Application Layer Gateway Service(Provides support for 3rd party protocol plug-ins for Internet Connection Sharing)
@@ -732,6 +752,12 @@ $wpf_gaming.Add_MouseLeave({
     $wpf_pBar.Visibility = "Hidden"
 })
 function Invoke-gaming{
+    <#
+
+    .SYNOPSIS
+        Set all services to gaming mode 
+    #>
+
     # Set-Presets "gaming"
     $services_m = @(
         "BcastDVRUserService_48486de"                  # GameDVR and Broadcast is used for Game Recordings and Live Broadcasts
@@ -857,12 +883,24 @@ function Invoke-gaming{
 " -ch Cyan
 }
 function Invoke-normal{
+    <#
+
+    .SYNOPSIS
+        Set all services to default 
+    #>
+
     #Set-Presets "normal"
     cmd /c services.msc
 }
 
 Get-Service -ErrorAction SilentlyContinue | ForEach-Object {[void]$wpf_ddlServices.Items.Add($_.Name)}
 function Get-Services {
+    <#
+
+    .SYNOPSIS
+        Function to get all services and their information 
+    #>
+
     $ServiceName=$wpf_ddlServices.SelectedItem
     $details=Get-Service -Name $ServiceName -ErrorAction SilentlyContinue | Select-Object *
     $wpf_lblName.Content=$details.DisplayName
@@ -895,6 +933,13 @@ function Get-Services {
 ########################################### OPTIMIZATION ########################################### 
 
 function Invoke-optimizationButton{
+    <#
+
+    .SYNOPSIS
+        This function run selected tweaks
+        Unselect tweaks after tweaking
+    #>
+
     # Invoke restore point
     #Set-RestorePoint
     # Essential Tweaks
@@ -1366,6 +1411,12 @@ function Invoke-optimizationButton{
     Invoke-InstallMessage -msg "tweak"
 }
 function Invoke-ToggleFastPreset {
+    <#
+
+    .SYNOPSIS
+        Fast preset to help when tweaking  
+    #>
+
     $IsChecked = $wpf_fastPresetButton.IsChecked
 
     $wpf_megaPresetButton.IsEnabled = !$IsChecked; $wpf_megaPresetButton.Style = $wpf_megaPresetButton.TryFindResource(('ToggleSwitchStyle' + ('Purple', 'Disabled')[$IsChecked]))
@@ -1388,6 +1439,12 @@ function Invoke-ToggleFastPreset {
     if ($IsChecked) { Write-Host "Enabling Fast Preset" -ForegroundColor Green } else { Write-Host "Disabling Fast Preset" -ForegroundColor Red }
 }
 function Invoke-ToggleMegaPreset {
+    <#
+
+    .SYNOPSIS
+        Mega preset to help when tweaking  
+    #>
+
     $IsChecked = $wpf_megaPresetButton.IsChecked
 
     $wpf_fastPresetButton.IsEnabled = !$IsChecked; $wpf_fastPresetButton.Style = $wpf_fastPresetButton.TryFindResource(('ToggleSwitchStyle' + ('Green', 'Disabled')[$IsChecked]))
@@ -1412,6 +1469,12 @@ function Invoke-ToggleMegaPreset {
 }
 
 function Get-ToggleValue {
+    <#
+
+    .SYNOPSIS
+        Handler function to get registry information for toggle tweakes
+        Get-ToggleValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled'
+    #>
     param (
         [string]$Path,
         [string]$Name
@@ -1420,6 +1483,13 @@ function Get-ToggleValue {
     return (Get-ItemProperty -Path $Path).$Name -ne 0
 }
 function Set-RegistryValue {
+    <#
+
+    .SYNOPSIS
+        Handler function to set registry information
+        Set-RegistryValue -Path $Path -Name $Name -Value $TrueValue
+    #>
+
     param (
         [string]$Path,
         [string]$Name,
@@ -1428,6 +1498,13 @@ function Set-RegistryValue {
     Set-ItemProperty -Path $Path -Name $Name -Value $Value
 }
 function Toggle-RegistryValue {
+    <#
+
+    .SYNOPSIS
+        Handler function to get registry information
+        Toggle-RegistryValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled'
+    #>
+
     param (
         [System.Windows.Controls.CheckBox]$CheckBox,
         [string]$Path,
@@ -1484,6 +1561,12 @@ function Invoke-ToggleDarkMode {
     Write-Host $(If ( $EnableDarkMode ) {"Enabling Dark Mode"} Else {"Disabling Dark Mode"})
 }
 function Get-CheckerTweaks{
+    <#
+
+    .SYNOPSIS
+        This function checks if toggle tweaks are already check 
+    #>
+
     $a = $wpf_ToggleBingSearchMenu.IsChecked = Get-ToggleValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled'
     $b = $wpf_ToggleNumLock.IsChecked = Get-ToggleValue -Path 'HKCU:\Control Panel\Keyboard' -Name 'InitialKeyboardIndicators'
     $c = $wpf_ToggleExt.IsChecked = (Get-ToggleValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'HideFileExt') -eq 0
@@ -1545,6 +1628,12 @@ function Invoke-ToggleSearch{
 ########################################### UPDATES ########################################### 
 
 function Invoke-UpdatesDefault{
+    <#
+
+    .SYNOPSIS
+        Set Update to default
+    #>
+
     If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU")) {
         New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Force | Out-Null
     }
@@ -1584,8 +1673,15 @@ function Invoke-UpdatesDefault{
 ----- Updates Set to Default -----
 ==================================
 " -ch Cyan
+    Invoke-InstallMessage -msg "updateDefault"
 }
 function Invoke-UpdatesSecurity{
+    <#
+
+    .SYNOPSIS
+        Set Windows Update to security
+    #>
+
     Write-Host "Disabling driver offering through Windows Update..."
     If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata")) {
         New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" -Force | Out-Null
@@ -1612,19 +1708,20 @@ function Invoke-UpdatesSecurity{
     Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" -Name "DeferFeatureUpdatesPeriodInDays" -Type DWord -Value 365
     Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" -Name "DeferQualityUpdatesPeriodInDays " -Type DWord -Value 4
 
-    $ButtonType = [System.Windows.MessageBoxButton]::OK
-    $MessageboxTitle = "Set Security Updates"
-    $Messageboxbody = ("Recommended Update settings loaded")
-    $MessageIcon = [System.Windows.MessageBoxImage]::Information
-
-    [System.Windows.MessageBox]::Show($Messageboxbody, $MessageboxTitle, $ButtonType, $MessageIcon)
     Art -artN "
 ==================================
 --- Updates Set to Recommended ---
 ==================================
 " -ch Cyan
+    Invoke-InstallMessage -msg "updateSecurity"
 }
 function Invoke-UpdatesDisable{
+    <#
+
+    .SYNOPSIS
+        Disable Windows Update
+    #>
+
     If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU")) {
         New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Force | Out-Null
     }
@@ -1651,9 +1748,15 @@ function Invoke-UpdatesDisable{
 ------ Updates ARE DISABLED ------
 ==================================
 " -ch DarkRed
+    Invoke-InstallMessage -msg "updateDisabled"
 }
 function Invoke-FixesUpdate{
-    ### Reset Windows Update Script - reregister dlls, services, and remove registry entires.
+    <#
+
+    .SYNOPSIS
+        Reset Windows Update Script - reregister dlls, services, and remove registry entires.
+    #>
+
     Write-Host "1. Stopping Windows Update Services..." 
     Stop-Service -Name BITS 
     Stop-Service -Name wuauserv 
@@ -1745,12 +1848,6 @@ function Invoke-FixesUpdate{
 
     Write-Host "Process complete. Please reboot your computer."
 
-    $ButtonType = [System.Windows.MessageBoxButton]::OK
-    $MessageboxTitle = "Reset Windows Update "
-    $Messageboxbody = ("Stock settings loaded.`n Please reboot your computer")
-    $MessageIcon = [System.Windows.MessageBoxImage]::Information
-
-    [System.Windows.MessageBox]::Show($Messageboxbody, $MessageboxTitle, $ButtonType, $MessageIcon)
     Write-Host "================================="
     Write-Host "-- Reset ALL Updates to Factory -"
     Write-Host "================================="
@@ -1759,6 +1856,7 @@ function Invoke-FixesUpdate{
 -- Reset ALL Updates to Factory --
 ==================================
 " -ch DarkGreen
+    Invoke-InstallMessage -msg "updateFix"
 }
 
 ########################################### /UPDATES ########################################### 
@@ -1835,16 +1933,12 @@ function Invoke-FeatureInstall {
         nfsadmin client localhost config fileaccess=755 SecFlavors=+sys -krb5 -krb5i
         Write-Host "NFS is now setup for user based NFS mounts"
     }
-    $ButtonType = [System.Windows.MessageBoxButton]::OK
-    $MessageboxTitle = "All features are now installed "
-    $Messageboxbody = ("Done")
-    $MessageIcon = [System.Windows.MessageBoxImage]::Information
-
-    [System.Windows.MessageBox]::Show($Messageboxbody, $MessageboxTitle, $ButtonType, $MessageIcon)
 
     Write-Host "================================="
     Write-Host "---  Features are Installed   ---"
     Write-Host "================================="
+
+    Invoke-InstallMessage -msg "feature"
 }
 function Invoke-PanelAutologin {
     <#
@@ -1857,6 +1951,13 @@ function Invoke-PanelAutologin {
 ########################################### /CONFIG ########################################### 
 ########################################### INSTALL ###########################################
 function Invoke-InstallMessage {
+    <#
+
+    .SYNOPSIS
+        Handler function for [System.Windows.MessageBox]
+        Invoke-InstallMessage -msg "install"
+    #>
+
     param (
         [string]$msg
     )
@@ -1867,6 +1968,11 @@ function Invoke-InstallMessage {
         "upgrade"   { "Upgrading are finished" }
         "tweak"   { "Tweaking are finished" }
         "debloat"   { "Debloating are finished" }
+        "updateDefault"   { "Set Updates To Default" }
+        "updateSecurity"   { "Set Security Updates" }
+        "updateDisabled"   { "Updates Are Disabled" }
+        "updateFix"   { "Reset Windows Update" }
+        "feature"   { "All features are now installed" }
         default     {
             Write-Warning "Unknown message type: $msg"
             return
@@ -1877,6 +1983,12 @@ function Invoke-InstallMessage {
 }
 
 function Start-Sleep($seconds) {
+    <#
+
+    .SYNOPSIS
+        Animated sleep function
+    #>
+
     $doneDT = (Get-Date).AddSeconds($seconds)
     while($doneDT -gt (Get-Date)) {
         $secondsLeft = $doneDT.Subtract((Get-Date)).TotalSeconds
@@ -1888,6 +2000,13 @@ function Start-Sleep($seconds) {
 }
 
 function Invoke-ManageInstall {
+    <#
+
+    .SYNOPSIS
+        Handler function for installing, uninstalling and upgrading apps
+        Invoke-ManageInstall -PackageManger "winget" -manage "Installing" -program $name -PackageName $winget
+    #>
+
     param(
             $program,
             $PackageManger,
@@ -2433,6 +2552,14 @@ $programs = @(
 )
 
 function jsonChecker {
+    <#
+
+    .SYNOPSIS
+        This function checks if json object can be successfully converted into a PowerShell object
+        Provides some basic error handling to report whether the conversion was successful or if an error occurred during the process
+        jsonChecker $packages
+    #>
+
     param(
         $name
     )
@@ -2449,6 +2576,12 @@ function jsonChecker {
 }
 
 function Invoke-installButton {
+    <#
+
+    .SYNOPSIS
+        This function install all selected apps
+        Support winget, choco and pip packages  
+    #>
 
     foreach ($program in $programs) {
         # Convert JSON string to PowerShell object
@@ -2484,7 +2617,13 @@ function Invoke-installButton {
 }
 
 function Invoke-getInstallButton {
-    
+    <#
+
+    .SYNOPSIS
+        This function select all installed apps
+        Read installed winget, choco and pip packages  
+    #>
+
     # Export winget package information to a JSON file
     $wingetExportPath = Join-Path $env:TEMP "wingetPackage.json"
     Start-Process -FilePath winget -ArgumentList "export -o $wingetExportPath" -NoNewWindow -RedirectStandardOutput "$process.StandardOutput.ReadToEnd()"
@@ -2535,6 +2674,12 @@ function Invoke-getInstallButton {
 }
 
 function Invoke-UninstallButton {
+    <#
+
+    .SYNOPSIS
+        This function uninstall all selected apps
+    #>
+
     foreach ($program in $programs) {
         # Convert JSON string to PowerShell object
         $appDetails = $program | ConvertFrom-Json
@@ -2569,6 +2714,12 @@ function Invoke-UninstallButton {
 }
 
 function Invoke-UpgradeButton {
+    <#
+
+    .SYNOPSIS
+        This function upgrade all selected apps
+    #>
+
     foreach ($program in $programs) {
         # Convert JSON string to PowerShell object
         $appDetails = $program | ConvertFrom-Json
@@ -2603,6 +2754,11 @@ function Invoke-UpgradeButton {
 }
 
 function Invoke-ClearProgramsButton {
+    <#
+
+    .SYNOPSIS
+        Clear selected apps   
+    #>
     
     $presets = @($wpf_ToggleLitePreset, $wpf_ToggleDevPreset, $wpf_ToggleGamingPreset)
     $styles = @("ToggleSwitchStyleGreen", "ToggleSwitchStylePurple", "ToggleSwitchStyleBlue")
@@ -2624,6 +2780,11 @@ function Invoke-ClearProgramsButton {
 }
 
 function Invoke-ToggleLitePreset {
+    <#
+
+    .SYNOPSIS
+        Minimal preset to help when installing apps   
+    #>
     $IsChecked = $wpf_ToggleLitePreset.IsChecked
 
     $wpf_ToggleDevPreset.IsEnabled = !$IsChecked; $wpf_ToggleDevPreset.Style = $wpf_ToggleDevPreset.TryFindResource(('ToggleSwitchStyle' + ('Purple', 'Disabled')[$IsChecked]))
@@ -2648,6 +2809,12 @@ function Invoke-ToggleLitePreset {
 }
 
 function Invoke-ToggleDevPreset {
+    <#
+
+    .SYNOPSIS
+        Developer preset to help when installing apps   
+    #>
+
     $IsChecked = $wpf_ToggleDevPreset.IsChecked
 
     $wpf_ToggleLitePreset.IsEnabled = !$IsChecked; $wpf_ToggleLitePreset.Style = $wpf_ToggleLitePreset.TryFindResource(('ToggleSwitchStyle' + ('Green', 'Disabled')[$IsChecked]))
@@ -2676,6 +2843,11 @@ function Invoke-ToggleDevPreset {
 }
 
 function Invoke-ToggleGamingPreset {
+    <#
+
+    .SYNOPSIS
+        Gaming preset to help when installing apps   
+    #>
     $IsChecked = $wpf_ToggleGamingPreset.IsChecked
 
     $wpf_ToggleLitePreset.IsEnabled = !$IsChecked; $wpf_ToggleLitePreset.Style = $wpf_ToggleLitePreset.TryFindResource(('ToggleSwitchStyle' + ('Green', 'Disabled')[$IsChecked]))
@@ -2701,6 +2873,11 @@ function Invoke-ToggleGamingPreset {
 }
 
 function Invoke-Filter {
+    <#
+
+    .SYNOPSIS
+        Search filter for apps 
+    #>
     
     foreach ($program in $programs) {
         $appDetails = $program | ConvertFrom-Json
@@ -2731,6 +2908,12 @@ $wpf_CheckboxFilter.Add_TextChanged({
 })
 
 function Invoke-ResetButton {
+    <#
+
+    .SYNOPSIS
+        Button to reset search filter
+    #>
+
     $wpf_CheckboxFilter.Text = "Search"
 
     foreach ($program in $programs) {
@@ -2747,6 +2930,12 @@ function Invoke-ResetButton {
 }
 
 function Invoke-ChocoInstall {
+    <#
+
+    .SYNOPSIS
+        Installing chocolatey
+    #>
+
     #Check if chocolatey is installed and get its version
     if ((Get-Command -Name choco -ErrorAction Ignore) -and ($chocoVersion = (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion)) {
         Write-Host "Chocolatey Version $chocoVersion is already installed" -ForegroundColor Green
@@ -2759,6 +2948,12 @@ function Invoke-ChocoInstall {
 }
 
 function Invoke-ChocoUpgrade {
+    <#
+
+    .SYNOPSIS
+        Upgrading chocolatey
+    #>
+
     if ((Get-Command -Name choco -ErrorAction Ignore) -and (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion) {
         Write-Host "Upgrading chocolatey package" -ForegroundColor Blue
         Start-Process -FilePath choco -ArgumentList "upgrade chocolatey -y" -NoNewWindow -Wait
@@ -2769,6 +2964,13 @@ function Invoke-ChocoUpgrade {
 }
 
 function Invoke-ChocoUninstall {
+
+    <#
+
+    .SYNOPSIS
+        Unistalling chocolatey
+    #>
+
     if ((Get-Command -Name choco -ErrorAction Ignore) -and (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion) {
         Write-Host "Uninstalling chocolatey package" -ForegroundColor Red
         $chocoPath = $env:ChocolateyInstall
@@ -2787,6 +2989,12 @@ function Invoke-ChocoUninstall {
 }
 
 function Invoke-AppInstaller {
+    <#
+
+    .SYNOPSIS
+        Upgrading App Installer to be able to install programs and apps in the APPX, APPXBundle, MSIX, and MSIXBundle format without any problem
+    #>
+
     Write-Host "Upgrading App Installer" -ForegroundColor Green
     #Add-AppxPackage https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
     $AppInstaller = "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
@@ -2803,6 +3011,27 @@ function Invoke-FixesWinget {
     #>
 
     Start-Process -FilePath "choco" -ArgumentList "install winget -y" -NoNewWindow -Wait
+    Invoke-InstallMessage -msg "install"
+}
+
+function Invoke-MsStoreFix {
+    <#
+
+    .SYNOPSIS
+        Fixes Microsoft Store by re-register
+    #>
+    
+    $store = Get-AppxPackage | Select-Object Name, PackageFullName | Where-Object Name -like *windowsstore*
+    if ($store){
+        Write-Host "Reinstaling windows store" -ForegroundColor Green
+        Get-AppxPackage *windowsstore* | Remove-AppxPackage
+        Start-Sleep 1
+        Get-AppxPackage -allusers Microsoft.WindowsStore | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}
+    } else{
+        Write-Host "Seems Windows Store is not installed, installing now" -ForegroundColor Magenta
+        Get-AppxPackage -allusers Microsoft.WindowsStore | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}
+    }
+    Invoke-InstallMessage -msg "install"
 }
 ########################################### /INSTALL ########################################## 
 Get-Author
