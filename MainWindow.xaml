@@ -1134,12 +1134,32 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallFloorp" Content="Floorp" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallLibrewolf" Content="LibreWolf" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
-                                    <CheckBox Name="DblInstallThorium" Content="Thorium Browser" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                    <CheckBox Name="DblInstallMullvad" Content="Mullvad Browser" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallTor" Content="Tor Browser" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallVivaldi" Content="Vivaldi" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallWaterfox" Content="Waterfox" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1439,6 +1459,11 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallKDEConnect" Content="KDE Connect" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallKeepass" Content="KeePassXC" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -1470,6 +1495,11 @@
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
                                     <CheckBox Name="DblInstallProcesslasso" Content="Process Lasso" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallProxyman" Content="Proxyman" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
