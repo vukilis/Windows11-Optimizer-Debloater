@@ -2228,14 +2228,34 @@ $programs = @(
         "winget": "Mozilla.Firefox"
     }',
     '{
+        "id": "DblInstallMullvad",
+        "name": "Mullvad Browser",
+        "winget": "MullvadVPN.MullvadBrowser"
+    }',
+    '{
+        "id": "DblInstallTor",
+        "name": "Tor Browser",
+        "winget": "TorProject.TorBrowser"
+    }',
+    '{
         "id": "DblInstallLibrewolf",
         "name": "Librewolf",
         "winget": "Librewolf.Librewolf"
     }',
     '{
-        "id": "DblInstallThorium",
-        "name": "Thorium",
-        "winget": "Alex313031.Thorium"
+        "id": "DblInstallFloorp",
+        "name": "Floorp",
+        "winget": "Ablaze.Floorp"
+    }',
+    '{
+        "id": "DblInstallVivaldi",
+        "name": "Vivaldi",
+        "winget": "VivaldiTechnologies.Vivaldi"
+    }',
+    '{
+        "id": "DblInstallWaterfox",
+        "name": "Waterfox",
+        "winget": "Waterfox.Waterfox"
     }',
     '{
         "id": "DblInstallDiscord",
@@ -2493,6 +2513,11 @@ $programs = @(
         "winget": "AppWork.JDownloader"
     }',
     '{
+        "id": "DblInstallKDEConnect",
+        "name": "KDE Connect",
+        "winget": "KDE.KDEConnect"
+    }',
+    '{
         "id": "DblInstallKeepass",
         "name": "KeePassXC",
         "winget": "KeePassXCTeam.KeePassXC"
@@ -2526,6 +2551,11 @@ $programs = @(
         "id": "DblInstallProcesslasso",
         "name": "Process Lasso",
         "winget": "BitSum.ProcessLasso"
+    }',
+    '{
+        "id": "DblInstallProxyman",
+        "name": "Proxyman",
+        "winget": "ProxymanLLC.Proxyman"
     }',
     '{
         "id": "DblInstallQbittorrent",
