@@ -2659,15 +2659,15 @@ function Invoke-getInstallButton {
 
     # Export winget package information to a JSON file
     $wingetExportPath = Join-Path $env:TEMP "wingetPackage.json"
-    Start-Process -FilePath winget -ArgumentList "export -o $wingetExportPath" -NoNewWindow -RedirectStandardOutput "$process.StandardOutput.ReadToEnd()"
-    Start-Sleep (2)
+    winget export -o $wingetExportPath
+    #Start-Sleep (2)
     # Read and parse the JSON file
     $jsonObject = Get-Content -Raw -Path $wingetExportPath | ConvertFrom-Json
 
     # Export Choco packages to a text file
     $chocoExportPath = Join-Path $env:TEMP "chocoPackage.json"
-    Start-Process -FilePath choco -ArgumentList "export -o $chocoExportPath" -NoNewWindow -RedirectStandardOutput "$process.StandardOutput.ReadToEnd()"
-    Start-Sleep (2)
+    choco export -o $chocoExportPath
+    #Start-Sleep (2)
     $chocoObject = Get-Content -Path $chocoExportPath
     $xml = [xml]$chocoObject
 
