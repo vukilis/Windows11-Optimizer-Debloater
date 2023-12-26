@@ -18,7 +18,7 @@ If you are having TLS 1.2 Issues or You cannot find or resolve `tinyurl.com/win1
 - **Info**
   > Shows system information
 - **Install**
-  > Install applications from winget.
+  > Install applications from winget, choco and pip.
 - **Debloat**
   > Removes unnecessary preinstalled apps.
 - **Optimization**
