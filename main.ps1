@@ -118,7 +118,6 @@ function Invoke-Button {
         "wpf_DblUpgrade" {Invoke-UpgradeButton}
         "wpf_DblClearPrograms" {Invoke-ClearProgramsButton}
         "wpf_ResetButton" {Invoke-ResetButton}
-        "wpf_DblAppInstallerUpgrade" {Invoke-AppInstaller}
         "wpf_DblChocoInstall" {Invoke-ChocoInstall}
         "wpf_DblChocoUpgrade" {Invoke-ChocoUpgrade}
         "wpf_DblChocoUninstall" {Invoke-ChocoUninstall}
@@ -2098,9 +2097,24 @@ $programs = @(
         "winget": "GitHub.GitHubDesktop"
     }',
     '{
+        "id": "DblInstallGodotEngine",
+        "name": "Godot Engine",
+        "winget": "GodotEngine.GodotEngine"
+    }',
+    '{
         "id": "DblInstallGolang",
         "name": "Go Programming Language",
         "winget": "GoLang.Go"
+    }',
+    '{
+        "id": "DblInstallHeidisql",
+        "name": "HeidiSQL",
+        "winget": "HeidiSQL.HeidiSQL"
+    }',
+    '{
+        "id": "DblInstallMySQL",
+        "name": "MySQL",
+        "winget": "Oracle.MySQL"
     }',
     '{
         "id": "DblInstallNodejs",
@@ -2123,14 +2137,19 @@ $programs = @(
         "winget": "EclipseAdoptium.Temurin.8.JRE"
     }',
     '{
-        "id": "DblInstallJava16",
-        "name": "Java 16",
-        "winget": "AdoptOpenJDK.OpenJDK.16"
+        "id": "DblInstallJava11",
+        "name": "Java 11",
+        "winget": "EclipseAdoptium.Temurin.11.JRE"
     }',
     '{
-        "id": "DblInstallJava18",
-        "name": "Java 18",
-        "winget": "EclipseAdoptium.Temurin.18.JRE"
+        "id": "DblInstallJava17",
+        "name": "Java 17",
+        "winget": "EclipseAdoptium.Temurin.17.JRE"
+    }',
+    '{
+        "id": "DblInstallJava21",
+        "name": "Java 21",
+        "winget": "EclipseAdoptium.Temurin.21.JDK"
     }',
     '{
         "id": "DblInstallOhmyposh",
@@ -2143,14 +2162,44 @@ $programs = @(
         "winget": "Python.Python.3.12"
     }',
     '{
+        "id": "DblInstallPodman",
+        "name": "Podman",
+        "winget": "RedHat.Podman"
+    }',
+    '{
         "id": "DblInstallPostman",
         "name": "Postman",
         "winget": "Postman.Postman"
     }',
     '{
+        "id": "DblInstallRuby",
+        "name": "Ruby 3.2",
+        "winget": "RubyInstallerTeam.Ruby.3.2"
+    }',
+    '{
         "id": "DblInstallRust",
         "name": "Rust",
         "winget": "Rustlang.Rust.MSVC"
+    }',
+    '{
+        "id": "DblInstallSQLite",
+        "name": "SQLite",
+        "winget": "DBBrowserForSQLite.DBBrowserForSQLite"
+    }',
+    '{
+        "id": "DblInstallSQLServer2022",
+        "name": "SQL Server 2022 Developer",
+        "winget": "Microsoft.SQLServer.2022.Developer"
+    }',
+    '{
+        "id": "DblInstallUnity",
+        "name": "Unity 2022",
+        "winget": "Unity.Unity.2022"
+    }',
+    '{
+        "id": "DblInstallVagrant",
+        "name": "Vagrant",
+        "winget": "Hashicorp.Vagrant"
     }',
     '{
         "id": "DblInstallVisualstudio2022",
@@ -2181,6 +2230,11 @@ $programs = @(
         "id": "DblInstallDotnet7",
         "name": ".NET 7",
         "winget": "Microsoft.DotNet.DesktopRuntime.7"
+    }',
+    '{
+        "id": "DblInstallDotnet8",
+        "name": ".NET 8",
+        "winget": "Microsoft.DotNet.DesktopRuntime.8"
     }',
     '{
         "id": "DblInstallPowershell",
@@ -2298,9 +2352,24 @@ $programs = @(
         "winget": "Zoom.Zoom"
     }',
     '{
+        "id": "DblInstallBluestacks",
+        "name": "Bluestacks",
+        "winget": "BlueStack.BlueStacks"
+    }',
+    '{
+        "id": "DblInstallCemu",
+        "name": "Cemu",
+        "winget": "Cemu.Cemu"
+    }',
+    '{
         "id": "DblInstallEaapp",
         "name": "EA Desktop App",
         "winget": "ElectronicArts.EADesktop"
+    }',
+    '{
+        "id": "DblInstallEmulationstation",
+        "name": "Emulation Station",
+        "winget": "Emulationstation.Emulationstation"
     }',
     '{
         "id": "DblInstallEpicgames",
@@ -2318,9 +2387,19 @@ $programs = @(
         "winget": "GOG.Galaxy"
     }',
     '{
+        "id": "DblInstallPlaynite",
+        "name": "Playnite",
+        "winget": "Playnite.Playnite"
+    }',
+    '{
         "id": "DblInstallPrism",
         "name": "Prism Launcher",
         "winget": "PrismLauncher.PrismLauncher"
+    }',
+    '{
+        "id": "DblInstallSideQuest",
+        "name": "SideQuestVR",
+        "winget": "SideQuestVR.SideQuest"
     }',
     '{
         "id": "DblInstallSteam",
@@ -2328,9 +2407,29 @@ $programs = @(
         "winget": "Valve.Steam"
     }',
     '{
+        "id": "DblInstallSunshine",
+        "name": "Sunshine Stream Server",
+        "winget": "LizardByte.Sunshine"
+    }',
+    '{
         "id": "DblInstallHeroic",
         "name": "Heroic Games Launcher",
         "winget": "HeroicGamesLauncher.HeroicGamesLauncher"
+    }',
+    '{
+        "id": "DblInstallItch",
+        "name": "itch.io",
+        "winget": "ItchIo.Itch"
+    }',
+    '{
+        "id": "DblInstallMedal",
+        "name": "Medal",
+        "winget": "MedalB.V.Medal"
+    }',
+    '{
+        "id": "DblInstallMoonlight",
+        "name": "Moonlight Stream Client",
+        "winget": "MoonlightGameStreamingProject.Moonlight"
     }',
     '{
         "id": "DblPythonEpicCLI",
@@ -2341,6 +2440,16 @@ $programs = @(
         "id": "DblInstallUbisoft",
         "name": "Ubisoft Connect",
         "winget": "Ubisoft.Connect"
+    }',
+    '{
+        "id": "DblInstallWargaming",
+        "name": "Wargaming Game Center",
+        "winget": "Wargaming.GameCenter"
+    }',
+    '{
+        "id": "DblInstallXemu",
+        "name": "XEMU",
+        "winget": "xemu-project.xemu"
     }',
     '{
         "id": "DblInstallAudacity",
@@ -2356,6 +2465,11 @@ $programs = @(
         "id": "DblInstallFigma",
         "name": "Figma",
         "winget": "Figma.Figma"
+    }',
+    '{
+        "id": "DblInstallFFmpeg",
+        "name": "FFmpeg",
+        "winget": "Gyan.FFmpeg"
     }',
     '{
         "id": "DblInstallCider",
@@ -2388,6 +2502,26 @@ $programs = @(
         "winget": "CodecGuide.K-LiteCodecPack.Standard"
     }',
     '{
+        "id": "DblInstallMediaInfo",
+        "name": "MediaInfo",
+        "winget": "MediaArea.MediaInfo.GUI"
+    }',
+    '{
+        "id": "DblInstallMKVToolNix",
+        "name": "MKVToolNix",
+        "winget": "MoritzBunkus.MKVToolNix"
+    }',
+    '{
+        "id": "DblInstallPlex",
+        "name": "Plex Client",
+        "winget": "Plex.Plex"
+    }',
+    '{
+        "id": "DblInstallPlexServer",
+        "name": "Plex Server",
+        "winget": "Plex.PlexMediaServer"
+    }',
+    '{
         "id": "DblInstallObs",
         "name": "OBS Studio",
         "winget": "OBSProject.OBSStudio"
@@ -2406,6 +2540,11 @@ $programs = @(
         "id": "DblInstallVlc",
         "name": "VLC Media Player",
         "winget": "VideoLAN.VLC"
+    }',
+    '{
+        "id": "DblInstallYtdlp",
+        "name": "yt-dlp",
+        "winget": "yt-dlp.yt-dlp"
     }',
     '{
         "id": "DblInstallAnki",
@@ -2428,9 +2567,24 @@ $programs = @(
         "winget": "TheDocumentFoundation.LibreOffice"
     }',
     '{
+        "id": "DblInstallNeovim",
+        "name": "Neovim",
+        "winget": "Neovim.Neovim"
+    }',
+    '{
+        "id": "DblInstallNeovimNightly",
+        "name": "Neovim Nightly",
+        "winget": "Neovim.Neovim.Nightly"
+    }',
+    '{
         "id": "DblInstallNotepadplus",
         "name": "Notepad",
         "winget": "Notepad++.Notepad++"
+    }',
+    '{
+        "id": "DblInstallNotepadsApp",
+        "name": "Notepads",
+        "winget": "JackieLiu.NotepadsApp"
     }',
     '{
         "id": "DblInstallObsidian",
@@ -2441,6 +2595,11 @@ $programs = @(
         "id": "DblInstallOnlyoffice",
         "name": "OnlyOffice",
         "winget": "ONLYOFFICE.DesktopEditors"
+    }',
+    '{
+        "id": "DblInstallSublime4",
+        "name": "Sublime Text 4",
+        "winget": "SublimeHQ.SublimeText.3"
     }',
     '{
         "id": "DblInstallSumatra",
@@ -2468,14 +2627,14 @@ $programs = @(
         "winget": "Alacritty.Alacritty"
     }',
     '{
+        "id": "DblInstallAnydo",
+        "name": "Anydo",
+        "winget": "Anydo.Anydo"
+    }',
+    '{
         "id": "DblInstallAutohotkey",
         "name": "AutoHotkey",
         "winget": "autohotkey"
-    }',
-    '{
-        "id": "DblInstallCpuz",
-        "name": "CPU-Z",
-        "winget": "CPUID.CPU-Z"
     }',
     '{
         "id": "DblInstallClasicMixer",
@@ -2483,14 +2642,34 @@ $programs = @(
         "winget": "PopeenCom.ClassicVolumeMixer"
     }',
     '{
+        "id": "DblInstallCpuz",
+        "name": "CPU-Z",
+        "winget": "CPUID.CPU-Z"
+    }',
+    '{
+        "id": "DblInstallCryptomator",
+        "name": "Cryptomator",
+        "winget": "Cryptomator.Cryptomator"
+    }',
+    '{
         "id": "DblInstallDdu",
         "name": "Display Driver Uninstaller",
-        "winget": "ddu"
+        "winget": "Wagnardsoft.DisplayDriverUninstaller"
+    }',
+    '{
+        "id": "DblInstallDrawio",
+        "name": "Draw.io",
+        "winget": "JGraph.Draw"
     }',
     '{
         "id": "DblInstallEsearch",
         "name": "Everything",
         "winget": "oidtools.Everything"
+    }',
+    '{
+        "id": "DblInstallGoogleDrive",
+        "name": "Google Drive",
+        "winget": "Google.GoogleDrive "
     }',
     '{
         "id": "DblInstallGpuz",
@@ -2528,6 +2707,11 @@ $programs = @(
         "winget": "Guru3D.Afterburner"
     }',
     '{
+        "id": "DblInstallThunderbird",
+        "name": "Thunderbird",
+        "winget": "Mozilla.Thunderbird"
+    }',
+    '{
         "id": "DblInstallNanazip",
         "name": "NanaZip",
         "winget": "M2Team.NanaZip"
@@ -2543,9 +2727,24 @@ $programs = @(
         "winget": "Oracle.VirtualBox"
     }',
     '{
+        "id": "DblInstallSpeedtest",
+        "name": "Speedtest by Ookla",
+        "winget": "Ookla.Speedtest.Desktop"
+    }',
+    '{
         "id": "DblInstallOpenrgb",
         "name": "OpenRGB",
         "winget": "CalcProgrammer1.OpenRGB"
+    }',
+    '{
+        "id": "DblInstallParsec",
+        "name": "Parsec",
+        "winget": "Parsec.Parsec"
+    }',
+    '{
+        "id": "DblInstallPostbox",
+        "name": "Postbox",
+        "winget": "Postbox.Postbox"
     }',
     '{
         "id": "DblInstallProcesslasso",
@@ -3021,29 +3220,18 @@ function Invoke-ChocoUninstall {
     }
 }
 
-function Invoke-AppInstaller {
-    <#
-
-    .SYNOPSIS
-        Upgrading App Installer to be able to install programs and apps in the APPX, APPXBundle, MSIX, and MSIXBundle format without any problem
-    #>
-
-    Write-Host "Upgrading App Installer" -ForegroundColor Green
-    #Add-AppxPackage https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
-    $AppInstaller = "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command { Add-AppxPackage '$AppInstaller' }" -NoNewWindow -Wait
-    Invoke-InstallMessage -msg "upgrade"
-}
-
 function Invoke-FixesWinget {
 
     <#
 
     .SYNOPSIS
-        Fixes Winget by running choco install winget
+        This would install the latest version of winget and install it with its dependency's
     #>
 
-    Start-Process -FilePath "choco" -ArgumentList "install winget -y" -NoNewWindow -Wait
+    Write-Host "Installing winget" -ForegroundColor Green
+    $winget = "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
+    Start-Process -FilePath powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command Add-AppxPackage -Path '$winget'" -NoNewWindow -Wait
+
     Invoke-InstallMessage -msg "install"
 }
 
