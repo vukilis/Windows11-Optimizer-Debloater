@@ -863,7 +863,7 @@
                             </TextBox.Resources> Search
                         </TextBox>
                         <Button Name="ResetButton" HorizontalAlignment="Right" BorderThickness="0" VerticalContentAlignment="Center"
-                                Margin="5,0,10,0" ToolTip="Reset Search" VerticalAlignment="Center"
+                                Margin="5,0,10,0" ToolTip="Reset Search" VerticalAlignment="Center" Padding="5,0,0,0"
                             Style="{StaticResource ResetButtonStyle}"
                             Tag="{StaticResource ResetIcon}"/>
                     </StackPanel>
@@ -1299,7 +1299,7 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
-                                    <CheckBox Name="DblPythonEpicCLI" Content="Legendary Epic (Python)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                    <CheckBox Name="DblPythonEpicCLI" Content="Legendary Epic Launcher" Foreground="#31668c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1376,6 +1376,14 @@
                                     </CheckBox>
                                 </StackPanel>
                                 <StackPanel SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="2" Margin="10,0,10,10">
+                                    <StackPanel HorizontalAlignment="Center" Margin="0,5,0,10">
+                                        <TextBlock FontSize="16" FontFamily="Helvetica" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#31668c">
+                                            ● Python packages
+                                        </TextBlock>
+                                        <TextBlock FontSize="16" FontFamily="Helvetica" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#8B4513">
+                                            ● Chocolatey packages
+                                        </TextBlock>
+                                    </StackPanel>
                                     <Label Content="Lite Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
@@ -1484,6 +1492,11 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallAV1" Content="AV1 Video Extension" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallBlender" Content="Blender (3D Graphics)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -1565,6 +1578,11 @@
                                         </CheckBox.LayoutTransform>
                                     </CheckBox> 
                                     <CheckBox Name="DblInstallVlc" Content="VLC (Video Player)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallVP9" Content="VP9 Video Extensions" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
