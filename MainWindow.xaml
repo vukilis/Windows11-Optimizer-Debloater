@@ -1139,12 +1139,27 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallAutoruns" Content="Autoruns" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallHxD" Content="HxD Hex Editor" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallPowershell" Content="PowerShell" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
                                     <CheckBox Name="DblInstallPowertoys" Content="Powertoys" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallProcessExplorer" Content="Process Explorer" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1544,7 +1559,7 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
-                                    <CheckBox Name="DblChocoSpotify" Content="Spotify" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                    <CheckBox Name="DblInstallSpotify" Content="Spotify" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1578,6 +1593,11 @@
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
                                     <CheckBox Name="DblInstallAutohotkey" Content="AutoHotkey" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallBitwarden" Content="Bitwarden" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1623,6 +1643,11 @@
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
                                     <CheckBox Name="DblInstallGsudo" Content="Gsudo" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallNGENUITY" Content="HyperX NGENUITY" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1722,6 +1747,11 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallWingetUI" Content="WingetUI" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallWinrar" Content="WinRAR" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -1741,7 +1771,7 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Margin="10,130,10,-30" Grid.Row="0" Grid.ColumnSpan="1">
-                                    <Button Name="debloatALL" Content="Remove ALL MS Store Apps" Height="40" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Background="#FF9E5050" ForceCursor="true" Cursor="Hand" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
+                                    <Button Name="debloatALL" Content="Remove ALL Bloatware" Height="40" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Background="#FF9E5050" ForceCursor="true" Cursor="Hand" Margin="-30,10,0,10" Padding="10" HorizontalAlignment="Center" Foreground="White"/>
                                     <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Margin="20,10,20,0" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFDEE39B"><Bold Foreground="#FF9E5050">USE WITH CAUTION!!!!!</Bold><LineBreak Foreground="#FF9E5050"/><LineBreak/>This will remove ALL Microsoft store apps other than the essentials to make winget work. <LineBreak/><LineBreak/>Games installed by MS Store <Bold Foreground="#FF9E5050">ARE INCLUDED!</Bold><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/><LineBreak/></TextBlock>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Margin="10,100,10,100">
