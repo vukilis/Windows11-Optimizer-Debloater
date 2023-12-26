@@ -502,7 +502,7 @@ function Invoke-debloatGaming{
 ----- Apps removed -----
 ========================
 " -ch Cyan
-    Invoke-InstallMessage -msg "debloat"
+    Invoke-MessageBox -msg "debloat"
 }
 function Invoke-debloatALL{
     <#
@@ -639,7 +639,7 @@ function Invoke-debloatALL{
 ----- Apps removed -----
 ========================
 " -ch Cyan
-    Invoke-InstallMessage -msg "debloat"
+    Invoke-MessageBox -msg "debloat"
 }
 
 ########################################### /DEBLOAT ###########################################   
@@ -746,7 +746,7 @@ function Invoke-recommended{
 -- Services set to Recommended Mode --
 ======================================
 " -ch Cyan
-    Invoke-InstallMessage "tweak"
+    Invoke-MessageBox "tweak"
 }
 $wpf_gaming.Add_MouseLeave({
     $wpf_pBar.Visibility = "Hidden"
@@ -881,7 +881,7 @@ function Invoke-gaming{
 ----- Services set to Gaming Mode -----
 =======================================
 " -ch Cyan
-    Invoke-InstallMessage "tweak"
+    Invoke-MessageBox "tweak"
 }
 function Invoke-normal{
     <#
@@ -892,7 +892,7 @@ function Invoke-normal{
 
     #Set-Presets "normal"
     cmd /c services.msc
-    Invoke-InstallMessage "tweak"
+    Invoke-MessageBox "tweak"
 }
 
 Get-Service -ErrorAction SilentlyContinue | ForEach-Object {[void]$wpf_ddlServices.Items.Add($_.Name)}
@@ -1410,7 +1410,7 @@ function Invoke-optimizationButton{
 
         $wpf_DblOneDrive.IsChecked = $false
     }
-    Invoke-InstallMessage -msg "tweak"
+    Invoke-MessageBox -msg "tweak"
 }
 function Invoke-ToggleFastPreset {
     <#
@@ -1675,7 +1675,7 @@ function Invoke-UpdatesDefault{
 ----- Updates Set to Default -----
 ==================================
 " -ch Cyan
-    Invoke-InstallMessage -msg "updateDefault"
+    Invoke-MessageBox -msg "updateDefault"
 }
 function Invoke-UpdatesSecurity{
     <#
@@ -1715,7 +1715,7 @@ function Invoke-UpdatesSecurity{
 --- Updates Set to Recommended ---
 ==================================
 " -ch Cyan
-    Invoke-InstallMessage -msg "updateSecurity"
+    Invoke-MessageBox -msg "updateSecurity"
 }
 function Invoke-UpdatesDisable{
     <#
@@ -1750,7 +1750,7 @@ function Invoke-UpdatesDisable{
 ------ Updates ARE DISABLED ------
 ==================================
 " -ch DarkRed
-    Invoke-InstallMessage -msg "updateDisabled"
+    Invoke-MessageBox -msg "updateDisabled"
 }
 function Invoke-FixesUpdate{
     <#
@@ -1858,7 +1858,7 @@ function Invoke-FixesUpdate{
 -- Reset ALL Updates to Factory --
 ==================================
 " -ch DarkGreen
-    Invoke-InstallMessage -msg "updateFix"
+    Invoke-MessageBox -msg "updateFix"
 }
 
 ########################################### /UPDATES ########################################### 
@@ -1940,7 +1940,7 @@ function Invoke-FeatureInstall {
     Write-Host "---  Features are Installed   ---"
     Write-Host "================================="
 
-    Invoke-InstallMessage -msg "feature"
+    Invoke-MessageBox -msg "feature"
 }
 function Invoke-PanelAutologin {
     <#
@@ -1952,12 +1952,12 @@ function Invoke-PanelAutologin {
 }
 ########################################### /CONFIG ########################################### 
 ########################################### INSTALL ###########################################
-function Invoke-InstallMessage {
+function Invoke-MessageBox {
     <#
 
     .SYNOPSIS
         Handler function for [System.Windows.MessageBox]
-        Invoke-InstallMessage -msg "install"
+        Invoke-MessageBox -msg "install"
     #>
 
     param (
@@ -2237,6 +2237,16 @@ $programs = @(
         "winget": "Microsoft.DotNet.DesktopRuntime.8"
     }',
     '{
+        "id": "DblInstallAutoruns",
+        "name": "Autoruns",
+        "winget": "Microsoft.Sysinternals.Autoruns"
+    }',
+    '{
+        "id": "DblInstallHxD",
+        "name": "HxD Hex Editor",
+        "winget": "MHNexus.HxD"
+    }',
+    '{
         "id": "DblInstallPowershell",
         "name": "PowerShell",
         "winget": "Microsoft.PowerShell"
@@ -2245,6 +2255,11 @@ $programs = @(
         "id": "DblInstallPowertoys",
         "name": "PowerToys",
         "winget": "Microsoft.PowerToys"
+    }',
+    '{
+        "id": "DblInstallProcessExplorer",
+        "name": "Process Explorer",
+        "winget": "Microsoft.Sysinternals.ProcessExplorer"
     }',
     '{
         "id": "DblInstallvc2015_64",
@@ -2527,9 +2542,9 @@ $programs = @(
         "winget": "OBSProject.OBSStudio"
     }',
     '{
-        "id": "DblChocoSpotify",
+        "id": "DblInstallSpotify",
         "name": "Spotify",
-        "choco": "spotify"
+        "winget": "9NCBCSZSJRSB"
     }',
     '{
         "id": "DblInstallSharex",
@@ -2637,6 +2652,11 @@ $programs = @(
         "winget": "autohotkey"
     }',
     '{
+        "id": "DblInstallBitwarden",
+        "name": "Bitwarden",
+        "winget": "Bitwarden.Bitwarden"
+    }',
+    '{
         "id": "DblInstallClasicMixer",
         "name": "ClassicVolumeMixer",
         "winget": "PopeenCom.ClassicVolumeMixer"
@@ -2680,6 +2700,11 @@ $programs = @(
         "id": "DblInstallGsudo",
         "name": "gsudo",
         "winget": "gerardog.gsudo"
+    }',
+    '{
+        "id": "DblInstallNGENUITY",
+        "name": "HyperX NGENUITY",
+        "winget": "9P1TBXR6QDCX"
     }',
     '{
         "id": "DblInstallHwinfo",
@@ -2777,6 +2802,11 @@ $programs = @(
         "winget": "9PF4KZ2VN4W9"
     }',
     '{
+        "id": "DblInstallWingetUI",
+        "name": "WingetUI",
+        "winget": "SomePythonThings.WingetUIStore"
+    }'
+    '{
         "id": "DblInstallWinrar",
         "name": "WinRAR",
         "winget": "RARLab.WinRAR"
@@ -2845,7 +2875,7 @@ function Invoke-installButton {
         }
     }
     
-    Invoke-InstallMessage -msg "install"
+    Invoke-MessageBox -msg "install"
 }
 
 function Invoke-getInstallButton {
@@ -2942,7 +2972,7 @@ function Invoke-UninstallButton {
         }
     }
     
-    Invoke-InstallMessage -msg "uninstall"
+    Invoke-MessageBox -msg "uninstall"
 }
 
 function Invoke-UpgradeButton {
@@ -2982,7 +3012,7 @@ function Invoke-UpgradeButton {
         }
     }
     
-    Invoke-InstallMessage -msg "upgrade"
+    Invoke-MessageBox -msg "upgrade"
 }
 
 function Invoke-ClearProgramsButton {
@@ -3176,7 +3206,7 @@ function Invoke-ChocoInstall {
         Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
         powershell choco feature enable -n allowGlobalConfirmation
     }
-    Invoke-InstallMessage -msg "install"
+    Invoke-MessageBox -msg "install"
 }
 
 function Invoke-ChocoUpgrade {
@@ -3189,7 +3219,7 @@ function Invoke-ChocoUpgrade {
     if ((Get-Command -Name choco -ErrorAction Ignore) -and (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion) {
         Write-Host "Upgrading chocolatey package" -ForegroundColor Blue
         Start-Process -FilePath choco -ArgumentList "upgrade chocolatey -y" -NoNewWindow -Wait
-        Invoke-InstallMessage -msg "upgrade"
+        Invoke-MessageBox -msg "upgrade"
     }else{
         Write-Host "Seems Chocolatey is not installed" -ForegroundColor Red
     }
@@ -3214,7 +3244,7 @@ function Invoke-ChocoUninstall {
         # Remove the environment variable
         [Environment]::SetEnvironmentVariable($chocoEnv, $null, [System.EnvironmentVariableTarget]::Machine)
         [Environment]::SetEnvironmentVariable($chocoUpdateEnv, $null, [System.EnvironmentVariableTarget]::User)
-        Invoke-InstallMessage -msg "uninstall"
+        Invoke-MessageBox -msg "uninstall"
     }else{
         Write-Host "Seems Chocolatey is not installed" -ForegroundColor Red
     }
@@ -3232,7 +3262,7 @@ function Invoke-FixesWinget {
     $winget = "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
     Start-Process -FilePath powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command Add-AppxPackage -Path '$winget'" -NoNewWindow -Wait
 
-    Invoke-InstallMessage -msg "install"
+    Invoke-MessageBox -msg "install"
 }
 
 function Invoke-MsStoreFix {
@@ -3252,7 +3282,7 @@ function Invoke-MsStoreFix {
         Write-Host "Seems Windows Store is not installed, installing now" -ForegroundColor Magenta
         Get-AppxPackage -allusers Microsoft.WindowsStore | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}
     }
-    Invoke-InstallMessage -msg "install"
+    Invoke-MessageBox -msg "install"
 }
 ########################################### /INSTALL ########################################## 
 Get-Author
