@@ -2472,6 +2472,11 @@ $programs = @(
         "winget": "Audacity.Audacity"
     }',
     '{
+        "id": "DblInstallAV1",
+        "name": "AV1 Video Extension",
+        "winget": "9MVZQVXJBQ9V"
+    }',
+    '{
         "id": "DblInstallBlender",
         "name": "Blender",
         "winget": "BlenderFoundation.Blender"
@@ -2555,6 +2560,11 @@ $programs = @(
         "id": "DblInstallVlc",
         "name": "VLC Media Player",
         "winget": "VideoLAN.VLC"
+    }',
+    '{
+        "id": "DblInstallVP9",
+        "name": "VP9 Video Extensions",
+        "winget": "9N4D0MSMP0PT"
     }',
     '{
         "id": "DblInstallYtdlp",
@@ -2886,6 +2896,7 @@ function Invoke-getInstallButton {
         Read installed winget, choco and pip packages  
     #>
 
+    Write-Host "Selecting Installed applications" -ForegroundColor Green
     # Export winget package information to a JSON file
     $wingetExportPath = Join-Path $env:TEMP "wingetPackage.json"
     winget export -o $wingetExportPath
