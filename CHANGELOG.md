@@ -10,15 +10,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - I'm not sure how to show ASCII output in .log.
 - When launch script, **Info** tab button is not visually selected.
 
-## [1.9] - 2023-12-23
+## [1.9] - 2023-12-26
 
 ### Added
 
 - Buttons to install, upgrade and uninstall **chocolatey**.
-- Button to upgrade **App Installer**.
 - Button to fix **winget**.
 - Button to fix **Microsoft Store**.
 - MessageBox when debloat, tweaking updates and services are finished.
+- New apps in the install menu.
 
 ### Changed
 
