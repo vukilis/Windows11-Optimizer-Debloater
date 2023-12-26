@@ -969,7 +969,7 @@
                                     </StackPanel>
                                     <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="1" Margin="0,0,15,0">
                                             <Label Content="Microsoft Store:" FontSize="14" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51"/>
-                                            <Button x:Name="DblMsStoreFix" Content="Fix" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,0,0"/>
+                                            <Button x:Name="DblMsStoreFix" Content="FIX" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,0,0"/>
                                         </StackPanel>
                                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Margin="0,0,10,0">
                                             <Label Content="WINGET:" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" Foreground="#FFF4AB51"/>
@@ -1378,10 +1378,10 @@
                                 <StackPanel SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="2" Margin="10,0,10,10">
                                     <StackPanel HorizontalAlignment="Center" Margin="0,5,0,10">
                                         <TextBlock FontSize="16" FontFamily="Helvetica" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#31668c">
-                                            ● Python packages
+                                            ● Python Packages
                                         </TextBlock>
                                         <TextBlock FontSize="16" FontFamily="Helvetica" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#8B4513">
-                                            ● Chocolatey packages
+                                            ● Chocolatey Packages
                                         </TextBlock>
                                     </StackPanel>
                                     <Label Content="Lite Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,0,0,5"/>
