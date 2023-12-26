@@ -972,13 +972,11 @@
                                             <Button x:Name="DblMsStoreFix" Content="Fix" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,0,0"/>
                                         </StackPanel>
                                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Margin="0,0,10,0">
-                                            <Label Content="App Installer:" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" Foreground="#FFF4AB51"/>
-                                            <Button x:Name="DblAppInstallerUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,82,0" ToolTip="Winget is supported through App Installer starting on Windows 10 1809."/>
                                             <Label Content="WINGET:" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" Foreground="#FFF4AB51"/>
                                             <Button x:Name="DblWingetFix" Content="FIX" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,2,0" ToolTip="If you encounter a problem with Winget, you can fix Winget with Choco."/>
                                     </StackPanel>
                                 </Grid>
-                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="0" Margin="10">
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="0" Margin="10,0,10,10">
                                     <Label Content="Development" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
                                     <CheckBox Name="DblInstallDockerdesktop" Content="Docker Desktop" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
@@ -1000,7 +998,22 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallGodotEngine" Content="Godot Engine" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallGolang" Content="GoLang" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallHeidisql" Content="HeidiSQL" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallMySQL" Content="MySQL Oracle" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1020,17 +1033,22 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
-                                    <CheckBox Name="DblInstallJava8" Content="OpenJDK Java 8" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                    <CheckBox Name="DblInstallJava8" Content="Eclipse Java 8 JRE" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
-                                    <CheckBox Name="DblInstallJava16" Content="OpenJDK Java 16" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                    <CheckBox Name="DblInstallJava11" Content="Eclipse Java 11 JRE" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
-                                    <CheckBox Name="DblInstallJava18" Content="Oracle Java 18" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                    <CheckBox Name="DblInstallJava17" Content="Eclipse Java 17 JRE" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallJava21" Content="Eclipse Java 21 JDK" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1045,12 +1063,42 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallPodman" Content="Podman" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallPostman" Content="Postman" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallRuby" Content="Ruby 3.2" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallRust" Content="Rust" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallSQLite" Content="SQLite" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallSQLServer2022" Content="SQL Server 2022 Dev" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallUnity" Content="Unity 2022" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallVagrant" Content="Vagrant" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1086,6 +1134,11 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallDotnet8" Content=".NET Desktop Runtime 8" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallPowershell" Content="PowerShell" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -1112,7 +1165,7 @@
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
                                 </StackPanel>
-                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="1" Margin="10">
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="1" Margin="10,0,10,10">
                                     <Label Content="Browsers" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
                                     <CheckBox Name="DblInstallBrave" Content="Brave" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
@@ -1206,7 +1259,22 @@
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
                                     <Label Content="Gaming Launchers" FontSize="18" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                    <CheckBox Name="DblInstallBluestacks" Content="Bluestacks" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallCemu" Content="Cemu" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallEaapp" Content="EA App" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallEmulationstation" Content="Emulation Station" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1236,7 +1304,32 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallItch" Content="itch.io" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallMedal" Content="Medal" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallMoonlight" Content="Moonlight Stream Client" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallPlaynite" Content="Playnite" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallPrism" Content="Prism Launcher" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallSideQuest" Content="SideQuestVR" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1246,13 +1339,28 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallSunshine" Content="Sunshine Stream Server" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallUbisoft" Content="Ubisoft Connect" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallWargaming" Content="Wargaming Game Center" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallXemu" Content="XEMU" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                 </StackPanel>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="2" Margin="10">
+                                <StackPanel SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="2" Margin="10,0,10,10">
                                     <Label Content="Lite Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
@@ -1283,7 +1391,7 @@
                                         <Button x:Name="DblClearPrograms" Content="CLEAR SELECTION" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="25" Width="204" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="30,0,0,0"/>
                                     </StackPanel>
                                 </StackPanel>
-                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="3" Margin="10">
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="3" Margin="10,0,10,10">
                                     <Label Content="Document" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
                                     <CheckBox Name="DblInstallAnki" Content="Anki" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
@@ -1305,7 +1413,22 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallNeovim" Content="Neovim" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallNeovimNightly" Content="Neovim Nightly" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallNotepadplus" Content="Notepad++" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallNotepadsApp" Content="Notepads" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1316,6 +1439,11 @@
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
                                     <CheckBox Name="DblInstallOnlyoffice" Content="ONLYOffice Desktop" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallSublime4" Content="Sublime Text 4" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1356,6 +1484,11 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallFFmpeg" Content="FFmpeg" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallGreenshot" Content="Greenshot (Screenshots)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -1381,6 +1514,26 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallMediaInfo" Content="MediaInfo" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallMKVToolNix" Content="MKVToolNix" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallPlex" Content="Plex Client" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallPlexServer" Content="Plex Server" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallObs" Content="OBS Studio" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -1401,8 +1554,13 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallYtdlp" Content="yt-dlp" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                 </StackPanel>
-                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="4" Margin="10">
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="4" Margin="10,0,10,10">
                                     <Label Content="Utilities" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
                                     <CheckBox Name="DblInstall7zip" Content="7-Zip" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
@@ -1410,6 +1568,11 @@
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
                                     <CheckBox Name="DblInstallAlacritty" Content="Alacritty Terminal" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallAnydo" Content="Anydo" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1424,6 +1587,11 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallCryptomator" Content="Cryptomator" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallClasicMixer" Content="Classic Volume Mixer" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -1434,7 +1602,17 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallDrawio" Content="Draw.io" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallEsearch" Content="Everything Search" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallGoogleDrive" Content="Google Drive" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
@@ -1474,6 +1652,11 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallThunderbird" Content="Thunderbird" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallNanazip" Content="NanaZip" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -1489,7 +1672,22 @@
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
+                                    <CheckBox Name="DblInstallSpeedtest" Content="Speedtest by Ookla" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
                                     <CheckBox Name="DblInstallOpenrgb" Content="OpenRGB" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallParsec" Content="Parsec" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblInstallPostbox" Content="Postbox" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                         </CheckBox.LayoutTransform>
