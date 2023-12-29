@@ -179,50 +179,56 @@ function Invoke-Tabs {
 Invoke-Tabs "wpf_Tab1BT"
 
 Function Get-Author {
-   # Clear-Host
-    $art = @"
- __      __          _      __   _   _       
- \ \    / /         | |    /_ | | | (_)      
-  \ \  / /   _   _  | | __  | | | |  _   ___ 
-   \ \/ /   | | | | | |/ /  | | | | | | / __|
-    \  /    | |_| | |   <   | | | | | | \__ \
-     \/      \__,_| |_|\_\  |_| |_| |_| |___/
+    <#
+        .SYNOPSIS
+        This function will show basic information about author and app
+    #>
+    
+    #Clear-Host
+    $colors = @("`e[38;5;200m", "`e[38;5;51m", "`e[38;5;98m")
 
-          https://github.com/vukilis/
-         Windows11 Optimizer&Debloater
-"@
-    for ($i=0;$i -lt $art.length;$i++) {
-        if ($i%2) {
-            $ch = "Magenta"
-        }
-        elseif ($i%5) {
-            $ch = "Cyan"
-        }
-        elseif ($i%7) {
-            $ch = "DarkRed"
-        }
-        else {
-            $ch = "DarkMagenta"
-        }
-        write-host $art[$i] -NoNewline -ForegroundColor $ch
+    function Get-RandomColor {
+        Get-Random -InputObject $colors
     }
 
+    $text = @"
+           __      __          _      __   _   _       
+           \ \    / /         | |    /_ | | | (_)      
+            \ \  / /   _   _  | | __  | | | |  _   ___ 
+             \ \/ /   | | | | | |/ /  | | | | | | / __|
+              \  /    | |_| | |   <   | | | | | | \__ \
+               \/      \__,_| |_|\_\  |_| |_| |_| |___/
+        
+GitHub:                                 Website:
+https://github.com/vukilis              https://vukilis.github.io/website
+
+Name:                                   Version:
+Windows11 Optimizer&Debloater           2.0    
+"@
+    $coloredText = $text.ToCharArray() | ForEach-Object {
+        $randomColor = Get-RandomColor
+        "$randomColor$_`e[0m"
+    }
+    Write-Output ($coloredText -join "")
     Write-Host "`n"
 }
 
 function Art {
     <#
         .SYNOPSIS
-        This function will remove any of the provided APPX names
+        This function will show tweak message in console in different colors
     #>
 
-    param ($artN, $ch)
-    for ($i=0;$i -lt $artN.length;$i++) {
-        $ch
-        write-host $artN[$i] -NoNewline -ForegroundColor $ch
+    param (
+        [string]$artN,
+        [string]$ch = "White"
+    )
+
+    $artN | ForEach-Object {
+        Write-Host $_ -NoNewline -ForegroundColor $ch
     }
+
     Write-Host "`n"
-    return $artN, $ch
 }
 
 ### Get all variables from form
