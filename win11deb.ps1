@@ -14,6 +14,8 @@
     Version        : 2.0
 #>
 
+Add-Type -AssemblyName PresentationFramework
+
 Start-Transcript $ENV:TEMP\win11deb.log -Append
 $xamlFile="xaml\MainWindow.xaml" #uncomment for development
 $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
