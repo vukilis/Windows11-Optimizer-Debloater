@@ -8,11 +8,11 @@ Requires you to launch PowerShell or Windows Terminal As ADMINISTRATOR!
 Launch Command:
 
 ```
-irm maglit.me/win11deb | iex
+irm maglit.me/win11app | iex
 ```
-If you are having TLS 1.2 Issues or You cannot find or resolve `maglit.me/win11deb` then run with the following command:
+If you are having TLS 1.2 Issues or You cannot find or resolve `maglit.me/win11app` then run with the following command:
 ```
-[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12;iex(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/main.ps1')
+[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12;iex(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/win11deb.ps1')
 ```
 [MagLit](https://github.com/NayamAmarshe/MagLit) - Free and Open Source Privacy Respecting Encrypted Magnet/HTTP(s) Link Shortener with Password Protection.
 
