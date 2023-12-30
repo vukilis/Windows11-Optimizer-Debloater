@@ -1,6 +1,6 @@
 #$xamlFile="xaml\MainWindow.xaml" #uncomment for development
 #$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/xaml/MainWindow.xaml") #uncomment for Production
+$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
 [XML]$XAML=$inputXAML
@@ -184,7 +184,7 @@ Function Get-Author {
         This function will show basic information about author and app
     #>
     
-    #Clear-Host
+    Clear-Host
     $colors = @("`e[38;5;200m", "`e[38;5;51m", "`e[38;5;98m")
 
     function Get-RandomColor {
