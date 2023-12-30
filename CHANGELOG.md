@@ -9,13 +9,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 - When launch script, **Info** tab button is not visually selected.
 
-## [2.0] - 2023-12-27
+## [2.0] - 2023-12-30
 
 ### Changed
 
 - Restructured project to help easier develop and debug code.
 - Each function is separated to mini **.ps1** file.
 - Code improved for **Fix Windows Update** function.
+- Shortener provider from tinyurl to **maglit.me** 
 
 ## [1.9] - 2023-12-26
 
