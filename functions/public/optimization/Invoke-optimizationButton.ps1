@@ -7,7 +7,7 @@ function Invoke-optimizationButton{
     #>
 
     # Invoke restore point
-    #Set-RestorePoint
+    Set-RestorePoint
     # Essential Tweaks
     If ( $wpf_DblTelemetry.IsChecked -eq $true ) {
         Write-Host "Disabling Telemetry..."
