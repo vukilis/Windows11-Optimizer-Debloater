@@ -16,4 +16,4 @@ function Get-CheckerTweaks{
 
     return $a -and $b -and $c -and $d -and $e -and $f -and $g
 }
-Get-CheckerTweaks
+Get-CheckerTweaks | out-null
