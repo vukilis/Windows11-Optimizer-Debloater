@@ -1,16 +1,19 @@
 # HARDWARE INFO
-$pcName=[System.Net.Dns]::GetHostName()
+
+$ComputerInfo = Get-ComputerInfo
+
+$pcName = $ComputerInfo.CsDNSHostName
 $wpf_pcName.Content="Welcome $pcName"
 
-$cpuInfo=Get-CimInstance -ClassName CIM_Processor | Select-Object *
+$cpuInfo = $ComputerInfo.CsProcessors
 $wpf_cpuInfo.Content=$cpuInfo.Name
 
 Get-CimInstance -ClassName win32_VideoController | ForEach-Object {[void]$wpf_gpuInfo.Items.Add($_.VideoProcessor)}
 
 $ramInfo = get-wmiobject -class Win32_ComputerSystem
-$ramInfoGB=[math]::Ceiling($ramInfo.TotalPhysicalMemory / 1024 / 1024 / 1024)
-$ramSpeed=Get-WmiObject Win32_PhysicalMemory | Select-Object *
-$IsVirtual=$ramInfo.Model.Contains("Virtual")
+$ramInfoGB = [math]::Ceiling($ramInfo.TotalPhysicalMemory / 1024 / 1024 / 1024)
+$ramSpeed = Get-WmiObject Win32_PhysicalMemory | Select-Object *
+$IsVirtual = $ramInfo.Model.Contains("Virtual")
 if ($IsVirtual -like 'False'){
     Write-Output "This Machine is Physical Platform"
     $wpf_ramInfo.Content=[string]$ramInfoGB+"GB"+" "+ $ramSpeed.ConfiguredClockSpeed[0]+"MT/s"
@@ -19,18 +22,19 @@ if ($IsVirtual -like 'False'){
     $wpf_ramInfo.Content=[string]$ramInfoGB+"GB"
 }
 
-$mbInfo=Get-CimInstance -ClassName win32_baseboard | Select-Object *
+$mbInfo = Get-CimInstance -ClassName win32_baseboard | Select-Object *
 $wpf_mbInfo.Content=$mbInfo.Product
 
 # OS INFO
-$osInfo=(Get-CimInstance -class Win32_OperatingSystem).Caption
-$wpf_osInfo.Content=$osInfo
+$osInfo = $ComputerInfo.OSName
+$wpf_osInfo.Content=$osInfo + " " + $ComputerInfo.OsArchitecture
 
-$verInfo=(Get-CimInstance Win32_OperatingSystem).BuildNumber
+$version = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").DisplayVersion
+$verInfo = "Version " + $version + " " + "($($ComputerInfo.OsVersion))"
 $wpf_verInfo.Content=$verInfo
 
-$installTimeInfo=(Get-CimInstance Win32_OperatingSystem).InstallDate
-$wpf_installTimeInfo.Content=$installTimeInfo
+$installTimeInfo = $ComputerInfo.OsInstallDate
+$wpf_installTimeInfo.Content=$installTimeInfo.ToString('dd-MMM-yyyy HH:mm')
 
 $licenceInfo=Get-CimInstance SoftwareLicensingProduct -Filter "partialproductkey is not null" | Where-Object name -like windows*
 $licenceCheckInfo=$licenceInfo.LicenseStatus
@@ -50,10 +54,26 @@ function Get-DiskInfo {
     $wpf_diskStyle.Content=$details.PartitionStyle
 }
 
-Get-WmiObject -Class win32_logicaldisk | ForEach-Object {[void]$wpf_diskName.Items.Add($_.DeviceId)}
+$volumes = Get-Volume
+foreach ($volume in $volumes) { if ($volume.DriveLetter -notlike "") {[void]$wpf_diskName.Items.Add($volume.DriveLetter)} }
 function Get-DiskSize {
-    $diskSelected=$wpf_diskName.SelectedItem
-    $details=Get-WmiObject -Class win32_logicaldisk -Filter  "DeviceID = '$diskSelected'" | Select-Object *
-    $wpf_diskMaxSize.Content=("{0}GB" -f [math]::truncate($details.Size / 1GB))
-    $wpf_diskFreeSize.Content=("{0}GB" -f [math]::truncate($details.FreeSpace / 1GB))
+    $diskSelected = $wpf_diskName.SelectedItem
+    foreach ($volume in $volumes) {
+        if ($volume.DriveLetter -eq $diskSelected) {
+            $maxSizeGB = $volume.Size / 1GB
+            $freeSizeGB = $volume.SizeRemaining / 1GB
+            $maxSizeFormatted = if ($maxSizeGB -ge 1000) {
+                "{0}TB" -f [math]::Round($maxSizeGB / 1024)
+            } else {
+                "{0}GB" -f [math]::Round($maxSizeGB)
+            }
+            $freeSizeFormatted = if ($freeSizeGB -ge 1000) {
+                "{0:N1}TB" -f ($freeSizeGB / 1024)
+            } else {
+                "{0:N1}GB" -f ($freeSizeGB)
+            }
+            $wpf_diskMaxSize.Content = $maxSizeFormatted
+            $wpf_diskFreeSize.Content = $freeSizeFormatted
+        }
+    }
 }
