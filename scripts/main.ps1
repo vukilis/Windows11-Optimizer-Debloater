@@ -1,9 +1,12 @@
-#$xamlFile="xaml\MainWindow.xaml" #uncomment for development
-#$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+$xamlFile="xaml\MainWindow.xaml" #uncomment for development
+$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
+#$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
 [XML]$XAML=$inputXAML
+
+[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing") 
+[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms") 
 
 $reader = New-Object System.Xml.XmlNodeReader $XAML
 try {
@@ -112,6 +115,7 @@ function Invoke-Button {
         "wpf_DblChocoUninstall" {Invoke-ChocoUninstall}
         "wpf_DblWingetFix" {Invoke-FixesWinget}
         "wpf_DblMsStoreFix" {Invoke-MsStoreFix}
+        "wpf_ShortcutApp" {Invoke-ShortcutApp -ShortcutToAdd "Win11Deb"}
     }
 }
 
@@ -184,7 +188,7 @@ Function Get-Author {
         This function will show basic information about author and app
     #>
     
-    Clear-Host
+    #Clear-Host
     $colors = @("`e[38;5;200m", "`e[38;5;51m", "`e[38;5;98m")
 
     function Get-RandomColor {
@@ -233,3 +237,17 @@ function Art {
 
 ### Get all variables from form
 # Get-Variable wpf_*
+# Function to download a file
+
+$downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"
+$destinationPath = Join-Path $env:TEMP "win11deb_logo.png"
+
+# Check if the file already exists
+if (-not (Test-Path $destinationPath)) {
+    # File does not exist, download it
+    $wc = New-Object System.Net.WebClient
+    $wc.DownloadFile($downloadUrl, $destinationPath)
+    Write-Host "File downloaded to: $destinationPath"
+} else {
+    Write-Output "File already exists at: $destinationPath"
+}
