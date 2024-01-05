@@ -1,6 +1,6 @@
-$xamlFile="xaml\MainWindow.xaml" #uncomment for development
-$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-#$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+#$xamlFile="xaml\MainWindow.xaml" #uncomment for development
+#$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
+$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
 [XML]$XAML=$inputXAML
@@ -116,6 +116,11 @@ function Invoke-Button {
         "wpf_DblWingetFix" {Invoke-FixesWinget}
         "wpf_DblMsStoreFix" {Invoke-MsStoreFix}
         "wpf_ShortcutApp" {Invoke-ShortcutApp -ShortcutToAdd "Win11Deb"}
+        "wpf_FixesNetwork" {Invoke-FixesNetwork}
+        "wpf_FixesSound" {Invoke-FixesSound}
+        "wpf_WingetConfig" {Set-WingetConfig}
+        "wpf_FixesADB" {Invoke-FixADB}
+        "wpf_PauseUpdate" {Invoke-PauseUpdate}
     }
 }
 
@@ -188,7 +193,7 @@ Function Get-Author {
         This function will show basic information about author and app
     #>
     
-    #Clear-Host
+    Clear-Host
     $colors = @("`e[38;5;200m", "`e[38;5;51m", "`e[38;5;98m")
 
     function Get-RandomColor {
