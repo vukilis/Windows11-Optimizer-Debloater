@@ -45,7 +45,7 @@ function Invoke-ShortcutApp {
     $Shortcut = $WshShell.CreateShortcut($FileBrowser.FileName)
     $Shortcut.TargetPath = $SourceExe
     $Shortcut.Arguments = $ArgumentsToSourceExe
-    if ($iconPath -ne $null) {
+    if ($null -ne $iconPath) {
         $shortcut.IconLocation = $iconPath
     }
     $Shortcut.Save()
