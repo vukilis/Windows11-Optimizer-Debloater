@@ -11,10 +11,10 @@
     Website        : https://vukilis.github.io/website/
     GitHub         : https://github.com/vukilis
     Name:          : Windows11 Optimizer&Debloater
-    Version        : 2.0
+    Version        : 2.1
 #>
 
-Add-Type -AssemblyName PresentationFramework 
+Add-Type -AssemblyName PresentationFramework
 
 Start-Transcript $ENV:TEMP\win11deb.log -Append
 #$xamlFile="xaml\MainWindow.xaml" #uncomment for development
@@ -231,7 +231,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.0    
+Windows11 Optimizer&Debloater           2.1    
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -2768,7 +2768,7 @@ function Invoke-ShortcutApp {
         $iconPath = $null
         Switch ($ShortcutToAdd) {
         "Win11Deb" {
-            $SourceExe = "$env:SystemRoot\WindowsPowerShell\v1.0\powershell.exe"
+            $SourceExe = "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
             $IRM = 'irm https://maglit.me/win11app | iex'
             $Powershell = '-ExecutionPolicy Bypass -Command "Start-Process powershell.exe -verb runas -ArgumentList'
             $ArgumentsToSourceExe = "$powershell '$IRM'"
