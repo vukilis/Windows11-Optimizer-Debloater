@@ -14,7 +14,7 @@ function Invoke-ShortcutApp {
         $iconPath = $null
         Switch ($ShortcutToAdd) {
         "Win11Deb" {
-            $SourceExe = "$env:SystemRoot\WindowsPowerShell\v1.0\powershell.exe"
+            $SourceExe = "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
             $IRM = 'irm https://maglit.me/win11app | iex'
             $Powershell = '-ExecutionPolicy Bypass -Command "Start-Process powershell.exe -verb runas -ArgumentList'
             $ArgumentsToSourceExe = "$powershell '$IRM'"
