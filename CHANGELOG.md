@@ -9,6 +9,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 - When launch script, **Info** tab button is not visually selected.
 
+## [2.1] - 2024-01-05
+
+### Added
+
+- New apps in the install menu.
+- **Pause Windows Update** button up to 35 days or 5 weeks in the **updates** menu. 
+- **Shortcut** for easier and faster access to script.
+- Buttons to fix network and sound in the **config** menu.
+- Buttons to configure **winget** settings and **Android Debug Bridge (adb)** environment.
+
+### Changed
+
+- **UI** Redesigned.
+- Improved code for **Info** tab.
+
 ## [2.0] - 2023-12-30
 
 ### Changed
