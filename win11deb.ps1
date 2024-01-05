@@ -206,10 +206,11 @@ function Invoke-Tabs {
 }
 Invoke-Tabs "wpf_Tab1BT"
 
-Function Get-Author {
+Function Get-Author7 {
     <#
         .SYNOPSIS
         This function will show basic information about author and app
+        This is for powershell v7.1+
     #>
     
     Clear-Host
@@ -240,6 +241,44 @@ Windows11 Optimizer&Debloater           2.1
     Write-Output ($coloredText -join "")
     Write-Host "`n"
 }
+
+Function Get-Author5 {
+    <#
+        .SYNOPSIS
+        This function will show basic information about author and app
+        This is for powershell v5.1
+    #>
+
+    Clear-Host
+    $colors = @("Red", "Cyan", "Magenta")
+
+    function Get-RandomColor {
+        Get-Random -InputObject $colors
+    }
+
+    $text = @"
+           __      __          _      __   _   _       
+           \ \    / /         | |    /_ | | | (_)      
+            \ \  / /   _   _  | | __  | | | |  _   ___ 
+             \ \/ /   | | | | | |/ /  | | | | | | / __|
+              \  /    | |_| | |   <   | | | | | | \__ \
+               \/      \__,_| |_|\_\  |_| |_| |_| |___/
+        
+GitHub:                                 Website:
+https://github.com/vukilis              https://vukilis.github.io/website
+
+Name:                                   Version:
+Windows11 Optimizer&Debloater           2.1    
+"@
+
+    $coloredText = $text.ToCharArray() | ForEach-Object {
+        $randomColor = Get-RandomColor
+        Write-Host $_ -ForegroundColor $randomColor -NoNewline
+    }
+
+    Write-Host "`n"
+}
+
 
 function Art {
     <#
@@ -2799,7 +2838,7 @@ function Invoke-ShortcutApp {
     $Shortcut = $WshShell.CreateShortcut($FileBrowser.FileName)
     $Shortcut.TargetPath = $SourceExe
     $Shortcut.Arguments = $ArgumentsToSourceExe
-    if ($iconPath -ne $null) {
+    if ($null -ne $iconPath) {
         $shortcut.IconLocation = $iconPath
     }
     $Shortcut.Save()
@@ -2813,7 +2852,16 @@ function Invoke-ShortcutApp {
 ###                                                                                                          ###
 ################################################################################################################
 
-Get-Author
+$psVersion = $PSVersionTable.PSVersion
+if ($psVersion.Major -eq 7 -and $psVersion.Minor -ge 1) {
+    Write-Host "You are running PowerShell version 7.1 or higher."
+    Get-Author7
+} elseif ($psVersion.Major -eq 5 -and $psVersion.Minor -eq 1) {
+    Write-Host "You are running PowerShell version 5.1."
+    Get-Author5
+} else {
+    Write-Host "You are running a different version of PowerShell."
+}
 $wpf_diskNameInfo.Add_SelectionChanged({Get-DiskInfo})
 $wpf_diskName.Add_SelectionChanged({Get-DiskSize})
 $wpf_ddlServices.Add_SelectionChanged({Get-Services})
