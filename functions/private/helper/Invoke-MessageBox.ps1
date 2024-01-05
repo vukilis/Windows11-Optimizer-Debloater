@@ -20,7 +20,10 @@ function Invoke-MessageBox {
         "updateSecurity"   { "Set Security Updates" }
         "updateDisabled"   { "Updates Are Disabled" }
         "updateFix"   { "Reset Windows Update" }
+        "updatePause"   { "Pause Windows Update" }
         "feature"   { "All features are now installed" }
+        "networkReset"   { "Stock settings loaded. Please reboot your computer" }
+        "soundReset"   { "Audio Service restarted" }
         default     {
             Write-Warning "Unknown message type: $msg"
             return
