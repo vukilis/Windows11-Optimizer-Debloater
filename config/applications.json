@@ -570,6 +570,11 @@
         "winget": "7zip.7zip"
     },
     {
+        "id": "DblInstallADB",
+        "name": "Android Debug Bridge",
+        "winget": "Google.PlatformTools"
+    },
+    {
         "id": "DblInstallAlacritty",
         "name": "Alacritty",
         "winget": "Alacritty.Alacritty"
@@ -588,6 +593,11 @@
         "id": "DblInstallBitwarden",
         "name": "Bitwarden",
         "winget": "Bitwarden.Bitwarden"
+    },
+    {
+        "id": "DblInstallChatterino",
+        "name": "Chatterino",
+        "winget": "ChatterinoTeam.Chatterino"
     },
     {
         "id": "DblInstallClasicMixer",
@@ -673,6 +683,11 @@
         "id": "DblInstallNanazip",
         "name": "NanaZip",
         "winget": "M2Team.NanaZip"
+    },
+    {
+        "id": "DblInstallNTop",
+        "name": "NTop",
+        "winget": "gsass1.NTop"
     },
     {
         "id": "DblInstallNvclean",
