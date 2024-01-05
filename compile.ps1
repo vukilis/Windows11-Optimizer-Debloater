@@ -144,6 +144,9 @@ Write-output '
 ################################################################################################################
 ' | Out-File ./$scriptname -Append -Encoding ascii
 
+Get-ChildItem .\functions\private\config -Recurse -File | ForEach-Object {
+    Get-Content $psitem.FullName | Out-File ./$scriptname -Append -Encoding ascii
+}
 Get-ChildItem .\functions\public\config -Recurse -File | ForEach-Object {
     Get-Content $psitem.FullName | Out-File ./$scriptname -Append -Encoding ascii
 }
