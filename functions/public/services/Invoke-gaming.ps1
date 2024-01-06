@@ -50,18 +50,9 @@ function Invoke-gaming{
         "vmicvmsession"
     )
 
-    $wpf_pBar.Visibility = "Visible"
-    $i=$services.Count
-    $wpf_pBar.Maximum = $i
-
-    $counter = 1
     foreach ($service in $services_m) {
         # -ErrorAction SilentlyContinue is so it doesn't write an error to stdout if a service doesn't exist
-
-        $ii=$counter++
-        $wpf_pBar.Value = $ii
-        
-        Write-Host "Setting $service StartupType to Manual"
+        Write-Host "Setting $service StartupType to Manual" -ForegroundColor Yellow
         Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue
     }
 
@@ -109,18 +100,9 @@ function Invoke-gaming{
         "wisvc"                                        # Windows Insider program(Windows Insider will not work if Disabled)
     )
 
-    $wpf_pBar.Visibility = "Visible"
-    $i=$services.Count
-    $wpf_pBar.Maximum = $i
-
-    $counter = 1
     foreach ($service in $services_d) {
         # -ErrorAction SilentlyContinue is so it doesn't write an error to stdout if a service doesn't exist
-
-        $ii=$counter++
-        $wpf_pBar.Value = $ii
-        
-        Write-Host "Setting $service StartupType to Disabled"
+        Write-Host "Setting $service StartupType to Disabled" -ForegroundColor Red
         Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue
     }
     Art -artN "
