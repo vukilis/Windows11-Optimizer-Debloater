@@ -27,9 +27,9 @@ function Invoke-ShortcutApp {
             if (-not (Test-Path -Path "$env:SystempRoot\win11deb.ico")) {
                 # File does not exist, download it
                 Invoke-WebRequest -Uri $downloadUrl -OutFile $destinationPath
-                Write-Host "File downloaded to: $destinationPath"
+                Write-Host "File downloaded to: $destinationPath" -ForegroundColor Green
             } else {
-                Write-Output "File already exists at: $destinationPath"
+                Write-Host "File already exists at: $destinationPath" -ForegroundColor Magenta
             }     
             $iconPath = "$env:SystempRoot\win11deb.ico"
         }
