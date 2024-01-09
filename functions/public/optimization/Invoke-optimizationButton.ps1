@@ -7,7 +7,9 @@ function Invoke-optimizationButton{
     #>
 
     # Invoke restore point
-    Set-RestorePoint
+    If ( $wpf_DblSystemRestore.IsChecked -eq $true ) {
+        Set-RestorePoint
+    }
     # Essential Tweaks
     If ( $wpf_DblTelemetry.IsChecked -eq $true ) {
         Write-Host "Disabling Telemetry..."
@@ -213,6 +215,11 @@ function Invoke-optimizationButton{
         Write-Host "--- "$env:TEMP
         Write-Host "======================================="
     }
+    If ( $wpf_DblRecycleBin.IsChecked -eq $true ) {
+        Write-Host "Empting Recycle Bin..." -ForegroundColor Green
+        Clear-RecycleBin -Force
+        $wpf_DblRecycleBin.IsChecked = $false
+    }
     If ( $wpf_DblDiskCleanup.IsChecked -eq $true ) {
         Write-Host "Running Disk Cleanup on Drive C:..."
         cmd /c cleanmgr.exe /d C: /VERYLOWDISK
@@ -259,6 +266,42 @@ function Invoke-optimizationButton{
         Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR" -Name "AllowGameDVR" -Type DWord -Value 0
 
         $wpf_DblDVR.IsChecked = $false
+    }
+    If ( $wpf_DblCoreIsolation.IsChecked -eq $true ) {
+        Write-Host "Disabling Core Isolation..." -ForegroundColor Green
+        $registryPath = "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity"
+        $dwordName = "Enabled"
+        # Value to set (0 to disable, 1 to enable)
+        $dwordValue = 0
+
+        New-Item -Path $registryPath -Force
+        New-ItemProperty -Path $registryPath -Name $dwordName -PropertyType DWord -Value $dwordValue -Force
+        Write-Host "Core Isolation disabled." -ForegroundColor Green
+        $wpf_DblCoreIsolation.IsChecked = $false
+    }
+    If ( $wpf_DblDisableTeredo.IsChecked -eq $true ) {
+        Write-Host "Disabling Teredo..." -ForegroundColor Green
+        $registryPath = "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters"
+        $dwordName = "DisabledComponents"
+        # Value to set (1 to disable, 0 to enable)
+        $dwordValue = 1
+
+        New-Item -Path $registryPath -Force
+        New-ItemProperty -Path $registryPath -Name $dwordName -PropertyType DWord -Value $dwordValue -Force
+        Write-Host "netsh interface teredo set state disabled." -ForegroundColor Green
+        $wpf_DblDisableTeredo.IsChecked = $false
+    }
+    If ( $wpf_DblAutoAdjustVolume.IsChecked -eq $true ) {
+        Write-Host "Disabling Auto Adjust Volume..." -ForegroundColor Green
+        $registryPath = "HKCU:\Software\Microsoft\Multimedia\Audio"
+        $dwordName = "UserDuckingPreference"
+        # dword:00000000: Mute all other sounds
+        # dword:00000001: Reduce all other by 80%
+        # dword:00000002: Reduce all other by 50%
+        # dword:00000003: Do nothing
+        $dwordValue = 3
+        New-ItemProperty -Path $registryPath -Name $dwordName -PropertyType DWord -Value $dwordValue -Force
+        $wpf_DblAutoAdjustVolume.IsChecked = $false
     }
 
     # Additional Tweaks
@@ -311,6 +354,11 @@ function Invoke-optimizationButton{
         Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage
         $wpf_DblRemoveCortana.IsChecked = $false
     }
+    If ( $wpf_DblClassicAltTab.IsChecked -eq $true ) {
+        Write-Host "Setting Classic Alt+Tab..."
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "MultiTaskingAltTabFilter" -Type DWord -Value 3       
+        $wpf_DblClassicAltTab.IsChecked = $false
+    }
     If ( $wpf_DblRightClickMenu.IsChecked -eq $true ) {
         Write-Host "Setting Classic Right-Click Menu..."
         New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}" -Name "InprocServer32" -force -value ""       
@@ -325,6 +373,11 @@ function Invoke-optimizationButton{
         Write-Host "Disabling Game Bar..."
         If (Test-Path "HKCU:\Software\Microsoft\GameBar") {Get-Item "HKCU:\Software\Microsoft\GameBar"|Set-ItemProperty -Name "UseNexusForGameBarEnabled" -Value 0 -Verbose -Force}
         $wpf_DblGameBar.IsChecked = $false
+    }
+    If ( $wpf_DblWindowsSound.IsChecked -eq $true ) {
+        Write-Host "Disabling Windows Sound..." -ForegroundColor Green
+        Set-ItemProperty -Path "HKCU:\AppEvents\Schemes" -Name "(Default)" -Value ".None" -Force
+        $wpf_DblWindowsSound.IsChecked = $false
     }
     If ( $wpf_DblPersonalize.IsChecked -eq $true ) {
         #hide search icon, show transparency effect, colors, lock screen, power
@@ -474,5 +527,139 @@ function Invoke-optimizationButton{
 
         $wpf_DblOneDrive.IsChecked = $false
     }
+    if ( $wpf_DblModernCursorDark.IsChecked -eq $true ) {
+        Write-Host "Downloading cursor..." -ForegroundColor Green
+        $downloadUrl = "https://github.com/vukilis/Windows11-Optimizer-Debloater/raw/dev/cursor.zip" #github link
+        $outputPath = "$env:TEMP\win11app"
+
+        # Check if the file already exists
+        if (-not (Test-Path -Path "$outputPath\cursor.zip")) {
+            # File does not exist, download it
+            New-Item -ItemType Directory -Force -Path $outputPath
+            Invoke-WebRequest -Uri $downloadUrl -OutFile "$outputPath\cursor.zip"
+            Write-Host "File downloaded to: $outputPath" -ForegroundColor Green
+        } else {
+            Write-Host "File already exists at: $outputPath" -ForegroundColor Magenta
+        }
+
+        # Unzip the downloaded file
+        Write-Host "Unziping content..." -ForegroundColor Green
+        Expand-Archive -Path "$outputPath\cursor.zip" -DestinationPath $outputPath -Force
+
+        Write-Host "Installing cursor..." -ForegroundColor Green   
+        # Step 2: Run install.inf
+        $infPath = Join-Path $outputPath "dark\Install.inf"
+        # Check if the install.inf file exists
+        if (Test-Path $infPath) {
+            # Run the installation file
+            Start-Process "C:\Windows\System32\rundll32.exe" -ArgumentList "advpack.dll,LaunchINFSection $infPath,DefaultInstall"
+        } else {
+            Write-Host "Install.inf not found in the specified location."
+        }
+
+        # Set the cursor scheme values
+        Write-Host "Seting cursor..." -ForegroundColor Green
+        $cursorScheme = @"
+C:\Windows\Cursors\Windows_11_dark_v2\pointer.cur,C:\Windows\Cursors\Windows_11_dark_v2\help.cur,C:\Windows\Cursors\Windows_11_dark_v2\working.ani,C:\Windows\Cursors\Windows_11_dark_v2\busy.ani,C:\Windows\Cursors\Windows_11_dark_v2\precision.cur,C:\Windows\Cursors\Windows_11_dark_v2\beam.cur,C:\Windows\Cursors\Windows_11_dark_v2\handwriting.cur,C:\Windows\Cursors\Windows_11_dark_v2\unavailable.cur,C:\Windows\Cursors\Windows_11_dark_v2\vert.cur,C:\Windows\Cursors\Windows_11_dark_v2\horz.cur,C:\Windows\Cursors\Windows_11_dark_v2\dgn1.cur,C:\Windows\Cursors\Windows_11_dark_v2\dgn2.cur,C:\Windows\Cursors\Windows_11_dark_v2\move.cur,C:\Windows\Cursors\Windows_11_dark_v2\alternate.cur,C:\Windows\Cursors\Windows_11_dark_v2\link.cur,C:\Windows\Cursors\Windows_11_dark_v2\person.cur,C:\Windows\Cursors\Windows_11_dark_v2\pin.cur
+"@
+
+        # Define the Registry path for the cursor scheme
+        $registryPath = "HKCU:\Control Panel\Cursors"
+
+        # Set the new cursor scheme for each individual cursor type
+        $cursorTypes = @("AppStarting", "Arrow", "Crosshair", "Hand", "Help", "IBeam", "No", "NWPen", "SizeAll", "SizeNESW", "SizeNS", "SizeNWSE", "SizeWE", "UpArrow", "Wait")
+        
+        Write-Host "Updating cursor..." -ForegroundColor Green
+        foreach ($cursorType in $cursorTypes) {
+            Set-ItemProperty -Path $registryPath -Name $cursorType -Value $cursorScheme
+        }
+
+        Start-Sleep 1
+
+        Add-Type @"
+    using System;
+    using System.Runtime.InteropServices;
+
+    public class SystemParamInfo
+    {
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+    }
+"@
+
+        [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
+
+    
+        $wpf_DblModernCursorDark.IsChecked = $false
+    }
+    if ( $wpf_DblModernCursorLight.IsChecked -eq $true ) {
+        Write-Host "Downloading cursor..." -ForegroundColor Green
+        $downloadUrl = "https://github.com/vukilis/Windows11-Optimizer-Debloater/raw/dev/cursor.zip" #github link
+        $outputPath = "$env:TEMP\win11app"
+
+        # Check if the file already exists
+        if (-not (Test-Path -Path "$outputPath\cursor.zip")) {
+            # File does not exist, download it
+            New-Item -ItemType Directory -Force -Path $outputPath
+            Invoke-WebRequest -Uri $downloadUrl -OutFile "$outputPath\cursor.zip"
+            Write-Host "File downloaded to: $outputPath" -ForegroundColor Green
+        } else {
+            Write-Host "File already exists at: $outputPath" -ForegroundColor Magenta
+        }
+
+        # Unzip the downloaded file
+        Write-Host "Unziping content..." -ForegroundColor Green
+        Expand-Archive -Path "$outputPath\cursor.zip" -DestinationPath $outputPath -Force
+
+        Write-Host "Installing cursor..." -ForegroundColor Green   
+        # Step 2: Run install.inf
+        $infPath = Join-Path $outputPath "light\Install.inf"
+        # Check if the install.inf file exists
+        if (Test-Path $infPath) {
+            # Run the installation file
+            Start-Process "C:\Windows\System32\rundll32.exe" -ArgumentList "advpack.dll,LaunchINFSection $infPath,DefaultInstall"
+        } else {
+            Write-Host "Install.inf not found in the specified location."
+        }
+
+        # Set the cursor scheme values
+        Write-Host "Seting cursor..." -ForegroundColor Green
+        $cursorScheme = @"
+C:\Windows\Cursors\Windows_11_light_v2\pointer.cur,C:\Windows\Cursors\Windows_11_light_v2\help.cur,C:\Windows\Cursors\Windows_11_light_v2\working.ani,C:\Windows\Cursors\Windows_11_light_v2\busy.ani,C:\Windows\Cursors\Windows_11_light_v2\precision.cur,C:\Windows\Cursors\Windows_11_light_v2\beam.cur,C:\Windows\Cursors\Windows_11_light_v2\handwriting.cur,C:\Windows\Cursors\Windows_11_light_v2\unavailable.cur,C:\Windows\Cursors\Windows_11_light_v2\vert.cur,C:\Windows\Cursors\Windows_11_light_v2\horz.cur,C:\Windows\Cursors\Windows_11_light_v2\dgn1.cur,C:\Windows\Cursors\Windows_11_light_v2\dgn2.cur,C:\Windows\Cursors\Windows_11_light_v2\move.cur,C:\Windows\Cursors\Windows_11_light_v2\alternate.cur,C:\Windows\Cursors\Windows_11_light_v2\link.cur,C:\Windows\Cursors\Windows_11_light_v2\person.cur,C:\Windows\Cursors\Windows_11_light_v2\pin.cur
+"@
+
+        # Define the Registry path for the cursor scheme
+        $registryPath = "HKCU:\Control Panel\Cursors"
+
+        # Set the new cursor scheme for each individual cursor type
+        $cursorTypes = @("AppStarting", "Arrow", "Crosshair", "Hand", "Help", "IBeam", "No", "NWPen", "SizeAll", "SizeNESW", "SizeNS", "SizeNWSE", "SizeWE", "UpArrow", "Wait")
+        
+        Write-Host "Updating cursor..." -ForegroundColor Green
+        foreach ($cursorType in $cursorTypes) {
+            Set-ItemProperty -Path $registryPath -Name $cursorType -Value $cursorScheme
+        }
+
+        Start-Sleep 1
+
+        Add-Type @"
+    using System;
+    using System.Runtime.InteropServices;
+
+    public class SystemParamInfo
+    {
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+    }
+"@
+
+        [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
+
+    
+        $wpf_DblModernCursorLight.IsChecked = $false
+    }
     Invoke-MessageBox -msg "tweak"
+    # Invoke restart computer
+    If ( $wpf_DblRestartPC.IsChecked -eq $true ) {
+        Restart-Computer
+    }
 }
