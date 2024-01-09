@@ -9,6 +9,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 - When launch script, **Info** tab button is not visually selected.
 
+## [2.2] - 2024-01-09
+
+### Added
+
+- Bring back Thorium browser after the drama with Furries and Alex's Response. His Response: [link](https://alex313031.blogspot.com/2024/01/the-good-bad-and-ugly.html).
+- New tweaks:  
+**Disable Core Isolation**,  
+**Disable Teredo**,  
+**Disable Auto Adjust Volume**,  
+**Disable Windows Sound**,  
+**Classic alt+tab**,    
+**Empty Recycle Bin**,  
+**Verbose Logon Messages**,  
+**Disable Snap Layout**,  
+custom modern **Cursor** dark/light. 
+- Added checkboxes for **System Restore Point** and **Restart Computer**.
+
+### Changed
+
+- **UI** Improved
+- Now can be enabled/disabled the creation of system restore point when tweaking. Enabled by Default!
+- Now can be enabled/disabled restart computer after tweaking. Disabled by default!
+- Improved code for **services** tab.
+
 ## [2.1] - 2024-01-05
 
 ### Added
