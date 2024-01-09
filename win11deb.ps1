@@ -202,7 +202,6 @@ function Invoke-Tabs {
             $TabNav.value.Items[$psitem].IsSelected = $false
         }
     }
-
     $isVisible = if ($TabSearchItem.isSelected) {"Visible"} else {"Collapsed"}; $wpf_CheckboxFilter.Visibility = $isVisible; $wpf_ResetButton.Visibility = $isVisible
 }
 Invoke-Tabs "wpf_Tab1BT"
