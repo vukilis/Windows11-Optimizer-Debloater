@@ -11,13 +11,13 @@
     Website        : https://vukilis.github.io/website/
     GitHub         : https://github.com/vukilis
     Name:          : Windows11 Optimizer&Debloater
-    Version        : 2.1
+    Version        : 2.2
 #>
 
 Add-Type -AssemblyName PresentationFramework
 
 Start-Transcript $ENV:TEMP\win11deb.log -Append
-#$xamlFile="xaml\MainWindow.xaml" #uncomment for development
+#$xamlFile="C:\Users\vukilis\Pictures\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
 #$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
 $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
@@ -162,7 +162,6 @@ function Invoke-Checkbox {
         "wpf_ToggleDevPreset" {Invoke-ToggleDevPreset}
         "wpf_ToggleGamingPreset" {Invoke-ToggleGamingPreset}
         "wpf_ToggleDarkMode" {Invoke-ToggleDarkMode}
-
         "wpf_ToggleBingSearchMenu" {Invoke-ToggleBingSearchMenu}
         "wpf_ToggleNumLock" {Invoke-ToggleNumLock}
         "wpf_ToggleExt" {Invoke-ToggleExt}
@@ -170,6 +169,8 @@ function Invoke-Checkbox {
         "wpf_TogglefIPv6" {Invoke-TogglefIPv6}
         "wpf_ToggleHiddenFiles" {Invoke-ToggleHiddenFiles}
         "wpf_ToggleSearch" {Invoke-ToggleSearch}
+        "wpf_ToggleSnapLayouts" {Invoke-ToggleSnapLayouts}
+        "wpf_ToggleVerboseLogon" {Invoke-ToggleVerboseLogon}
     }
 }
 ################################
@@ -213,7 +214,7 @@ Function Get-Author7 {
         This is for powershell v7.1+
     #>
     
-    Clear-Host
+    #Clear-Host
     $colors = @("`e[38;5;200m", "`e[38;5;51m", "`e[38;5;98m")
 
     function Get-RandomColor {
@@ -232,7 +233,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.1    
+Windows11 Optimizer&Debloater           2.2    
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -249,7 +250,7 @@ Function Get-Author5 {
         This is for powershell v5.1
     #>
 
-    Clear-Host
+    #Clear-Host
     $colors = @("Red", "Cyan", "Magenta")
 
     function Get-RandomColor {
@@ -268,7 +269,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.1    
+Windows11 Optimizer&Debloater           2.2    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {
@@ -321,7 +322,7 @@ if (-not (Test-Path $destinationPath)) {
 ###                                                                                                          ###
 ################################################################################################################
 
-$programs = @('{"winget":"Docker.DockerDesktop","name":"Docker Desktop","id":"DblInstallDockerdesktop"}','{"winget":"Git.Git","name":"Git","id":"DblInstallGit"}','{"winget":"GitExtensionsTeam.GitExtensions","name":"Git Extensions","id":"DblInstallGitextensions"}','{"winget":"GitHub.GitHubDesktop","name":"GitHub Desktop","id":"DblInstallGithubdesktop"}','{"winget":"GodotEngine.GodotEngine","name":"Godot Engine","id":"DblInstallGodotEngine"}','{"winget":"GoLang.Go","name":"Go Programming Language","id":"DblInstallGolang"}','{"winget":"HeidiSQL.HeidiSQL","name":"HeidiSQL","id":"DblInstallHeidisql"}','{"winget":"Oracle.MySQL","name":"MySQL","id":"DblInstallMySQL"}','{"winget":"OpenJS.NodeJS","name":"Node.js","id":"DblInstallNodejs"}','{"winget":"OpenJS.NodeJS.LTS","name":"Node.js LTS","id":"DblInstallNodejslts"}','{"winget":"CoreyButler.NVMforWindows","name":"Node Version Manager (NVM)","id":"DblInstallNodemanager"}','{"winget":"EclipseAdoptium.Temurin.8.JRE","name":"Java 8","id":"DblInstallJava8"}','{"winget":"EclipseAdoptium.Temurin.11.JRE","name":"Java 11","id":"DblInstallJava11"}','{"winget":"EclipseAdoptium.Temurin.17.JRE","name":"Java 17","id":"DblInstallJava17"}','{"winget":"EclipseAdoptium.Temurin.21.JDK","name":"Java 21","id":"DblInstallJava21"}','{"winget":"JanDeDobbeleer.OhMyPosh","name":"Oh My Posh","id":"DblInstallOhmyposh"}','{"winget":"Python.Python.3.12","name":"Python 3","id":"DblInstallPython3"}','{"winget":"RedHat.Podman","name":"Podman","id":"DblInstallPodman"}','{"winget":"Postman.Postman","name":"Postman","id":"DblInstallPostman"}','{"winget":"RubyInstallerTeam.Ruby.3.2","name":"Ruby 3.2","id":"DblInstallRuby"}','{"winget":"Rustlang.Rust.MSVC","name":"Rust","id":"DblInstallRust"}','{"winget":"DBBrowserForSQLite.DBBrowserForSQLite","name":"SQLite","id":"DblInstallSQLite"}','{"winget":"Microsoft.SQLServer.2022.Developer","name":"SQL Server 2022 Developer","id":"DblInstallSQLServer2022"}','{"winget":"Unity.Unity.2022","name":"Unity 2022","id":"DblInstallUnity"}','{"winget":"Hashicorp.Vagrant","name":"Vagrant","id":"DblInstallVagrant"}','{"winget":"Microsoft.VisualStudio.2022.Community","name":"Visual Studio 2022","id":"DblInstallVisualstudio2022"}','{"winget":"Microsoft.VisualStudioCode","name":"Visual Studio Code","id":"DblInstallCode"}','{"winget":"Microsoft.DotNet.DesktopRuntime.3_1","name":".NET Core 3","id":"DblInstallDotnet3"}','{"winget":"Microsoft.DotNet.DesktopRuntime.5","name":".NET 5","id":"DblInstallDotnet5"}','{"winget":"Microsoft.DotNet.DesktopRuntime.6","name":".NET 6","id":"DblInstallDotnet6"}','{"winget":"Microsoft.DotNet.DesktopRuntime.7","name":".NET 7","id":"DblInstallDotnet7"}','{"winget":"Microsoft.DotNet.DesktopRuntime.8","name":".NET 8","id":"DblInstallDotnet8"}','{"winget":"Microsoft.Sysinternals.Autoruns","name":"Autoruns","id":"DblInstallAutoruns"}','{"winget":"MHNexus.HxD","name":"HxD Hex Editor","id":"DblInstallHxD"}','{"winget":"Microsoft.PowerShell","name":"PowerShell","id":"DblInstallPowershell"}','{"winget":"Microsoft.PowerToys","name":"PowerToys","id":"DblInstallPowertoys"}','{"winget":"Microsoft.Sysinternals.ProcessExplorer","name":"Process Explorer","id":"DblInstallProcessExplorer"}','{"winget":"Microsoft.VCRedist.2015+.x64","name":"Visual 2015 Redistributable (64-bit)","id":"DblInstallvc2015_64"}','{"winget":"Microsoft.VCRedist.2015+.x86","name":"Visual 2015 Redistributable (32-bit)","id":"DblInstallvc2015_32"}','{"winget":"Microsoft.WindowsTerminal","name":"Windows Terminal","id":"DblInstallTerminal"}','{"winget":"Brave.Brave","name":"Brave","id":"DblInstallBrave"}','{"winget":"Google.Chrome","name":"Google Chrome","id":"DblInstallChrome"}','{"winget":"eloston.ungoogled-chromium","name":"Chromium","id":"DblInstallChromium"}','{"winget":"Mozilla.Firefox","name":"Mozilla Firefox","id":"DblInstallFirefox"}','{"winget":"MullvadVPN.MullvadBrowser","name":"Mullvad Browser","id":"DblInstallMullvad"}','{"winget":"TorProject.TorBrowser","name":"Tor Browser","id":"DblInstallTor"}','{"winget":"Librewolf.Librewolf","name":"Librewolf","id":"DblInstallLibrewolf"}','{"winget":"Ablaze.Floorp","name":"Floorp","id":"DblInstallFloorp"}','{"winget":"VivaldiTechnologies.Vivaldi","name":"Vivaldi","id":"DblInstallVivaldi"}','{"winget":"Waterfox.Waterfox","name":"Waterfox","id":"DblInstallWaterfox"}','{"winget":"Discord.Discord","name":"Discord","id":"DblInstallDiscord"}','{"winget":"Element.Element","name":"Element (Matrix)","id":"DblInstallMatrix"}','{"winget":"Microsoft.Skype","name":"Skype","id":"DblInstallSkype"}','{"winget":"SlackTechnologies.Slack","name":"Slack","id":"DblInstallSlack"}','{"winget":"Microsoft.Teams","name":"Microsoft Teams","id":"DblInstallTeams"}','{"winget":"Telegram.TelegramDesktop","name":"Telegram","id":"DblInstallTelegram"}','{"winget":"Viber.Viber","name":"Viber","id":"DblInstallViber"}','{"winget":"Zoom.Zoom","name":"Zoom","id":"DblInstallZoom"}','{"winget":"BlueStack.BlueStacks","name":"Bluestacks","id":"DblInstallBluestacks"}','{"winget":"Cemu.Cemu","name":"Cemu","id":"DblInstallCemu"}','{"winget":"ElectronicArts.EADesktop","name":"EA Desktop App","id":"DblInstallEaapp"}','{"winget":"Emulationstation.Emulationstation","name":"Emulation Station","id":"DblInstallEmulationstation"}','{"winget":"EpicGames.EpicGamesLauncher","name":"Epic Games Store","id":"DblInstallEpicgames"}','{"winget":"Nvidia.GeforceNOW","name":"NVIDIA GeForce NOW","id":"DblInstallGeforcenow"}','{"winget":"GOG.Galaxy","name":"GOG Galaxy","id":"DblInstallGog"}','{"winget":"Playnite.Playnite","name":"Playnite","id":"DblInstallPlaynite"}','{"winget":"PrismLauncher.PrismLauncher","name":"Prism Launcher","id":"DblInstallPrism"}','{"winget":"SideQuestVR.SideQuest","name":"SideQuestVR","id":"DblInstallSideQuest"}','{"winget":"Valve.Steam","name":"Steam","id":"DblInstallSteam"}','{"winget":"LizardByte.Sunshine","name":"Sunshine Stream Server","id":"DblInstallSunshine"}','{"winget":"HeroicGamesLauncher.HeroicGamesLauncher","name":"Heroic Games Launcher","id":"DblInstallHeroic"}','{"winget":"ItchIo.Itch","name":"itch.io","id":"DblInstallItch"}','{"winget":"MedalB.V.Medal","name":"Medal","id":"DblInstallMedal"}','{"winget":"MoonlightGameStreamingProject.Moonlight","name":"Moonlight Stream Client","id":"DblInstallMoonlight"}','{"winget":null,"name":"Legendary Epic (Python)","id":"DblPythonEpicCLI"}','{"winget":"Ubisoft.Connect","name":"Ubisoft Connect","id":"DblInstallUbisoft"}','{"winget":"Wargaming.GameCenter","name":"Wargaming Game Center","id":"DblInstallWargaming"}','{"winget":"xemu-project.xemu","name":"XEMU","id":"DblInstallXemu"}','{"winget":"Audacity.Audacity","name":"Audacity","id":"DblInstallAudacity"}','{"winget":"9MVZQVXJBQ9V","name":"AV1 Video Extension","id":"DblInstallAV1"}','{"winget":"BlenderFoundation.Blender","name":"Blender","id":"DblInstallBlender"}','{"winget":"Figma.Figma","name":"Figma","id":"DblInstallFigma"}','{"winget":"Gyan.FFmpeg","name":"FFmpeg","id":"DblInstallFFmpeg"}','{"winget":"CiderCollective.Cider","name":"Cider","id":"DblInstallCider"}','{"winget":"Greenshot.Greenshot","name":"Greenshot","id":"DblInstallGreenshot"}','{"winget":"HandBrake.HandBrake","name":"Handbrake","id":"DblInstallHandbrake"}','{"winget":"DuongDieuPhap.ImageGlass","name":"ImageGlass","id":"DblInstallImageglass"}','{"winget":"XBMCFoundation.Kodi","name":"Kodi","id":"DblInstallKodi"}','{"winget":"CodecGuide.K-LiteCodecPack.Standard","name":"K-Lite Codec Pack","id":"DblInstallKlite"}','{"winget":"MediaArea.MediaInfo.GUI","name":"MediaInfo","id":"DblInstallMediaInfo"}','{"winget":"MoritzBunkus.MKVToolNix","name":"MKVToolNix","id":"DblInstallMKVToolNix"}','{"winget":"Plex.Plex","name":"Plex Client","id":"DblInstallPlex"}','{"winget":"Plex.PlexMediaServer","name":"Plex Server","id":"DblInstallPlexServer"}','{"winget":"OBSProject.OBSStudio","name":"OBS Studio","id":"DblInstallObs"}','{"winget":"9NCBCSZSJRSB","name":"Spotify","id":"DblInstallSpotify"}','{"winget":"ShareX.ShareX","name":"ShareX","id":"DblInstallSharex"}','{"winget":"VideoLAN.VLC","name":"VLC Media Player","id":"DblInstallVlc"}','{"winget":"9N4D0MSMP0PT","name":"VP9 Video Extensions","id":"DblInstallVP9"}','{"winget":"yt-dlp.yt-dlp","name":"yt-dlp","id":"DblInstallYtdlp"}','{"winget":"Anki.Anki","name":"Anki","id":"DblInstallAnki"}','{"winget":"Adobe.Acrobat.Reader.64-bit","name":"Adobe","id":"DblInstallAdobe"}','{"winget":"Joplin.Joplin","name":"Joplin","id":"DblInstallJoplin"}','{"winget":"TheDocumentFoundation.LibreOffice","name":"LibreOffice","id":"DblInstallLibreoffice"}','{"winget":"Neovim.Neovim","name":"Neovim","id":"DblInstallNeovim"}','{"winget":"Neovim.Neovim.Nightly","name":"Neovim Nightly","id":"DblInstallNeovimNightly"}','{"winget":"Notepad++.Notepad++","name":"Notepad","id":"DblInstallNotepadplus"}','{"winget":"JackieLiu.NotepadsApp","name":"Notepads","id":"DblInstallNotepadsApp"}','{"winget":"Obsidian.Obsidian","name":"Obsidian","id":"DblInstallObsidian"}','{"winget":"ONLYOFFICE.DesktopEditors","name":"OnlyOffice","id":"DblInstallOnlyoffice"}','{"winget":"SublimeHQ.SublimeText.3","name":"Sublime Text 4","id":"DblInstallSublime4"}','{"winget":"SumatraPDF.SumatraPDF","name":"Sumatra","id":"DblInstallSumatra"}','{"winget":"Kingsoft.WPSOffice","name":"WPS Office","id":"DblInstallWPS"}','{"winget":"WinMerge.WinMerge","name":"WinMerge","id":"DblInstallWinmerge"}','{"winget":"7zip.7zip","name":"7-zip","id":"DblInstall7zip"}','{"winget":"Google.PlatformTools","name":"Android Debug Bridge","id":"DblInstallADB"}','{"winget":"Alacritty.Alacritty","name":"Alacritty","id":"DblInstallAlacritty"}','{"winget":"Anydo.Anydo","name":"Anydo","id":"DblInstallAnydo"}','{"winget":"autohotkey","name":"AutoHotkey","id":"DblInstallAutohotkey"}','{"winget":"Bitwarden.Bitwarden","name":"Bitwarden","id":"DblInstallBitwarden"}','{"winget":"ChatterinoTeam.Chatterino","name":"Chatterino","id":"DblInstallChatterino"}','{"winget":"PopeenCom.ClassicVolumeMixer","name":"ClassicVolumeMixer","id":"DblInstallClasicMixer"}','{"winget":"CPUID.CPU-Z","name":"CPU-Z","id":"DblInstallCpuz"}','{"winget":"Cryptomator.Cryptomator","name":"Cryptomator","id":"DblInstallCryptomator"}','{"winget":"Wagnardsoft.DisplayDriverUninstaller","name":"Display Driver Uninstaller","id":"DblInstallDdu"}','{"winget":"JGraph.Draw","name":"Draw.io","id":"DblInstallDrawio"}','{"winget":"oidtools.Everything","name":"Everything","id":"DblInstallEsearch"}','{"winget":"Google.GoogleDrive ","name":"Google Drive","id":"DblInstallGoogleDrive"}','{"winget":"TechPowerUp.GPU-Z","name":"GPU-Z","id":"DblInstallGpuz"}','{"winget":"gerardog.gsudo","name":"gsudo","id":"DblInstallGsudo"}','{"winget":"9P1TBXR6QDCX","name":"HyperX NGENUITY","id":"DblInstallNGENUITY"}','{"winget":"REALiX.HWiNFO","name":"HWiNFO","id":"DblInstallHwinfo"}','{"winget":"AppWork.JDownloader","name":"JDownloader","id":"DblInstallJdownloader"}','{"winget":"KDE.KDEConnect","name":"KDE Connect","id":"DblInstallKDEConnect"}','{"winget":"KeePassXCTeam.KeePassXC","name":"KeePassXC","id":"DblInstallKeepass"}','{"winget":"Guru3D.Afterburner","name":"Afterburner","id":"DblInstallMsiafterburner"}','{"winget":"Mozilla.Thunderbird","name":"Thunderbird","id":"DblInstallThunderbird"}','{"winget":"M2Team.NanaZip","name":"NanaZip","id":"DblInstallNanazip"}','{"winget":"gsass1.NTop","name":"NTop","id":"DblInstallNTop"}','{"winget":"TechPowerUp.NVCleanstall","name":"NVCleanstall","id":"DblInstallNvclean"}','{"winget":"Oracle.VirtualBox","name":"VirtualBox","id":"DblInstallOVirtualBox"}','{"winget":"Ookla.Speedtest.Desktop","name":"Speedtest by Ookla","id":"DblInstallSpeedtest"}','{"winget":"CalcProgrammer1.OpenRGB","name":"OpenRGB","id":"DblInstallOpenrgb"}','{"winget":"Parsec.Parsec","name":"Parsec","id":"DblInstallParsec"}','{"winget":"Postbox.Postbox","name":"Postbox","id":"DblInstallPostbox"}','{"winget":"BitSum.ProcessLasso","name":"Process Lasso","id":"DblInstallProcesslasso"}','{"winget":"ProxymanLLC.Proxyman","name":"Proxyman","id":"DblInstallProxyman"}','{"winget":"qBittorrent.qBittorrent","name":"qBittorrent","id":"DblInstallQbittorrent"}','{"winget":"RevoUninstaller.RevoUninstaller","name":"Revo","id":"DblInstallRevo"}','{"winget":"Rufus.Rufus","name":"Rufus","id":"DblInstallRufus"}','{"winget":"9PF4KZ2VN4W9","name":"Ttaskbar","id":"DblInstallTtaskbar"}','{"winget":"SomePythonThings.WingetUIStore","name":"WingetUI","id":"DblInstallWingetUI"}','{"winget":"RARLab.WinRAR","name":"WinRAR","id":"DblInstallWinrar"}')
+$programs = @('{"winget":"Docker.DockerDesktop","id":"DblInstallDockerdesktop","name":"Docker Desktop"}','{"winget":"Git.Git","id":"DblInstallGit","name":"Git"}','{"winget":"GitExtensionsTeam.GitExtensions","id":"DblInstallGitextensions","name":"Git Extensions"}','{"winget":"GitHub.GitHubDesktop","id":"DblInstallGithubdesktop","name":"GitHub Desktop"}','{"winget":"GodotEngine.GodotEngine","id":"DblInstallGodotEngine","name":"Godot Engine"}','{"winget":"GoLang.Go","id":"DblInstallGolang","name":"Go Programming Language"}','{"winget":"HeidiSQL.HeidiSQL","id":"DblInstallHeidisql","name":"HeidiSQL"}','{"winget":"Oracle.MySQL","id":"DblInstallMySQL","name":"MySQL"}','{"winget":"OpenJS.NodeJS","id":"DblInstallNodejs","name":"Node.js"}','{"winget":"OpenJS.NodeJS.LTS","id":"DblInstallNodejslts","name":"Node.js LTS"}','{"winget":"CoreyButler.NVMforWindows","id":"DblInstallNodemanager","name":"Node Version Manager (NVM)"}','{"winget":"EclipseAdoptium.Temurin.8.JRE","id":"DblInstallJava8","name":"Java 8"}','{"winget":"EclipseAdoptium.Temurin.11.JRE","id":"DblInstallJava11","name":"Java 11"}','{"winget":"EclipseAdoptium.Temurin.17.JRE","id":"DblInstallJava17","name":"Java 17"}','{"winget":"EclipseAdoptium.Temurin.21.JDK","id":"DblInstallJava21","name":"Java 21"}','{"winget":"JanDeDobbeleer.OhMyPosh","id":"DblInstallOhmyposh","name":"Oh My Posh"}','{"winget":"Python.Python.3.12","id":"DblInstallPython3","name":"Python 3"}','{"winget":"RedHat.Podman","id":"DblInstallPodman","name":"Podman"}','{"winget":"Postman.Postman","id":"DblInstallPostman","name":"Postman"}','{"winget":"RubyInstallerTeam.Ruby.3.2","id":"DblInstallRuby","name":"Ruby 3.2"}','{"winget":"Rustlang.Rust.MSVC","id":"DblInstallRust","name":"Rust"}','{"winget":"DBBrowserForSQLite.DBBrowserForSQLite","id":"DblInstallSQLite","name":"SQLite"}','{"winget":"Microsoft.SQLServer.2022.Developer","id":"DblInstallSQLServer2022","name":"SQL Server 2022 Developer"}','{"winget":"Unity.Unity.2022","id":"DblInstallUnity","name":"Unity 2022"}','{"winget":"Hashicorp.Vagrant","id":"DblInstallVagrant","name":"Vagrant"}','{"winget":"Microsoft.VisualStudio.2022.Community","id":"DblInstallVisualstudio2022","name":"Visual Studio 2022"}','{"winget":"Microsoft.VisualStudioCode","id":"DblInstallCode","name":"Visual Studio Code"}','{"winget":"Microsoft.DotNet.DesktopRuntime.3_1","id":"DblInstallDotnet3","name":".NET Core 3"}','{"winget":"Microsoft.DotNet.DesktopRuntime.5","id":"DblInstallDotnet5","name":".NET 5"}','{"winget":"Microsoft.DotNet.DesktopRuntime.6","id":"DblInstallDotnet6","name":".NET 6"}','{"winget":"Microsoft.DotNet.DesktopRuntime.7","id":"DblInstallDotnet7","name":".NET 7"}','{"winget":"Microsoft.DotNet.DesktopRuntime.8","id":"DblInstallDotnet8","name":".NET 8"}','{"winget":"Microsoft.Sysinternals.Autoruns","id":"DblInstallAutoruns","name":"Autoruns"}','{"winget":"MHNexus.HxD","id":"DblInstallHxD","name":"HxD Hex Editor"}','{"winget":"Microsoft.PowerShell","id":"DblInstallPowershell","name":"PowerShell"}','{"winget":"Microsoft.PowerToys","id":"DblInstallPowertoys","name":"PowerToys"}','{"winget":"Microsoft.Sysinternals.ProcessExplorer","id":"DblInstallProcessExplorer","name":"Process Explorer"}','{"winget":"Microsoft.VCRedist.2015+.x64","id":"DblInstallvc2015_64","name":"Visual 2015 Redistributable (64-bit)"}','{"winget":"Microsoft.VCRedist.2015+.x86","id":"DblInstallvc2015_32","name":"Visual 2015 Redistributable (32-bit)"}','{"winget":"Microsoft.WindowsTerminal","id":"DblInstallTerminal","name":"Windows Terminal"}','{"winget":"Brave.Brave","id":"DblInstallBrave","name":"Brave"}','{"winget":"Google.Chrome","id":"DblInstallChrome","name":"Google Chrome"}','{"winget":"eloston.ungoogled-chromium","id":"DblInstallChromium","name":"Chromium"}','{"winget":"Mozilla.Firefox","id":"DblInstallFirefox","name":"Mozilla Firefox"}','{"winget":"MullvadVPN.MullvadBrowser","id":"DblInstallMullvad","name":"Mullvad"}','{"winget":"Alex313031.Thorium","id":"DblInstallThorium","name":"Thorium"}','{"winget":"Alex313031.Thorium.AVX2","id":"DblInstallThoriumAVX","name":"Thorium AVX2"}','{"winget":"TorProject.TorBrowser","id":"DblInstallTor","name":"Tor Browser"}','{"winget":"Librewolf.Librewolf","id":"DblInstallLibrewolf","name":"Librewolf"}','{"winget":"Ablaze.Floorp","id":"DblInstallFloorp","name":"Floorp"}','{"winget":"VivaldiTechnologies.Vivaldi","id":"DblInstallVivaldi","name":"Vivaldi"}','{"winget":"Waterfox.Waterfox","id":"DblInstallWaterfox","name":"Waterfox"}','{"winget":"Discord.Discord","id":"DblInstallDiscord","name":"Discord"}','{"winget":"Element.Element","id":"DblInstallMatrix","name":"Element (Matrix)"}','{"winget":"Microsoft.Skype","id":"DblInstallSkype","name":"Skype"}','{"winget":"SlackTechnologies.Slack","id":"DblInstallSlack","name":"Slack"}','{"winget":"Microsoft.Teams","id":"DblInstallTeams","name":"Microsoft Teams"}','{"winget":"Telegram.TelegramDesktop","id":"DblInstallTelegram","name":"Telegram"}','{"winget":"Viber.Viber","id":"DblInstallViber","name":"Viber"}','{"winget":"Zoom.Zoom","id":"DblInstallZoom","name":"Zoom"}','{"winget":"BlueStack.BlueStacks","id":"DblInstallBluestacks","name":"Bluestacks"}','{"winget":"Cemu.Cemu","id":"DblInstallCemu","name":"Cemu"}','{"winget":"ElectronicArts.EADesktop","id":"DblInstallEaapp","name":"EA Desktop App"}','{"winget":"Emulationstation.Emulationstation","id":"DblInstallEmulationstation","name":"Emulation Station"}','{"winget":"EpicGames.EpicGamesLauncher","id":"DblInstallEpicgames","name":"Epic Games Store"}','{"winget":"Nvidia.GeforceNOW","id":"DblInstallGeforcenow","name":"NVIDIA GeForce NOW"}','{"winget":"GOG.Galaxy","id":"DblInstallGog","name":"GOG Galaxy"}','{"winget":"Playnite.Playnite","id":"DblInstallPlaynite","name":"Playnite"}','{"winget":"PrismLauncher.PrismLauncher","id":"DblInstallPrism","name":"Prism Launcher"}','{"winget":"SideQuestVR.SideQuest","id":"DblInstallSideQuest","name":"SideQuestVR"}','{"winget":"Valve.Steam","id":"DblInstallSteam","name":"Steam"}','{"winget":"LizardByte.Sunshine","id":"DblInstallSunshine","name":"Sunshine Stream Server"}','{"winget":"HeroicGamesLauncher.HeroicGamesLauncher","id":"DblInstallHeroic","name":"Heroic Games Launcher"}','{"winget":"ItchIo.Itch","id":"DblInstallItch","name":"itch.io"}','{"winget":"MedalB.V.Medal","id":"DblInstallMedal","name":"Medal"}','{"winget":"MoonlightGameStreamingProject.Moonlight","id":"DblInstallMoonlight","name":"Moonlight Stream Client"}','{"winget":null,"id":"DblPythonEpicCLI","name":"Legendary Epic (Python)"}','{"winget":"Ubisoft.Connect","id":"DblInstallUbisoft","name":"Ubisoft Connect"}','{"winget":"Wargaming.GameCenter","id":"DblInstallWargaming","name":"Wargaming Game Center"}','{"winget":"xemu-project.xemu","id":"DblInstallXemu","name":"XEMU"}','{"winget":"Audacity.Audacity","id":"DblInstallAudacity","name":"Audacity"}','{"winget":"9MVZQVXJBQ9V","id":"DblInstallAV1","name":"AV1 Video Extension"}','{"winget":"BlenderFoundation.Blender","id":"DblInstallBlender","name":"Blender"}','{"winget":"Figma.Figma","id":"DblInstallFigma","name":"Figma"}','{"winget":"Gyan.FFmpeg","id":"DblInstallFFmpeg","name":"FFmpeg"}','{"winget":"CiderCollective.Cider","id":"DblInstallCider","name":"Cider"}','{"winget":"Greenshot.Greenshot","id":"DblInstallGreenshot","name":"Greenshot"}','{"winget":"HandBrake.HandBrake","id":"DblInstallHandbrake","name":"Handbrake"}','{"winget":"DuongDieuPhap.ImageGlass","id":"DblInstallImageglass","name":"ImageGlass"}','{"winget":"XBMCFoundation.Kodi","id":"DblInstallKodi","name":"Kodi"}','{"winget":"CodecGuide.K-LiteCodecPack.Standard","id":"DblInstallKlite","name":"K-Lite Codec Pack"}','{"winget":"MediaArea.MediaInfo.GUI","id":"DblInstallMediaInfo","name":"MediaInfo"}','{"winget":"MoritzBunkus.MKVToolNix","id":"DblInstallMKVToolNix","name":"MKVToolNix"}','{"winget":"Plex.Plex","id":"DblInstallPlex","name":"Plex Client"}','{"winget":"Plex.PlexMediaServer","id":"DblInstallPlexServer","name":"Plex Server"}','{"winget":"OBSProject.OBSStudio","id":"DblInstallObs","name":"OBS Studio"}','{"winget":"9NCBCSZSJRSB","id":"DblInstallSpotify","name":"Spotify"}','{"winget":"ShareX.ShareX","id":"DblInstallSharex","name":"ShareX"}','{"winget":"VideoLAN.VLC","id":"DblInstallVlc","name":"VLC Media Player"}','{"winget":"9N4D0MSMP0PT","id":"DblInstallVP9","name":"VP9 Video Extensions"}','{"winget":"yt-dlp.yt-dlp","id":"DblInstallYtdlp","name":"yt-dlp"}','{"winget":"Anki.Anki","id":"DblInstallAnki","name":"Anki"}','{"winget":"Adobe.Acrobat.Reader.64-bit","id":"DblInstallAdobe","name":"Adobe"}','{"winget":"Joplin.Joplin","id":"DblInstallJoplin","name":"Joplin"}','{"winget":"TheDocumentFoundation.LibreOffice","id":"DblInstallLibreoffice","name":"LibreOffice"}','{"winget":"Neovim.Neovim","id":"DblInstallNeovim","name":"Neovim"}','{"winget":"Neovim.Neovim.Nightly","id":"DblInstallNeovimNightly","name":"Neovim Nightly"}','{"winget":"Notepad++.Notepad++","id":"DblInstallNotepadplus","name":"Notepad"}','{"winget":"JackieLiu.NotepadsApp","id":"DblInstallNotepadsApp","name":"Notepads"}','{"winget":"Obsidian.Obsidian","id":"DblInstallObsidian","name":"Obsidian"}','{"winget":"ONLYOFFICE.DesktopEditors","id":"DblInstallOnlyoffice","name":"OnlyOffice"}','{"winget":"SublimeHQ.SublimeText.3","id":"DblInstallSublime4","name":"Sublime Text 4"}','{"winget":"SumatraPDF.SumatraPDF","id":"DblInstallSumatra","name":"Sumatra"}','{"winget":"Kingsoft.WPSOffice","id":"DblInstallWPS","name":"WPS Office"}','{"winget":"WinMerge.WinMerge","id":"DblInstallWinmerge","name":"WinMerge"}','{"winget":"7zip.7zip","id":"DblInstall7zip","name":"7-zip"}','{"winget":"Google.PlatformTools","id":"DblInstallADB","name":"Android Debug Bridge"}','{"winget":"Alacritty.Alacritty","id":"DblInstallAlacritty","name":"Alacritty"}','{"winget":"Anydo.Anydo","id":"DblInstallAnydo","name":"Anydo"}','{"winget":"autohotkey","id":"DblInstallAutohotkey","name":"AutoHotkey"}','{"winget":"Bitwarden.Bitwarden","id":"DblInstallBitwarden","name":"Bitwarden"}','{"winget":"ChatterinoTeam.Chatterino","id":"DblInstallChatterino","name":"Chatterino"}','{"winget":"PopeenCom.ClassicVolumeMixer","id":"DblInstallClasicMixer","name":"ClassicVolumeMixer"}','{"winget":"CPUID.CPU-Z","id":"DblInstallCpuz","name":"CPU-Z"}','{"winget":"Cryptomator.Cryptomator","id":"DblInstallCryptomator","name":"Cryptomator"}','{"winget":"Wagnardsoft.DisplayDriverUninstaller","id":"DblInstallDdu","name":"Display Driver Uninstaller"}','{"winget":"JGraph.Draw","id":"DblInstallDrawio","name":"Draw.io"}','{"winget":"oidtools.Everything","id":"DblInstallEsearch","name":"Everything"}','{"winget":"Google.GoogleDrive ","id":"DblInstallGoogleDrive","name":"Google Drive"}','{"winget":"TechPowerUp.GPU-Z","id":"DblInstallGpuz","name":"GPU-Z"}','{"winget":"gerardog.gsudo","id":"DblInstallGsudo","name":"gsudo"}','{"winget":"9P1TBXR6QDCX","id":"DblInstallNGENUITY","name":"HyperX NGENUITY"}','{"winget":"REALiX.HWiNFO","id":"DblInstallHwinfo","name":"HWiNFO"}','{"winget":"AppWork.JDownloader","id":"DblInstallJdownloader","name":"JDownloader"}','{"winget":"KDE.KDEConnect","id":"DblInstallKDEConnect","name":"KDE Connect"}','{"winget":"KeePassXCTeam.KeePassXC","id":"DblInstallKeepass","name":"KeePassXC"}','{"winget":"Guru3D.Afterburner","id":"DblInstallMsiafterburner","name":"Afterburner"}','{"winget":"Mozilla.Thunderbird","id":"DblInstallThunderbird","name":"Thunderbird"}','{"winget":"M2Team.NanaZip","id":"DblInstallNanazip","name":"NanaZip"}','{"winget":"gsass1.NTop","id":"DblInstallNTop","name":"NTop"}','{"winget":"TechPowerUp.NVCleanstall","id":"DblInstallNvclean","name":"NVCleanstall"}','{"winget":"Oracle.VirtualBox","id":"DblInstallOVirtualBox","name":"VirtualBox"}','{"winget":"Ookla.Speedtest.Desktop","id":"DblInstallSpeedtest","name":"Speedtest by Ookla"}','{"winget":"CalcProgrammer1.OpenRGB","id":"DblInstallOpenrgb","name":"OpenRGB"}','{"winget":"Parsec.Parsec","id":"DblInstallParsec","name":"Parsec"}','{"winget":"Postbox.Postbox","id":"DblInstallPostbox","name":"Postbox"}','{"winget":"BitSum.ProcessLasso","id":"DblInstallProcesslasso","name":"Process Lasso"}','{"winget":"ProxymanLLC.Proxyman","id":"DblInstallProxyman","name":"Proxyman"}','{"winget":"qBittorrent.qBittorrent","id":"DblInstallQbittorrent","name":"qBittorrent"}','{"winget":"RevoUninstaller.RevoUninstaller","id":"DblInstallRevo","name":"Revo"}','{"winget":"Rufus.Rufus","id":"DblInstallRufus","name":"Rufus"}','{"winget":"9PF4KZ2VN4W9","id":"DblInstallTtaskbar","name":"Ttaskbar"}','{"winget":"SomePythonThings.WingetUIStore","id":"DblInstallWingetUI","name":"WingetUI"}','{"winget":"RARLab.WinRAR","id":"DblInstallWinrar","name":"WinRAR"}')
 
 ################################################################################################################
 ###                                                                                                          ###
@@ -1418,12 +1419,15 @@ function Get-CheckerTweaks{
     $b = $wpf_ToggleNumLock.IsChecked = Get-ToggleValue -Path 'HKCU:\Control Panel\Keyboard' -Name 'InitialKeyboardIndicators'
     $c = $wpf_ToggleExt.IsChecked = (Get-ToggleValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'HideFileExt') -eq 0
     $d = $wpf_ToggleMouseAcceleration.IsChecked = (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseSpeed') -and (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold1') -and (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold2')
-    $getValue = Get-ItemPropertyValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Hidden'
-    $e = $wpf_ToggleHiddenFiles.IsChecked = $(If ($getValue -eq 0) {$false} Else {$true})
+    $getE = Get-ItemPropertyValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Hidden'
+    $e = $wpf_ToggleHiddenFiles.IsChecked = $(If ($getE -eq 0) {$false} Else {$true})
     $f = $wpf_ToggleSearch.IsChecked = (Get-ToggleValue -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'SearchBoxTaskbarMode') -eq 0
     $g = $wpf_TogglefIPv6.IsChecked = $(If ((Get-NetAdapterBinding -Name 'Ethernet' -ComponentID ms_tcpip6).Enabled -eq "True" -And $(Get-NetAdapterBinding -Name 'Ethernet' -ComponentID ms_tcpip6).Enabled -eq "False") {$true} Else {$false})
+    $getH = Get-ItemPropertyValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'EnableSnapAssistFlyout'
+    $h = $wpf_ToggleSnapLayouts.IsChecked = $(If ($getH -eq 0) {$true} Else {$false})
+    $i = $wpf_ToggleVerboseLogon.IsChecked = Get-ToggleValue -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' -Name 'VerboseStatus'
 
-    return $a -and $b -and $c -and $d -and $e -and $f -and $g
+    return $a -and $b -and $c -and $d -and $e -and $f -and $g -and $h -and $i
 }
 Get-CheckerTweaks | out-null
 function Invoke-optimizationButton{
@@ -1435,7 +1439,9 @@ function Invoke-optimizationButton{
     #>
 
     # Invoke restore point
-    Set-RestorePoint
+    If ( $wpf_DblSystemRestore.IsChecked -eq $true ) {
+        Set-RestorePoint
+    }
     # Essential Tweaks
     If ( $wpf_DblTelemetry.IsChecked -eq $true ) {
         Write-Host "Disabling Telemetry..."
@@ -1641,6 +1647,11 @@ function Invoke-optimizationButton{
         Write-Host "--- "$env:TEMP
         Write-Host "======================================="
     }
+    If ( $wpf_DblRecycleBin.IsChecked -eq $true ) {
+        Write-Host "Empting Recycle Bin..." -ForegroundColor Green
+        Clear-RecycleBin -Force
+        $wpf_DblRecycleBin.IsChecked = $false
+    }
     If ( $wpf_DblDiskCleanup.IsChecked -eq $true ) {
         Write-Host "Running Disk Cleanup on Drive C:..."
         cmd /c cleanmgr.exe /d C: /VERYLOWDISK
@@ -1687,6 +1698,42 @@ function Invoke-optimizationButton{
         Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR" -Name "AllowGameDVR" -Type DWord -Value 0
 
         $wpf_DblDVR.IsChecked = $false
+    }
+    If ( $wpf_DblCoreIsolation.IsChecked -eq $true ) {
+        Write-Host "Disabling Core Isolation..." -ForegroundColor Green
+        $registryPath = "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity"
+        $dwordName = "Enabled"
+        # Value to set (0 to disable, 1 to enable)
+        $dwordValue = 0
+
+        New-Item -Path $registryPath -Force
+        New-ItemProperty -Path $registryPath -Name $dwordName -PropertyType DWord -Value $dwordValue -Force
+        Write-Host "Core Isolation disabled." -ForegroundColor Green
+        $wpf_DblCoreIsolation.IsChecked = $false
+    }
+    If ( $wpf_DblDisableTeredo.IsChecked -eq $true ) {
+        Write-Host "Disabling Teredo..." -ForegroundColor Green
+        $registryPath = "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters"
+        $dwordName = "DisabledComponents"
+        # Value to set (1 to disable, 0 to enable)
+        $dwordValue = 1
+
+        New-Item -Path $registryPath -Force
+        New-ItemProperty -Path $registryPath -Name $dwordName -PropertyType DWord -Value $dwordValue -Force
+        Write-Host "netsh interface teredo set state disabled." -ForegroundColor Green
+        $wpf_DblDisableTeredo.IsChecked = $false
+    }
+    If ( $wpf_DblAutoAdjustVolume.IsChecked -eq $true ) {
+        Write-Host "Disabling Auto Adjust Volume..." -ForegroundColor Green
+        $registryPath = "HKCU:\Software\Microsoft\Multimedia\Audio"
+        $dwordName = "UserDuckingPreference"
+        # dword:00000000: Mute all other sounds
+        # dword:00000001: Reduce all other by 80%
+        # dword:00000002: Reduce all other by 50%
+        # dword:00000003: Do nothing
+        $dwordValue = 3
+        New-ItemProperty -Path $registryPath -Name $dwordName -PropertyType DWord -Value $dwordValue -Force
+        $wpf_DblAutoAdjustVolume.IsChecked = $false
     }
 
     # Additional Tweaks
@@ -1739,6 +1786,11 @@ function Invoke-optimizationButton{
         Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage
         $wpf_DblRemoveCortana.IsChecked = $false
     }
+    If ( $wpf_DblClassicAltTab.IsChecked -eq $true ) {
+        Write-Host "Setting Classic Alt+Tab..."
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "MultiTaskingAltTabFilter" -Type DWord -Value 3       
+        $wpf_DblClassicAltTab.IsChecked = $false
+    }
     If ( $wpf_DblRightClickMenu.IsChecked -eq $true ) {
         Write-Host "Setting Classic Right-Click Menu..."
         New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}" -Name "InprocServer32" -force -value ""       
@@ -1753,6 +1805,11 @@ function Invoke-optimizationButton{
         Write-Host "Disabling Game Bar..."
         If (Test-Path "HKCU:\Software\Microsoft\GameBar") {Get-Item "HKCU:\Software\Microsoft\GameBar"|Set-ItemProperty -Name "UseNexusForGameBarEnabled" -Value 0 -Verbose -Force}
         $wpf_DblGameBar.IsChecked = $false
+    }
+    If ( $wpf_DblWindowsSound.IsChecked -eq $true ) {
+        Write-Host "Disabling Windows Sound..." -ForegroundColor Green
+        Set-ItemProperty -Path "HKCU:\AppEvents\Schemes" -Name "(Default)" -Value ".None" -Force
+        $wpf_DblWindowsSound.IsChecked = $false
     }
     If ( $wpf_DblPersonalize.IsChecked -eq $true ) {
         #hide search icon, show transparency effect, colors, lock screen, power
@@ -1902,7 +1959,141 @@ function Invoke-optimizationButton{
 
         $wpf_DblOneDrive.IsChecked = $false
     }
+    if ( $wpf_DblModernCursorDark.IsChecked -eq $true ) {
+        Write-Host "Downloading cursor..." -ForegroundColor Green
+        $downloadUrl = "https://github.com/vukilis/Windows11-Optimizer-Debloater/raw/dev/cursor.zip" #github link
+        $outputPath = "$env:TEMP\win11app"
+
+        # Check if the file already exists
+        if (-not (Test-Path -Path "$outputPath\cursor.zip")) {
+            # File does not exist, download it
+            New-Item -ItemType Directory -Force -Path $outputPath
+            Invoke-WebRequest -Uri $downloadUrl -OutFile "$outputPath\cursor.zip"
+            Write-Host "File downloaded to: $outputPath" -ForegroundColor Green
+        } else {
+            Write-Host "File already exists at: $outputPath" -ForegroundColor Magenta
+        }
+
+        # Unzip the downloaded file
+        Write-Host "Unziping content..." -ForegroundColor Green
+        Expand-Archive -Path "$outputPath\cursor.zip" -DestinationPath $outputPath -Force
+
+        Write-Host "Installing cursor..." -ForegroundColor Green   
+        # Step 2: Run install.inf
+        $infPath = Join-Path $outputPath "dark\Install.inf"
+        # Check if the install.inf file exists
+        if (Test-Path $infPath) {
+            # Run the installation file
+            Start-Process "C:\Windows\System32\rundll32.exe" -ArgumentList "advpack.dll,LaunchINFSection $infPath,DefaultInstall"
+        } else {
+            Write-Host "Install.inf not found in the specified location."
+        }
+
+        # Set the cursor scheme values
+        Write-Host "Seting cursor..." -ForegroundColor Green
+        $cursorScheme = @"
+C:\Windows\Cursors\Windows_11_dark_v2\pointer.cur,C:\Windows\Cursors\Windows_11_dark_v2\help.cur,C:\Windows\Cursors\Windows_11_dark_v2\working.ani,C:\Windows\Cursors\Windows_11_dark_v2\busy.ani,C:\Windows\Cursors\Windows_11_dark_v2\precision.cur,C:\Windows\Cursors\Windows_11_dark_v2\beam.cur,C:\Windows\Cursors\Windows_11_dark_v2\handwriting.cur,C:\Windows\Cursors\Windows_11_dark_v2\unavailable.cur,C:\Windows\Cursors\Windows_11_dark_v2\vert.cur,C:\Windows\Cursors\Windows_11_dark_v2\horz.cur,C:\Windows\Cursors\Windows_11_dark_v2\dgn1.cur,C:\Windows\Cursors\Windows_11_dark_v2\dgn2.cur,C:\Windows\Cursors\Windows_11_dark_v2\move.cur,C:\Windows\Cursors\Windows_11_dark_v2\alternate.cur,C:\Windows\Cursors\Windows_11_dark_v2\link.cur,C:\Windows\Cursors\Windows_11_dark_v2\person.cur,C:\Windows\Cursors\Windows_11_dark_v2\pin.cur
+"@
+
+        # Define the Registry path for the cursor scheme
+        $registryPath = "HKCU:\Control Panel\Cursors"
+
+        # Set the new cursor scheme for each individual cursor type
+        $cursorTypes = @("AppStarting", "Arrow", "Crosshair", "Hand", "Help", "IBeam", "No", "NWPen", "SizeAll", "SizeNESW", "SizeNS", "SizeNWSE", "SizeWE", "UpArrow", "Wait")
+        
+        Write-Host "Updating cursor..." -ForegroundColor Green
+        foreach ($cursorType in $cursorTypes) {
+            Set-ItemProperty -Path $registryPath -Name $cursorType -Value $cursorScheme
+        }
+
+        Start-Sleep 1
+
+        Add-Type @"
+    using System;
+    using System.Runtime.InteropServices;
+
+    public class SystemParamInfo
+    {
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+    }
+"@
+
+        [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
+
+    
+        $wpf_DblModernCursorDark.IsChecked = $false
+    }
+    if ( $wpf_DblModernCursorLight.IsChecked -eq $true ) {
+        Write-Host "Downloading cursor..." -ForegroundColor Green
+        $downloadUrl = "https://github.com/vukilis/Windows11-Optimizer-Debloater/raw/dev/cursor.zip" #github link
+        $outputPath = "$env:TEMP\win11app"
+
+        # Check if the file already exists
+        if (-not (Test-Path -Path "$outputPath\cursor.zip")) {
+            # File does not exist, download it
+            New-Item -ItemType Directory -Force -Path $outputPath
+            Invoke-WebRequest -Uri $downloadUrl -OutFile "$outputPath\cursor.zip"
+            Write-Host "File downloaded to: $outputPath" -ForegroundColor Green
+        } else {
+            Write-Host "File already exists at: $outputPath" -ForegroundColor Magenta
+        }
+
+        # Unzip the downloaded file
+        Write-Host "Unziping content..." -ForegroundColor Green
+        Expand-Archive -Path "$outputPath\cursor.zip" -DestinationPath $outputPath -Force
+
+        Write-Host "Installing cursor..." -ForegroundColor Green   
+        # Step 2: Run install.inf
+        $infPath = Join-Path $outputPath "light\Install.inf"
+        # Check if the install.inf file exists
+        if (Test-Path $infPath) {
+            # Run the installation file
+            Start-Process "C:\Windows\System32\rundll32.exe" -ArgumentList "advpack.dll,LaunchINFSection $infPath,DefaultInstall"
+        } else {
+            Write-Host "Install.inf not found in the specified location."
+        }
+
+        # Set the cursor scheme values
+        Write-Host "Seting cursor..." -ForegroundColor Green
+        $cursorScheme = @"
+C:\Windows\Cursors\Windows_11_light_v2\pointer.cur,C:\Windows\Cursors\Windows_11_light_v2\help.cur,C:\Windows\Cursors\Windows_11_light_v2\working.ani,C:\Windows\Cursors\Windows_11_light_v2\busy.ani,C:\Windows\Cursors\Windows_11_light_v2\precision.cur,C:\Windows\Cursors\Windows_11_light_v2\beam.cur,C:\Windows\Cursors\Windows_11_light_v2\handwriting.cur,C:\Windows\Cursors\Windows_11_light_v2\unavailable.cur,C:\Windows\Cursors\Windows_11_light_v2\vert.cur,C:\Windows\Cursors\Windows_11_light_v2\horz.cur,C:\Windows\Cursors\Windows_11_light_v2\dgn1.cur,C:\Windows\Cursors\Windows_11_light_v2\dgn2.cur,C:\Windows\Cursors\Windows_11_light_v2\move.cur,C:\Windows\Cursors\Windows_11_light_v2\alternate.cur,C:\Windows\Cursors\Windows_11_light_v2\link.cur,C:\Windows\Cursors\Windows_11_light_v2\person.cur,C:\Windows\Cursors\Windows_11_light_v2\pin.cur
+"@
+
+        # Define the Registry path for the cursor scheme
+        $registryPath = "HKCU:\Control Panel\Cursors"
+
+        # Set the new cursor scheme for each individual cursor type
+        $cursorTypes = @("AppStarting", "Arrow", "Crosshair", "Hand", "Help", "IBeam", "No", "NWPen", "SizeAll", "SizeNESW", "SizeNS", "SizeNWSE", "SizeWE", "UpArrow", "Wait")
+        
+        Write-Host "Updating cursor..." -ForegroundColor Green
+        foreach ($cursorType in $cursorTypes) {
+            Set-ItemProperty -Path $registryPath -Name $cursorType -Value $cursorScheme
+        }
+
+        Start-Sleep 1
+
+        Add-Type @"
+    using System;
+    using System.Runtime.InteropServices;
+
+    public class SystemParamInfo
+    {
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+    }
+"@
+
+        [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
+
+    
+        $wpf_DblModernCursorLight.IsChecked = $false
+    }
     Invoke-MessageBox -msg "tweak"
+    # Invoke restart computer
+    If ( $wpf_DblRestartPC.IsChecked -eq $true ) {
+        Restart-Computer
+    }
 }
 function Invoke-ToggleBingSearchMenu{
     Toggle-RegistryValue -CheckBox $wpf_ToggleBingSearchMenu -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled' -TrueValue 1 -FalseValue 0 -EnableMessage "Enabled Bing Search" -DisableMessage "Disabling Bing Search"
@@ -2023,6 +2214,16 @@ function Invoke-ToggleNumLock{
 function Invoke-ToggleSearch{
     Toggle-RegistryValue -CheckBox $wpf_ToggleSearch -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'SearchBoxTaskbarMode' -TrueValue 0 -FalseValue 2 -EnableMessage "Hiding search box" -DisableMessage "Showing search box"
 }
+function Invoke-ToggleSnapLayouts{
+    taskkill.exe /F /IM "explorer.exe"
+    Toggle-RegistryValue -CheckBox $wpf_ToggleSnapLayouts -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'EnableSnapAssistFlyout' -TrueValue 0 -FalseValue 1 -EnableMessage "Disabling Snap Layouts" -DisableMessage "Enabled Snap Layouts"
+    Start-Process "explorer.exe"
+}
+function Invoke-ToggleVerboseLogon{
+
+    New-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' -Name 'VerboseStatus' -PropertyType DWord -Value 0 -Force
+    Toggle-RegistryValue -CheckBox $wpf_ToggleVerboseLogon -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' -Name 'VerboseStatus' -TrueValue 1 -FalseValue 0 -EnableMessage "Enabling Verbose Logon" -DisableMessage "Disabling Verbose Logon"
+}
 
 ################################################################################################################
 ###                                                                                                          ###
@@ -2038,31 +2239,29 @@ function Get-Services {
         Function to get all services and their information 
     #>
 
-    $ServiceName=$wpf_ddlServices.SelectedItem
-    $details=Get-Service -Name $ServiceName -ErrorAction SilentlyContinue | Select-Object *
-    $wpf_lblName.Content=$details.DisplayName
-    $wpf_lblStatus.Content=$details.Status
-    $wpf_lblStartupType.Content=$details.StartupType
+    $ServiceName = $wpf_ddlServices.SelectedItem
+    # Use Get-WmiObject to retrieve service information
+    $serviceInfo = Get-WmiObject -Class Win32_Service -Filter "Name = '$ServiceName'"
+    # Use Get-Service to retrieve service information
+    $serviceDetails = Get-Service -Name $ServiceName -ErrorAction SilentlyContinue | Select-Object *
+    # Use Display service information from Get-Service if available, otherwise fallback to WMI
+    $wpf_lblName.Content = if ($serviceDetails.DisplayName) { $serviceDetails.DisplayName } else { $serviceInfo.Name }
+    $wpf_lblStatus.Content = if ($serviceDetails.Status) { $serviceDetails.Status } else { $serviceInfo.State }
+    $wpf_lblStartupType.Content = if ($serviceDetails.StartupType) { $serviceDetails.StartupType } else { $serviceInfo.StartMode }
+    $wpf_lblServicesDesc.Text = if ($serviceDetails.Description) { $serviceDetails.Description } else { $serviceInfo.Description }
 
-    ### display info about service
-    $wpf_lblServicesDesc.Text=$details.Description
 
     ### status color
-    if ($wpf_lblStatus.Content -eq 'Running') {
-        $wpf_lblStatus.Foreground='green'
-    }else{
-        $wpf_lblStatus.Foreground='red'
+    $wpf_lblStatus.Foreground = switch ($wpf_lblStatus.Content) {
+        'Stopped' {'red'} 
+        'Paused' {'yellow'} 
+        default {'green'}
     }
-
     ### type color
-    if ($wpf_lblStartupType.Content -eq 'Running') {
-        $wpf_lblStartupType.Foreground='green'
-    }elseif ($wpf_lblStartupType.Content -eq 'Manual'){
-        $wpf_lblStartupType.Foreground='yellow'
-    }elseif($wpf_lblStartupType.Content -eq 'Automatic'){
-        $wpf_lblStartupType.Foreground='blue'
-    }else{
-        $wpf_lblStartupType.Foreground='red'
+    $wpf_lblStartupType.Foreground = switch ($wpf_lblStartupType.Content) {
+        'Manual' {'yellow'} 
+        'Automatic' {'blue'} 
+        default {'red'}
     }
 }
 function Invoke-gaming{
@@ -2117,18 +2316,9 @@ function Invoke-gaming{
         "vmicvmsession"
     )
 
-    $wpf_pBar.Visibility = "Visible"
-    $i=$services.Count
-    $wpf_pBar.Maximum = $i
-
-    $counter = 1
     foreach ($service in $services_m) {
         # -ErrorAction SilentlyContinue is so it doesn't write an error to stdout if a service doesn't exist
-
-        $ii=$counter++
-        $wpf_pBar.Value = $ii
-        
-        Write-Host "Setting $service StartupType to Manual"
+        Write-Host "Setting $service StartupType to Manual" -ForegroundColor Yellow
         Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue
     }
 
@@ -2176,18 +2366,9 @@ function Invoke-gaming{
         "wisvc"                                        # Windows Insider program(Windows Insider will not work if Disabled)
     )
 
-    $wpf_pBar.Visibility = "Visible"
-    $i=$services.Count
-    $wpf_pBar.Maximum = $i
-
-    $counter = 1
     foreach ($service in $services_d) {
         # -ErrorAction SilentlyContinue is so it doesn't write an error to stdout if a service doesn't exist
-
-        $ii=$counter++
-        $wpf_pBar.Value = $ii
-        
-        Write-Host "Setting $service StartupType to Disabled"
+        Write-Host "Setting $service StartupType to Disabled" -ForegroundColor Red
         Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue
     }
     Art -artN "
@@ -2285,18 +2466,9 @@ function Invoke-recommended{
         "vmicvmsession"
     )
     
-    $wpf_pBar.Visibility = "Visible"
-    $i=$services.Count
-    $wpf_pBar.Maximum = $i
-
-    $counter = 1
     foreach ($service in $services) {
         # -ErrorAction SilentlyContinue is so it doesn't write an error to stdout if a service doesn't exist
-
-        $ii=$counter++
-        $wpf_pBar.Value = $ii
-        
-        Write-Host "Setting $service StartupType to Manual"
+         Write-Host "Setting $service StartupType to Manual" -ForegroundColor Yellow
         Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue
     }
     Art -artN "
@@ -2306,15 +2478,6 @@ function Invoke-recommended{
 " -ch Cyan
     Invoke-MessageBox "tweak"
 }
-$wpf_pBar.Visibility = "Hidden"
-
-$wpf_recommended.Add_MouseLeave({
-    $wpf_pBar.Visibility = "Hidden"
-})
-
-$wpf_gaming.Add_MouseLeave({
-    $wpf_pBar.Visibility = "Hidden"
-})
 
 ################################################################################################################
 ###                                                                                                          ###
@@ -2820,9 +2983,9 @@ function Invoke-ShortcutApp {
             if (-not (Test-Path -Path "$env:SystempRoot\win11deb.ico")) {
                 # File does not exist, download it
                 Invoke-WebRequest -Uri $downloadUrl -OutFile $destinationPath
-                Write-Host "File downloaded to: $destinationPath"
+                Write-Host "File downloaded to: $destinationPath" -ForegroundColor Green
             } else {
-                Write-Output "File already exists at: $destinationPath"
+                Write-Host "File already exists at: $destinationPath" -ForegroundColor Magenta
             }     
             $iconPath = "$env:SystempRoot\win11deb.ico"
         }
