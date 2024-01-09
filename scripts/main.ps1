@@ -1,4 +1,4 @@
-#$xamlFile="xaml\MainWindow.xaml" #uncomment for development
+#$xamlFile="C:\Users\vukilis\Pictures\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
 #$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
 $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
@@ -143,7 +143,6 @@ function Invoke-Checkbox {
         "wpf_ToggleDevPreset" {Invoke-ToggleDevPreset}
         "wpf_ToggleGamingPreset" {Invoke-ToggleGamingPreset}
         "wpf_ToggleDarkMode" {Invoke-ToggleDarkMode}
-
         "wpf_ToggleBingSearchMenu" {Invoke-ToggleBingSearchMenu}
         "wpf_ToggleNumLock" {Invoke-ToggleNumLock}
         "wpf_ToggleExt" {Invoke-ToggleExt}
@@ -151,6 +150,8 @@ function Invoke-Checkbox {
         "wpf_TogglefIPv6" {Invoke-TogglefIPv6}
         "wpf_ToggleHiddenFiles" {Invoke-ToggleHiddenFiles}
         "wpf_ToggleSearch" {Invoke-ToggleSearch}
+        "wpf_ToggleSnapLayouts" {Invoke-ToggleSnapLayouts}
+        "wpf_ToggleVerboseLogon" {Invoke-ToggleVerboseLogon}
     }
 }
 ################################
@@ -194,7 +195,7 @@ Function Get-Author7 {
         This is for powershell v7.1+
     #>
     
-    Clear-Host
+    #Clear-Host
     $colors = @("`e[38;5;200m", "`e[38;5;51m", "`e[38;5;98m")
 
     function Get-RandomColor {
@@ -213,7 +214,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.1    
+Windows11 Optimizer&Debloater           2.2    
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -230,7 +231,7 @@ Function Get-Author5 {
         This is for powershell v5.1
     #>
 
-    Clear-Host
+    #Clear-Host
     $colors = @("Red", "Cyan", "Magenta")
 
     function Get-RandomColor {
@@ -249,7 +250,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.1    
+Windows11 Optimizer&Debloater           2.2    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {
