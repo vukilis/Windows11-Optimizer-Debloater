@@ -221,8 +221,18 @@
     },
     {
         "id": "DblInstallMullvad",
-        "name": "Mullvad Browser",
+        "name": "Mullvad",
         "winget": "MullvadVPN.MullvadBrowser"
+    },
+    {
+        "id": "DblInstallThorium",
+        "name": "Thorium",
+        "winget": "Alex313031.Thorium"
+    },
+    {
+        "id": "DblInstallThoriumAVX",
+        "name": "Thorium AVX2",
+        "winget": "Alex313031.Thorium.AVX2"
     },
     {
         "id": "DblInstallTor",
