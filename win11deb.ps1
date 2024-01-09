@@ -1425,11 +1425,12 @@ function Get-CheckerTweaks{
     $g = $wpf_TogglefIPv6.IsChecked = $(If ((Get-NetAdapterBinding -Name 'Ethernet' -ComponentID ms_tcpip6).Enabled -eq "True" -And $(Get-NetAdapterBinding -Name 'Ethernet' -ComponentID ms_tcpip6).Enabled -eq "False") {$true} Else {$false})
     $getH = Get-ItemPropertyValue 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'EnableSnapAssistFlyout'
     $h = $wpf_ToggleSnapLayouts.IsChecked = $(If ($getH -eq 0) {$true} Else {$false})
-    $i = $wpf_ToggleVerboseLogon.IsChecked = Get-ToggleValue -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' -Name 'VerboseStatus'
+    $getI = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" | Select-Object -ExpandProperty "VerboseStatus" -ErrorAction SilentlyContinue
+    if ($getI) { $i = $wpf_ToggleVerboseLogon.IsChecked = $(If ($getI -eq 0) {$false} Else {$true}) }
 
     return $a -and $b -and $c -and $d -and $e -and $f -and $g -and $h -and $i
 }
-Get-CheckerTweaks | out-null
+Get-CheckerTweaks | Out-Null
 function Invoke-optimizationButton{
     <#
 
