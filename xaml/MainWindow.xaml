@@ -9,10 +9,29 @@
         Background="#333333"
         Title="Windows11-OptimizerDebloater" 
         WindowStartupLocation="CenterScreen"
-        WindowStyle="SingleBorderWindow"
+        WindowStyle="None"
         Height="583" 
         Width="1366">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" CornerRadius="10"/>
+    </WindowChrome.WindowChrome>
     <Window.Resources>
+        <Style x:Key="MacOsButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FFD8D8D8"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="7">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -783,15 +802,39 @@
     </Window.Resources>
     <Grid Background="#2d2d30" ShowGridLines="False" Name="MainGrid" Width="Auto" Height="Auto" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
+            <RowDefinition Height="30px"/>
             <RowDefinition Height="50px"/>
             <RowDefinition Height=".9*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <DockPanel Background="#1f1f21" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Grid.Row="0" Width="Auto">
+        <Grid Background="#1f1f21" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".50*"/>
+                <ColumnDefinition Width=".50*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" SnapsToDevicePixels="True" Grid.Column="0" Margin="0,0,0,0">
+                <Label Foreground="#FFF4AB51" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Windows11 Optimizer&amp;Debloater"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" SnapsToDevicePixels="True" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0">
+                <Label Name="AppVersion" Foreground="#a69f6c" FontSize="14" FontWeight="Bold" Margin="5,0" Content=""></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" SnapsToDevicePixels="True" Grid.Column="1" Margin="0,0,0,0">
+                <!-- Minimize Button -->
+                <Button Name="MinButton" Content="−" Background="Yellow" Foreground="#1f1f21" Width="22" Height="22"  Margin="5,0" Cursor="Hand" Style="{StaticResource MacOsButtonStyle}"/>
+                <!-- Maximize Button -->
+                <Button Name="MaxButton" Content="◻" Background="green" Foreground="#1f1f21" Width="22" Height="22"  Margin="5,0" Cursor="Hand" Style="{StaticResource MacOsButtonStyle}"/>
+                <!-- Close Button -->
+                <Button Name="CloseButton" Content="✕" Background="red" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0,10,0" Cursor="Hand" Style="{StaticResource MacOsButtonStyle}"/>
+            </StackPanel>
+        </Grid>
+        <DockPanel Background="#1f1f21" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Grid.Row="1" Width="Auto">
             <Image Height="70" Width="70" Name="Icon" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
-            <RadioButton  HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}"
+            <RadioButton IsChecked="True" HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}"
                                   Background="#444444" Foreground="#fac664" FontWeight="Bold" Name="Tab1BT" Margin="0,0,5,0">
                 <ToggleButton.Content>
                     <TextBlock Background="Transparent" Foreground="#fac664" >
@@ -847,7 +890,7 @@
                     </TextBlock>
                 </ToggleButton.Content>
             </RadioButton>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
                 <TextBox 
                             Name="CheckboxFilter" VerticalContentAlignment="Center" Margin="0,0,0,0" ToolTip="Type app name to filter application list below. Press Reset Button to reset the filter"
                             Height="34" Width="200" Padding="5,0,0,0"
@@ -864,7 +907,7 @@
                             Tag="{StaticResource ResetIcon}"/>
             </StackPanel>
         </DockPanel>
-        <ScrollViewer Grid.Row="1" Padding="-1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
+        <ScrollViewer Grid.Row="2" Padding="-1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
             <TabControl Name="TabNav" Background="Transparent" Width="Auto" Height="Auto" BorderBrush="Transparent" BorderThickness="0">
                 <TabItem Header="INFO" Visibility="Collapsed" Name="Tab1">
                     <Grid Background="Transparent">
