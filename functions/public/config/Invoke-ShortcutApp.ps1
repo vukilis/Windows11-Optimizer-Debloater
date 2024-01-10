@@ -16,8 +16,8 @@ function Invoke-ShortcutApp {
         "Win11Deb" {
             $SourceExe = "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
             $IRM = 'irm https://maglit.me/win11app | iex'
-            $Powershell = '-ExecutionPolicy Bypass -Command "Start-Process powershell.exe -verb runas -ArgumentList'
-            $ArgumentsToSourceExe = "$powershell '$IRM'"
+            $Powershell = '-NoProfile -ExecutionPolicy Bypass'
+            $ArgumentsToSourceExe = "$powershell $IRM"
             $DestinationName = "Win11Deb.lnk"
             
             $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/icon.ico"
@@ -49,6 +49,10 @@ function Invoke-ShortcutApp {
         $shortcut.IconLocation = $iconPath
     }
     $Shortcut.Save()
+
+    $bytes = [System.IO.File]::ReadAllBytes($($FileBrowser.FileName))
+    $bytes[0x15] = $bytes[0x15] -bor 0x20 #set byte 21 (0x15) bit 6 (0x20) ON
+    [System.IO.File]::WriteAllBytes("$($FileBrowser.FileName)", $bytes)
 
     Write-Host "Shortcut for $ShortcutToAdd has been saved to $($FileBrowser.FileName)"
 }
