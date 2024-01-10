@@ -33,6 +33,80 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
+$wpf_AppVersion.Content = "Version: 2.3"
+
+function Invoke-CloseButton {
+    <#
+    .SYNOPSIS
+        Close application
+
+    .PARAMETER Button
+    #>
+
+    $psform.Close()
+    Write-Host "Goodbye! :)" -ForegroundColor Red
+}
+function Invoke-MinButton {
+    <#
+    .SYNOPSIS
+        Minimize application
+
+    .PARAMETER Button
+    #>
+
+    $psform.WindowState = 'Minimized'
+    Write-Host "Minimize!"
+}
+function Invoke-MaxButton {
+    <#
+    .SYNOPSIS
+        Maximize application
+
+    .PARAMETER Button
+    #>
+
+    if ($psform.WindowState -eq 'Normal')
+    {
+        $psform.WindowState = 'Maximized'
+        $maxMargin = New-Object Windows.Thickness -ArgumentList 5, 5, 5, 5
+        $wpf_MainGrid.Margin = $maxMargin
+    }
+    else
+    {
+        $psform.WindowState = 'Normal'
+        $maxMargin = New-Object Windows.Thickness -ArgumentList 0, 0, 0, 0
+        $wpf_MainGrid.Margin = $maxMargin
+    }
+}
+
+$psform.Add_MouseLeftButtonDown({
+    <#
+    .SYNOPSIS
+        Move application
+    #>
+
+    $psform.DragMove()
+})
+
+$psform.Add_MouseDoubleClick({
+    <#
+    .SYNOPSIS
+        Maximize application when double click 
+    #>
+    if ($psform.WindowState -eq 'Normal')
+    {
+        $psform.WindowState = 'Maximized'
+        $maxMargin = New-Object Windows.Thickness -ArgumentList 5, 5, 5, 5
+        $wpf_MainGrid.Margin = $maxMargin
+    }
+    else
+    {
+        $psform.WindowState = 'Normal'
+        $maxMargin = New-Object Windows.Thickness -ArgumentList 0, 0, 0, 0
+        $wpf_MainGrid.Margin = $maxMargin
+    }
+})
+
 $radioButtons = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "RadioButton"}
 foreach ($radioButton in $radioButtons){
     $radioButton.value.Add_Click({
@@ -73,6 +147,9 @@ function Invoke-Button {
     Switch -Wildcard ($Button){
 
         "wpf_Tab?BT" {Invoke-Tabs $Button}
+        "wpf_CloseButton" {Invoke-CloseButton}
+        "wpf_MinButton" {Invoke-MinButton}
+        "wpf_MaxButton" {Invoke-MaxButton}
         "wpf_debloatALL" {Invoke-debloatALL}
         "wpf_debloatGaming" {Invoke-debloatGaming}
         "wpf_optimizationButton" {Invoke-optimizationButton}
@@ -186,7 +263,6 @@ function Invoke-Tabs {
 
     $isVisible = if ($TabSearchItem.isSelected) {"Visible"} else {"Collapsed"}; $wpf_CheckboxFilter.Visibility = $isVisible; $wpf_ResetButton.Visibility = $isVisible
 }
-Invoke-Tabs "wpf_Tab1BT"
 
 Function Get-Author7 {
     <#
@@ -214,7 +290,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.2    
+Windows11 Optimizer&Debloater           2.3    
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -250,7 +326,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.2    
+Windows11 Optimizer&Debloater           2.3    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {
