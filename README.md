@@ -8,7 +8,7 @@ Requires you to launch PowerShell or Windows Terminal As ADMINISTRATOR!
 Launch Command:
 
 ```
-irm maglit.me/win11app | iex
+iwr -useb maglit.me/win11deb | iex
 ```
 If you are having TLS 1.2 Issues or You cannot find or resolve `maglit.me/win11app` then run with the following command:
 ```
