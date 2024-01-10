@@ -3,12 +3,17 @@
 [![changelog](https://img.shields.io/badge/📋-release%20notes-00B2EE.svg)](https://github.com/vukilis/Windows11-Optimizer-Debloater/blob/dev/CHANGELOG.md)  
 This Utility show basic system information, install programs, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates.
 
+## Usage:
+
 Requires you to launch PowerShell or Windows Terminal As ADMINISTRATOR!
 
 Launch Command:
-
 ```
-iwr -useb maglit.me/win11deb | iex
+iwr -useb maglit.me/win11app | iex
+```
+or 
+```
+irm maglit.me/win11app | iex
 ```
 If you are having TLS 1.2 Issues or You cannot find or resolve `maglit.me/win11app` then run with the following command:
 ```
