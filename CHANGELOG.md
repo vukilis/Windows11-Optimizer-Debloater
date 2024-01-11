@@ -7,7 +7,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Known Issues]
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
-- When launch script, **Info** tab button is not visually selected.
+
+## [2.3] - 2024-01-11
+
+### Added
+
+- Displays the current version of the application.
+
+### Changed
+
+- From default to custom window controls: **minimize**, **maximize** and **close**.
+- Improved shortcut creation, newly created shortcut has enabled by default **Run As Administrator** in Advanced Properties. This allowed to run script direct from first powershell window and show custom icon in taskbar.
+
+### Fix
+
+- When application is launched, it not showing active **tab**.
 
 ## [2.2] - 2024-01-09
 
