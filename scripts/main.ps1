@@ -263,6 +263,7 @@ function Invoke-Tabs {
 
     $isVisible = if ($TabSearchItem.isSelected) {"Visible"} else {"Collapsed"}; $wpf_CheckboxFilter.Visibility = $isVisible; $wpf_ResetButton.Visibility = $isVisible
 }
+Invoke-Tabs "wpf_Tab1BT"
 
 Function Get-Author7 {
     <#
