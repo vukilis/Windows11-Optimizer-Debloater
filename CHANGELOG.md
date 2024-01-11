@@ -17,7 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 - From default to custom window controls: **minimize**, **maximize** and **close**.
-- Improved shortcut creation, newly created shortcut has enabled by default **Run As Administrator** in Advanced Properties. This allowed to run script direct from first powershell window and show custom icon in taskbar.
+- Improved shortcut creation, newly created shortcut has enabled by default **Run As Administrator** in Advanced Properties. This allowed to run script direct from first powershell window and show custom icon on taskbar.
 
 ### Fix
 
