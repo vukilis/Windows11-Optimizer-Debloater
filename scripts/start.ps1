@@ -4,7 +4,7 @@
     Website        : https://vukilis.github.io/website/
     GitHub         : https://github.com/vukilis
     Name:          : Windows11 Optimizer&Debloater
-    Version        : 2.3
+    Version        : 2.4
 #>
 
 Add-Type -AssemblyName PresentationFramework
