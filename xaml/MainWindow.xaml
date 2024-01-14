@@ -16,6 +16,45 @@
         <WindowChrome CaptionHeight="0" CornerRadius="10"/>
     </WindowChrome.WindowChrome>
     <Window.Resources>
+        <Geometry x:Key="AboutIcon">M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z</Geometry>
+        <Style x:Key="AboutButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Background" Value="#FFD8D8D8"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="7">
+                            <Path Data="{StaticResource AboutIcon}"
+                        Stretch="Uniform"
+                        Fill="#1f1f21"
+                        Margin="{TemplateBinding Padding}"
+                        Height="14"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFCA5959"/>
+                                            <GradientStop Color="purple" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Tag" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="Tag" Value="Collapsed"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="MacOsButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#FFD8D8D8"/>
             <Setter Property="Foreground" Value="Black"/>
@@ -107,7 +146,22 @@
             <Setter Property="Margin" Value="1"/>
             <Setter Property="Content" Value=""/>
             <Setter Property="Foreground" Value="#fac664"/>
-            <Setter Property="Background" Value="#777777"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="-1,1" StartPoint="4,0" SpreadMethod="Pad">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform Angle="-90" CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FF6A6B59" Offset="1"/>
+                        <GradientStop Color="#1f1f21" Offset="0"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -120,7 +174,7 @@
                                 <Grid>
                                     <Border x:Name="BackgroundBorder"
                                         Background="{TemplateBinding Background}"    
-                                        BorderBrush="#777777"
+                                        BorderBrush="#FF6A6B59"
                                         BorderThickness="1"
                                         CornerRadius="7">
                                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,2,10,2"/>
@@ -130,7 +184,7 @@
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="BackgroundBorder" Property="Background" Value="#a69f6c"/>
+                                <Setter TargetName="BackgroundBorder" Property="Background" Value="#333333"/>
                                 <Setter Property="Panel.ZIndex" Value="2000"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
@@ -809,7 +863,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid Background="#1f1f21" Grid.Row="0">
+        <Grid Background="#141415" Grid.Row="0" x:Name="ControlPanel">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -824,77 +878,215 @@
                 <Label Name="AppVersion" Foreground="#a69f6c" FontSize="14" FontWeight="Bold" Margin="5,0" Content=""></Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" SnapsToDevicePixels="True" Grid.Column="1" Margin="0,0,0,0">
+                <ToggleButton x:Name="AboutButton" Background="Purple" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" ToolTip="Reset Search" Style="{StaticResource AboutButtonStyle}" Tag="{StaticResource AboutIcon}"/>
                 <!-- Minimize Button -->
-                <Button Name="MinButton" Content="−" Background="Yellow" Foreground="#1f1f21" Width="22" Height="22"  Margin="5,0" Cursor="Hand" Style="{StaticResource MacOsButtonStyle}"/>
+                <Button Name="MinButton" Content="−" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" FontSize="16" FontWeight="Bold">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="BackgroundBorder" Background="Yellow" BorderBrush="#1f1f21" BorderThickness="0" CornerRadius="7">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="BackgroundBorder" Property="Background" Value="#FFFF99"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
                 <!-- Maximize Button -->
-                <Button Name="MaxButton" Content="◻" Background="green" Foreground="#1f1f21" Width="22" Height="22"  Margin="5,0" Cursor="Hand" Style="{StaticResource MacOsButtonStyle}"/>
+                <Button Name="MaxButton" Content="◻" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" FontSize="16" FontWeight="Bold">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="BackgroundBorder" Background="green" BorderBrush="#1f1f21" BorderThickness="0" CornerRadius="7">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="BackgroundBorder" Property="Background" Value="#00F500"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
                 <!-- Close Button -->
-                <Button Name="CloseButton" Content="✕" Background="red" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0,10,0" Cursor="Hand" Style="{StaticResource MacOsButtonStyle}"/>
+                <Button Name="CloseButton" Content="✕" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0,10,0" Cursor="Hand" FontSize="16" FontWeight="Bold">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="BackgroundBorder" Background="red" BorderBrush="#1f1f21" BorderThickness="0" CornerRadius="7">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="BackgroundBorder" Property="Background" Value="#FF7070"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
             </StackPanel>
         </Grid>
-        <DockPanel Background="#1f1f21" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Grid.Row="1" Width="Auto">
+        <DockPanel Background="#1f1f21" x:Name="DockerPanel" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Grid.Row="1" Width="Auto">
             <Image Height="70" Width="70" Name="Icon" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
-            <RadioButton IsChecked="True" HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}"
-                                  Background="#444444" Foreground="#fac664" FontWeight="Bold" Name="Tab1BT" Margin="0,0,5,0">
+            <RadioButton IsChecked="True" HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}" Foreground="#fac664" FontWeight="Bold" Name="Tab1BT" Margin="0,0,5,0">
+                <RadioButton.Background>
+                    <LinearGradientBrush EndPoint="-1,1" StartPoint="4,0" SpreadMethod="Pad">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform Angle="-90" CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#1f1f21" Offset="1"/>
+                        <GradientStop Color="#FF6B6D51" Offset="0"/>
+                    </LinearGradientBrush>
+                </RadioButton.Background>
                 <ToggleButton.Content>
                     <TextBlock Background="Transparent" Foreground="#fac664" >
-                                INFO
+                INFO
                     </TextBlock>
                 </ToggleButton.Content>
             </RadioButton>
             <RadioButton  HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}"
-                                  Background="#444444" Foreground="#fac664" FontWeight="Bold" Name="Tab2BT" Margin="0,0,5,0">
+                                Foreground="#fac664" FontWeight="Bold" Name="Tab2BT" Margin="0,0,5,0">
+                <RadioButton.Background>
+                    <LinearGradientBrush EndPoint="-1,1" StartPoint="4,0" SpreadMethod="Pad">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform Angle="-90" CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#1f1f21" Offset="1"/>
+                        <GradientStop Color="#FF6B6D51" Offset="0"/>
+                    </LinearGradientBrush>
+                </RadioButton.Background>
                 <ToggleButton.Content>
                     <TextBlock Background="Transparent" Foreground="#fac664" >
-                                INSTALL
+                            INSTALL
                     </TextBlock>
                 </ToggleButton.Content>
             </RadioButton>
             <RadioButton  HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}"
-                                  Background="#444444" Foreground="#fac664" FontWeight="Bold" Name="Tab3BT" Margin="0,0,5,0">
+                                 Foreground="#fac664" FontWeight="Bold" Name="Tab3BT" Margin="0,0,5,0">
+                <RadioButton.Background>
+                    <LinearGradientBrush EndPoint="-1,1" StartPoint="4,0" SpreadMethod="Pad">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform Angle="-90" CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#1f1f21" Offset="1"/>
+                        <GradientStop Color="#FF6B6D51" Offset="0"/>
+                    </LinearGradientBrush>
+                </RadioButton.Background>
                 <ToggleButton.Content>
                     <TextBlock Background="Transparent" Foreground="#fac664" >
-                                DEBLOAT
+                            DEBLOAT
                     </TextBlock>
                 </ToggleButton.Content>
             </RadioButton>
             <RadioButton  HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}"
-                                  Background="#444444" Foreground="#fac664" FontWeight="Bold" Name="Tab4BT" Margin="0,0,5,0">
+                                 Foreground="#fac664" FontWeight="Bold" Name="Tab4BT" Margin="0,0,5,0">
+                <RadioButton.Background>
+                    <LinearGradientBrush EndPoint="-1,1" StartPoint="4,0" SpreadMethod="Pad">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform Angle="-90" CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#1f1f21" Offset="1"/>
+                        <GradientStop Color="#FF6B6D51" Offset="0"/>
+                    </LinearGradientBrush>
+                </RadioButton.Background>
                 <ToggleButton.Content>
                     <TextBlock Background="Transparent" Foreground="#fac664" >
-                                OPTIMIZATION
+                            OPTIMIZATION
                     </TextBlock>
                 </ToggleButton.Content>
             </RadioButton>
             <RadioButton  HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}"
-                                  Background="#444444" Foreground="#fac664" FontWeight="Bold" Name="Tab5BT" Margin="0,0,5,0">
+                                 Foreground="#fac664" FontWeight="Bold" Name="Tab5BT" Margin="0,0,5,0">
+                <RadioButton.Background>
+                    <LinearGradientBrush EndPoint="-1,1" StartPoint="4,0" SpreadMethod="Pad">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform Angle="-90" CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#1f1f21" Offset="1"/>
+                        <GradientStop Color="#FF6B6D51" Offset="0"/>
+                    </LinearGradientBrush>
+                </RadioButton.Background>
                 <ToggleButton.Content>
                     <TextBlock Background="Transparent" Foreground="#fac664" >
-                                SERVICES
+                            SERVICES
                     </TextBlock>
                 </ToggleButton.Content>
             </RadioButton>
             <RadioButton  HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}"
-                                  Background="#444444" Foreground="#fac664" FontWeight="Bold" Name="Tab6BT" Margin="0,0,5,0">
+                                 Foreground="#fac664" FontWeight="Bold" Name="Tab6BT" Margin="0,0,5,0">
+                <RadioButton.Background>
+                    <LinearGradientBrush EndPoint="-1,1" StartPoint="4,0" SpreadMethod="Pad">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform Angle="-90" CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#1f1f21" Offset="1"/>
+                        <GradientStop Color="#FF6B6D51" Offset="0"/>
+                    </LinearGradientBrush>
+                </RadioButton.Background>
                 <ToggleButton.Content>
                     <TextBlock Background="Transparent" Foreground="#fac664" >
-                                UPDATES
+                            UPDATES
                     </TextBlock>
                 </ToggleButton.Content>
             </RadioButton>
             <RadioButton  HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}"
-                                  Background="#444444" Foreground="#fac664" FontWeight="Bold" Name="Tab7BT" Margin="0,0,5,0">
+                                 Foreground="#fac664" FontWeight="Bold" Name="Tab7BT" Margin="0,0,5,0">
+                <RadioButton.Background>
+                    <LinearGradientBrush EndPoint="-1,1" StartPoint="4,0" SpreadMethod="Pad">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform Angle="-90" CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#1f1f21" Offset="1"/>
+                        <GradientStop Color="#FF6B6D51" Offset="0"/>
+                    </LinearGradientBrush>
+                </RadioButton.Background>
                 <ToggleButton.Content>
                     <TextBlock Background="Transparent" Foreground="#fac664" >
-                                CONFIG
+                            CONFIG
                     </TextBlock>
                 </ToggleButton.Content>
             </RadioButton>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
                 <TextBox 
-                            Name="CheckboxFilter" VerticalContentAlignment="Center" Margin="0,0,0,0" ToolTip="Type app name to filter application list below. Press Reset Button to reset the filter"
-                            Height="34" Width="200" Padding="5,0,0,0"
-                            Foreground="#a69f6c" Background="#2d2d30" FontSize="18">
+                        Name="CheckboxFilter" VerticalContentAlignment="Center" Margin="0,0,0,0" ToolTip="Type app name to filter application list below. Press Reset Button to reset the filter"
+                        Height="34" Width="200" Padding="5,0,0,0"
+                        Foreground="#a69f6c" Background="#2d2d30" FontSize="18">
                     <TextBox.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="7"/>
@@ -902,11 +1094,50 @@
                     </TextBox.Resources> Search
                 </TextBox>
                 <Button Name="ResetButton" HorizontalAlignment="Right" BorderThickness="0" VerticalContentAlignment="Center"
-                                Margin="5,0,10,0" ToolTip="Reset Search" VerticalAlignment="Center" Padding="5,0,0,0"
-                            Style="{StaticResource ResetButtonStyle}"
-                            Tag="{StaticResource ResetIcon}"/>
+                            Margin="5,0,10,0" ToolTip="Reset Search" VerticalAlignment="Center" Padding="5,0,0,0"
+                        Style="{StaticResource ResetButtonStyle}"
+                        Tag="{StaticResource ResetIcon}"/>
             </StackPanel>
         </DockPanel>
+        <Grid Background="Transparent" Panel.ZIndex="1" Grid.Row="2" ShowGridLines="False" Name="AboutGrid" Width="Auto" Height="300" HorizontalAlignment="Center" Visibility="Collapsed" SnapsToDevicePixels="True">
+            <Border CornerRadius="7" Background="#1f1f21" Height="300" BorderBrush="Purple" BorderThickness="1,1,1,1" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <WrapPanel Margin="5,5" Orientation="Vertical" HorizontalAlignment="Center" Width="auto" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                        <StackPanel Width="auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Image Height="50" Width="100" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
+                            <Label Foreground="#FFF4AB51" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,5,5,0" Content="Windows11 Optimizer&amp;Debloater"></Label>
+                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 2.4 - 14.01.2024"></Label>
+                        </StackPanel>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Vertical" HorizontalAlignment="Left" Width="auto" Margin="5,5" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True">
+                            <TextBlock Foreground="#6ec2b7" FontSize="14" FontWeight="Bold" Margin="5,5" TextWrapping="WrapWithOverflow" TextAlignment="Justify">Author: <TextBlock Foreground="#6e99c2">Vuk1lis</TextBlock></TextBlock>
+                            <TextBlock Foreground="#6ec2b7" FontSize="14" FontWeight="Bold" Margin="5,5" TextWrapping="WrapWithOverflow" TextAlignment="Justify">
+                                <Run Text="{Binding LoadsCount}" />GitHub: <Run Text="{Binding BrokerLoadsCount}" />
+                                <Hyperlink Name="GitHubHyperlink" TextDecorations="None" Foreground="#6e99c2" NavigateUri="https://github.com/vukilis">https://github.com/vukilis</Hyperlink>
+                            </TextBlock>
+                            <TextBlock Foreground="#6ec2b7" FontSize="14" FontWeight="Bold" Margin="5,5" TextWrapping="WrapWithOverflow" TextAlignment="Justify">
+                                <Run Text="{Binding LoadsCount}" />Website: <Run Text="{Binding BrokerLoadsCount}" />
+                                <Hyperlink Name="WebsiteHyperlink" TextDecorations="None" Foreground="#6e99c2" NavigateUri="https://vukilis.github.io/website/">https://vukilis.github.io/website/</Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Vertical" HorizontalAlignment="Right" Width="auto" VerticalAlignment="Top"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True">
+                            <TextBlock FontSize="14" FontFamily="Helvetica" FontWeight="Bold" TextWrapping="WrapWithOverflow" Margin="10,6" TextAlignment="Justify" MaxWidth="300" Foreground="#6ec2b7">This Utility show basic system information, install programs, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates. Makes your Windows more stable and faster!</TextBlock>
+                        </StackPanel>
+                    </WrapPanel>
+                </Grid>
+            </Border>
+        </Grid>
         <ScrollViewer Grid.Row="2" Padding="-1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
             <TabControl Name="TabNav" Background="Transparent" Width="Auto" Height="Auto" BorderBrush="Transparent" BorderThickness="0">
                 <TabItem Header="INFO" Visibility="Collapsed" Name="Tab1">
@@ -1449,13 +1680,13 @@
                                 </CheckBox>
                             </StackPanel>
                         </Border>
-                        <StackPanel Margin="10,0,10,10" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="2">
+                        <StackPanel Margin="15,0,10,10" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center">
                             <StackPanel HorizontalAlignment="Center" Margin="0,5,0,10">
                                 <TextBlock FontSize="16" FontFamily="Helvetica" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#31668c">
-                                                ● Python Packages
+                                            ● Python Packages
                                 </TextBlock>
                                 <TextBlock FontSize="16" FontFamily="Helvetica" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#8B4513">
-                                                ● Chocolatey Packages
+                                            ● Chocolatey Packages
                                 </TextBlock>
                             </StackPanel>
                             <Label Content="Lite Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,0,0,5"/>
@@ -2230,7 +2461,7 @@
                                     <Viewbox Grid.RowSpan="2" Width="400">
                                         <StackPanel RenderTransformOrigin="0.537,0.012" Background="Snow">
                                             <TextBox   x:Name="lblServicesDesc" FontSize="14" TextWrapping="Wrap" Foreground="#a69f6c" Padding="10"
-                                                Text="" Cursor="Arrow" IsReadOnly="True"  Height="181" Width="400" VerticalScrollBarVisibility="Auto" SelectionBrush="Transparent" Background="#1f1f21" BorderBrush="#fac664"/>
+                                            Text="" Cursor="Arrow" IsReadOnly="True"  Height="181" Width="400" VerticalScrollBarVisibility="Auto" SelectionBrush="Transparent" Background="#1f1f21" BorderBrush="#fac664"/>
                                         </StackPanel>
                                     </Viewbox>
                                 </StackPanel>
@@ -2366,7 +2597,7 @@
                             <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Margin="3">
                                 <Label Content="Features" FontSize="18"  Foreground="#FFF4AB51" HorizontalAlignment="Center" Style="{StaticResource chfont}" FontWeight="Bold"/>
                             </StackPanel>
-                        </Border>    
+                        </Border>
                         <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
