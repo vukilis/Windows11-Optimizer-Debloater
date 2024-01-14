@@ -8,6 +8,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [2.4] - 2024-01-14
+
+### Added
+
+- Button to show **About** window.
+- Handler function for **ToggleButtons**.
+- **Date release** next to version.
+
+### Changed
+
+- Buttons and UI color.
+- Improved **double-click** to maximize window.
+
 ## [2.3] - 2024-01-11
 
 ### Added
