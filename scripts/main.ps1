@@ -2,6 +2,9 @@
 #$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
 $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
+# # # # # # # # # # # # # # # # 
+# BLOCK FOR PRE-GENERATE XAML #
+# # # # # # # # # # # # # # # # 
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
 [XML]$XAML=$inputXAML
 
@@ -33,7 +36,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 2.3"
+$wpf_AppVersion.Content = "Version: 2.4 - 14.01.2024"
 
 function Invoke-CloseButton {
     <#
@@ -55,7 +58,7 @@ function Invoke-MinButton {
     #>
 
     $psform.WindowState = 'Minimized'
-    Write-Host "Minimize!"
+    #Write-Host "Minimize!"
 }
 function Invoke-MaxButton {
     <#
@@ -88,10 +91,10 @@ $psform.Add_MouseLeftButtonDown({
     $psform.DragMove()
 })
 
-$psform.Add_MouseDoubleClick({
+function Maximize-Window {
     <#
     .SYNOPSIS
-        Maximize application when double click 
+        Maximize application handler
     #>
     if ($psform.WindowState -eq 'Normal')
     {
@@ -105,7 +108,53 @@ $psform.Add_MouseDoubleClick({
         $maxMargin = New-Object Windows.Thickness -ArgumentList 0, 0, 0, 0
         $wpf_MainGrid.Margin = $maxMargin
     }
-})
+}
+function Handle-DoubleLeftClick {
+    Write-Host "Double Left Clicked!"
+}
+$doubleLeftClickEvent = [System.Windows.Input.MouseButtonEventHandler]{
+    <#
+    .SYNOPSIS
+        Maximize application when double right click 
+    #>
+    param(
+        [object]$sender,
+        [System.Windows.Input.MouseButtonEventArgs]$e
+    )
+
+    if ($e.ChangedButton -eq [System.Windows.Input.MouseButton]::Left -and $e.ClickCount -eq 2) {
+        Maximize-Window
+        #Handle-DoubleLeftClick
+    }
+}
+$wpf_ControlPanel.Add_MouseLeftButtonDown($doubleLeftClickEvent)
+$wpf_DockerPanel.Add_MouseLeftButtonDown($doubleLeftClickEvent)
+
+function Invoke-AboutButton {
+    <#
+        .DESCRIPTION
+        This function show and hide about page.
+    #>
+    $AboutButton = $psform.FindName("AboutButton")
+    $aboutGrid = $psform.FindName("AboutGrid")
+    
+        if ($AboutButton.IsChecked) {
+            $aboutGrid.Visibility = "Visible"
+            $animation = New-Object Windows.Media.Animation.DoubleAnimation
+            $animation.From = 0
+            $animation.To = 607.663333333333
+            $animation.Duration = [Windows.Duration]::new([TimeSpan]::FromSeconds(0.5))
+            $aboutGrid.BeginAnimation([Windows.FrameworkElement]::WidthProperty, $animation)
+        } else {
+            $animation = New-Object Windows.Media.Animation.DoubleAnimation
+            $animation.From = 607.663333333333
+            $animation.To = 0
+            $animation.Duration = [Windows.Duration]::new([TimeSpan]::FromSeconds(0.5))
+            $aboutGrid.BeginAnimation([Windows.FrameworkElement]::WidthProperty, $animation)
+            # $aboutGrid.Visibility = "Collapsed"
+        }
+}
+
 
 $radioButtons = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "RadioButton"}
 foreach ($radioButton in $radioButtons){
@@ -123,6 +172,14 @@ foreach ($button in $buttons){
     })
 }
 
+$toggleButtons = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "ToggleButton"}
+foreach ($button in $toggleButtons){
+    $button.value.Add_Click({
+        [System.Object]$Sender = $args[0]
+        Invoke-ToggleButtons "wpf_$($Sender.name)"
+    })
+}
+
 $checkbox = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "CheckBox"}
 foreach ($box in $checkbox){
     $box.value.Add_Click({
@@ -131,6 +188,23 @@ foreach ($box in $checkbox){
     })
 }
 
+function Invoke-ToggleButtons {
+
+    <#
+    
+        .DESCRIPTION
+        Meant to make creating ToggleButtons easier. There is a section below in the gui that will assign this function to every ToggleButton.
+        This way you can dictate what each ToggleButton does from this function. 
+    
+        Input will be the name of the ToggleButton that is clicked. 
+    #>
+    
+    Param ([string]$ToggleButton) 
+
+    Switch -Wildcard ($ToggleButton){
+        "wpf_AboutButton" {Invoke-AboutButton}
+    }
+}
 function Invoke-Button {
 
     <#
@@ -291,7 +365,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.3    
+Windows11 Optimizer&Debloater           2.4    
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -327,7 +401,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.3    
+Windows11 Optimizer&Debloater           2.4    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {
