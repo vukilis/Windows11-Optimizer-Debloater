@@ -11,7 +11,7 @@
     Website        : https://vukilis.github.io/website/
     GitHub         : https://github.com/vukilis
     Name:          : Windows11 Optimizer&Debloater
-    Version        : 2.3
+    Version        : 2.4
 #>
 
 Add-Type -AssemblyName PresentationFramework
@@ -21,6 +21,9 @@ Start-Transcript $ENV:TEMP\win11deb.log -Append
 #$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
 $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
+# # # # # # # # # # # # # # # # 
+# BLOCK FOR PRE-GENERATE XAML #
+# # # # # # # # # # # # # # # # 
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
 [XML]$XAML=$inputXAML
 
@@ -52,7 +55,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 2.3"
+$wpf_AppVersion.Content = "Version: 2.4 - 14.01.2024"
 
 function Invoke-CloseButton {
     <#
@@ -74,7 +77,7 @@ function Invoke-MinButton {
     #>
 
     $psform.WindowState = 'Minimized'
-    Write-Host "Minimize!"
+    #Write-Host "Minimize!"
 }
 function Invoke-MaxButton {
     <#
@@ -107,10 +110,10 @@ $psform.Add_MouseLeftButtonDown({
     $psform.DragMove()
 })
 
-$psform.Add_MouseDoubleClick({
+function Maximize-Window {
     <#
     .SYNOPSIS
-        Maximize application when double click 
+        Maximize application handler
     #>
     if ($psform.WindowState -eq 'Normal')
     {
@@ -124,7 +127,53 @@ $psform.Add_MouseDoubleClick({
         $maxMargin = New-Object Windows.Thickness -ArgumentList 0, 0, 0, 0
         $wpf_MainGrid.Margin = $maxMargin
     }
-})
+}
+function Handle-DoubleLeftClick {
+    Write-Host "Double Left Clicked!"
+}
+$doubleLeftClickEvent = [System.Windows.Input.MouseButtonEventHandler]{
+    <#
+    .SYNOPSIS
+        Maximize application when double right click 
+    #>
+    param(
+        [object]$sender,
+        [System.Windows.Input.MouseButtonEventArgs]$e
+    )
+
+    if ($e.ChangedButton -eq [System.Windows.Input.MouseButton]::Left -and $e.ClickCount -eq 2) {
+        Maximize-Window
+        #Handle-DoubleLeftClick
+    }
+}
+$wpf_ControlPanel.Add_MouseLeftButtonDown($doubleLeftClickEvent)
+$wpf_DockerPanel.Add_MouseLeftButtonDown($doubleLeftClickEvent)
+
+function Invoke-AboutButton {
+    <#
+        .DESCRIPTION
+        This function show and hide about page.
+    #>
+    $AboutButton = $psform.FindName("AboutButton")
+    $aboutGrid = $psform.FindName("AboutGrid")
+    
+        if ($AboutButton.IsChecked) {
+            $aboutGrid.Visibility = "Visible"
+            $animation = New-Object Windows.Media.Animation.DoubleAnimation
+            $animation.From = 0
+            $animation.To = 607.663333333333
+            $animation.Duration = [Windows.Duration]::new([TimeSpan]::FromSeconds(0.5))
+            $aboutGrid.BeginAnimation([Windows.FrameworkElement]::WidthProperty, $animation)
+        } else {
+            $animation = New-Object Windows.Media.Animation.DoubleAnimation
+            $animation.From = 607.663333333333
+            $animation.To = 0
+            $animation.Duration = [Windows.Duration]::new([TimeSpan]::FromSeconds(0.5))
+            $aboutGrid.BeginAnimation([Windows.FrameworkElement]::WidthProperty, $animation)
+            # $aboutGrid.Visibility = "Collapsed"
+        }
+}
+
 
 $radioButtons = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "RadioButton"}
 foreach ($radioButton in $radioButtons){
@@ -142,6 +191,14 @@ foreach ($button in $buttons){
     })
 }
 
+$toggleButtons = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "ToggleButton"}
+foreach ($button in $toggleButtons){
+    $button.value.Add_Click({
+        [System.Object]$Sender = $args[0]
+        Invoke-ToggleButtons "wpf_$($Sender.name)"
+    })
+}
+
 $checkbox = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "CheckBox"}
 foreach ($box in $checkbox){
     $box.value.Add_Click({
@@ -150,6 +207,23 @@ foreach ($box in $checkbox){
     })
 }
 
+function Invoke-ToggleButtons {
+
+    <#
+    
+        .DESCRIPTION
+        Meant to make creating ToggleButtons easier. There is a section below in the gui that will assign this function to every ToggleButton.
+        This way you can dictate what each ToggleButton does from this function. 
+    
+        Input will be the name of the ToggleButton that is clicked. 
+    #>
+    
+    Param ([string]$ToggleButton) 
+
+    Switch -Wildcard ($ToggleButton){
+        "wpf_AboutButton" {Invoke-AboutButton}
+    }
+}
 function Invoke-Button {
 
     <#
@@ -310,7 +384,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.3    
+Windows11 Optimizer&Debloater           2.4    
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -346,7 +420,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.3    
+Windows11 Optimizer&Debloater           2.4    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {
@@ -399,7 +473,7 @@ if (-not (Test-Path $destinationPath)) {
 ###                                                                                                          ###
 ################################################################################################################
 
-$programs = @('{"id":"DblInstallDockerdesktop","name":"Docker Desktop","winget":"Docker.DockerDesktop"}','{"id":"DblInstallGit","name":"Git","winget":"Git.Git"}','{"id":"DblInstallGitextensions","name":"Git Extensions","winget":"GitExtensionsTeam.GitExtensions"}','{"id":"DblInstallGithubdesktop","name":"GitHub Desktop","winget":"GitHub.GitHubDesktop"}','{"id":"DblInstallGodotEngine","name":"Godot Engine","winget":"GodotEngine.GodotEngine"}','{"id":"DblInstallGolang","name":"Go Programming Language","winget":"GoLang.Go"}','{"id":"DblInstallHeidisql","name":"HeidiSQL","winget":"HeidiSQL.HeidiSQL"}','{"id":"DblInstallMySQL","name":"MySQL","winget":"Oracle.MySQL"}','{"id":"DblInstallNodejs","name":"Node.js","winget":"OpenJS.NodeJS"}','{"id":"DblInstallNodejslts","name":"Node.js LTS","winget":"OpenJS.NodeJS.LTS"}','{"id":"DblInstallNodemanager","name":"Node Version Manager (NVM)","winget":"CoreyButler.NVMforWindows"}','{"id":"DblInstallJava8","name":"Java 8","winget":"EclipseAdoptium.Temurin.8.JRE"}','{"id":"DblInstallJava11","name":"Java 11","winget":"EclipseAdoptium.Temurin.11.JRE"}','{"id":"DblInstallJava17","name":"Java 17","winget":"EclipseAdoptium.Temurin.17.JRE"}','{"id":"DblInstallJava21","name":"Java 21","winget":"EclipseAdoptium.Temurin.21.JDK"}','{"id":"DblInstallOhmyposh","name":"Oh My Posh","winget":"JanDeDobbeleer.OhMyPosh"}','{"id":"DblInstallPython3","name":"Python 3","winget":"Python.Python.3.12"}','{"id":"DblInstallPodman","name":"Podman","winget":"RedHat.Podman"}','{"id":"DblInstallPostman","name":"Postman","winget":"Postman.Postman"}','{"id":"DblInstallRuby","name":"Ruby 3.2","winget":"RubyInstallerTeam.Ruby.3.2"}','{"id":"DblInstallRust","name":"Rust","winget":"Rustlang.Rust.MSVC"}','{"id":"DblInstallSQLite","name":"SQLite","winget":"DBBrowserForSQLite.DBBrowserForSQLite"}','{"id":"DblInstallSQLServer2022","name":"SQL Server 2022 Developer","winget":"Microsoft.SQLServer.2022.Developer"}','{"id":"DblInstallUnity","name":"Unity 2022","winget":"Unity.Unity.2022"}','{"id":"DblInstallVagrant","name":"Vagrant","winget":"Hashicorp.Vagrant"}','{"id":"DblInstallVisualstudio2022","name":"Visual Studio 2022","winget":"Microsoft.VisualStudio.2022.Community"}','{"id":"DblInstallCode","name":"Visual Studio Code","winget":"Microsoft.VisualStudioCode"}','{"id":"DblInstallDotnet3","name":".NET Core 3","winget":"Microsoft.DotNet.DesktopRuntime.3_1"}','{"id":"DblInstallDotnet5","name":".NET 5","winget":"Microsoft.DotNet.DesktopRuntime.5"}','{"id":"DblInstallDotnet6","name":".NET 6","winget":"Microsoft.DotNet.DesktopRuntime.6"}','{"id":"DblInstallDotnet7","name":".NET 7","winget":"Microsoft.DotNet.DesktopRuntime.7"}','{"id":"DblInstallDotnet8","name":".NET 8","winget":"Microsoft.DotNet.DesktopRuntime.8"}','{"id":"DblInstallAutoruns","name":"Autoruns","winget":"Microsoft.Sysinternals.Autoruns"}','{"id":"DblInstallHxD","name":"HxD Hex Editor","winget":"MHNexus.HxD"}','{"id":"DblInstallPowershell","name":"PowerShell","winget":"Microsoft.PowerShell"}','{"id":"DblInstallPowertoys","name":"PowerToys","winget":"Microsoft.PowerToys"}','{"id":"DblInstallProcessExplorer","name":"Process Explorer","winget":"Microsoft.Sysinternals.ProcessExplorer"}','{"id":"DblInstallvc2015_64","name":"Visual 2015 Redistributable (64-bit)","winget":"Microsoft.VCRedist.2015+.x64"}','{"id":"DblInstallvc2015_32","name":"Visual 2015 Redistributable (32-bit)","winget":"Microsoft.VCRedist.2015+.x86"}','{"id":"DblInstallTerminal","name":"Windows Terminal","winget":"Microsoft.WindowsTerminal"}','{"id":"DblInstallBrave","name":"Brave","winget":"Brave.Brave"}','{"id":"DblInstallChrome","name":"Google Chrome","winget":"Google.Chrome"}','{"id":"DblInstallChromium","name":"Chromium","winget":"eloston.ungoogled-chromium"}','{"id":"DblInstallFirefox","name":"Mozilla Firefox","winget":"Mozilla.Firefox"}','{"id":"DblInstallMullvad","name":"Mullvad","winget":"MullvadVPN.MullvadBrowser"}','{"id":"DblInstallThorium","name":"Thorium","winget":"Alex313031.Thorium"}','{"id":"DblInstallThoriumAVX","name":"Thorium AVX2","winget":"Alex313031.Thorium.AVX2"}','{"id":"DblInstallTor","name":"Tor Browser","winget":"TorProject.TorBrowser"}','{"id":"DblInstallLibrewolf","name":"Librewolf","winget":"Librewolf.Librewolf"}','{"id":"DblInstallFloorp","name":"Floorp","winget":"Ablaze.Floorp"}','{"id":"DblInstallVivaldi","name":"Vivaldi","winget":"VivaldiTechnologies.Vivaldi"}','{"id":"DblInstallWaterfox","name":"Waterfox","winget":"Waterfox.Waterfox"}','{"id":"DblInstallDiscord","name":"Discord","winget":"Discord.Discord"}','{"id":"DblInstallMatrix","name":"Element (Matrix)","winget":"Element.Element"}','{"id":"DblInstallSkype","name":"Skype","winget":"Microsoft.Skype"}','{"id":"DblInstallSlack","name":"Slack","winget":"SlackTechnologies.Slack"}','{"id":"DblInstallTeams","name":"Microsoft Teams","winget":"Microsoft.Teams"}','{"id":"DblInstallTelegram","name":"Telegram","winget":"Telegram.TelegramDesktop"}','{"id":"DblInstallViber","name":"Viber","winget":"Viber.Viber"}','{"id":"DblInstallZoom","name":"Zoom","winget":"Zoom.Zoom"}','{"id":"DblInstallBluestacks","name":"Bluestacks","winget":"BlueStack.BlueStacks"}','{"id":"DblInstallCemu","name":"Cemu","winget":"Cemu.Cemu"}','{"id":"DblInstallEaapp","name":"EA Desktop App","winget":"ElectronicArts.EADesktop"}','{"id":"DblInstallEmulationstation","name":"Emulation Station","winget":"Emulationstation.Emulationstation"}','{"id":"DblInstallEpicgames","name":"Epic Games Store","winget":"EpicGames.EpicGamesLauncher"}','{"id":"DblInstallGeforcenow","name":"NVIDIA GeForce NOW","winget":"Nvidia.GeforceNOW"}','{"id":"DblInstallGog","name":"GOG Galaxy","winget":"GOG.Galaxy"}','{"id":"DblInstallPlaynite","name":"Playnite","winget":"Playnite.Playnite"}','{"id":"DblInstallPrism","name":"Prism Launcher","winget":"PrismLauncher.PrismLauncher"}','{"id":"DblInstallSideQuest","name":"SideQuestVR","winget":"SideQuestVR.SideQuest"}','{"id":"DblInstallSteam","name":"Steam","winget":"Valve.Steam"}','{"id":"DblInstallSunshine","name":"Sunshine Stream Server","winget":"LizardByte.Sunshine"}','{"id":"DblInstallHeroic","name":"Heroic Games Launcher","winget":"HeroicGamesLauncher.HeroicGamesLauncher"}','{"id":"DblInstallItch","name":"itch.io","winget":"ItchIo.Itch"}','{"id":"DblInstallMedal","name":"Medal","winget":"MedalB.V.Medal"}','{"id":"DblInstallMoonlight","name":"Moonlight Stream Client","winget":"MoonlightGameStreamingProject.Moonlight"}','{"id":"DblPythonEpicCLI","name":"Legendary Epic (Python)","winget":null}','{"id":"DblInstallUbisoft","name":"Ubisoft Connect","winget":"Ubisoft.Connect"}','{"id":"DblInstallWargaming","name":"Wargaming Game Center","winget":"Wargaming.GameCenter"}','{"id":"DblInstallXemu","name":"XEMU","winget":"xemu-project.xemu"}','{"id":"DblInstallAudacity","name":"Audacity","winget":"Audacity.Audacity"}','{"id":"DblInstallAV1","name":"AV1 Video Extension","winget":"9MVZQVXJBQ9V"}','{"id":"DblInstallBlender","name":"Blender","winget":"BlenderFoundation.Blender"}','{"id":"DblInstallFigma","name":"Figma","winget":"Figma.Figma"}','{"id":"DblInstallFFmpeg","name":"FFmpeg","winget":"Gyan.FFmpeg"}','{"id":"DblInstallCider","name":"Cider","winget":"CiderCollective.Cider"}','{"id":"DblInstallGreenshot","name":"Greenshot","winget":"Greenshot.Greenshot"}','{"id":"DblInstallHandbrake","name":"Handbrake","winget":"HandBrake.HandBrake"}','{"id":"DblInstallImageglass","name":"ImageGlass","winget":"DuongDieuPhap.ImageGlass"}','{"id":"DblInstallKodi","name":"Kodi","winget":"XBMCFoundation.Kodi"}','{"id":"DblInstallKlite","name":"K-Lite Codec Pack","winget":"CodecGuide.K-LiteCodecPack.Standard"}','{"id":"DblInstallMediaInfo","name":"MediaInfo","winget":"MediaArea.MediaInfo.GUI"}','{"id":"DblInstallMKVToolNix","name":"MKVToolNix","winget":"MoritzBunkus.MKVToolNix"}','{"id":"DblInstallPlex","name":"Plex Client","winget":"Plex.Plex"}','{"id":"DblInstallPlexServer","name":"Plex Server","winget":"Plex.PlexMediaServer"}','{"id":"DblInstallObs","name":"OBS Studio","winget":"OBSProject.OBSStudio"}','{"id":"DblInstallSpotify","name":"Spotify","winget":"9NCBCSZSJRSB"}','{"id":"DblInstallSharex","name":"ShareX","winget":"ShareX.ShareX"}','{"id":"DblInstallVlc","name":"VLC Media Player","winget":"VideoLAN.VLC"}','{"id":"DblInstallVP9","name":"VP9 Video Extensions","winget":"9N4D0MSMP0PT"}','{"id":"DblInstallYtdlp","name":"yt-dlp","winget":"yt-dlp.yt-dlp"}','{"id":"DblInstallAnki","name":"Anki","winget":"Anki.Anki"}','{"id":"DblInstallAdobe","name":"Adobe","winget":"Adobe.Acrobat.Reader.64-bit"}','{"id":"DblInstallJoplin","name":"Joplin","winget":"Joplin.Joplin"}','{"id":"DblInstallLibreoffice","name":"LibreOffice","winget":"TheDocumentFoundation.LibreOffice"}','{"id":"DblInstallNeovim","name":"Neovim","winget":"Neovim.Neovim"}','{"id":"DblInstallNeovimNightly","name":"Neovim Nightly","winget":"Neovim.Neovim.Nightly"}','{"id":"DblInstallNotepadplus","name":"Notepad","winget":"Notepad++.Notepad++"}','{"id":"DblInstallNotepadsApp","name":"Notepads","winget":"JackieLiu.NotepadsApp"}','{"id":"DblInstallObsidian","name":"Obsidian","winget":"Obsidian.Obsidian"}','{"id":"DblInstallOnlyoffice","name":"OnlyOffice","winget":"ONLYOFFICE.DesktopEditors"}','{"id":"DblInstallSublime4","name":"Sublime Text 4","winget":"SublimeHQ.SublimeText.3"}','{"id":"DblInstallSumatra","name":"Sumatra","winget":"SumatraPDF.SumatraPDF"}','{"id":"DblInstallWPS","name":"WPS Office","winget":"Kingsoft.WPSOffice"}','{"id":"DblInstallWinmerge","name":"WinMerge","winget":"WinMerge.WinMerge"}','{"id":"DblInstall7zip","name":"7-zip","winget":"7zip.7zip"}','{"id":"DblInstallADB","name":"Android Debug Bridge","winget":"Google.PlatformTools"}','{"id":"DblInstallAlacritty","name":"Alacritty","winget":"Alacritty.Alacritty"}','{"id":"DblInstallAnydo","name":"Anydo","winget":"Anydo.Anydo"}','{"id":"DblInstallAutohotkey","name":"AutoHotkey","winget":"autohotkey"}','{"id":"DblInstallBitwarden","name":"Bitwarden","winget":"Bitwarden.Bitwarden"}','{"id":"DblInstallChatterino","name":"Chatterino","winget":"ChatterinoTeam.Chatterino"}','{"id":"DblInstallClasicMixer","name":"ClassicVolumeMixer","winget":"PopeenCom.ClassicVolumeMixer"}','{"id":"DblInstallCpuz","name":"CPU-Z","winget":"CPUID.CPU-Z"}','{"id":"DblInstallCryptomator","name":"Cryptomator","winget":"Cryptomator.Cryptomator"}','{"id":"DblInstallDdu","name":"Display Driver Uninstaller","winget":"Wagnardsoft.DisplayDriverUninstaller"}','{"id":"DblInstallDrawio","name":"Draw.io","winget":"JGraph.Draw"}','{"id":"DblInstallEsearch","name":"Everything","winget":"oidtools.Everything"}','{"id":"DblInstallGoogleDrive","name":"Google Drive","winget":"Google.GoogleDrive "}','{"id":"DblInstallGpuz","name":"GPU-Z","winget":"TechPowerUp.GPU-Z"}','{"id":"DblInstallGsudo","name":"gsudo","winget":"gerardog.gsudo"}','{"id":"DblInstallNGENUITY","name":"HyperX NGENUITY","winget":"9P1TBXR6QDCX"}','{"id":"DblInstallHwinfo","name":"HWiNFO","winget":"REALiX.HWiNFO"}','{"id":"DblInstallJdownloader","name":"JDownloader","winget":"AppWork.JDownloader"}','{"id":"DblInstallKDEConnect","name":"KDE Connect","winget":"KDE.KDEConnect"}','{"id":"DblInstallKeepass","name":"KeePassXC","winget":"KeePassXCTeam.KeePassXC"}','{"id":"DblInstallMsiafterburner","name":"Afterburner","winget":"Guru3D.Afterburner"}','{"id":"DblInstallThunderbird","name":"Thunderbird","winget":"Mozilla.Thunderbird"}','{"id":"DblInstallNanazip","name":"NanaZip","winget":"M2Team.NanaZip"}','{"id":"DblInstallNTop","name":"NTop","winget":"gsass1.NTop"}','{"id":"DblInstallNvclean","name":"NVCleanstall","winget":"TechPowerUp.NVCleanstall"}','{"id":"DblInstallOVirtualBox","name":"VirtualBox","winget":"Oracle.VirtualBox"}','{"id":"DblInstallSpeedtest","name":"Speedtest by Ookla","winget":"Ookla.Speedtest.Desktop"}','{"id":"DblInstallOpenrgb","name":"OpenRGB","winget":"CalcProgrammer1.OpenRGB"}','{"id":"DblInstallParsec","name":"Parsec","winget":"Parsec.Parsec"}','{"id":"DblInstallPostbox","name":"Postbox","winget":"Postbox.Postbox"}','{"id":"DblInstallProcesslasso","name":"Process Lasso","winget":"BitSum.ProcessLasso"}','{"id":"DblInstallProxyman","name":"Proxyman","winget":"ProxymanLLC.Proxyman"}','{"id":"DblInstallQbittorrent","name":"qBittorrent","winget":"qBittorrent.qBittorrent"}','{"id":"DblInstallRevo","name":"Revo","winget":"RevoUninstaller.RevoUninstaller"}','{"id":"DblInstallRufus","name":"Rufus","winget":"Rufus.Rufus"}','{"id":"DblInstallTtaskbar","name":"Ttaskbar","winget":"9PF4KZ2VN4W9"}','{"id":"DblInstallWingetUI","name":"WingetUI","winget":"SomePythonThings.WingetUIStore"}','{"id":"DblInstallWinrar","name":"WinRAR","winget":"RARLab.WinRAR"}')
+$programs = @('{"winget":"Docker.DockerDesktop","id":"DblInstallDockerdesktop","name":"Docker Desktop"}','{"winget":"Git.Git","id":"DblInstallGit","name":"Git"}','{"winget":"GitExtensionsTeam.GitExtensions","id":"DblInstallGitextensions","name":"Git Extensions"}','{"winget":"GitHub.GitHubDesktop","id":"DblInstallGithubdesktop","name":"GitHub Desktop"}','{"winget":"GodotEngine.GodotEngine","id":"DblInstallGodotEngine","name":"Godot Engine"}','{"winget":"GoLang.Go","id":"DblInstallGolang","name":"Go Programming Language"}','{"winget":"HeidiSQL.HeidiSQL","id":"DblInstallHeidisql","name":"HeidiSQL"}','{"winget":"Oracle.MySQL","id":"DblInstallMySQL","name":"MySQL"}','{"winget":"OpenJS.NodeJS","id":"DblInstallNodejs","name":"Node.js"}','{"winget":"OpenJS.NodeJS.LTS","id":"DblInstallNodejslts","name":"Node.js LTS"}','{"winget":"CoreyButler.NVMforWindows","id":"DblInstallNodemanager","name":"Node Version Manager (NVM)"}','{"winget":"EclipseAdoptium.Temurin.8.JRE","id":"DblInstallJava8","name":"Java 8"}','{"winget":"EclipseAdoptium.Temurin.11.JRE","id":"DblInstallJava11","name":"Java 11"}','{"winget":"EclipseAdoptium.Temurin.17.JRE","id":"DblInstallJava17","name":"Java 17"}','{"winget":"EclipseAdoptium.Temurin.21.JDK","id":"DblInstallJava21","name":"Java 21"}','{"winget":"JanDeDobbeleer.OhMyPosh","id":"DblInstallOhmyposh","name":"Oh My Posh"}','{"winget":"Python.Python.3.12","id":"DblInstallPython3","name":"Python 3"}','{"winget":"RedHat.Podman","id":"DblInstallPodman","name":"Podman"}','{"winget":"Postman.Postman","id":"DblInstallPostman","name":"Postman"}','{"winget":"RubyInstallerTeam.Ruby.3.2","id":"DblInstallRuby","name":"Ruby 3.2"}','{"winget":"Rustlang.Rust.MSVC","id":"DblInstallRust","name":"Rust"}','{"winget":"DBBrowserForSQLite.DBBrowserForSQLite","id":"DblInstallSQLite","name":"SQLite"}','{"winget":"Microsoft.SQLServer.2022.Developer","id":"DblInstallSQLServer2022","name":"SQL Server 2022 Developer"}','{"winget":"Unity.Unity.2022","id":"DblInstallUnity","name":"Unity 2022"}','{"winget":"Hashicorp.Vagrant","id":"DblInstallVagrant","name":"Vagrant"}','{"winget":"Microsoft.VisualStudio.2022.Community","id":"DblInstallVisualstudio2022","name":"Visual Studio 2022"}','{"winget":"Microsoft.VisualStudioCode","id":"DblInstallCode","name":"Visual Studio Code"}','{"winget":"Microsoft.DotNet.DesktopRuntime.3_1","id":"DblInstallDotnet3","name":".NET Core 3"}','{"winget":"Microsoft.DotNet.DesktopRuntime.5","id":"DblInstallDotnet5","name":".NET 5"}','{"winget":"Microsoft.DotNet.DesktopRuntime.6","id":"DblInstallDotnet6","name":".NET 6"}','{"winget":"Microsoft.DotNet.DesktopRuntime.7","id":"DblInstallDotnet7","name":".NET 7"}','{"winget":"Microsoft.DotNet.DesktopRuntime.8","id":"DblInstallDotnet8","name":".NET 8"}','{"winget":"Microsoft.Sysinternals.Autoruns","id":"DblInstallAutoruns","name":"Autoruns"}','{"winget":"MHNexus.HxD","id":"DblInstallHxD","name":"HxD Hex Editor"}','{"winget":"Microsoft.PowerShell","id":"DblInstallPowershell","name":"PowerShell"}','{"winget":"Microsoft.PowerToys","id":"DblInstallPowertoys","name":"PowerToys"}','{"winget":"Microsoft.Sysinternals.ProcessExplorer","id":"DblInstallProcessExplorer","name":"Process Explorer"}','{"winget":"Microsoft.VCRedist.2015+.x64","id":"DblInstallvc2015_64","name":"Visual 2015 Redistributable (64-bit)"}','{"winget":"Microsoft.VCRedist.2015+.x86","id":"DblInstallvc2015_32","name":"Visual 2015 Redistributable (32-bit)"}','{"winget":"Microsoft.WindowsTerminal","id":"DblInstallTerminal","name":"Windows Terminal"}','{"winget":"Brave.Brave","id":"DblInstallBrave","name":"Brave"}','{"winget":"Google.Chrome","id":"DblInstallChrome","name":"Google Chrome"}','{"winget":"eloston.ungoogled-chromium","id":"DblInstallChromium","name":"Chromium"}','{"winget":"Mozilla.Firefox","id":"DblInstallFirefox","name":"Mozilla Firefox"}','{"winget":"MullvadVPN.MullvadBrowser","id":"DblInstallMullvad","name":"Mullvad"}','{"winget":"Alex313031.Thorium","id":"DblInstallThorium","name":"Thorium"}','{"winget":"Alex313031.Thorium.AVX2","id":"DblInstallThoriumAVX","name":"Thorium AVX2"}','{"winget":"TorProject.TorBrowser","id":"DblInstallTor","name":"Tor Browser"}','{"winget":"Librewolf.Librewolf","id":"DblInstallLibrewolf","name":"Librewolf"}','{"winget":"Ablaze.Floorp","id":"DblInstallFloorp","name":"Floorp"}','{"winget":"VivaldiTechnologies.Vivaldi","id":"DblInstallVivaldi","name":"Vivaldi"}','{"winget":"Waterfox.Waterfox","id":"DblInstallWaterfox","name":"Waterfox"}','{"winget":"Discord.Discord","id":"DblInstallDiscord","name":"Discord"}','{"winget":"Element.Element","id":"DblInstallMatrix","name":"Element (Matrix)"}','{"winget":"Microsoft.Skype","id":"DblInstallSkype","name":"Skype"}','{"winget":"SlackTechnologies.Slack","id":"DblInstallSlack","name":"Slack"}','{"winget":"Microsoft.Teams","id":"DblInstallTeams","name":"Microsoft Teams"}','{"winget":"Telegram.TelegramDesktop","id":"DblInstallTelegram","name":"Telegram"}','{"winget":"Viber.Viber","id":"DblInstallViber","name":"Viber"}','{"winget":"Zoom.Zoom","id":"DblInstallZoom","name":"Zoom"}','{"winget":"BlueStack.BlueStacks","id":"DblInstallBluestacks","name":"Bluestacks"}','{"winget":"Cemu.Cemu","id":"DblInstallCemu","name":"Cemu"}','{"winget":"ElectronicArts.EADesktop","id":"DblInstallEaapp","name":"EA Desktop App"}','{"winget":"Emulationstation.Emulationstation","id":"DblInstallEmulationstation","name":"Emulation Station"}','{"winget":"EpicGames.EpicGamesLauncher","id":"DblInstallEpicgames","name":"Epic Games Store"}','{"winget":"Nvidia.GeforceNOW","id":"DblInstallGeforcenow","name":"NVIDIA GeForce NOW"}','{"winget":"GOG.Galaxy","id":"DblInstallGog","name":"GOG Galaxy"}','{"winget":"Playnite.Playnite","id":"DblInstallPlaynite","name":"Playnite"}','{"winget":"PrismLauncher.PrismLauncher","id":"DblInstallPrism","name":"Prism Launcher"}','{"winget":"SideQuestVR.SideQuest","id":"DblInstallSideQuest","name":"SideQuestVR"}','{"winget":"Valve.Steam","id":"DblInstallSteam","name":"Steam"}','{"winget":"LizardByte.Sunshine","id":"DblInstallSunshine","name":"Sunshine Stream Server"}','{"winget":"HeroicGamesLauncher.HeroicGamesLauncher","id":"DblInstallHeroic","name":"Heroic Games Launcher"}','{"winget":"ItchIo.Itch","id":"DblInstallItch","name":"itch.io"}','{"winget":"MedalB.V.Medal","id":"DblInstallMedal","name":"Medal"}','{"winget":"MoonlightGameStreamingProject.Moonlight","id":"DblInstallMoonlight","name":"Moonlight Stream Client"}','{"winget":null,"id":"DblPythonEpicCLI","name":"Legendary Epic (Python)"}','{"winget":"Ubisoft.Connect","id":"DblInstallUbisoft","name":"Ubisoft Connect"}','{"winget":"Wargaming.GameCenter","id":"DblInstallWargaming","name":"Wargaming Game Center"}','{"winget":"xemu-project.xemu","id":"DblInstallXemu","name":"XEMU"}','{"winget":"Audacity.Audacity","id":"DblInstallAudacity","name":"Audacity"}','{"winget":"9MVZQVXJBQ9V","id":"DblInstallAV1","name":"AV1 Video Extension"}','{"winget":"BlenderFoundation.Blender","id":"DblInstallBlender","name":"Blender"}','{"winget":"Figma.Figma","id":"DblInstallFigma","name":"Figma"}','{"winget":"Gyan.FFmpeg","id":"DblInstallFFmpeg","name":"FFmpeg"}','{"winget":"CiderCollective.Cider","id":"DblInstallCider","name":"Cider"}','{"winget":"Greenshot.Greenshot","id":"DblInstallGreenshot","name":"Greenshot"}','{"winget":"HandBrake.HandBrake","id":"DblInstallHandbrake","name":"Handbrake"}','{"winget":"DuongDieuPhap.ImageGlass","id":"DblInstallImageglass","name":"ImageGlass"}','{"winget":"XBMCFoundation.Kodi","id":"DblInstallKodi","name":"Kodi"}','{"winget":"CodecGuide.K-LiteCodecPack.Standard","id":"DblInstallKlite","name":"K-Lite Codec Pack"}','{"winget":"MediaArea.MediaInfo.GUI","id":"DblInstallMediaInfo","name":"MediaInfo"}','{"winget":"MoritzBunkus.MKVToolNix","id":"DblInstallMKVToolNix","name":"MKVToolNix"}','{"winget":"Plex.Plex","id":"DblInstallPlex","name":"Plex Client"}','{"winget":"Plex.PlexMediaServer","id":"DblInstallPlexServer","name":"Plex Server"}','{"winget":"OBSProject.OBSStudio","id":"DblInstallObs","name":"OBS Studio"}','{"winget":"9NCBCSZSJRSB","id":"DblInstallSpotify","name":"Spotify"}','{"winget":"ShareX.ShareX","id":"DblInstallSharex","name":"ShareX"}','{"winget":"VideoLAN.VLC","id":"DblInstallVlc","name":"VLC Media Player"}','{"winget":"9N4D0MSMP0PT","id":"DblInstallVP9","name":"VP9 Video Extensions"}','{"winget":"yt-dlp.yt-dlp","id":"DblInstallYtdlp","name":"yt-dlp"}','{"winget":"Anki.Anki","id":"DblInstallAnki","name":"Anki"}','{"winget":"Adobe.Acrobat.Reader.64-bit","id":"DblInstallAdobe","name":"Adobe"}','{"winget":"Joplin.Joplin","id":"DblInstallJoplin","name":"Joplin"}','{"winget":"TheDocumentFoundation.LibreOffice","id":"DblInstallLibreoffice","name":"LibreOffice"}','{"winget":"Neovim.Neovim","id":"DblInstallNeovim","name":"Neovim"}','{"winget":"Neovim.Neovim.Nightly","id":"DblInstallNeovimNightly","name":"Neovim Nightly"}','{"winget":"Notepad++.Notepad++","id":"DblInstallNotepadplus","name":"Notepad"}','{"winget":"JackieLiu.NotepadsApp","id":"DblInstallNotepadsApp","name":"Notepads"}','{"winget":"Obsidian.Obsidian","id":"DblInstallObsidian","name":"Obsidian"}','{"winget":"ONLYOFFICE.DesktopEditors","id":"DblInstallOnlyoffice","name":"OnlyOffice"}','{"winget":"SublimeHQ.SublimeText.3","id":"DblInstallSublime4","name":"Sublime Text 4"}','{"winget":"SumatraPDF.SumatraPDF","id":"DblInstallSumatra","name":"Sumatra"}','{"winget":"Kingsoft.WPSOffice","id":"DblInstallWPS","name":"WPS Office"}','{"winget":"WinMerge.WinMerge","id":"DblInstallWinmerge","name":"WinMerge"}','{"winget":"7zip.7zip","id":"DblInstall7zip","name":"7-zip"}','{"winget":"Google.PlatformTools","id":"DblInstallADB","name":"Android Debug Bridge"}','{"winget":"Alacritty.Alacritty","id":"DblInstallAlacritty","name":"Alacritty"}','{"winget":"Anydo.Anydo","id":"DblInstallAnydo","name":"Anydo"}','{"winget":"autohotkey","id":"DblInstallAutohotkey","name":"AutoHotkey"}','{"winget":"Bitwarden.Bitwarden","id":"DblInstallBitwarden","name":"Bitwarden"}','{"winget":"ChatterinoTeam.Chatterino","id":"DblInstallChatterino","name":"Chatterino"}','{"winget":"PopeenCom.ClassicVolumeMixer","id":"DblInstallClasicMixer","name":"ClassicVolumeMixer"}','{"winget":"CPUID.CPU-Z","id":"DblInstallCpuz","name":"CPU-Z"}','{"winget":"Cryptomator.Cryptomator","id":"DblInstallCryptomator","name":"Cryptomator"}','{"winget":"Wagnardsoft.DisplayDriverUninstaller","id":"DblInstallDdu","name":"Display Driver Uninstaller"}','{"winget":"JGraph.Draw","id":"DblInstallDrawio","name":"Draw.io"}','{"winget":"oidtools.Everything","id":"DblInstallEsearch","name":"Everything"}','{"winget":"Google.GoogleDrive ","id":"DblInstallGoogleDrive","name":"Google Drive"}','{"winget":"TechPowerUp.GPU-Z","id":"DblInstallGpuz","name":"GPU-Z"}','{"winget":"gerardog.gsudo","id":"DblInstallGsudo","name":"gsudo"}','{"winget":"9P1TBXR6QDCX","id":"DblInstallNGENUITY","name":"HyperX NGENUITY"}','{"winget":"REALiX.HWiNFO","id":"DblInstallHwinfo","name":"HWiNFO"}','{"winget":"AppWork.JDownloader","id":"DblInstallJdownloader","name":"JDownloader"}','{"winget":"KDE.KDEConnect","id":"DblInstallKDEConnect","name":"KDE Connect"}','{"winget":"KeePassXCTeam.KeePassXC","id":"DblInstallKeepass","name":"KeePassXC"}','{"winget":"Guru3D.Afterburner","id":"DblInstallMsiafterburner","name":"Afterburner"}','{"winget":"Mozilla.Thunderbird","id":"DblInstallThunderbird","name":"Thunderbird"}','{"winget":"M2Team.NanaZip","id":"DblInstallNanazip","name":"NanaZip"}','{"winget":"gsass1.NTop","id":"DblInstallNTop","name":"NTop"}','{"winget":"TechPowerUp.NVCleanstall","id":"DblInstallNvclean","name":"NVCleanstall"}','{"winget":"Oracle.VirtualBox","id":"DblInstallOVirtualBox","name":"VirtualBox"}','{"winget":"Ookla.Speedtest.Desktop","id":"DblInstallSpeedtest","name":"Speedtest by Ookla"}','{"winget":"CalcProgrammer1.OpenRGB","id":"DblInstallOpenrgb","name":"OpenRGB"}','{"winget":"Parsec.Parsec","id":"DblInstallParsec","name":"Parsec"}','{"winget":"Postbox.Postbox","id":"DblInstallPostbox","name":"Postbox"}','{"winget":"BitSum.ProcessLasso","id":"DblInstallProcesslasso","name":"Process Lasso"}','{"winget":"ProxymanLLC.Proxyman","id":"DblInstallProxyman","name":"Proxyman"}','{"winget":"qBittorrent.qBittorrent","id":"DblInstallQbittorrent","name":"qBittorrent"}','{"winget":"RevoUninstaller.RevoUninstaller","id":"DblInstallRevo","name":"Revo"}','{"winget":"Rufus.Rufus","id":"DblInstallRufus","name":"Rufus"}','{"winget":"9PF4KZ2VN4W9","id":"DblInstallTtaskbar","name":"Ttaskbar"}','{"winget":"SomePythonThings.WingetUIStore","id":"DblInstallWingetUI","name":"WingetUI"}','{"winget":"RARLab.WinRAR","id":"DblInstallWinrar","name":"WinRAR"}')
 
 ################################################################################################################
 ###                                                                                                          ###
@@ -407,6 +481,23 @@ $programs = @('{"id":"DblInstallDockerdesktop","name":"Docker Desktop","winget":
 ###                                                                                                          ###
 ################################################################################################################
 
+function Get-NavigateUri {
+    <#
+    .SYNOPSIS
+        Function that gets url links from xaml
+        Get-NavigateUri -hyperlink $GitHubHyperlink 
+    #>
+
+    param (
+        [System.Windows.Documents.Hyperlink]$hyperlink
+    )
+
+    if ($hyperlink -ne $null) {
+        return $hyperlink.NavigateUri.AbsoluteUri
+    }
+
+    return $null
+}
 function Invoke-jsonChecker {
     <#
 
@@ -466,6 +557,42 @@ function Invoke-MessageBox {
 
     [System.Windows.MessageBox]::Show("Done", $MessageboxTitle, [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
 }
+Function Open-Link {
+    <#
+    .SYNOPSIS
+        Function that opens a url link
+        Open-Link -Uri $navigateUriGit
+    #>
+
+    param($Uri)
+
+    try {
+        Start-Process $Uri
+    }
+    catch {
+        [System.Windows.MessageBox]::Show("Error opening link: $_", "Error", [Windows.MessageBoxButton]::OK, [Windows.MessageBoxImage]::Error)
+    }
+}
+
+$wpf_GitHubHyperlink.Add_Click({
+    <#
+    .SYNOPSIS
+        Open GitHub page link
+    #>
+    $GitHubHyperlink = $psform.FindName("GitHubHyperlink")
+    $navigateUriGit = Get-NavigateUri -hyperlink $GitHubHyperlink
+    Open-Link -Uri $navigateUriGit
+})
+
+$wpf_WebsiteHyperlink.Add_Click({
+    <#
+    .SYNOPSIS
+        Open Website link
+    #>
+    $WebsiteHyperlink = $psform.FindName("WebsiteHyperlink")
+    $navigateUriSite = Get-NavigateUri -hyperlink $WebsiteHyperlink
+    Open-Link -Uri $navigateUriSite
+})
 function Set-RestorePoint {
     <#
     
