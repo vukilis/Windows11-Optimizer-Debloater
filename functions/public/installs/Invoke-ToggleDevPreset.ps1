@@ -16,12 +16,12 @@ function Invoke-ToggleDevPreset {
 
         if ($checkBox.IsChecked -eq $false -and @(
             "Githubdesktop", "Nodemanager", "Java8", "Ohmyposh",
-            "Python3", "Postman", "Visualstudio2022", "Code",
+            "Python3", "Postman", "Ruby", "Visualstudio2022", "Code",
             "Dotnet3", "Dotnet5", "Dotnet6", "Dotnet7",
             "Powershell", "vc2015_64", "vc2015_32", "Terminal",
             "Thorium", "Discord", "Slack", "Teams", "Zoom",
-            "Steam", "Greenshot", "Imageglass", "Klite", "Vlc",
-            "Notepadplus", "7zip", "Cpuz", "ClasicMixer", "Hwinfo",
+            "Steam", "Greenshot", "Imageglass", "Klite", "Spotify", "Vlc",
+            "Notepadplus", "7zip", "Cpuz", "ClasicMixer", "Drawio", "Hwinfo",
             "Jdownloader", "Msiafterburner", "OVirtualBox", "Qbittorrent",
             "Ttaskbar", "Winrar", "Sumatra"
         ) -contains $checkBox.Name.Replace("DblInstall", "")){ $checkBox.IsChecked = $true }else{ $checkBox.IsChecked = $false }
