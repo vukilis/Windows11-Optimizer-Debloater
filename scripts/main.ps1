@@ -1,6 +1,6 @@
-#$xamlFile="C:\Users\vukilis\Pictures\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
-#$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+$xamlFile="C:\Users\vukilis\Pictures\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
+$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
+#$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 # # # # # # # # # # # # # # # # 
 # BLOCK FOR PRE-GENERATE XAML #
@@ -36,7 +36,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 2.4 - 14.01.2024"
+$wpf_AppVersion.Content = "Version: 2.4 - 14.01.2024."
 
 function Invoke-CloseButton {
     <#
@@ -82,13 +82,29 @@ function Invoke-MaxButton {
     }
 }
 
+$dragging = $false
 $psform.Add_MouseLeftButtonDown({
-    <#
-    .SYNOPSIS
-        Move application
-    #>
-
+    $dragging = $true
     $psform.DragMove()
+})
+
+$psform.Add_MouseLeftButtonUp({
+    $dragging = $false
+})
+
+$psform.Add_MouseMove({
+    if ($dragging) {
+        $screenHeight = [Windows.SystemParameters]::PrimaryScreenHeight
+        $mousePosition = [Windows.Forms.Cursor]::Position
+
+        $maximizeThreshold = 24
+
+        if ($mousePosition.Y -lt $maximizeThreshold) {
+            $psform.WindowState = 'Maximized'
+            $maxMargin = New-Object Windows.Thickness -ArgumentList 5, 5, 5, 5
+            $wpf_MainGrid.Margin = $maxMargin
+        } 
+    }
 })
 
 function Maximize-Window {
