@@ -44,5 +44,5 @@ If you are having TLS 1.2 Issues or You cannot find or resolve `maglit.me/win11a
 
 ## Credits
 - Special thanks to [jepriCreations](https://www.deviantart.com/rosea92) for his amazing Windows 11 cursor concept.
-- Here is the original [link](https://www.deviantart.com/jepricreations/art/Windows-11-Free-Tail-Cursor-Concept-962242647) to the free version.
-- You can find a more complete version with HD resolution and some cool alternatives in the next [link](https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-HD-v2-890672103)
+  > Here is the original [link](https://www.deviantart.com/jepricreations/art/Windows-11-Free-Tail-Cursor-Concept-962242647) to the free version.  
+  > You can find a more complete version with HD resolution and some cool alternatives in the next [link](https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-HD-v2-890672103)
