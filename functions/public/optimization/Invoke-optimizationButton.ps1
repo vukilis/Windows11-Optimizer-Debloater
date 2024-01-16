@@ -354,6 +354,11 @@ function Invoke-optimizationButton{
         Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage
         $wpf_DblRemoveCortana.IsChecked = $false
     }
+    If ( $wpf_DblRemoveWidgets.IsChecked -eq $true ) {
+        Write-Host "Removing Widgets..."
+        Get-AppxPackage -allusers MicrosoftWindows.Client.WebExperience | Remove-AppxPackage
+        $wpf_DblRemoveCortana.IsChecked = $false
+    }
     If ( $wpf_DblClassicAltTab.IsChecked -eq $true ) {
         Write-Host "Setting Classic Alt+Tab..."
         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "MultiTaskingAltTabFilter" -Type DWord -Value 3       
