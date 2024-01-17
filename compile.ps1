@@ -26,7 +26,7 @@ Write-output '
 ################################################################################################################
 ' | Out-File ./$scriptname -Append -Encoding ascii
 
-Get-ChildItem .\config | Where-Object {$_.Extension -eq ".json"} | ForEach-Object {
+Get-ChildItem .\config\applications.json | ForEach-Object {
     $jsonObject = (Get-Content $_.FullName) -join "`n" | ConvertFrom-Json
 
     $convertedArray = $jsonObject | ForEach-Object {
@@ -41,6 +41,22 @@ Get-ChildItem .\config | Where-Object {$_.Extension -eq ".json"} | ForEach-Objec
     $convertedArrayString = "@(" + ($convertedArray -join ',' ) + ")"
 
     Write-Output "`$programs = $convertedArrayString" | Out-File ./$scriptname -Append -Encoding ascii
+}
+
+Get-ChildItem .\config\msAppxDebloat.json | ForEach-Object {
+    $jsonObject = (Get-Content $_.FullName) -join "`n" | ConvertFrom-Json
+
+    $convertedArray = $jsonObject | ForEach-Object {
+        $objString = @{
+            'id'    = $_.id
+            'name'  = $_.name
+        } | ConvertTo-Json -Compress
+        "'$objString'"
+    }
+
+    $convertedArrayString = "@(" + ($convertedArray -join ',' ) + ")"
+
+    Write-Output "`$appx = $convertedArrayString" | Out-File ./$scriptname -Append -Encoding ascii
 }
 
 Write-output '
