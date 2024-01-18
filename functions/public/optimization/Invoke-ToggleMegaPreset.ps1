@@ -17,8 +17,9 @@ function Invoke-ToggleMegaPreset {
         return
     }
 
-    $checkBoxNames = "Telemetry", "Wifi", "AH", "DeleteTempFiles", "DiskCleanup", "LocTrack", "Storage", "Hiber", "DVR",
-                    "Power", "Display", "RemoveCortana", "RightClickMenu", "DisableUAC", "Personalize"
+    $checkBoxNames = "Telemetry", "Wifi", "AH", "DeleteTempFiles", "RecycleBin", "DiskCleanup", "LocTrack", "Storage", "Hiber", "DVR",
+                    "CoreIsolation", "DisableTeredo", "AutoAdjustVolume", "Power", "Display", "RemoveCortana", "RemoveWidgets", "DisableNotifications"
+                    "RightClickMenu", "DisableUAC", "ClassicAltTab", "WindowsSound", "Personalize", "ModernCursorLight"
     $checkBoxes = $checkBoxNames | ForEach-Object { $tabItem.FindName("Dbl$_") }
 
     foreach ($checkBox in $checkBoxes) {
