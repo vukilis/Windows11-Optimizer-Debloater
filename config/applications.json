@@ -745,6 +745,11 @@
         "winget": "qBittorrent.qBittorrent"
     },
     {
+        "id": "DblInstallRclone",
+        "name": "Rclone",
+        "winget": "Rclone.Rclone"
+    },
+    {
         "id": "DblInstallRevo",
         "name": "Revo",
         "winget": "RevoUninstaller.RevoUninstaller"
