@@ -16,6 +16,8 @@ function Invoke-MessageBox {
         "upgrade"   { "Upgrading are finished" }
         "tweak"   { "Tweaking are finished" }
         "debloat"   { "Debloating are finished" }
+        "debloatError"   { "Please unselect all unchecked APPXs!" }
+        "debloatInfo"   { "Please select an APPX!" }
         "updateDefault"   { "Set Updates To Default" }
         "updateSecurity"   { "Set Security Updates" }
         "updateDisabled"   { "Updates Are Disabled" }
