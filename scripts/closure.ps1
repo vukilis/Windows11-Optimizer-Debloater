@@ -1,12 +1,12 @@
 $psVersion = $PSVersionTable.PSVersion
 if ($psVersion.Major -eq 7 -and $psVersion.Minor -ge 1) {
-    Write-Host "You are running PowerShell version 7.1 or higher."
+    Write-Host "You are running PowerShell version 7.1 or higher." -ForegroundColor Green
     Get-Author7
 } elseif ($psVersion.Major -eq 5 -and $psVersion.Minor -eq 1) {
-    Write-Host "You are running PowerShell version 5.1."
+    Write-Host "You are running PowerShell version 5.1." -ForegroundColor Blue
     Get-Author5
 } else {
-    Write-Host "You are running a different version of PowerShell."
+    Write-Host "You are running a different version of PowerShell." -ForegroundColor Red
 }
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
