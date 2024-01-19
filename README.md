@@ -9,11 +9,11 @@ Requires you to launch PowerShell or Windows Terminal As ADMINISTRATOR!
 
 Launch Command:
 ```
-iwr -useb irm dub.sh/win11deb | iex | iex
+iwr -useb dub.sh/win11deb | iex
 ```
 or 
 ```
-irm irm dub.sh/win11deb | iex | iex
+irm dub.sh/win11deb | iex
 ```
 If you are having TLS 1.2 Issues or You cannot find or resolve `dub.sh/win11deb` then run with the following command:
 ```
