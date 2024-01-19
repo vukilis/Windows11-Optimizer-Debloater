@@ -62,8 +62,6 @@ function Invoke-MaxButton {
     <#
     .SYNOPSIS
         Maximize application
-
-    .PARAMETER Button
     #>
 
     if ($psform.WindowState -eq 'Normal')
