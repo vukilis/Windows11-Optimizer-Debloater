@@ -1114,7 +1114,7 @@
                         <StackPanel Width="auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                             <Image Height="50" Width="100" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
                             <Label Foreground="#FFF4AB51" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,5,5,0" Content="Windows11 Optimizer&amp;Debloater"></Label>
-                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 2.4 - 14.01.2024."></Label>
+                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 2.5 - 19.01.2024."></Label>
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Orientation="Vertical" HorizontalAlignment="Left" Width="auto" Margin="5,5" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
@@ -2117,28 +2117,29 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border Margin="20,20,20,20" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Height="450">
+                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0" Height="490" VerticalAlignment="Top">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
                                 <StackPanel Name="GetDebloat" SnapsToDevicePixels="True" VerticalAlignment="Top" HorizontalAlignment="Left">
                                 </StackPanel>
                             </ScrollViewer>
                         </Border>
-                        <Border Margin="20,20,20,20" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="1">
+                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="1" Height="490" VerticalAlignment="Top">
                             <Grid Background="Transparent">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height=".33*"/>
-                                    <RowDefinition Height=".33*"/>
-                                    <RowDefinition Height=".33*"/>
+                                    <RowDefinition Height=".40*"/>
+                                    <RowDefinition Height=".20*"/>
+                                    <RowDefinition Height=".40*"/>
                                 </Grid.RowDefinitions>
                                 <StackPanel Orientation="Vertical" Margin="10,10" SnapsToDevicePixels="True" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="0">
-                                    <Button Name="SelectDebloat" Content="Un/Select Apps" Height="40" Width="150" FontSize="16" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,10,0,0" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Center"/>
+                                    <Button Name="SelectDebloat" Content="Un/Select Apps" Height="40" Width="150" FontSize="16" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,10,0,0" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Cursor="Hand" HorizontalAlignment="Center"/>
                                     <Button Name="SelectDebloatAll" Content="Select All" Height="40" Width="150" FontSize="16" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,10,0,0" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Background="#FF9E5050" Cursor="Hand" HorizontalAlignment="Center" ToolTip="USE WITH CAUTION!!!!! This will remove ALL Microsoft store apps other than the essentials to make winget work. Games installed by MS Store ARE INCLUDED!"/>
                                     <Button Name="UnselectDebloatAll" Content="Unselect All" Height="40" Width="150" FontSize="16" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,10,0,0" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Cursor="Hand" HorizontalAlignment="Center"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Vertical" Margin="10,10" SnapsToDevicePixels="True" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1">
+                                    <Label Name="DblSelected" Content="" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51"/>
                                     <Button Name="UninstallDebloat" Content="Uninstall Apps" Height="40" Width="150" FontSize="16" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,10,0,0" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Cursor="Hand" HorizontalAlignment="Center"/>
                                 </StackPanel>
                                 <WrapPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="2">
@@ -2152,8 +2153,8 @@
                                 </WrapPanel>
                             </Grid>
                         </Border>
-                        <Border Margin="20,20,20,20" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="2">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Height="450">
+                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="2" Height="490" VerticalAlignment="Top">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
                                 <StackPanel Name="SetDebloat" SnapsToDevicePixels="True" VerticalAlignment="Top" HorizontalAlignment="Left">
                                 </StackPanel>
                             </ScrollViewer>
@@ -2518,7 +2519,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border Margin="15,15,15,15" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0">
+                        <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0">
                             <StackPanel SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="10">
                                 <Button Name="Updatesdefault" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Default (Out of Box) Settings" Cursor="Hand" Margin="0,0,0,5" Padding="10" HorizontalAlignment="Center"/>
                                 <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFDEE39B">This is the default settings that come with Windows. <LineBreak/><LineBreak/> No modifications are made and will remove any custom windows update settings.</TextBlock>
@@ -2527,13 +2528,13 @@
                                 <Button Name="PauseUpdate" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Pause Windows Updates" Cursor="Hand" Margin="0,5,0,0" Padding="10" HorizontalAlignment = "Center"/>
                             </StackPanel>
                         </Border>
-                        <Border Margin="15,15,15,15" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="1">
+                        <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="1">
                             <StackPanel SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="10">
                                 <Button Name="Updatessecurity" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Security (Recommended) Settings" Cursor="Hand" Padding="10" HorizontalAlignment="Center"/>
                                 <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFDEE39B">This is my recommended setting I use on all computers.<LineBreak/><LineBreak/> It will delay feature updates by 2 years and will install security updates 4 days after release.<LineBreak/><LineBreak/>Feature Updates: Adds features and often bugs to systems when they are released. You want to delay these as long as possible.<LineBreak/><LineBreak/>Security Updates: Typically these are pressing security flaws that need to be patched quickly. You only want to delay these a couple of days just to see if they are safe and don't break other systems. You don't want to go without these for ANY extended periods of time.</TextBlock>
                             </StackPanel>
                         </Border>
-                        <Border Margin="15,15,15,15" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="3">
+                        <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="3">
                             <StackPanel SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="10">
                                 <Button Name="Updatesdisable" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Background="#FF9E5050" Content="Disable ALL Updates (NOT RECOMMENDED!)" Cursor="Hand" Padding="10" HorizontalAlignment="Center"/>
                                 <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFDEE39B">This completely disables ALL Windows Updates and is NOT RECOMMENDED.<LineBreak/><LineBreak/> However, it can be suitable if you use your system for a select purpose and do not actively browse the internet. <LineBreak/><LineBreak/>Note: Your system will be easier to hack and infect without security updates.</TextBlock>
