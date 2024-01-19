@@ -30,12 +30,14 @@ function Invoke-UninstallDebloat {
 
         if (-not $matched) {
             Write-Host "Application is unchecked and is not unselect from the list. Please unselect all unchecked APPXs!" -ForegroundColor Red
+            Invoke-MessageBox -msg "debloatError"
         }else {
             Invoke-UninstallTeams
+            Invoke-MessageBox -msg "debloat"
         }
 
     } else {
         Write-Host "Please select an APPX!" -ForegroundColor Magenta
+        Invoke-MessageBox -msg "debloatInfo"
     }
-    Invoke-MessageBox -msg "debloat"
 }
