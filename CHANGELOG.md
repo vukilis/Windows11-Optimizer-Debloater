@@ -8,6 +8,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [2.5] - 2024-01-19
+
+### Added
+
+- New tweak **Remove Widgets**.
+- New app in the install menu. 
+- Activator for Windows and Office - **Microsoft Activation Scripts (MAS)**.
+- Custom code for maximizing the window when it is dragged to the edge of the screen.
+ 
+### Changed
+
+- Adjusted presets: 
+**Lite Preset**
+**Dev Preset**
+**Gaming Preset**
+**Fast Preset**
+**Mega Preset**
+- Recoded and redesigned **DEBLOAT TAB**, allowed user to choose what MSAppx want to uninstall and added **XBOX Preset**.
+
 ## [2.4] - 2024-01-14
 
 ### Added
