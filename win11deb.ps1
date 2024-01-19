@@ -11,7 +11,7 @@
     Website        : https://vukilis.github.io/website/
     GitHub         : https://github.com/vukilis
     Name:          : Windows11 Optimizer&Debloater
-    Version        : 2.4
+    Version        : 2.5
 #>
 
 Add-Type -AssemblyName PresentationFramework
@@ -81,8 +81,6 @@ function Invoke-MaxButton {
     <#
     .SYNOPSIS
         Maximize application
-
-    .PARAMETER Button
     #>
 
     if ($psform.WindowState -eq 'Normal')
@@ -2409,8 +2407,8 @@ function Invoke-ToggleMegaPreset {
         return
     }
 
-    $checkBoxNames = "Telemetry", "Wifi", "AH", "DeleteTempFiles", "RecycleBin", "DiskCleanup", "LocTrack", "Storage", "Hiber", "DVR",
-                    "CoreIsolation", "DisableTeredo", "AutoAdjustVolume", "Power", "Display", "RemoveCortana", "RemoveWidgets", "DisableNotifications"
+    $checkBoxNames = "Telemetry", "Wifi", "AH", "DeleteTempFiles", "RecycleBin", "DiskCleanup", "LocTrack", "Storage", "Hiber", "DVR", 
+                    "CoreIsolation", "DisableTeredo", "AutoAdjustVolume", "Power", "Display", "RemoveCortana", "RemoveWidgets", "DisableNotifications", 
                     "RightClickMenu", "DisableUAC", "ClassicAltTab", "WindowsSound", "Personalize", "ModernCursorLight"
     $checkBoxes = $checkBoxNames | ForEach-Object { $tabItem.FindName("Dbl$_") }
 
@@ -2418,7 +2416,7 @@ function Invoke-ToggleMegaPreset {
         $checkBox.IsChecked = $IsChecked
     }
 
-    if ($IsChecked) { Write-Host "Enabling Fast Preset" -ForegroundColor Green } else { Write-Host "Disabling Fast Preset" -ForegroundColor Red }
+    if ($IsChecked) { Write-Host "Enabling Mega Preset" -ForegroundColor Green } else { Write-Host "Disabling Mega Preset" -ForegroundColor Red }
 }
 function Invoke-ToggleMouseAcceleration{    
     $EnableMode = $wpf_ToggleMouseAcceleration.IsChecked
