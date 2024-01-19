@@ -6,9 +6,9 @@ function Invoke-SelectApplicationAll {
     foreach ($app in $checkedCheckboxes) {
         $isChecked = $app.IsChecked = $true
         if ($isChecked -eq $true) {
-            AddCustomLabel -content $app.Content -panel $DblSelectPanel -Foreground "#a69f6c" -Margin @(15, 5, 15, 0) -FontSize 14 -FontWeight "Bold" -FontFamily "Gadugi"
+            AddCustomLabel -content $app.Content -panel $DblSelectPanel -Foreground "#a69f6c" -Margin @(15, 5, 15, 4) -FontSize 14 -FontWeight "Bold" -FontFamily "Gadugi"
             $checkedCount++
         }
     }
-    AddCustomLabel -content "Checked: $checkedCount of $($matchingMsAppx.Count)" -panel $DblSelectPanel -Foreground "#F4AB51" -Margin @(15, 5, 15, 0) -FontSize 14 -FontWeight "Bold" -FontFamily "Gadugi"
+    $wpf_DblSelected.Content = "Selected: $checkedCount of $($matchingMsAppx.Count)"
 }
