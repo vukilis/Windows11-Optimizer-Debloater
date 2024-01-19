@@ -1,10 +1,8 @@
 #$xamlFile="C:\Users\vukilis\Pictures\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
 #$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+#$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
-# # # # # # # # # # # # # # # # 
-# BLOCK FOR PRE-GENERATE XAML #
-# # # # # # # # # # # # # # # # 
+
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
 [XML]$XAML=$inputXAML
 
@@ -36,7 +34,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 2.4 - 14.01.2024"
+$wpf_AppVersion.Content = "Version: 2.5 - 19.01.2024."
 
 function Invoke-CloseButton {
     <#
@@ -82,13 +80,29 @@ function Invoke-MaxButton {
     }
 }
 
+$dragging = $false
 $psform.Add_MouseLeftButtonDown({
-    <#
-    .SYNOPSIS
-        Move application
-    #>
-
+    $dragging = $true
     $psform.DragMove()
+})
+
+$psform.Add_MouseLeftButtonUp({
+    $dragging = $false
+})
+
+$psform.Add_MouseMove({
+    if ($dragging) {
+        $screenHeight = [Windows.SystemParameters]::PrimaryScreenHeight
+        $mousePosition = [Windows.Forms.Cursor]::Position
+
+        $maximizeThreshold = 24
+
+        if ($mousePosition.Y -lt $maximizeThreshold) {
+            $psform.WindowState = 'Maximized'
+            $maxMargin = New-Object Windows.Thickness -ArgumentList 5, 5, 5, 5
+            $wpf_MainGrid.Margin = $maxMargin
+        } 
+    }
 })
 
 function Maximize-Window {
@@ -224,13 +238,18 @@ function Invoke-Button {
         "wpf_CloseButton" {Invoke-CloseButton}
         "wpf_MinButton" {Invoke-MinButton}
         "wpf_MaxButton" {Invoke-MaxButton}
-        "wpf_debloatALL" {Invoke-debloatALL}
-        "wpf_debloatGaming" {Invoke-debloatGaming}
+        "wpf_SelectDebloat" {Invoke-SelectApplication}
+        "wpf_SelectDebloatAll" {Invoke-SelectApplicationAll}
+        "wpf_UnselectDebloatAll" {Invoke-UnselectApplicationAll}
+        "wpf_UninstallDebloat" {Invoke-UninstallDebloat}
+        # "wpf_debloatALL" {Invoke-debloatALL}
+        # "wpf_debloatGaming" {Invoke-debloatGaming}
         "wpf_optimizationButton" {Invoke-optimizationButton}
         "wpf_recommended" {Invoke-recommended}
         "wpf_gaming" {Invoke-gaming}
         "wpf_normal" {Invoke-normal}
         "wpf_Updatesdefault" {Invoke-UpdatesDefault}
+        "wpf_PauseUpdate" {Invoke-PauseUpdate}
         "wpf_FixesUpdate" {Invoke-FixesUpdate}
         "wpf_Updatesdisable" {Invoke-UpdatesDisable}
         "wpf_Updatessecurity" {Invoke-UpdatesSecurity}
@@ -271,7 +290,7 @@ function Invoke-Button {
         "wpf_FixesSound" {Invoke-FixesSound}
         "wpf_WingetConfig" {Set-WingetConfig}
         "wpf_FixesADB" {Invoke-FixADB}
-        "wpf_PauseUpdate" {Invoke-PauseUpdate}
+        "wpf_ActivateWindows" {Invoke-ActivateWindows}
     }
 }
 
@@ -288,6 +307,7 @@ function Invoke-Checkbox {
     Param ([string]$checkbox) 
 
     Switch -Wildcard ($checkbox){
+        "wpf_ToggleXboxPreset" {Invoke-ToggleXboxPreseta}
         "wpf_fastPresetButton" {Invoke-ToggleFastPreset}
         "wpf_megaPresetButton" {Invoke-ToggleMegaPreset}
         "wpf_ToggleLitePreset" {Invoke-ToggleLitePreset}
@@ -365,7 +385,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.4    
+Windows11 Optimizer&Debloater           2.5    
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -401,7 +421,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.4    
+Windows11 Optimizer&Debloater           2.5    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {

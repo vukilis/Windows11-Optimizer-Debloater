@@ -18,7 +18,7 @@ function Invoke-ToggleLitePreset {
             "Git", "Java8", "Ohmyposh", "Code", "Powershell", 
             "vc2015_64", "vc2015_32", "Terminal", "Thorium", 
             "Discord", "Steam", "Greenshot", "Imageglass", "Klite", 
-            "Vlc", "Notepadplus", "Sumatra", "7zip", "Cpuz", 
+            "Spotify", "Vlc", "Notepadplus", "Sumatra", "7zip", "Cpuz", 
             "ClasicMixer", "Hwinfo", "Jdownloader", "Msiafterburner", 
             "Qbittorrent", "Ttaskbar"
         ) -contains $checkBox.Name.Replace("DblInstall", "")){ $checkBox.IsChecked = $true }else{ $checkBox.IsChecked = $false }

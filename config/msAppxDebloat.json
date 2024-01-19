@@ -1,0 +1,338 @@
+[
+    {
+        "id": "MicrosoftCorporationIIQuickAssist",
+        "name": "MicrosoftCorporationII.QuickAssist"
+    },
+    {
+        "id": "ClipchampClipchamp",
+        "name": "Clipchamp.Clipchamp"
+    },
+    {
+        "id": "MicrosoftOutlookForWindows",
+        "name": "Microsoft.OutlookForWindows"
+    },
+    {
+        "id": "MicrosoftPowerAutomateDesktop",
+        "name": "Microsoft.PowerAutomateDesktop"
+    },
+    {
+        "id": "MicrosoftTodos",
+        "name": "Microsoft.Todos"
+    },
+    {
+        "id": "MicrosoftAppConnector",
+        "name": "Microsoft.AppConnector"
+    },
+    {
+        "id": "MicrosoftBingFinance",
+        "name": "Microsoft.BingFinance"
+    },
+    {
+        "id": "MicrosoftBingNews",
+        "name": "Microsoft.BingNews"
+    },
+    {
+        "id": "MicrosoftBingSports",
+        "name": "Microsoft.BingSports"
+    },
+    {
+        "id": "MicrosoftBingTranslator",
+        "name": "Microsoft.BingTranslator"
+    },
+    {
+        "id": "MicrosoftBingWeather",
+        "name": "Microsoft.BingWeather"
+    },
+    {
+        "id": "MicrosoftBingFoodAndDrink",
+        "name": "Microsoft.BingFoodAndDrink"
+    },
+    {
+        "id": "MicrosoftBingHealthAndFitness",
+        "name": "Microsoft.BingHealthAndFitness"
+    },
+    {
+        "id": "MicrosoftBingTravel",
+        "name": "Microsoft.BingTravel"
+    },
+    {
+        "id": "MicrosoftMinecraftUWP",
+        "name": "Microsoft.MinecraftUWP"
+    },
+    {
+        "id": "MicrosoftGamingServices",
+        "name": "Microsoft.GamingServices"
+    },
+    {
+        "id": "MicrosoftGetHelp",
+        "name": "Microsoft.GetHelp"
+    },
+    {
+        "id": "MicrosoftGetstarted",
+        "name": "Microsoft.Getstarted"
+    },
+    {
+        "id": "MicrosoftMessaging",
+        "name": "Microsoft.Messaging"
+    },
+    {
+        "id": "MicrosoftMicrosoft3DViewer",
+        "name": "Microsoft.Microsoft3DViewer"
+    },
+    {
+        "id": "MicrosoftMicrosoftSolitaireCollection",
+        "name": "Microsoft.MicrosoftSolitaireCollection"
+    },
+    {
+        "id": "MicrosoftNetworkSpeedTest",
+        "name": "Microsoft.NetworkSpeedTest"
+    },
+    {
+        "id": "MicrosoftNews",
+        "name": "Microsoft.News"
+    },
+    {
+        "id": "MicrosoftOfficeLens",
+        "name": "Microsoft.Office.Lens"
+    },
+    {
+        "id": "MicrosoftOfficeSway",
+        "name": "Microsoft.Office.Sway"
+    },
+    {
+        "id": "MicrosoftOfficeOneNote",
+        "name": "Microsoft.Office.OneNote"
+    },
+    {
+        "id": "MicrosoftOneConnect",
+        "name": "Microsoft.OneConnect"
+    },
+    {
+        "id": "MicrosoftPeople",
+        "name": "Microsoft.People"
+    },
+    {
+        "id": "MicrosoftPrint3D",
+        "name": "Microsoft.Print3D"
+    },
+    {
+        "id": "MicrosoftSkypeApp",
+        "name": "Microsoft.SkypeApp"
+    },
+    {
+        "id": "MicrosoftWallet",
+        "name": "Microsoft.Wallet"
+    },
+    {
+        "id": "MicrosoftWhiteboard",
+        "name": "Microsoft.Whiteboard"
+    },
+    {
+        "id": "MicrosoftWindowsAlarms",
+        "name": "Microsoft.WindowsAlarms"
+    },
+    {
+        "id": "microsoftwindowscommunicationsapps",
+        "name": "microsoft.windowscommunicationsapps"
+    },
+    {
+        "id": "MicrosoftWindowsFeedbackHub",
+        "name": "Microsoft.WindowsFeedbackHub"
+    },
+    {
+        "id": "MicrosoftWindowsMaps",
+        "name": "Microsoft.WindowsMaps"
+    },
+    {
+        "id": "MicrosoftWindowsPhone",
+        "name": "Microsoft.WindowsPhone"
+    },
+    {
+        "id": "MicrosoftWindowsSoundRecorder",
+        "name": "Microsoft.WindowsSoundRecorder"
+    },
+    {
+        "id": "MicrosoftXboxApp",
+        "name": "Microsoft.XboxApp"
+    },
+    {
+        "id": "MicrosoftGamingApp",
+        "name": "Microsoft.GamingApp"
+    },
+    {
+        "id": "MicrosoftConnectivityStore",
+        "name": "Microsoft.ConnectivityStore"
+    },
+    {
+        "id": "MicrosoftCommsPhone",
+        "name": "Microsoft.CommsPhone"
+    },
+    {
+        "id": "MicrosoftScreenSketch",
+        "name": "Microsoft.ScreenSketch"
+    },
+    {
+        "id": "MicrosoftXboxTCUI",
+        "name": "Microsoft.Xbox.TCUI"
+    },
+    {
+        "id": "MicrosoftXboxGameOverlay",
+        "name": "Microsoft.XboxGameOverlay"
+    },
+    {
+        "id": "MicrosoftXboxGamingOverlay",
+        "name": "Microsoft.XboxGamingOverlay"
+    },
+    {
+        "id": "MicrosoftXboxGameCallableUI",
+        "name": "Microsoft.XboxGameCallableUI"
+    },
+    {
+        "id": "MicrosoftXboxSpeechToTextOverlay",
+        "name": "Microsoft.XboxSpeechToTextOverlay"
+    },
+    {
+        "id": "MicrosoftXboxIdentityProvider",
+        "name": "Microsoft.XboxIdentityProvider"
+    },
+    {
+        "id": "MicrosoftMixedRealityPortal",
+        "name": "Microsoft.MixedReality.Portal"
+    },
+    {
+        "id": "MicrosoftYourPhone",
+        "name": "Microsoft.YourPhone"
+    },
+    {
+        "id": "MicrosoftZuneMusic",
+        "name": "Microsoft.ZuneMusic"
+    },
+    {
+        "id": "MicrosoftZuneVideo",
+        "name": "Microsoft.ZuneVideo"
+    },
+    {
+        "id": "MicrosoftGetstarted",
+        "name": "Microsoft.Getstarted"
+    },
+    {
+        "id": "MicrosoftFamily",
+        "name": "Microsoft.Family"
+    },
+    {
+        "id": "MicrosoftMicrosoftOfficeHub",
+        "name": "Microsoft.MicrosoftOfficeHub"
+    },
+    {
+        "id": "MicrosoftMicrosoftStickyNotes",
+        "name": "Microsoft.MicrosoftStickyNotes"
+    },
+    {
+        "id": "EclipseManager",
+        "name": "*EclipseManager*"
+    },
+    {
+        "id": "ActiproSoftwareLLC",
+        "name": "*ActiproSoftwareLLC*"
+    },
+    {
+        "id": "AdobePhotoshopExpress",
+        "name": "*AdobeSystemsIncorporated.AdobePhotoshopExpress*"
+    },
+    {
+        "id": "DuolingoLearnLanguagesforFree",
+        "name": "*Duolingo-LearnLanguagesforFree*"
+    },
+    {
+        "id": "PandoraMediaInc",
+        "name": "*PandoraMediaInc*"
+    },
+    {
+        "id": "CandyCrush",
+        "name": "*CandyCrush*"
+    },
+    {
+        "id": "BubbleWitch3Saga",
+        "name": "*BubbleWitch3Saga*"
+    },
+    {
+        "id": "Wunderlist",
+        "name": "*Wunderlist*"
+    },
+    {
+        "id": "Flipboard",
+        "name": "*Flipboard*"
+    },
+    {
+        "id": "Twitter",
+        "name": "*Twitter*"
+    },
+    {
+        "id": "Facebook",
+        "name": "*Facebook*"
+    },
+    {
+        "id": "RoyalRevolt",
+        "name": "*Royal Revolt*"
+    },
+    {
+        "id": "Sway",
+        "name": "*Sway*"
+    },
+    {
+        "id": "SpeedTest",
+        "name": "*Speed Test*"
+    },
+    {
+        "id": "Dolby",
+        "name": "*Dolby*"
+    },
+    {
+        "id": "Viber",
+        "name": "*Viber*"
+    },
+    {
+        "id": "ACGMediaPlayer",
+        "name": "*ACGMediaPlayer*"
+    },
+    {
+        "id": "Netflix",
+        "name": "*Netflix*"
+    },
+    {
+        "id": "OneCalendar",
+        "name": "*OneCalendar*"
+    },
+    {
+        "id": "LinkedInforWindows",
+        "name": "*LinkedInforWindows*"
+    },
+    {
+        "id": "HiddenCityMysteryofShadows",
+        "name": "*HiddenCityMysteryofShadows*"
+    },
+    {
+        "id": "Hulu",
+        "name": "*Hulu*"
+    },
+    {
+        "id": "HiddenCity",
+        "name": "*HiddenCity*"
+    },
+    {
+        "id": "AdobePhotoshopExpress",
+        "name": "*AdobePhotoshopExpress*"
+    },
+    {
+        "id": "HotspotShieldFreeVPN",
+        "name": "*HotspotShieldFreeVPN*"
+    },
+    {
+        "id": "MicrosoftAdvertisingXaml",
+        "name": "*Microsoft.Advertising.Xaml*"
+    },
+    {
+        "id": "WindowsDevHome",
+        "name": "*Windows.DevHome*"
+    }    
+]

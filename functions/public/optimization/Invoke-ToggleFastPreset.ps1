@@ -17,7 +17,9 @@ function Invoke-ToggleFastPreset {
         return
     }
 
-    $checkBoxNames = "Telemetry", "Wifi", "AH", "DeleteTempFiles", "LocTrack", "Storage", "Hiber", "DVR", "Power", "Display", "Personalize"
+    $checkBoxNames = "Telemetry", "Wifi", "AH", "DeleteTempFiles", "RecycleBin", "LocTrack", "Storage", "Hiber", "DVR", 
+                    "DisableTeredo", "AutoAdjustVolume", "Power", "Display", "DisableUAC", "ClassicAltTab", 
+                    "RightClickMenu", "Personalize", "ModernCursorLight"
     $checkBoxes = $checkBoxNames | ForEach-Object { $tabItem.FindName("Dbl$_") }
 
     foreach ($checkBox in $checkBoxes) {

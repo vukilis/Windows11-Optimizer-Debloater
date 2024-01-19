@@ -15,7 +15,7 @@ function Invoke-ShortcutApp {
         Switch ($ShortcutToAdd) {
         "Win11Deb" {
             $SourceExe = "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
-            $IRM = 'irm https://maglit.me/win11app | iex'
+            $IRM = 'irm https://dub.sh/win11deb | iex'
             $Powershell = '-NoProfile -ExecutionPolicy Bypass'
             $ArgumentsToSourceExe = "$powershell $IRM"
             $DestinationName = "Win11Deb.lnk"

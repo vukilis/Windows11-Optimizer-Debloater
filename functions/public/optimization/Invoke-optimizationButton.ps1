@@ -118,7 +118,7 @@ function Invoke-optimizationButton{
         Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "MenuShowDelay" -Type DWord -Value 1
         Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "AutoEndTasks" -Type DWord -Value 1
         Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" -Name "ClearPageFileAtShutdown" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKCU:\Control Panel\Mouse" -Name "MouseHoverTime" -Type DWord -Value 400
+        Set-ItemProperty -Path "HKCU:\Control Panel\Mouse" -Name "MouseHoverTime" -Type String -Value 400
         
         ## Timeout Tweaks cause flickering on Windows now
         Remove-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "WaitToKillAppTimeout" -ErrorAction SilentlyContinue
@@ -352,6 +352,11 @@ function Invoke-optimizationButton{
     If ( $wpf_DblRemoveCortana.IsChecked -eq $true ) {
         Write-Host "Removing Cortana..."
         Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage
+        $wpf_DblRemoveCortana.IsChecked = $false
+    }
+    If ( $wpf_DblRemoveWidgets.IsChecked -eq $true ) {
+        Write-Host "Removing Widgets..."
+        Get-AppxPackage -allusers MicrosoftWindows.Client.WebExperience | Remove-AppxPackage
         $wpf_DblRemoveCortana.IsChecked = $false
     }
     If ( $wpf_DblClassicAltTab.IsChecked -eq $true ) {
