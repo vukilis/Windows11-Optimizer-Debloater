@@ -2707,7 +2707,7 @@
                 </TabItem>
             </TabControl>
         </ScrollViewer>
-        <StatusBar Name="ElevatorStatus"  DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Grid.Row="2" Background="Transparent">
+        <StatusBar Name="ElevatorStatus"  DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Grid.Row="2" Background="Transparent" Visibility="Collapsed">
             <StatusBarItem Name="ElevatorMode" Content="" FontWeight="Bold" FontSize="16"/>
         </StatusBar>
     </Grid>
