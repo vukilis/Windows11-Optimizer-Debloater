@@ -6,14 +6,18 @@ if ($psVersion.Major -eq 7 -and $psVersion.Minor -ge 1) {
     Write-Host "You are running PowerShell version 5.1." -ForegroundColor Blue
     Get-Author5
 } else {
-    Write-Host "You are running a different version of PowerShell." -ForegroundColor Red
+    Write-Host "You are running a different version of PowerShell. Versions from 1.0 to 5.0 not supported!" -ForegroundColor Red
 }
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Host "################################################################################################" -ForegroundColor Red
-    Write-Host "Not running as administrator. Please run the script as an administrator." -ForegroundColor Red
+    Write-Host "Not running as administrator. Please run the script as an administrator!" -ForegroundColor Red
     Write-Host "If you continue to use as non-admin user, it will result to script creates unexpected behaviour!" -ForegroundColor Red
     Write-Host "################################################################################################" -ForegroundColor Red
+
+    $wpf_ElevatorStatus.Visibility = "Visible"
+    $wpf_ElevatorStatus.Background = "red"
+    $wpf_ElevatorMode.Content = "Not running as administrator. Please run the script as an administrator!!!"
 } 
 
 $wpf_diskNameInfo.Add_SelectionChanged({Get-DiskInfo})

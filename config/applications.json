@@ -250,6 +250,11 @@
         "winget": "Ablaze.Floorp"
     },
     {
+        "id": "DblInstallUngoogled",
+        "name": "Ungoogled",
+        "winget": "eloston.ungoogled-chromium"
+    },
+    {
         "id": "DblInstallVivaldi",
         "name": "Vivaldi",
         "winget": "VivaldiTechnologies.Vivaldi"
@@ -535,6 +540,11 @@
         "winget": "Neovim.Neovim.Nightly"
     },
     {
+        "id": "DblInstallNotion",
+        "name": "Notion",
+        "winget": "Notion.Notion"
+    },
+    {
         "id": "DblInstallNotepadplus",
         "name": "Notepad",
         "winget": "Notepad++.Notepad++"
@@ -573,6 +583,11 @@
         "id": "DblInstallWinmerge",
         "name": "WinMerge",
         "winget": "WinMerge.WinMerge"
+    },
+    {
+        "id": "DblInstall1Password",
+        "name": "1Password",
+        "winget": "AgileBits.1Password"
     },
     {
         "id": "DblInstall7zip",

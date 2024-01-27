@@ -8,6 +8,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [2.6] - 2024-01-27
+
+### Added
+
+- New apps in the install menu.
+- Show red alert track if script is not run with administrator rights.
+
+### Changed
+
+- Descriptions for debloat functions.
+
+### Fix
+
+- **Remove Widgets** from stayed checked to unchecked after tweaking.
+
 ## [2.5] - 2024-01-19
 
 ### Added

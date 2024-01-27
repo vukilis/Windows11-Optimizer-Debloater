@@ -1,4 +1,13 @@
 function Invoke-ToggleXboxPreseta {
+    <#
+
+    .SYNOPSIS
+        XBOX preset to help when debloating.
+    .DESCRIPTION
+        This will remove ALL Microsoft store apps other than the essentials to make winget and xbox work. 
+        Games installed by MS Store ARE NOT INCLUDED!
+    #>
+
     $DblSelectPanel = $psform.FindName("SetDebloat")
     $DblSelectPanel.Children.Clear()
     $checkedCheckboxes = $DblGetPanel.Children

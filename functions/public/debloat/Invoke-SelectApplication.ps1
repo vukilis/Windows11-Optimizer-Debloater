@@ -2,7 +2,7 @@ function Invoke-SelectApplication {
     <#
 
     .SYNOPSIS
-        This function Select all MS APPX you choose to uninstall.
+        This function select MS APPX you choose.
     #>
 
     $DblSelectPanel = $psform.FindName("SetDebloat")

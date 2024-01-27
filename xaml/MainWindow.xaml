@@ -1114,7 +1114,7 @@
                         <StackPanel Width="auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                             <Image Height="50" Width="100" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
                             <Label Foreground="#FFF4AB51" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,5,5,0" Content="Windows11 Optimizer&amp;Debloater"></Label>
-                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 2.5 - 19.01.2024."></Label>
+                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 2.6 - 27.01.2024."></Label>
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Orientation="Vertical" HorizontalAlignment="Left" Width="auto" Margin="5,5" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
@@ -1526,6 +1526,11 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
+                                <CheckBox Name="DblInstallUngoogled" Content="Ungoogled" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
                                 <CheckBox Name="DblInstallVivaldi" Content="Vivaldi" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -1762,6 +1767,11 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
+                                <CheckBox Name="DblInstallNotion" Content="Notion" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
                                 <CheckBox Name="DblInstallObsidian" Content="Obsidian" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -1903,6 +1913,11 @@
                         <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="4">
                             <StackPanel Margin="10,0,10,10">
                                 <Label Content="Utilities" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                <CheckBox Name="DblInstall1Password" Content="1Password" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
                                 <CheckBox Name="DblInstall7zip" Content="7-Zip" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -2692,5 +2707,8 @@
                 </TabItem>
             </TabControl>
         </ScrollViewer>
+        <StatusBar Name="ElevatorStatus"  DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Grid.Row="2" Background="Transparent" Visibility="Collapsed">
+            <StatusBarItem Name="ElevatorMode" Content="" FontWeight="Bold" FontSize="16"/>
+        </StatusBar>
     </Grid>
 </Window>
