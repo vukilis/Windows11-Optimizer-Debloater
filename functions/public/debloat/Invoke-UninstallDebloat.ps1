@@ -1,4 +1,10 @@
 function Invoke-UninstallDebloat {
+    <#
+
+    .SYNOPSIS
+        This function uninstall all selected MS APPX.
+    #>
+
     $DblSelectPanel = $psform.FindName("SetDebloat")
     $DblGetPanel = $psform.FindName("GetDebloat")
 
