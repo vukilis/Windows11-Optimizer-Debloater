@@ -14,6 +14,8 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     Write-Host "Not running as administrator. Please run the script as an administrator!" -ForegroundColor Red
     Write-Host "If you continue to use as non-admin user, it will result to script creates unexpected behaviour!" -ForegroundColor Red
     Write-Host "################################################################################################" -ForegroundColor Red
+
+    $wpf_ElevatorStatus.Visibility = "Visible"
     $wpf_ElevatorStatus.Background = "red"
     $wpf_ElevatorMode.Content = "Not running as administrator. Please run the script as an administrator!!!"
 } 
