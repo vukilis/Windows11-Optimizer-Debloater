@@ -357,7 +357,7 @@ function Invoke-optimizationButton{
     If ( $wpf_DblRemoveWidgets.IsChecked -eq $true ) {
         Write-Host "Removing Widgets..."
         Get-AppxPackage -allusers MicrosoftWindows.Client.WebExperience | Remove-AppxPackage
-        $wpf_DblRemoveCortana.IsChecked = $false
+        $wpf_DblRemoveWidgets.IsChecked = $false
     }
     If ( $wpf_DblClassicAltTab.IsChecked -eq $true ) {
         Write-Host "Setting Classic Alt+Tab..."
