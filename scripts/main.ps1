@@ -34,7 +34,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 2.5 - 19.01.2024."
+$wpf_AppVersion.Content = "Version: 2.6 - 27.01.2024."
 
 function Invoke-CloseButton {
     <#
@@ -383,7 +383,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.5    
+Windows11 Optimizer&Debloater           2.6    
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -419,7 +419,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.github.io/website
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.5    
+Windows11 Optimizer&Debloater           2.6    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {
