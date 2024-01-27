@@ -1,4 +1,10 @@
 function Invoke-UnselectApplicationAll {
+    <#
+
+    .SYNOPSIS
+        This function Unelect all MS APPX
+    #>
+
     $DblSelectPanel = $psform.FindName("SetDebloat")
     $DblSelectPanel.Children.Clear()
     $checkedCheckboxes = $DblGetPanel.Children
