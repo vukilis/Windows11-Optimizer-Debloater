@@ -34,7 +34,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 2.6 - 27.01.2024."
+$wpf_AppVersion.Content = "Version: 2.7 - 06.05.2024."
 
 function Invoke-CloseButton {
     <#
@@ -321,6 +321,8 @@ function Invoke-Checkbox {
         "wpf_ToggleSearch" {Invoke-ToggleSearch}
         "wpf_ToggleSnapLayouts" {Invoke-ToggleSnapLayouts}
         "wpf_ToggleVerboseLogon" {Invoke-ToggleVerboseLogon}
+        "wpf_ToggleCopilot" {Invoke-ToggleCopilot}
+        "wpf_ToggleSticky" {Invoke-ToggleSticky}
     }
 }
 ################################
@@ -380,10 +382,10 @@ Function Get-Author7 {
                \/      \__,_| |_|\_\  |_| |_| |_| |___/
         
 GitHub:                                 Website:
-https://github.com/vukilis              https://vukilis.github.io/website
+https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.6    
+Windows11 Optimizer&Debloater           2.7    
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -416,10 +418,10 @@ Function Get-Author5 {
                \/      \__,_| |_|\_\  |_| |_| |_| |___/
         
 GitHub:                                 Website:
-https://github.com/vukilis              https://vukilis.github.io/website
+https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.6    
+Windows11 Optimizer&Debloater           2.7    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {
