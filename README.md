@@ -1,5 +1,5 @@
 # Windows11-Optimizer-Debloater
-![version](https://img.shields.io/badge/version%20-2.6-lighgreen)
+![version](https://img.shields.io/badge/version%20-2.7-lighgreen)
 [![changelog](https://img.shields.io/badge/📋-release%20notes-00B2EE.svg)](https://github.com/vukilis/Windows11-Optimizer-Debloater/blob/dev/CHANGELOG.md)  
 This Utility show basic system information, install programs, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates.
 
@@ -9,10 +9,11 @@ Requires you to launch PowerShell or Windows Terminal As ADMINISTRATOR!
 
 Launch Command:
 ```
-iwr -useb dub.sh/win11deb | iex
+iwr -useb vukilis.com/win11deb | iex
 ```
 or 
 ```
+iwr -useb dub.sh/win11deb | iex
 irm dub.sh/win11deb | iex
 ```
 If you are having TLS 1.2 Issues or You cannot find or resolve `dub.sh/win11deb` then run with the following command:
