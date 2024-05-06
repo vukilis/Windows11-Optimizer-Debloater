@@ -8,6 +8,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [2.7] - 2024-05-06
+
+### Added
+
+- Toggle tweak to disable/enable Windows Copilot - **Copilot**.
+- Toggle tweak to disable/enable Sticky Keys - **Sticky Keys**.
+
 ## [2.6] - 2024-01-27
 
 ### Added
