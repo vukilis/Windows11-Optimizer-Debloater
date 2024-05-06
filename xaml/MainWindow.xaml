@@ -1114,7 +1114,7 @@
                         <StackPanel Width="auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                             <Image Height="50" Width="100" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
                             <Label Foreground="#FFF4AB51" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,5,5,0" Content="Windows11 Optimizer&amp;Debloater"></Label>
-                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 2.6 - 27.01.2024."></Label>
+                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 2.7 - 06.05.2024."></Label>
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Orientation="Vertical" HorizontalAlignment="Left" Width="auto" Margin="5,5" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
@@ -1126,7 +1126,7 @@
                             </TextBlock>
                             <TextBlock Foreground="#6ec2b7" FontSize="14" FontWeight="Bold" Margin="5,5" TextWrapping="WrapWithOverflow" TextAlignment="Justify">
                                 <Run Text="{Binding LoadsCount}" />Website: <Run Text="{Binding BrokerLoadsCount}" />
-                                <Hyperlink Name="WebsiteHyperlink" TextDecorations="None" Foreground="#6e99c2" NavigateUri="https://vukilis.github.io/website/">https://vukilis.github.io/website/</Hyperlink>
+                                <Hyperlink Name="WebsiteHyperlink" TextDecorations="None" Foreground="#6e99c2" NavigateUri="https://vukilis.com/">https://vukilis.com/</Hyperlink>
                             </TextBlock>
                         </StackPanel>
                     </WrapPanel>
