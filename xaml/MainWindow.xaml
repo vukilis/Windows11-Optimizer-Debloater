@@ -2420,6 +2420,12 @@
                                         <CheckBox Name="ToggleSnapLayouts" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
+                                    <Label Content="Disable Copilot" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="ToggleCopilot" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
                                 </StackPanel>
                                 <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" VerticalAlignment="Top">
                                     <Label Content="Mega Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#ca35de" Margin="0,0,0,5"/>
@@ -2456,6 +2462,12 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                         <CheckBox Name="ToggleVerboseLogon" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Disable Sticky Keys" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="ToggleSticky" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                 </StackPanel>
