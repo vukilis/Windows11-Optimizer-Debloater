@@ -1,10 +1,10 @@
 <#
 .NOTES
     Author         : Vuk1lis
-    Website        : https://vukilis.github.io/website/
+    Website        : https://vukilis.com
     GitHub         : https://github.com/vukilis
     Name:          : Windows11 Optimizer&Debloater
-    Version        : 2.6
+    Version        : 2.7
 #>
 
 Add-Type -AssemblyName PresentationFramework
