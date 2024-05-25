@@ -8,6 +8,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [2.8] - 2024-05-25
+
+### Added
+
+- **Create Registry Backup** button to backup your registry.
+- **MessageBox** alert for registry backup.
+
+### Changed
+
+- Improved code for shortcut creation, now has better console output.
+
 ## [2.7] - 2024-05-06
 
 ### Added

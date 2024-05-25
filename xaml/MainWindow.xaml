@@ -1114,7 +1114,7 @@
                         <StackPanel Width="auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                             <Image Height="50" Width="100" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
                             <Label Foreground="#FFF4AB51" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,5,5,0" Content="Windows11 Optimizer&amp;Debloater"></Label>
-                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 2.7 - 06.05.2024."></Label>
+                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 2.8 - 25.05.2024."></Label>
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Orientation="Vertical" HorizontalAlignment="Left" Width="auto" Margin="5,5" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
@@ -2644,11 +2644,14 @@
                                         <Button Name="ShortcutApp" Content="Create Win11Deb Shortcut" Cursor="Hand" Margin="5,0" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
-                                        <Label Content="Fixes:" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left" Foreground="#FFDEE39B"/>
+                                        <Label Content="Fixes &amp; Backups:" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left" Foreground="#FFDEE39B"/>
                                     </StackPanel>
                                     <StackPanel Margin="0,5" Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
                                         <Button Name="FixesNetwork" Content="Reset Network" Cursor="Hand" Margin="5,0" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220"/>
                                         <Button Name="FixesSound" Content="Reset Sound" Cursor="Hand" Margin="5,0" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="0,5" Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
+                                        <Button Name="RegistryBackup" Content="Create Registry Backup" Cursor="Hand" Margin="5,0" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220" ToolTip="Recommended to backup registry before tweaking."/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
                                         <Label Content="Apps:" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left" Foreground="#FFDEE39B"/>

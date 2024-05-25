@@ -1,5 +1,5 @@
 # Windows11-Optimizer-Debloater
-![version](https://img.shields.io/badge/version%20-2.7-lighgreen)
+![version](https://img.shields.io/badge/version%20-2.8-lighgreen)
 [![changelog](https://img.shields.io/badge/📋-release%20notes-00B2EE.svg)](https://github.com/vukilis/Windows11-Optimizer-Debloater/blob/dev/CHANGELOG.md)  
 This Utility show basic system information, install programs, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates.
 
@@ -38,12 +38,19 @@ If you are having TLS 1.2 Issues or You cannot find or resolve `dub.sh/win11deb`
   > Shows services status
 - **Updates**
   > Fixes the default Windows update scheme  
-  > Reset Windows Update to factory settings
+  > Reset Windows Update to factory settings  
+  > Pauses Windows updates to 5 week
 - **Config**
   > Quick configurations for Windows Installs  
-  > Has old legacy panels from Windows 7
+  > Has old legacy panels from Windows 7  
+  > Makes shortcuts and backups  
+  > Fixes and sets configs for applications  
+  > Activate Windows with MAS script
 
 ## Credits
 - Special thanks to [jepriCreations](https://www.deviantart.com/rosea92) for his amazing Windows 11 cursor concept.
-  > Here is the original [link](https://www.deviantart.com/jepricreations/art/Windows-11-Free-Tail-Cursor-Concept-962242647) to the free version.  
+  > Here is the official [link](https://www.deviantart.com/jepricreations/art/Windows-11-Free-Tail-Cursor-Concept-962242647) of the free version.  
   > You can find a more complete version with HD resolution and some cool alternatives in the next [link](https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-HD-v2-890672103)
+
+- Special thanks to [massgravel](https://github.com/massgravel) for his amazing Windows and Office activator.
+  > Here is the official [link](https://github.com/massgravel/Microsoft-Activation-Scripts).
