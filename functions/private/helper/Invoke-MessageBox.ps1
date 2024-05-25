@@ -26,6 +26,8 @@ function Invoke-MessageBox {
         "feature"   { "All features are now installed" }
         "networkReset"   { "Stock settings loaded. Please reboot your computer" }
         "soundReset"   { "Audio Service restarted" }
+        "backup"   { "Backup are finished" }
+        "shortcut"   { "Shortcut is created" }
         default     {
             Write-Warning "Unknown message type: $msg"
             return
