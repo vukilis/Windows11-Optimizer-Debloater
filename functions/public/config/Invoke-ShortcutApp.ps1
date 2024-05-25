@@ -39,20 +39,32 @@ function Invoke-ShortcutApp {
     $FileBrowser.InitialDirectory = [Environment]::GetFolderPath('Desktop')
     $FileBrowser.Filter = "Shortcut Files (*.lnk)|*.lnk"
     $FileBrowser.FileName = $DestinationName
-    $FileBrowser.ShowDialog() | Out-Null
+    $DialogResult = $FileBrowser.ShowDialog()
 
-    $WshShell = New-Object -comObject WScript.Shell
-    $Shortcut = $WshShell.CreateShortcut($FileBrowser.FileName)
-    $Shortcut.TargetPath = $SourceExe
-    $Shortcut.Arguments = $ArgumentsToSourceExe
-    if ($null -ne $iconPath) {
-        $shortcut.IconLocation = $iconPath
+    if ($DialogResult -eq [System.Windows.Forms.DialogResult]::OK) {
+        $WshShell = New-Object -comObject WScript.Shell
+        $Shortcut = $WshShell.CreateShortcut($FileBrowser.FileName)
+        $Shortcut.TargetPath = $SourceExe
+        $Shortcut.Arguments = $ArgumentsToSourceExe
+        if ($null -ne $iconPath) {
+            $shortcut.IconLocation = $iconPath
+        }
+        $Shortcut.Save()
+
+        $bytes = [System.IO.File]::ReadAllBytes($($FileBrowser.FileName))
+        $bytes[0x15] = $bytes[0x15] -bor 0x20 #set byte 21 (0x15) bit 6 (0x20) ON
+        [System.IO.File]::WriteAllBytes("$($FileBrowser.FileName)", $bytes)
+
+        Art -artN "
+Shortcut for $ShortcutToAdd has been saved to $($FileBrowser.FileName)
+" -ch DarkGreen
+
+    Invoke-MessageBox -msg "shortcut"
+    }else {
+        Art -artN "
+======================================
+== Operation cancelled by the user. ==
+======================================
+" -ch DarkRed
     }
-    $Shortcut.Save()
-
-    $bytes = [System.IO.File]::ReadAllBytes($($FileBrowser.FileName))
-    $bytes[0x15] = $bytes[0x15] -bor 0x20 #set byte 21 (0x15) bit 6 (0x20) ON
-    [System.IO.File]::WriteAllBytes("$($FileBrowser.FileName)", $bytes)
-
-    Write-Host "Shortcut for $ShortcutToAdd has been saved to $($FileBrowser.FileName)"
 }
