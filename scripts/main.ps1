@@ -34,7 +34,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 2.7 - 06.05.2024."
+$wpf_AppVersion.Content = "Version: 2.8 - 25.05.2024."
 
 function Invoke-CloseButton {
     <#
@@ -286,6 +286,7 @@ function Invoke-Button {
         "wpf_ShortcutApp" {Invoke-ShortcutApp -ShortcutToAdd "Win11Deb"}
         "wpf_FixesNetwork" {Invoke-FixesNetwork}
         "wpf_FixesSound" {Invoke-FixesSound}
+        "wpf_RegistryBackup" {Invoke-RegistryBackup}
         "wpf_WingetConfig" {Set-WingetConfig}
         "wpf_FixesADB" {Invoke-FixADB}
         "wpf_ActivateWindows" {Invoke-ActivateWindows}
@@ -385,7 +386,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.7    
+Windows11 Optimizer&Debloater           2.8    
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -421,7 +422,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.7    
+Windows11 Optimizer&Debloater           2.8    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {
