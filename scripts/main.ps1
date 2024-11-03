@@ -324,6 +324,7 @@ function Invoke-Checkbox {
         "wpf_ToggleVerboseLogon" {Invoke-ToggleVerboseLogon}
         "wpf_ToggleCopilot" {Invoke-ToggleCopilot}
         "wpf_ToggleSticky" {Invoke-ToggleSticky}
+        "wpf_ToggleEndTask" {Invoke-ToggleEndTask}
     }
 }
 ################################
