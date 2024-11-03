@@ -1,5 +1,5 @@
 # Windows11-Optimizer-Debloater
-![version](https://img.shields.io/badge/version%20-2.8-lighgreen)
+![version](https://img.shields.io/badge/version%20-2.9-lighgreen)
 [![changelog](https://img.shields.io/badge/📋-release%20notes-00B2EE.svg)](https://github.com/vukilis/Windows11-Optimizer-Debloater/blob/dev/CHANGELOG.md)  
 This Utility show basic system information, install programs, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates.
 
