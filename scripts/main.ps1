@@ -34,7 +34,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 2.9 - 03.11.2024."
+$wpf_AppVersion.Content = "Version: 2.8 - 25.05.2024."
 
 function Invoke-CloseButton {
     <#
@@ -324,7 +324,6 @@ function Invoke-Checkbox {
         "wpf_ToggleVerboseLogon" {Invoke-ToggleVerboseLogon}
         "wpf_ToggleCopilot" {Invoke-ToggleCopilot}
         "wpf_ToggleSticky" {Invoke-ToggleSticky}
-        "wpf_ToggleEndTask" {Invoke-ToggleEndTask}
     }
 }
 ################################
@@ -387,7 +386,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.9    
+Windows11 Optimizer&Debloater           2.8    
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -423,7 +422,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.9    
+Windows11 Optimizer&Debloater           2.8    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {
