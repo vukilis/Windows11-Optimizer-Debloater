@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [2.9] - 2024-11-03
+
+### Added
+
+- Toggle tweak to disable/enable End Task in Taskbar by Right Click - **Enable End Task**  
+
 ## [2.8] - 2024-05-25
 
 ### Added
