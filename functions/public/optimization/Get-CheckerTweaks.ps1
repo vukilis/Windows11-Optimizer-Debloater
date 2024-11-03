@@ -28,6 +28,8 @@ function Get-CheckerTweaks{
     $getK = Get-ItemPropertyValue 'HKCU:\Control Panel\Accessibility\StickyKeys' -Name 'Flags'
     $k = $wpf_ToggleSticky.IsChecked = $(If ($getK -eq 58) {$true} Else {$false})
 
-    return $a -and $b -and $c -and $d -and $e -and $f -and $g -and $h -and $i -and $j -and $k
+    $l = $wpf_ToggleEndTask.IsChecked = (Get-ToggleValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings' -Name 'TaskbarEndTask') -eq 1
+
+    return $a -and $b -and $c -and $d -and $e -and $f -and $g -and $h -and $i -and $j -and $k -and $l
 }
 Get-CheckerTweaks | Out-Null
