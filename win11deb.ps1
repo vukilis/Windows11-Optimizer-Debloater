@@ -389,7 +389,7 @@ Function Get-Author7 {
         This is for powershell v7.1+
     #>
     
-    # Clear-Host
+    Clear-Host
     $colors = @("`e[38;5;200m", "`e[38;5;51m", "`e[38;5;98m")
 
     function Get-RandomColor {
