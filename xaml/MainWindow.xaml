@@ -1114,7 +1114,7 @@
                         <StackPanel Width="auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                             <Image Height="50" Width="100" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
                             <Label Foreground="#FFF4AB51" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,5,5,0" Content="Windows11 Optimizer&amp;Debloater"></Label>
-                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 2.9 - 03.11.2024."></Label>
+                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 3.0 - 22.07.2025"></Label>
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Orientation="Vertical" HorizontalAlignment="Left" Width="auto" Margin="5,5" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
@@ -2259,6 +2259,11 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
+                                <CheckBox Name="DblSearchIndexer" Content="Disable Search Indexer" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="Indexing the content of your PC helps you get faster results when your searching it for files, emails, or other local content.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
                                 <Separator Background="#FFF4AB51" Width="250" Margin="10,10" Height="2"/>
                                 <CheckBox Name="DblSystemRestore" Content="System Restore Point" IsChecked="True" Foreground="gold" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="Enable or disable system restore point before tweaking. Enabled by default!">
                                     <CheckBox.LayoutTransform>
@@ -2432,6 +2437,12 @@
                                         <CheckBox Name="ToggleEndTask" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0" ToolTip="Toggle tweak to disable/enable End Task in Taskbar by Right Click"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
+                                    <Label Content="Enable Detailed BSoD" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="ToggleDetailedBSoD" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0" ToolTip="Toggle tweak to disable/enable detailed BSoD"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
                                 </StackPanel>
                                 <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" VerticalAlignment="Top">
                                     <Label Content="Mega Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#ca35de" Margin="0,0,0,5"/>
@@ -2474,6 +2485,12 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                         <CheckBox Name="ToggleSticky" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>   
+                                    <Label Content="Center Taskbar Items" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="ToggleCenterTaskbar" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0" ToolTip="Toggle tweak to Left/Center taskbar items"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                 </StackPanel>
