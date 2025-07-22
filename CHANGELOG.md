@@ -8,6 +8,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [3.0] - 2025-07-22
+
+### Added
+
+- Toggle tweak to Left/Center taskbar items - **Center Taskbar Items** 
+- Toggle tweak to Enable/Disable more detailed BSoD - **Enable Detailed BSoD** 
+- New essential tweak: **Disable Search Indexer** — disables Windows Search indexing service to improve system performance 
+- **Get-RegistryValue** as a handler function to retrieve registry keys more efficiently and safely, with fallback handling for missing or inaccessible values.
+
+### Changed
+
+- Simplified `Get-CheckerTweaks` by replacing direct registry access with `Get-RegistryValue` wrapper function.
+- Improved code maintainability and UI state sync.
+
+
 ## [2.9] - 2024-11-03
 
 ### Added
