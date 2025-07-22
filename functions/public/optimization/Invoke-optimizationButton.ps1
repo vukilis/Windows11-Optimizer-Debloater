@@ -303,6 +303,11 @@ function Invoke-optimizationButton{
         New-ItemProperty -Path $registryPath -Name $dwordName -PropertyType DWord -Value $dwordValue -Force
         $wpf_DblAutoAdjustVolume.IsChecked = $false
     }
+    If ( $wpf_DblSearchIndexer.IsChecked -eq $true ) {
+        Write-Host "Disabling search indexer..." -ForegroundColor Green
+        sc stop "wsearch" && sc config "wsearch" start=disabled​
+        $wpf_DblSearchIndexer.IsChecked = $false
+    }
 
     # Additional Tweaks
     If ( $wpf_DblPower.IsChecked -eq $true ) {
