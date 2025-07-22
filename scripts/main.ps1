@@ -1,5 +1,5 @@
-#$xamlFile="C:\Users\vukilis\Pictures\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
-#$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
+# $xamlFile="C:\Users\vukilis\Pictures\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
+$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
 $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
@@ -34,7 +34,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 2.9 - 03.11.2024."
+$wpf_AppVersion.Content = "Version: 3.0 - 22.07.2025"
 
 function Invoke-CloseButton {
     <#
@@ -325,6 +325,8 @@ function Invoke-Checkbox {
         "wpf_ToggleCopilot" {Invoke-ToggleCopilot}
         "wpf_ToggleSticky" {Invoke-ToggleSticky}
         "wpf_ToggleEndTask" {Invoke-ToggleEndTask}
+        "wpf_ToggleCenterTaskbar" {Invoke-ToggleCenterTaskbar}
+        "wpf_ToggleDetailedBSoD" {Invoke-ToggleDetailedBSoD}
     }
 }
 ################################
@@ -387,7 +389,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.9    
+Windows11 Optimizer&Debloater           3.0    
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -423,7 +425,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           2.9    
+Windows11 Optimizer&Debloater           3.0    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {
