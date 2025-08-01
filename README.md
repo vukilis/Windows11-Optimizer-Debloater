@@ -1,6 +1,11 @@
 # Windows11-Optimizer-Debloater
-![version](https://img.shields.io/badge/version%20-3.0-lighgreen)
-[![changelog](https://img.shields.io/badge/📋-release%20notes-00B2EE.svg)](https://github.com/vukilis/Windows11-Optimizer-Debloater/blob/dev/CHANGELOG.md)  
+![GitHub Release](https://img.shields.io/github/v/release/vukilis/Windows11-Optimizer-Debloater?style=flat&logo=futurelearn&logoColor=%2332a850&label=LATEST%20RELEASE&color=%2332a850)
+[![changelog](https://img.shields.io/badge/📋-RELEASE%20NOTES-00B2EE.svg)](https://github.com/vukilis/Windows11-Optimizer-Debloater/blob/dev/CHANGELOG.md) 
+![GitHub Downloads (specific asset, all releases)](https://img.shields.io/github/downloads/vukilis/Windows11-Optimizer-Debloater/win11deb.ps1?style=flat&logo=abdownloadmanager&logoColor=%2332a850&logoSize=auto&label=TOTAL%20DOWNLOADS&color=%2332a850)
+[![Number of GitHub stars](https://img.shields.io/github/stars/vukilis/Windows11-Optimizer-Debloater?style=flat&label=STARS&logo=github&labelColor=444&color=DAAA3F&cacheSeconds=3600)](https://star-history.com/#ungive/discord-music-presence&Date)
+[![Buy me a beer](https://img.shields.io/badge/BUY%20ME%20A%20BEER-black?style=flat&logo=buymeacoffee&logoColor=black&color=FFDD00)](https://buymeacoffee.com/vukilis)
+[![ko-fi](https://shields.io/badge/KO--FI-BEER-ff5f5f?logo=ko-fi&style=for-the-badgeKo-fi)](https://ko-fi.com/J3J71J0BUX)
+
 This Utility show basic system information, install programs, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates.
 
 ## Usage:
