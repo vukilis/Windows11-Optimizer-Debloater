@@ -8,6 +8,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [3.1] - 2025-08-02
+
+### Added
+
+- **Buy Me a Coffee** and **Ko-fi** donation buttons to the About page for user support.
+
+### Changed
+
+- **Improved Window Management**: Added checks for IsVisible and IsLoaded to prevent opening the window multiple times.
+
 ## [3.0] - 2025-07-22
 
 ### Added
