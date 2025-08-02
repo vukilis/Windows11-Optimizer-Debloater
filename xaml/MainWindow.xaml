@@ -878,9 +878,9 @@
                 <Label Name="AppVersion" Foreground="#a69f6c" FontSize="14" FontWeight="Bold" Margin="5,0" Content=""></Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" SnapsToDevicePixels="True" Grid.Column="1" Margin="0,0,0,0">
-                <ToggleButton x:Name="AboutButton" Background="Purple" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" ToolTip="Reset Search" Style="{StaticResource AboutButtonStyle}" Tag="{StaticResource AboutIcon}"/>
+                <ToggleButton x:Name="AboutButton" Background="Purple" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" ToolTip="About" Style="{StaticResource AboutButtonStyle}" Tag="{StaticResource AboutIcon}"/>
                 <!-- Minimize Button -->
-                <Button Name="MinButton" Content="−" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" FontSize="16" FontWeight="Bold">
+                <Button Name="MinButton" Content="−" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" FontSize="16" FontWeight="Bold" ToolTip="Minimize">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="BackgroundBorder" Background="Yellow" BorderBrush="#1f1f21" BorderThickness="0" CornerRadius="7">
@@ -896,7 +896,7 @@
                 </Button>
 
                 <!-- Maximize Button -->
-                <Button Name="MaxButton" Content="◻" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" FontSize="16" FontWeight="Bold">
+                <Button Name="MaxButton" Content="◻" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" FontSize="16" FontWeight="Bold" ToolTip="Maximize">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="BackgroundBorder" Background="green" BorderBrush="#1f1f21" BorderThickness="0" CornerRadius="7">
@@ -911,7 +911,7 @@
                     </Button.Template>
                 </Button>
                 <!-- Close Button -->
-                <Button Name="CloseButton" Content="✕" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0,10,0" Cursor="Hand" FontSize="16" FontWeight="Bold">
+                <Button Name="CloseButton" Content="✕" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0,10,0" Cursor="Hand" FontSize="16" FontWeight="Bold" ToolTip="Close">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="BackgroundBorder" Background="red" BorderBrush="#1f1f21" BorderThickness="0" CornerRadius="7">
@@ -1099,8 +1099,8 @@
                         Tag="{StaticResource ResetIcon}"/>
             </StackPanel>
         </DockPanel>
-        <Grid Background="Transparent" Panel.ZIndex="1" Grid.Row="2" ShowGridLines="False" Name="AboutGrid" Width="Auto" Height="300" HorizontalAlignment="Center" Visibility="Collapsed" SnapsToDevicePixels="True">
-            <Border CornerRadius="7" Background="#1f1f21" Height="300" BorderBrush="Purple" BorderThickness="1,1,1,1" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Background="Transparent" Panel.ZIndex="1" Grid.Row="2" ShowGridLines="False" Name="AboutGrid" Width="Auto" Height="350" HorizontalAlignment="Center" Visibility="Collapsed" SnapsToDevicePixels="True">
+            <Border CornerRadius="7" Background="#1f1f21" Height="350" BorderBrush="Purple" BorderThickness="1,1,1,1" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -1128,6 +1128,32 @@
                                 <Run Text="{Binding LoadsCount}" />Website: <Run Text="{Binding BrokerLoadsCount}" />
                                 <Hyperlink Name="WebsiteHyperlink" TextDecorations="None" Foreground="#6e99c2" NavigateUri="https://vukilis.com/">https://vukilis.com/</Hyperlink>
                             </TextBlock>
+                            <TextBlock Foreground="#6ec2b7" FontSize="14" FontWeight="Bold" Margin="5,5" TextWrapping="WrapWithOverflow" TextAlignment="Justify">
+                                <Run Text="{Binding LoadsCount}" />Support Me: <Run Text="{Binding BrokerLoadsCount}" />
+                            </TextBlock>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True">
+                        <!-- Buy Me A Coffee Button -->
+                            <Button Name="buymeacoffee" Width="Auto" Height="auto" Margin="10,0,0,0" Cursor="Hand" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Left" Background="#FF813F" BorderBrush="Transparent">
+                                <Button.Content>
+                                    <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                                        <InlineUIContainer>
+                                            <Image Width="96" Height="24" Source="https://cdn.buymeacoffee.com/buttons/default-orange.png"/>
+                                        </InlineUIContainer>
+                                    </TextBlock>
+                                </Button.Content>
+                            </Button>
+                            <Button Name="buymeakofi" Width="100" Height="Auto" Margin="10,0,0,0" Cursor="Hand" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Left" Background="#26292B" BorderBrush="Transparent">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Image Width="24" Height="24" Source="https://storage.ko-fi.com/cdn/logomarkLogo.png" VerticalAlignment="Center"/>
+                                        <TextBlock VerticalAlignment="Center" FontSize="14" Foreground="White" Margin="5,0,0,0">
+                                            <Run Text="Ko-fi"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Orientation="Vertical" HorizontalAlignment="Right" Width="auto" VerticalAlignment="Top"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1">
