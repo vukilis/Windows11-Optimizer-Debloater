@@ -1,6 +1,6 @@
-# $xamlFile="C:\Users\vukilis\Pictures\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
-# $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+$xamlFile="C:\Users\vukilis\Pictures\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
+$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
+# $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
@@ -76,6 +76,28 @@ function Invoke-MaxButton {
         $maxMargin = New-Object Windows.Thickness -ArgumentList 0, 0, 0, 0
         $wpf_MainGrid.Margin = $maxMargin
     }
+}
+
+function Invoke-BuyMeACoffee {
+    <#
+    .SYNOPSIS
+        Open BuyMeACoffe link
+
+    .PARAMETER Button
+    #>
+
+    Start-Process "https://buymeacoffee.com/vukilis"
+}
+
+function Invoke-BuyMeAKofi {
+    <#
+    .SYNOPSIS
+        Open BuyMeAKofi link
+
+    .PARAMETER Button
+    #>
+
+    Start-Process "https://ko-fi.com/vukilis"
 }
 
 $dragging = $false
@@ -236,6 +258,8 @@ function Invoke-Button {
         "wpf_CloseButton" {Invoke-CloseButton}
         "wpf_MinButton" {Invoke-MinButton}
         "wpf_MaxButton" {Invoke-MaxButton}
+        "wpf_buymeacoffee" {Invoke-BuyMeACoffee}
+        "wpf_buymeakofi" {Invoke-BuyMeAKofi}
         "wpf_SelectDebloat" {Invoke-SelectApplication}
         "wpf_SelectDebloatAll" {Invoke-SelectApplicationAll}
         "wpf_UnselectDebloatAll" {Invoke-UnselectApplicationAll}
