@@ -308,6 +308,18 @@ function Invoke-optimizationButton{
         sc stop "wsearch" && sc config "wsearch" start=disabled​
         $wpf_DblSearchIndexer.IsChecked = $false
     }
+    If ( $wpf_DblPS7Telemetry.IsChecked -eq $true ) {
+        Write-Host "Disabling Powershell 7 Telemetry..." -ForegroundColor Green
+        "[Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '1', 'Machine')"
+        $wpf_DblPS7Telemetry.IsChecked = $false
+    }
+    If ( $wpf_DblConsumerFeatures.IsChecked -eq $true ) {
+        Write-Host "Disabling ConsumerFeatures..." -ForegroundColor Green
+        If (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent") {
+            Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" -Name "DisableWindowsConsumerFeatures" -Type DWord -Value 1
+        }    
+        $wpf_DblConsumerFeatures.IsChecked = $false
+    }
 
     # Additional Tweaks
     If ( $wpf_DblPower.IsChecked -eq $true ) {

@@ -8,6 +8,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [3.1] - 2025-08-03
+
+### Added
+
+- **Buy Me a Coffee** and **Ko-fi** donation buttons to the About page for user support.
+- Toggle tweak to Enable/Disable Password Reveal Button, hide your password in a password entry text box in Windows 11  - **Password Reveal Button** 
+- **Disable ConsumerFeatures** - Tweak that preventing unwanted apps, games, or links from auto-installing. Also, disabling features like Phone Link
+- Disabling Powershell 7 Telemetry - **Disable PowerShell 7 Telemetry**
+
+### Changed
+
+- **Improved Window Management**: Added checks for IsVisible and IsLoaded to prevent opening the window multiple times.
+
 ## [3.0] - 2025-07-22
 
 ### Added

@@ -23,5 +23,12 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 $wpf_diskNameInfo.Add_SelectionChanged({Get-DiskInfo})
 $wpf_diskName.Add_SelectionChanged({Get-DiskSize})
 $wpf_ddlServices.Add_SelectionChanged({Get-Services})
-$psform.ShowDialog() | out-null
+
+# Check if the window is already opened or not
+if ($psform.IsVisible -eq $false -or $psform.IsLoaded -eq $false) {
+    $psform.ShowDialog() | Out-Null
+} else {
+    Write-Host "The window is already open and cannot be shown again."
+}
+
 Stop-Transcript

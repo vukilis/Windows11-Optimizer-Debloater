@@ -34,7 +34,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 3.0 - 22.07.2025"
+$wpf_AppVersion.Content = "Version: 3.1 - 03.08.2025"
 
 function Invoke-CloseButton {
     <#
@@ -76,6 +76,28 @@ function Invoke-MaxButton {
         $maxMargin = New-Object Windows.Thickness -ArgumentList 0, 0, 0, 0
         $wpf_MainGrid.Margin = $maxMargin
     }
+}
+
+function Invoke-BuyMeACoffee {
+    <#
+    .SYNOPSIS
+        Open BuyMeACoffe link
+
+    .PARAMETER Button
+    #>
+
+    Start-Process "https://buymeacoffee.com/vukilis"
+}
+
+function Invoke-BuyMeAKofi {
+    <#
+    .SYNOPSIS
+        Open BuyMeAKofi link
+
+    .PARAMETER Button
+    #>
+
+    Start-Process "https://ko-fi.com/vukilis"
 }
 
 $dragging = $false
@@ -236,6 +258,8 @@ function Invoke-Button {
         "wpf_CloseButton" {Invoke-CloseButton}
         "wpf_MinButton" {Invoke-MinButton}
         "wpf_MaxButton" {Invoke-MaxButton}
+        "wpf_buymeacoffee" {Invoke-BuyMeACoffee}
+        "wpf_buymeakofi" {Invoke-BuyMeAKofi}
         "wpf_SelectDebloat" {Invoke-SelectApplication}
         "wpf_SelectDebloatAll" {Invoke-SelectApplicationAll}
         "wpf_UnselectDebloatAll" {Invoke-UnselectApplicationAll}
@@ -327,6 +351,7 @@ function Invoke-Checkbox {
         "wpf_ToggleEndTask" {Invoke-ToggleEndTask}
         "wpf_ToggleCenterTaskbar" {Invoke-ToggleCenterTaskbar}
         "wpf_ToggleDetailedBSoD" {Invoke-ToggleDetailedBSoD}
+        "wpf_TogglePasswordReveal" {Invoke-TogglePasswordReveal}
     }
 }
 ################################
@@ -389,7 +414,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.0    
+Windows11 Optimizer&Debloater           3.1    
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -425,7 +450,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.0    
+Windows11 Optimizer&Debloater           3.1    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {

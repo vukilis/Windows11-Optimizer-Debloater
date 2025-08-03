@@ -878,9 +878,9 @@
                 <Label Name="AppVersion" Foreground="#a69f6c" FontSize="14" FontWeight="Bold" Margin="5,0" Content=""></Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" SnapsToDevicePixels="True" Grid.Column="1" Margin="0,0,0,0">
-                <ToggleButton x:Name="AboutButton" Background="Purple" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" ToolTip="Reset Search" Style="{StaticResource AboutButtonStyle}" Tag="{StaticResource AboutIcon}"/>
+                <ToggleButton x:Name="AboutButton" Background="Purple" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" ToolTip="About" Style="{StaticResource AboutButtonStyle}" Tag="{StaticResource AboutIcon}"/>
                 <!-- Minimize Button -->
-                <Button Name="MinButton" Content="−" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" FontSize="16" FontWeight="Bold">
+                <Button Name="MinButton" Content="−" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" FontSize="16" FontWeight="Bold" ToolTip="Minimize">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="BackgroundBorder" Background="Yellow" BorderBrush="#1f1f21" BorderThickness="0" CornerRadius="7">
@@ -896,7 +896,7 @@
                 </Button>
 
                 <!-- Maximize Button -->
-                <Button Name="MaxButton" Content="◻" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" FontSize="16" FontWeight="Bold">
+                <Button Name="MaxButton" Content="◻" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" FontSize="16" FontWeight="Bold" ToolTip="Maximize">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="BackgroundBorder" Background="green" BorderBrush="#1f1f21" BorderThickness="0" CornerRadius="7">
@@ -911,7 +911,7 @@
                     </Button.Template>
                 </Button>
                 <!-- Close Button -->
-                <Button Name="CloseButton" Content="✕" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0,10,0" Cursor="Hand" FontSize="16" FontWeight="Bold">
+                <Button Name="CloseButton" Content="✕" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0,10,0" Cursor="Hand" FontSize="16" FontWeight="Bold" ToolTip="Close">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="BackgroundBorder" Background="red" BorderBrush="#1f1f21" BorderThickness="0" CornerRadius="7">
@@ -1099,8 +1099,8 @@
                         Tag="{StaticResource ResetIcon}"/>
             </StackPanel>
         </DockPanel>
-        <Grid Background="Transparent" Panel.ZIndex="1" Grid.Row="2" ShowGridLines="False" Name="AboutGrid" Width="Auto" Height="300" HorizontalAlignment="Center" Visibility="Collapsed" SnapsToDevicePixels="True">
-            <Border CornerRadius="7" Background="#1f1f21" Height="300" BorderBrush="Purple" BorderThickness="1,1,1,1" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Background="Transparent" Panel.ZIndex="1" Grid.Row="2" ShowGridLines="False" Name="AboutGrid" Width="Auto" Height="350" HorizontalAlignment="Center" Visibility="Collapsed" SnapsToDevicePixels="True">
+            <Border CornerRadius="7" Background="#1f1f21" Height="350" BorderBrush="Purple" BorderThickness="1,1,1,1" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -1114,7 +1114,7 @@
                         <StackPanel Width="auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                             <Image Height="50" Width="100" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
                             <Label Foreground="#FFF4AB51" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,5,5,0" Content="Windows11 Optimizer&amp;Debloater"></Label>
-                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 3.0 - 22.07.2025"></Label>
+                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 3.1 - 03.08.2025"></Label>
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Orientation="Vertical" HorizontalAlignment="Left" Width="auto" Margin="5,5" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
@@ -1128,6 +1128,32 @@
                                 <Run Text="{Binding LoadsCount}" />Website: <Run Text="{Binding BrokerLoadsCount}" />
                                 <Hyperlink Name="WebsiteHyperlink" TextDecorations="None" Foreground="#6e99c2" NavigateUri="https://vukilis.com/">https://vukilis.com/</Hyperlink>
                             </TextBlock>
+                            <TextBlock Foreground="#6ec2b7" FontSize="14" FontWeight="Bold" Margin="5,5" TextWrapping="WrapWithOverflow" TextAlignment="Justify">
+                                <Run Text="{Binding LoadsCount}" />Support Me: <Run Text="{Binding BrokerLoadsCount}" />
+                            </TextBlock>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True">
+                        <!-- Buy Me A Coffee Button -->
+                            <Button Name="buymeacoffee" Width="Auto" Height="auto" Margin="10,0,0,0" Cursor="Hand" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Left" Background="#FF813F" BorderBrush="Transparent">
+                                <Button.Content>
+                                    <TextBlock VerticalAlignment="Center" TextAlignment="Center">
+                                        <InlineUIContainer>
+                                            <Image Width="96" Height="24" Source="https://cdn.buymeacoffee.com/buttons/default-orange.png"/>
+                                        </InlineUIContainer>
+                                    </TextBlock>
+                                </Button.Content>
+                            </Button>
+                            <Button Name="buymeakofi" Width="100" Height="Auto" Margin="10,0,0,0" Cursor="Hand" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Left" Background="#26292B" BorderBrush="Transparent">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Image Width="24" Height="24" Source="https://storage.ko-fi.com/cdn/logomarkLogo.png" VerticalAlignment="Center"/>
+                                        <TextBlock VerticalAlignment="Center" FontSize="14" Foreground="White" Margin="5,0,0,0">
+                                            <Run Text="Ko-fi"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Orientation="Vertical" HorizontalAlignment="Right" Width="auto" VerticalAlignment="Top"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1">
@@ -2199,6 +2225,11 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
+                                <CheckBox Name="DblConsumerFeatures" Content="Disable ConsumerFeatures" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Windows 10 will not automatically install any games, third-party apps, or application links from the Windows Store for the signed-in user. Some default Apps will be inaccessible (eg. Phone Link)">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
                                 <CheckBox Name="DblWifi" Content="Disable Wifi-Sense" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Wifi Sense is a spying service that phones home all nearby scaned wifi networks and your current geo location.">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -2260,6 +2291,11 @@
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
                                 <CheckBox Name="DblSearchIndexer" Content="Disable Search Indexer" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="Indexing the content of your PC helps you get faster results when your searching it for files, emails, or other local content.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblPS7Telemetry" Content="Disable Powershell 7 Telemetry" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="This will create an Environment Variable called 'POWERSHELL_TELEMETRY_OPTOUT' with a value of '1' which will tell Powershell 7 to not send Telemetry Data.">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
@@ -2491,6 +2527,12 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                         <CheckBox Name="ToggleCenterTaskbar" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0" ToolTip="Toggle tweak to Left/Center taskbar items"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Password Reveal Button" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="TogglePasswordReveal" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0" ToolTip="Toggle tweak to Left/Center taskbar items"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                 </StackPanel>
