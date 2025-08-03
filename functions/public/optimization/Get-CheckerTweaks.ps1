@@ -21,8 +21,9 @@ function Get-CheckerTweaks {
     $l = $wpf_ToggleEndTask.IsChecked = (((Get-RegistryValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings' -Name 'TaskbarEndTask') -eq 1))
     $m = $wpf_ToggleCenterTaskbar.IsChecked = (((Get-RegistryValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'TaskbarAl') -eq 1))
     $n = $wpf_ToggleDetailedBSoD.IsChecked = (((Get-RegistryValue -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl' -Name 'DisplayParameters') -eq 1))
+    $o = $wpf_TogglePasswordReveal.IsChecked = $(If ((Get-RegistryValue -Path 'HKLM:\Software\Policies\Microsoft\Windows\CredUI' -Name 'DisablePasswordReveal') -eq 0) {$true})
 
-    return $a -and $b -and $c -and $d -and $e -and $f -and $g -and $h -and $i -and $j -and $k -and $l -and $m -and $n
+    return $a -and $b -and $c -and $d -and $e -and $f -and $g -and $h -and $i -and $j -and $k -and $l -and $m -and $n -and $o
 }
 
 # Invoke and discard result (to only update UI)
