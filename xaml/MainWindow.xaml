@@ -1114,7 +1114,7 @@
                         <StackPanel Width="auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                             <Image Height="50" Width="100" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
                             <Label Foreground="#FFF4AB51" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,5,5,0" Content="Windows11 Optimizer&amp;Debloater"></Label>
-                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 3.0 - 22.07.2025"></Label>
+                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 3.1 - 03.08.2025"></Label>
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Orientation="Vertical" HorizontalAlignment="Left" Width="auto" Margin="5,5" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
@@ -2225,6 +2225,11 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
+                                <CheckBox Name="DblConsumerFeatures" Content="Disable ConsumerFeatures" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Windows 10 will not automatically install any games, third-party apps, or application links from the Windows Store for the signed-in user. Some default Apps will be inaccessible (eg. Phone Link)">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
                                 <CheckBox Name="DblWifi" Content="Disable Wifi-Sense" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Wifi Sense is a spying service that phones home all nearby scaned wifi networks and your current geo location.">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -2286,6 +2291,11 @@
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
                                 <CheckBox Name="DblSearchIndexer" Content="Disable Search Indexer" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="Indexing the content of your PC helps you get faster results when your searching it for files, emails, or other local content.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblPS7Telemetry" Content="Disable Powershell 7 Telemetry" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="This will create an Environment Variable called 'POWERSHELL_TELEMETRY_OPTOUT' with a value of '1' which will tell Powershell 7 to not send Telemetry Data.">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
@@ -2517,6 +2527,12 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                         <CheckBox Name="ToggleCenterTaskbar" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0" ToolTip="Toggle tweak to Left/Center taskbar items"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Password Reveal Button" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <CheckBox Name="TogglePasswordReveal" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0" ToolTip="Toggle tweak to Left/Center taskbar items"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                 </StackPanel>
