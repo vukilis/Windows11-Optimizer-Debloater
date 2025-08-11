@@ -305,7 +305,8 @@ function Invoke-optimizationButton{
     }
     If ( $wpf_DblSearchIndexer.IsChecked -eq $true ) {
         Write-Host "Disabling search indexer..." -ForegroundColor Green
-        sc stop "wsearch" && sc config "wsearch" start=disabled​
+        Get-Service -Name "wsearch" -ErrorAction SilentlyContinue | Stop-Service -ErrorAction SilentlyContinue
+        Get-Service -Name "wsearch" -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue
         $wpf_DblSearchIndexer.IsChecked = $false
     }
     If ( $wpf_DblPS7Telemetry.IsChecked -eq $true ) {
