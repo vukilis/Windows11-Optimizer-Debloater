@@ -77,7 +77,7 @@ function Invoke-recommended{
     
     foreach ($service in $services) {
         # -ErrorAction SilentlyContinue is so it doesn't write an error to stdout if a service doesn't exist
-         Write-Host "Setting $service StartupType to Manual" -ForegroundColor Yellow
+        Write-Host "Setting $service StartupType to Manual" -ForegroundColor Yellow
         Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue
     }
     Art -artN "
