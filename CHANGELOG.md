@@ -18,7 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 - Enhanced **Set-RegistryValue** function to better handle registry operations based on provided inputs
-- Changed and improved Optimization tweak **Disable Telemetry**
+- Enhanced all optimization tweaks
 
 ## [3.1] - 2025-08-03
 
