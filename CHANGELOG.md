@@ -8,6 +8,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [3.2] - 2025-08-12
+
+### Added
+
+- New helper function to invoke a provided script block - **Invoke-SCripts**
+- New optimization function **Set-ScheduledTask** to disable the specified scheduled task.
+
+### Changed
+
+- Enhanced **Set-RegistryValue** function to better handle registry operations based on provided inputs
+- Changed and improved Optimization tweak **Disable Telemetry**
+
 ## [3.1] - 2025-08-03
 
 ### Added
