@@ -17,9 +17,9 @@
 Add-Type -AssemblyName PresentationFramework
 
 Start-Transcript $ENV:TEMP\win11deb.log -Append
-# $xamlFile="C:\Users\vukilis\Pictures\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
-# $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+$xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
+$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
+# $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
@@ -610,6 +610,50 @@ function Invoke-MessageBox {
     }
 
     [System.Windows.MessageBox]::Show("Done", $MessageboxTitle, [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+}
+function Invoke-Scripts {
+    <#
+
+    .SYNOPSIS
+        Invokes the provided scriptblock. Intended for things that can't be handled with the other functions.
+
+    .PARAMETER Name
+        The name of the scriptblock being invoked
+
+    .PARAMETER scriptblock
+        The scriptblock to be invoked
+
+    .EXAMPLE
+        $Scriptblock = [scriptblock]::Create({"Write-output 'Hello World'"})
+        Invoke-Scripts -ScriptBlock $scriptblock -Name "Hello World"
+
+    #>
+    param (
+        $Name,
+        [scriptblock]$scriptblock
+    )
+
+    try {
+        Write-Host "Running Script for $name"
+        Invoke-Command $scriptblock -ErrorAction Stop
+    } catch [System.Management.Automation.CommandNotFoundException] {
+        Write-Warning "The specified command was not found."
+        Write-Warning $PSItem.Exception.message
+    } catch [System.Management.Automation.RuntimeException] {
+        Write-Warning "A runtime exception occurred."
+        Write-Warning $PSItem.Exception.message
+    } catch [System.Security.SecurityException] {
+        Write-Warning "A security exception occurred."
+        Write-Warning $PSItem.Exception.message
+    } catch [System.UnauthorizedAccessException] {
+        Write-Warning "Access denied. You do not have permission to perform this operation."
+        Write-Warning $PSItem.Exception.message
+    } catch {
+        # Generic catch block to handle any other type of exception
+        Write-Warning "Unable to run script for $name due to unhandled exception"
+        Write-Warning $psitem.Exception.StackTrace
+    }
+
 }
 Function Open-Link {
     <#
@@ -1662,16 +1706,95 @@ function Set-RegistryValue {
     <#
 
     .SYNOPSIS
-        Handler function to set registry information
-        Set-RegistryValue -Path $Path -Name $Name -Value $TrueValue
-    #>
+        Modifies the registry based on the given inputs
 
+    .PARAMETER Name
+        The name of the key to modify
+
+    .PARAMETER Path
+        The path to the key
+
+    .PARAMETER Type
+        The type of value to set the key to
+
+    .PARAMETER Value
+        The value to set the key to
+
+    .EXAMPLE
+        Set-RegistryValue -Name "PublishUserActivities" -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Type "DWord" -Value "0"
+
+    #>
     param (
-        [string]$Path,
-        [string]$Name,
-        [int]$Value
+        $Name,
+        $Path,
+        $Type,
+        $Value
     )
-    Set-ItemProperty -Path $Path -Name $Name -Value $Value
+
+    try {
+        if(!(Test-Path 'HKU:\')) {New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS}
+
+        If (!(Test-Path $Path)) {
+            Write-Host "$Path was not found, Creating..."
+            New-Item -Path $Path -Force -ErrorAction Stop | Out-Null
+        }
+
+        if ($Value -ne "<RemoveEntry>") {
+            Write-Host "Set $Path\$Name to $Value"
+            Set-ItemProperty -Path $Path -Name $Name -Type $Type -Value $Value -Force -ErrorAction Stop | Out-Null
+        }
+        else{
+            Write-Host "Remove $Path\$Name"
+            Remove-ItemProperty -Path $Path -Name $Name -Force -ErrorAction Stop | Out-Null
+        }
+    } catch [System.Security.SecurityException] {
+        Write-Warning "Unable to set $Path\$Name to $Value due to a Security Exception"
+    } catch [System.Management.Automation.ItemNotFoundException] {
+        Write-Warning $psitem.Exception.ErrorRecord
+    } catch [System.UnauthorizedAccessException] {
+        Write-Warning $psitem.Exception.Message
+    } catch {
+        Write-Warning "Unable to set $Name due to unhandled exception"
+        Write-Warning $psitem.Exception.StackTrace
+    }
+}
+function Set-ScheduledTask {
+    <#
+
+    .SYNOPSIS
+        Disables the provided Scheduled Task
+
+    .PARAMETER Name
+        The path to the Scheduled Task
+
+    .PARAMETER State
+        The State to set the Task to
+
+    .EXAMPLE
+        Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" -State "Disabled"
+
+    #>
+    param (
+        $Name,
+        $State
+    )
+
+    try {
+        if($State -eq "Disabled") {
+            Write-Host "Disabling Scheduled Task $Name"
+            Disable-ScheduledTask -TaskName $Name -ErrorAction Stop
+        }
+    } catch [System.Exception] {
+        if($psitem.Exception.Message -like "*The system cannot find the file specified*") {
+            Write-Warning "Scheduled Task $name was not Found"
+        } else {
+            Write-Warning "Unable to set $Name due to unhandled exception"
+            Write-Warning $psitem.Exception.Message
+        }
+    } catch {
+        Write-Warning "Unable to run script for $name due to unhandled exception"
+        Write-Warning $psitem.Exception.StackTrace
+    }
 }
 function Toggle-RegistryValue {
     <#
@@ -1727,10 +1850,8 @@ function Get-CheckerTweaks {
     $m = $wpf_ToggleCenterTaskbar.IsChecked = (((Get-RegistryValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'TaskbarAl') -eq 1))
     $n = $wpf_ToggleDetailedBSoD.IsChecked = (((Get-RegistryValue -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl' -Name 'DisplayParameters') -eq 1))
     $o = $wpf_TogglePasswordReveal.IsChecked = $(If ((Get-RegistryValue -Path 'HKLM:\Software\Policies\Microsoft\Windows\CredUI' -Name 'DisablePasswordReveal') -eq 0) {$true})
-    # $p = $wpf_ToggleRecommendedSection.IsChecked = $(If ((Get-RegistryValue -Path 'HKLM:\Software\Policies\Microsoft\Windows\Explorer' -Name 'HideRecommendedSection') -eq 0) {$true})
-    $p = $wpf_ToggleRecommendedSection.IsChecked = (((Get-RegistryValue -Path 'HKLM:\Software\Policies\Microsoft\Windows\Explorer' -Name 'HideRecommendedSection') -eq 0))
 
-    return $a -and $b -and $c -and $d -and $e -and $f -and $g -and $h -and $i -and $j -and $k -and $l -and $m -and $n -and $o -and $p
+    return $a -and $b -and $c -and $d -and $e -and $f -and $g -and $h -and $i -and $j -and $k -and $l -and $m -and $n -and $o
 }
 
 # Invoke and discard result (to only update UI)
@@ -1750,175 +1871,90 @@ function Invoke-optimizationButton{
     # Essential Tweaks
     If ( $wpf_DblTelemetry.IsChecked -eq $true ) {
         Write-Host "Disabling Telemetry..."
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" -Name "AllowTelemetry" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "AllowTelemetry" -Type DWord -Value 0
-        Disable-ScheduledTask -TaskName "Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" | Out-Null
-        Disable-ScheduledTask -TaskName "Microsoft\Windows\Application Experience\ProgramDataUpdater" | Out-Null
-        Disable-ScheduledTask -TaskName "Microsoft\Windows\Autochk\Proxy" | Out-Null
-        Disable-ScheduledTask -TaskName "Microsoft\Windows\Customer Experience Improvement Program\Consolidator" | Out-Null
-        Disable-ScheduledTask -TaskName "Microsoft\Windows\Customer Experience Improvement Program\UsbCeip" | Out-Null
-        Disable-ScheduledTask -TaskName "Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector" | Out-Null
-        Write-Host "Disabling Application suggestions..."
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "ContentDeliveryAllowed" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "OemPreInstalledAppsEnabled" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "PreInstalledAppsEnabled" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "PreInstalledAppsEverEnabled" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SilentInstalledAppsEnabled" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338387Enabled" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338388Enabled" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338389Enabled" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-353698Enabled" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SystemPaneSuggestionsEnabled" -Type DWord -Value 0
-        If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent")) {
-            New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" -Force | Out-Null
-        }
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" -Name "DisableWindowsConsumerFeatures" -Type DWord -Value 1
-        Write-Host "Disabling Feedback..."
-        If (!(Test-Path "HKCU:\SOFTWARE\Microsoft\Siuf\Rules")) {
-            New-Item -Path "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" -Force | Out-Null
-        }
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" -Name "NumberOfSIUFInPeriod" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "DoNotShowFeedbackNotifications" -Type DWord -Value 1
-        Disable-ScheduledTask -TaskName "Microsoft\Windows\Feedback\Siuf\DmClient" -ErrorAction SilentlyContinue | Out-Null
-        Disable-ScheduledTask -TaskName "Microsoft\Windows\Feedback\Siuf\DmClientOnScenarioDownload" -ErrorAction SilentlyContinue | Out-Null
-        Write-Host "Disabling Tailored Experiences..."
-        If (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\CloudContent")) {
-            New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" -Force | Out-Null
-        }
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" -Name "DisableTailoredExperiencesWithDiagnosticData" -Type DWord -Value 1
-        Write-Host "Disabling Advertising ID..."
-        If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo")) {
-            New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" | Out-Null
-        }
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" -Name "DisabledByGroupPolicy" -Type DWord -Value 1
-        Write-Host "Disabling Error reporting..."
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting" -Name "Disabled" -Type DWord -Value 1
-        Disable-ScheduledTask -TaskName "Microsoft\Windows\Windows Error Reporting\QueueReporting" | Out-Null
-        Write-Host "Restricting Windows Update P2P only to local network..."
-        If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config")) {
-            New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config" | Out-Null
-        }
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config" -Name "DODownloadMode" -Type DWord -Value 1
-        Write-Host "Stopping and disabling Diagnostics Tracking Service..."
-        Stop-Service "DiagTrack" -WarningAction SilentlyContinue
-        Set-Service "DiagTrack" -StartupType Disabled
-        Write-Host "Stopping and disabling WAP Push Service..."
-        Stop-Service "dmwappushservice" -WarningAction SilentlyContinue
-        Set-Service "dmwappushservice" -StartupType Disabled
-        Write-Host "Enabling F8 boot menu options..."
-        bcdedit /set `{current`} bootmenupolicy Legacy | Out-Null
-        Write-Host "Disabling Remote Assistance..."
-        Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance" -Name "fAllowToGetHelp" -Type DWord -Value 0
-        Write-Host "Stopping and disabling Superfetch service..."
-        Stop-Service "SysMain" -WarningAction SilentlyContinue
-        Set-Service "SysMain" -StartupType Disabled
-
-        # Task Manager Details
-        If ((get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentBuild).CurrentBuild -lt 22557) {
-            Write-Host "Showing task manager details..."
-            $taskmgr = Start-Process -WindowStyle Hidden -FilePath taskmgr.exe -PassThru
-            Do {
-                Start-Sleep -Milliseconds 100
-                $preferences = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\TaskManager" -Name "Preferences" -ErrorAction SilentlyContinue
-            } Until ($preferences)
-            Stop-Process $taskmgr
-            $preferences.Preferences[28] = 0
-            Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\TaskManager" -Name "Preferences" -Type Binary -Value $preferences.Preferences
-        }
-        else { Write-Host "Task Manager patch not run in builds 22557+ due to bug" }
-
-        Write-Host "Showing file operations details..."
-        If (!(Test-Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager")) {
-            New-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager" | Out-Null
-        }
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager" -Name "EnthusiastMode" -Type DWord -Value 1
-        Write-Host "Hiding Task View button..."
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowTaskViewButton" -Type DWord -Value 0
-        Write-Host "Hiding People icon..."
-        If (!(Test-Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People")) {
-            New-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People" | Out-Null
-        }
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People" -Name "PeopleBand" -Type DWord -Value 0
-
-        Write-Host "Changing default Explorer view to This PC..."
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "LaunchTo" -Type DWord -Value 1
-
-        ## Enable Long Paths
-        Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Type DWORD -Value 1
-
-        Write-Host "Hiding 3D Objects icon from This PC..."
-        Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}" -Recurse -ErrorAction SilentlyContinue  
-
-        ## Performance Tweaks and More Telemetry
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching" -Name "SearchOrderConfig" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" -Name "SystemResponsiveness" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "MenuShowDelay" -Type DWord -Value 1
-        Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "AutoEndTasks" -Type DWord -Value 1
-        Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" -Name "ClearPageFileAtShutdown" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKCU:\Control Panel\Mouse" -Name "MouseHoverTime" -Type String -Value 400
+        Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" -State "Disabled"
+        Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\ProgramDataUpdater" -State "Disabled"
+        Set-ScheduledTask -Name "Microsoft\Windows\Autochk\Proxy" -State "Disabled"
+        Set-ScheduledTask -Name "Microsoft\Windows\Customer Experience Improvement Program\Consolidator" -State "Disabled"
+        Set-ScheduledTask -Name "Microsoft\Windows\Customer Experience Improvement Program\UsbCeip" -State "Disabled"
+        Set-ScheduledTask -Name "Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector" -State "Disabled"
+        Set-ScheduledTask -Name "Microsoft\Windows\Feedback\Siuf\DmClient" -State "Disabled"
+        Set-ScheduledTask -Name "Microsoft\Windows\Feedback\Siuf\DmClientOnScenarioDownload" -State "Disabled"
+        Set-ScheduledTask -Name "Microsoft\Windows\Windows Error Reporting\QueueReporting" -State "Disabled"
+        Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\MareBackup" -State "Disabled"
+        Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\StartupAppTask" -State "Disabled"
+        Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\PcaPatchDbTask" -State "Disabled"
+        Set-ScheduledTask -Name "Microsoft\Windows\Maps\MapsUpdateTask" -State "Disabled"
         
-        ## Timeout Tweaks cause flickering on Windows now
-        Remove-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "WaitToKillAppTimeout" -ErrorAction SilentlyContinue
-        Remove-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "HungAppTimeout" -ErrorAction SilentlyContinue
-        Remove-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control" -Name "WaitToKillServiceTimeout" -ErrorAction SilentlyContinue
-        Remove-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "LowLevelHooksTimeout" -ErrorAction SilentlyContinue
-        Remove-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "WaitToKillServiceTimeout" -ErrorAction SilentlyContinue
+        Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "AllowTelemetry" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" -Name "AllowTelemetry" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "OemPreInstalledAppsEnabled" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "ContentDeliveryAllowed" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "PreInstalledAppsEnabled" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "PreInstalledAppsEverEnabled" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SilentInstalledAppsEnabled" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338387Enabled" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338388Enabled" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338389Enabled" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-353698Enabled" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SystemPaneSuggestionsEnabled" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" -Name "NumberOfSIUFInPeriod" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "DoNotShowFeedbackNotifications" -Type "DWord" -Value 1
+        Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "DisableTailoredExperiencesWithDiagnosticData" -Type "DWord" -Value 1
+        Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" -Name "DisabledByGroupPolicy" -Type "DWord" -Value 1
+        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting" -Name "Disabled" -Type "DWord" -Value 1
+        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config" -Name "DODownloadMode" -Type "DWord" -Value 1
+        Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance" -Name "fAllowToGetHelp" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager" -Name "EnthusiastMode" -Type "DWord" -Value 1
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "PeopleBand" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "LongPathsEnabled" -Type "DWord" -Value 1
+        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching" -Name "SearchOrderConfig" -Type "DWord" -Value 1
+        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" -Name "SystemResponsiveness" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" -Name "NetworkThrottlingIndex" -Type "DWord" -Value 4294967295
+        Set-RegistryValue -Path "HKCU:\Control Panel\Desktop" -Name "MenuShowDelay" -Type "DWord" -Value 1
+        Set-RegistryValue -Path "HKCU:\Control Panel\Desktop" -Name "AutoEndTasks" -Type "DWord" -Value 1
+        Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" -Name "ClearPageFileAtShutdown" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKLM:\SYSTEM\ControlSet001\Services\Ndu" -Name "Start" -Type "DWord" -Value 2
+        Set-RegistryValue -Path "HKCU:\Control Panel\Mouse" -Name "MouseHoverTime" -Type "DWord" -Value 400
+        Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" -Name "IRPStackSize" -Type "DWord" -Value 30
+        Set-RegistryValue -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds" -Name "EnableFeeds" -Type "DWord" -Value 0
+        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds" -Name "ShellFeedsTaskbarViewMode" -Type "DWord" -Value 2
+        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "HideSCAMeetNow" -Type "DWord" -Value 1
+        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\UserProfileEngagement" -Name "ScoobeSystemSettingEnabled" -Type "DWord" -Value 0
+        
+        $InvokeScript = [ScriptBlock]::Create(@'
+bcdedit /set {current} bootmenupolicy Legacy | Out-Null
 
-        # Network Tweaks
-        Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" -Name "IRPStackSize" -Type DWord -Value 20
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" -Name "NetworkThrottlingIndex" -Type DWord -Value 4294967295
+If ((Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentBuild).CurrentBuild -lt 22557) {
+    $taskmgr = Start-Process -WindowStyle Hidden -FilePath taskmgr.exe -PassThru
+    Do {
+        Start-Sleep -Milliseconds 100
+        $preferences = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\TaskManager" -Name "Preferences" -ErrorAction SilentlyContinue
+    } Until ($preferences)
+    Stop-Process $taskmgr
+    $preferences.Preferences[28] = 0
+    Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\TaskManager" -Name "Preferences" -Type Binary -Value $preferences.Preferences
+}
 
-        # Gaming Tweaks
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" -Name "Affinity" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" -Name "Background Only" -Type String -Value "False"
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" -Name "Clock Rate" -Type DWord -Value 10000
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" -Name "GPU Priority" -Type DWord -Value 8
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" -Name "Priority" -Type DWord -Value 6
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" -Name "Scheduling Category" -Type String -Value "High"
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" -Name "SFIO Priority" -Type String -Value "High"
+Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}" -Recurse -ErrorAction SilentlyContinue
 
-        # Group svchost.exe processes
-        $ram = (Get-CimInstance -ClassName "Win32_PhysicalMemory" | Measure-Object -Property Capacity -Sum).Sum / 1kb
-        Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control" -Name "SvcHostSplitThresholdInKB" -Type DWord -Value $ram -Force
+If (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge") {
+    Remove-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" -Recurse -ErrorAction SilentlyContinue
+}
 
-        Write-Host "Disable News and Interests"
-        If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds")) {
-            New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds" | Out-Null
-        }
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds" -Name "EnableFeeds" -Type DWord -Value 0
-        # Remove "News and Interest" from taskbar
-        Set-ItemProperty -Path  "HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds" -Name "ShellFeedsTaskbarViewMode" -Type DWord -Value 2
+$ram = (Get-CimInstance -ClassName Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum).Sum / 1kb
+Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control" -Name "SvcHostSplitThresholdInKB" -Type DWord -Value $ram -Force
 
-        # remove "Widgets" button from taskbar
-        Write-Host "Disable Widgets"
-        If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh")) {
-            New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" | Out-Null
-        }
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" -Name "AllowNewsAndInterests" -Type DWord -Value 0
+$autoLoggerDir = "$env:PROGRAMDATA\Microsoft\Diagnosis\ETLLogs\AutoLogger"
+If (Test-Path "$autoLoggerDir\AutoLogger-Diagtrack-Listener.etl") {
+    Remove-Item "$autoLoggerDir\AutoLogger-Diagtrack-Listener.etl"
+}
+icacls $autoLoggerDir "/deny" "SYSTEM:(OI)(CI)F" | Out-Null
 
-        # remove "Meet Now" button from taskbar
+Set-MpPreference -SubmitSamplesConsent 2 -ErrorAction SilentlyContinue | Out-Null
+'@)
 
-        If (!(Test-Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer")) {
-            New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Force | Out-Null
-        }
+        Invoke-Scripts -ScriptBlock $InvokeScript -Name "InvokeScript"
 
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "HideSCAMeetNow" -Type DWord -Value 1
-
-        Write-Host "Removing AutoLogger file and restricting directory..."
-        $autoLoggerDir = "$env:PROGRAMDATA\Microsoft\Diagnosis\ETLLogs\AutoLogger"
-        If (Test-Path "$autoLoggerDir\AutoLogger-Diagtrack-Listener.etl") {
-            Remove-Item "$autoLoggerDir\AutoLogger-Diagtrack-Listener.etl"
-        }
-        icacls $autoLoggerDir /deny SYSTEM:`(OI`)`(CI`)F | Out-Null
-
-        Write-Host "Stopping and disabling Diagnostics Tracking Service..."
-        Stop-Service "DiagTrack"
-        Set-Service "DiagTrack" -StartupType Disabled
-
-        Write-Host "Doing Security checks for Administrator Account and Group Policy"
-        if (([System.Security.Principal.WindowsIdentity]::GetCurrent().Name).IndexOf('Administrator') -eq -1) {
-            net user administrator /active:no
-        }
 
         $wpf_DblTelemetry.IsChecked = $false
     }
@@ -2591,18 +2627,6 @@ function Invoke-TogglePasswordReveal{
     }
 
     Toggle-RegistryValue -CheckBox $wpf_TogglePasswordReveal -Path 'HKLM:\Software\Policies\Microsoft\Windows\CredUI' -Name 'DisablePasswordReveal' -TrueValue 0 -FalseValue 1 -EnableMessage "Enabling Password Reveal" -DisableMessage "Disabling Password Reveal"
-}
-function Invoke-ToggleRecommendedSection{    
-
-    If (!(Test-Path "HKLM:\Software\Policies\Microsoft\Windows\Explorer")) {
-        New-Item -Path "HKLM:\Software\Policies\Microsoft\Windows\Explorer" -Force | Out-Null
-        New-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\Explorer' -Name 'HideRecommendedSection' -PropertyType DWord -Value 0 -Force
-    }
-    else {
-        New-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\Explorer' -Name 'HideRecommendedSection' -PropertyType DWord -Value 0 -Force
-    }
-
-    Toggle-RegistryValue -CheckBox $wpf_ToggleRecommendedSection -Path 'HKLM:\Software\Policies\Microsoft\Windows\Explorer' -Name 'HideRecommendedSection' -TrueValue 0 -FalseValue 1 -EnableMessage "Enabling Recommendations in Start Menu" -DisableMessage "Disabling Recommendations in Start Menu"
 }
 function Invoke-ToggleSearch{
     Toggle-RegistryValue -CheckBox $wpf_ToggleSearch -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'SearchBoxTaskbarMode' -TrueValue 0 -FalseValue 2 -EnableMessage "Hiding search box" -DisableMessage "Showing search box"
