@@ -40,7 +40,7 @@ catch [System.Management.Automation.MethodInvocationException] {
     }
 }
 catch {
-    ### If it broke some other way <img draggable="false" role="img" class="emoji" alt="????" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f600.svg">
+    ### If it broke some other way <img draggable="false" role="img" class="emoji" alt="??" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f600.svg">
     Write-Host "Unable to load Windows.Markup.XamlReader. Double-check syntax and ensure .net is installed."
 }
 
@@ -226,10 +226,10 @@ foreach ($button in $buttons){
 }
 
 $toggleButtons = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "ToggleButton"}
-foreach ($button in $toggleButtons){
-    $button.value.Add_Click({
-        [System.Object]$Sender = $args[0]
-        Invoke-ToggleButtons "wpf_$($Sender.name)"
+foreach ($btn in $toggleButtons) {
+    $btn.Value.Add_Click({
+        $Sender = $args[0]
+        Invoke-ToggleButtons -toggle "wpf_$($Sender.Name)" -isChecked ([bool]$Sender.IsChecked)
     })
 }
 
@@ -241,23 +241,112 @@ foreach ($box in $checkbox){
     })
 }
 
+# Load tweaks.json
+$tweaksJsonPath = ".\config\tweaks.json"
+$tweaks = Get-Content $tweaksJsonPath -Raw | ConvertFrom-Json
+
 function Invoke-ToggleButtons {
+    Param ([string]$ToggleButton, [bool]$isChecked)
 
-    <#
-    
-        .DESCRIPTION
-        Meant to make creating ToggleButtons easier. There is a section below in the gui that will assign this function to every ToggleButton.
-        This way you can dictate what each ToggleButton does from this function. 
-    
-        Input will be the name of the ToggleButton that is clicked. 
-    #>
-    
-    Param ([string]$ToggleButton) 
+    switch -Wildcard ($ToggleButton) {
+        # Static / hard-coded buttons
+        "wpf_AboutButton" { Invoke-AboutButton }
+        "wpf_SettingsButton" { Invoke-SettingsButton }
 
-    Switch -Wildcard ($ToggleButton){
-        "wpf_AboutButton" {Invoke-AboutButton}
+        # Dynamic toggle buttons from JSON
+        default {
+            # Strip off "wpf_" prefix for JSON lookup
+            $toggleName = $ToggleButton -replace '^wpf_', ''
+
+            if ($tweaks.PSObject.Properties.Name -contains $toggleName) {
+                $toggleEntry = $tweaks.$toggleName
+
+                foreach ($regEntry in $toggleEntry.registry) {
+                    $path = $regEntry.Path
+                    $name = $regEntry.Name
+                    $type = $regEntry.Type
+
+                    if ($isChecked) {
+                        $valueToSet = $regEntry.Value
+                    } else {
+                        $valueToSet = $regEntry.OriginalValue
+                    }
+
+                    # Write-Host "Setting registry $path\$name to $valueToSet"
+
+                    try {
+                        Set-RegistryValue -Path $path -Name $name -Type $type -Value $valueToSet
+
+                    } catch {
+                        # Write-Warning "Failed to set registry ${path}\${name}: $_"
+                    }
+                }
+            }
+            else {
+                Write-Warning "No toggle matched for '$toggle'"
+            }
+        }
     }
 }
+
+
+
+# function Invoke-ToggleButtons {
+#     Param (
+#         [string]$toggle,
+#         [bool]$isChecked
+#     ) 
+
+#     # Write-Host "Invoke-Toggle called with isChecked = '$isChecked'"
+
+#     $toggleName = $toggle -replace '^wpf_', ''
+
+#     if ($tweaks.PSObject.Properties.Name -contains $toggleName) {
+#         $toggleEntry = $tweaks.$toggleName
+
+#         foreach ($regEntry in $toggleEntry.registry) {
+#             $path = $regEntry.Path
+#             $name = $regEntry.Name
+#             $type = $regEntry.Type
+
+#             if ($isChecked) {
+#                 $valueToSet = $regEntry.Value
+#             } else {
+#                 $valueToSet = $regEntry.OriginalValue
+#             }
+
+#             # Write-Host "Setting registry $path\$name to $valueToSet"
+
+#             try {
+#                 Set-RegistryValue -Path $path -Name $name -Type $type -Value $valueToSet -ErrorAction Stop
+
+#             } catch {
+#                 Write-Warning "Failed to set registry ${path}\${name}: $_"
+#             }
+#         }
+#     }
+#     else {
+#         Write-Warning "No toggle matched for '$toggle'"
+#     }
+# }
+
+# function Invoke-ToggleButtons {
+
+#     <#
+    
+#         .DESCRIPTION
+#         Meant to make creating ToggleButtons easier. There is a section below in the gui that will assign this function to every ToggleButton.
+#         This way you can dictate what each ToggleButton does from this function. 
+    
+#         Input will be the name of the ToggleButton that is clicked. 
+#     #>
+    
+#     Param ([string]$ToggleButton) 
+
+#     Switch -Wildcard ($ToggleButton){
+#         "wpf_AboutButton" {Invoke-AboutButton}
+#     }
+# }
 function Invoke-Button {
 
     <#
@@ -355,22 +444,6 @@ function Invoke-Checkbox {
         "wpf_ToggleLitePreset" {Invoke-ToggleLitePreset}
         "wpf_ToggleDevPreset" {Invoke-ToggleDevPreset}
         "wpf_ToggleGamingPreset" {Invoke-ToggleGamingPreset}
-        "wpf_ToggleDarkMode" {Invoke-ToggleDarkMode}
-        "wpf_ToggleBingSearchMenu" {Invoke-ToggleBingSearchMenu}
-        "wpf_ToggleNumLock" {Invoke-ToggleNumLock}
-        "wpf_ToggleExt" {Invoke-ToggleExt}
-        "wpf_ToggleMouseAcceleration" {Invoke-ToggleMouseAcceleration}
-        "wpf_TogglefIPv6" {Invoke-TogglefIPv6}
-        "wpf_ToggleHiddenFiles" {Invoke-ToggleHiddenFiles}
-        "wpf_ToggleSearch" {Invoke-ToggleSearch}
-        "wpf_ToggleSnapLayouts" {Invoke-ToggleSnapLayouts}
-        "wpf_ToggleVerboseLogon" {Invoke-ToggleVerboseLogon}
-        "wpf_ToggleCopilot" {Invoke-ToggleCopilot}
-        "wpf_ToggleSticky" {Invoke-ToggleSticky}
-        "wpf_ToggleEndTask" {Invoke-ToggleEndTask}
-        "wpf_ToggleCenterTaskbar" {Invoke-ToggleCenterTaskbar}
-        "wpf_ToggleDetailedBSoD" {Invoke-ToggleDetailedBSoD}
-        "wpf_TogglePasswordReveal" {Invoke-TogglePasswordReveal}
     }
 }
 ################################
@@ -414,7 +487,7 @@ Function Get-Author7 {
         This is for powershell v7.1+
     #>
     
-    Clear-Host
+    #Clear-Host
     $colors = @("`e[38;5;200m", "`e[38;5;51m", "`e[38;5;98m")
 
     function Get-RandomColor {
@@ -522,7 +595,7 @@ if (-not (Test-Path $destinationPath)) {
 ###                                                                                                          ###
 ################################################################################################################
 
-$programs = @('{"winget":"Docker.DockerDesktop","name":"Docker Desktop","id":"DblInstallDockerdesktop"}','{"winget":"Git.Git","name":"Git","id":"DblInstallGit"}','{"winget":"GitExtensionsTeam.GitExtensions","name":"Git Extensions","id":"DblInstallGitextensions"}','{"winget":"GitHub.GitHubDesktop","name":"GitHub Desktop","id":"DblInstallGithubdesktop"}','{"winget":"GodotEngine.GodotEngine","name":"Godot Engine","id":"DblInstallGodotEngine"}','{"winget":"GoLang.Go","name":"Go Programming Language","id":"DblInstallGolang"}','{"winget":"HeidiSQL.HeidiSQL","name":"HeidiSQL","id":"DblInstallHeidisql"}','{"winget":"Oracle.MySQL","name":"MySQL","id":"DblInstallMySQL"}','{"winget":"OpenJS.NodeJS","name":"Node.js","id":"DblInstallNodejs"}','{"winget":"OpenJS.NodeJS.LTS","name":"Node.js LTS","id":"DblInstallNodejslts"}','{"winget":"CoreyButler.NVMforWindows","name":"Node Version Manager (NVM)","id":"DblInstallNodemanager"}','{"winget":"EclipseAdoptium.Temurin.8.JRE","name":"Java 8","id":"DblInstallJava8"}','{"winget":"EclipseAdoptium.Temurin.11.JRE","name":"Java 11","id":"DblInstallJava11"}','{"winget":"EclipseAdoptium.Temurin.17.JRE","name":"Java 17","id":"DblInstallJava17"}','{"winget":"EclipseAdoptium.Temurin.21.JDK","name":"Java 21","id":"DblInstallJava21"}','{"winget":"JanDeDobbeleer.OhMyPosh","name":"Oh My Posh","id":"DblInstallOhmyposh"}','{"winget":"Python.Python.3.12","name":"Python 3","id":"DblInstallPython3"}','{"winget":"RedHat.Podman","name":"Podman","id":"DblInstallPodman"}','{"winget":"Postman.Postman","name":"Postman","id":"DblInstallPostman"}','{"winget":"RubyInstallerTeam.Ruby.3.2","name":"Ruby 3.2","id":"DblInstallRuby"}','{"winget":"Rustlang.Rust.MSVC","name":"Rust","id":"DblInstallRust"}','{"winget":"DBBrowserForSQLite.DBBrowserForSQLite","name":"SQLite","id":"DblInstallSQLite"}','{"winget":"Microsoft.SQLServer.2022.Developer","name":"SQL Server 2022 Developer","id":"DblInstallSQLServer2022"}','{"winget":"Unity.Unity.2022","name":"Unity 2022","id":"DblInstallUnity"}','{"winget":"Hashicorp.Vagrant","name":"Vagrant","id":"DblInstallVagrant"}','{"winget":"Microsoft.VisualStudio.2022.Community","name":"Visual Studio 2022","id":"DblInstallVisualstudio2022"}','{"winget":"Microsoft.VisualStudioCode","name":"Visual Studio Code","id":"DblInstallCode"}','{"winget":"Microsoft.DotNet.DesktopRuntime.3_1","name":".NET Core 3","id":"DblInstallDotnet3"}','{"winget":"Microsoft.DotNet.DesktopRuntime.5","name":".NET 5","id":"DblInstallDotnet5"}','{"winget":"Microsoft.DotNet.DesktopRuntime.6","name":".NET 6","id":"DblInstallDotnet6"}','{"winget":"Microsoft.DotNet.DesktopRuntime.7","name":".NET 7","id":"DblInstallDotnet7"}','{"winget":"Microsoft.DotNet.DesktopRuntime.8","name":".NET 8","id":"DblInstallDotnet8"}','{"winget":"Microsoft.Sysinternals.Autoruns","name":"Autoruns","id":"DblInstallAutoruns"}','{"winget":"MHNexus.HxD","name":"HxD Hex Editor","id":"DblInstallHxD"}','{"winget":"Microsoft.PowerShell","name":"PowerShell","id":"DblInstallPowershell"}','{"winget":"Microsoft.PowerToys","name":"PowerToys","id":"DblInstallPowertoys"}','{"winget":"Microsoft.Sysinternals.ProcessExplorer","name":"Process Explorer","id":"DblInstallProcessExplorer"}','{"winget":"Microsoft.VCRedist.2015+.x64","name":"Visual 2015 Redistributable (64-bit)","id":"DblInstallvc2015_64"}','{"winget":"Microsoft.VCRedist.2015+.x86","name":"Visual 2015 Redistributable (32-bit)","id":"DblInstallvc2015_32"}','{"winget":"Microsoft.WindowsTerminal","name":"Windows Terminal","id":"DblInstallTerminal"}','{"winget":"Brave.Brave","name":"Brave","id":"DblInstallBrave"}','{"winget":"Google.Chrome","name":"Google Chrome","id":"DblInstallChrome"}','{"winget":"eloston.ungoogled-chromium","name":"Chromium","id":"DblInstallChromium"}','{"winget":"Mozilla.Firefox","name":"Mozilla Firefox","id":"DblInstallFirefox"}','{"winget":"MullvadVPN.MullvadBrowser","name":"Mullvad","id":"DblInstallMullvad"}','{"winget":"Alex313031.Thorium","name":"Thorium","id":"DblInstallThorium"}','{"winget":"Alex313031.Thorium.AVX2","name":"Thorium AVX2","id":"DblInstallThoriumAVX"}','{"winget":"TorProject.TorBrowser","name":"Tor Browser","id":"DblInstallTor"}','{"winget":"Librewolf.Librewolf","name":"Librewolf","id":"DblInstallLibrewolf"}','{"winget":"Ablaze.Floorp","name":"Floorp","id":"DblInstallFloorp"}','{"winget":"eloston.ungoogled-chromium","name":"Ungoogled","id":"DblInstallUngoogled"}','{"winget":"VivaldiTechnologies.Vivaldi","name":"Vivaldi","id":"DblInstallVivaldi"}','{"winget":"Waterfox.Waterfox","name":"Waterfox","id":"DblInstallWaterfox"}','{"winget":"Discord.Discord","name":"Discord","id":"DblInstallDiscord"}','{"winget":"Element.Element","name":"Element (Matrix)","id":"DblInstallMatrix"}','{"winget":"Microsoft.Skype","name":"Skype","id":"DblInstallSkype"}','{"winget":"SlackTechnologies.Slack","name":"Slack","id":"DblInstallSlack"}','{"winget":"Microsoft.Teams","name":"Microsoft Teams","id":"DblInstallTeams"}','{"winget":"Telegram.TelegramDesktop","name":"Telegram","id":"DblInstallTelegram"}','{"winget":"Viber.Viber","name":"Viber","id":"DblInstallViber"}','{"winget":"Zoom.Zoom","name":"Zoom","id":"DblInstallZoom"}','{"winget":"BlueStack.BlueStacks","name":"Bluestacks","id":"DblInstallBluestacks"}','{"winget":"Cemu.Cemu","name":"Cemu","id":"DblInstallCemu"}','{"winget":"ElectronicArts.EADesktop","name":"EA Desktop App","id":"DblInstallEaapp"}','{"winget":"Emulationstation.Emulationstation","name":"Emulation Station","id":"DblInstallEmulationstation"}','{"winget":"EpicGames.EpicGamesLauncher","name":"Epic Games Store","id":"DblInstallEpicgames"}','{"winget":"Nvidia.GeforceNOW","name":"NVIDIA GeForce NOW","id":"DblInstallGeforcenow"}','{"winget":"GOG.Galaxy","name":"GOG Galaxy","id":"DblInstallGog"}','{"winget":"Playnite.Playnite","name":"Playnite","id":"DblInstallPlaynite"}','{"winget":"PrismLauncher.PrismLauncher","name":"Prism Launcher","id":"DblInstallPrism"}','{"winget":"SideQuestVR.SideQuest","name":"SideQuestVR","id":"DblInstallSideQuest"}','{"winget":"Valve.Steam","name":"Steam","id":"DblInstallSteam"}','{"winget":"LizardByte.Sunshine","name":"Sunshine Stream Server","id":"DblInstallSunshine"}','{"winget":"HeroicGamesLauncher.HeroicGamesLauncher","name":"Heroic Games Launcher","id":"DblInstallHeroic"}','{"winget":"ItchIo.Itch","name":"itch.io","id":"DblInstallItch"}','{"winget":"MedalB.V.Medal","name":"Medal","id":"DblInstallMedal"}','{"winget":"MoonlightGameStreamingProject.Moonlight","name":"Moonlight Stream Client","id":"DblInstallMoonlight"}','{"winget":null,"name":"Legendary Epic (Python)","id":"DblPythonEpicCLI"}','{"winget":"Ubisoft.Connect","name":"Ubisoft Connect","id":"DblInstallUbisoft"}','{"winget":"Wargaming.GameCenter","name":"Wargaming Game Center","id":"DblInstallWargaming"}','{"winget":"xemu-project.xemu","name":"XEMU","id":"DblInstallXemu"}','{"winget":"Audacity.Audacity","name":"Audacity","id":"DblInstallAudacity"}','{"winget":"9MVZQVXJBQ9V","name":"AV1 Video Extension","id":"DblInstallAV1"}','{"winget":"BlenderFoundation.Blender","name":"Blender","id":"DblInstallBlender"}','{"winget":"Figma.Figma","name":"Figma","id":"DblInstallFigma"}','{"winget":"Gyan.FFmpeg","name":"FFmpeg","id":"DblInstallFFmpeg"}','{"winget":"CiderCollective.Cider","name":"Cider","id":"DblInstallCider"}','{"winget":"Greenshot.Greenshot","name":"Greenshot","id":"DblInstallGreenshot"}','{"winget":"HandBrake.HandBrake","name":"Handbrake","id":"DblInstallHandbrake"}','{"winget":"DuongDieuPhap.ImageGlass","name":"ImageGlass","id":"DblInstallImageglass"}','{"winget":"XBMCFoundation.Kodi","name":"Kodi","id":"DblInstallKodi"}','{"winget":"CodecGuide.K-LiteCodecPack.Standard","name":"K-Lite Codec Pack","id":"DblInstallKlite"}','{"winget":"MediaArea.MediaInfo.GUI","name":"MediaInfo","id":"DblInstallMediaInfo"}','{"winget":"MoritzBunkus.MKVToolNix","name":"MKVToolNix","id":"DblInstallMKVToolNix"}','{"winget":"Plex.Plex","name":"Plex Client","id":"DblInstallPlex"}','{"winget":"Plex.PlexMediaServer","name":"Plex Server","id":"DblInstallPlexServer"}','{"winget":"OBSProject.OBSStudio","name":"OBS Studio","id":"DblInstallObs"}','{"winget":"9NCBCSZSJRSB","name":"Spotify","id":"DblInstallSpotify"}','{"winget":"ShareX.ShareX","name":"ShareX","id":"DblInstallSharex"}','{"winget":"VideoLAN.VLC","name":"VLC Media Player","id":"DblInstallVlc"}','{"winget":"9N4D0MSMP0PT","name":"VP9 Video Extensions","id":"DblInstallVP9"}','{"winget":"yt-dlp.yt-dlp","name":"yt-dlp","id":"DblInstallYtdlp"}','{"winget":"Anki.Anki","name":"Anki","id":"DblInstallAnki"}','{"winget":"Adobe.Acrobat.Reader.64-bit","name":"Adobe","id":"DblInstallAdobe"}','{"winget":"Joplin.Joplin","name":"Joplin","id":"DblInstallJoplin"}','{"winget":"TheDocumentFoundation.LibreOffice","name":"LibreOffice","id":"DblInstallLibreoffice"}','{"winget":"Neovim.Neovim","name":"Neovim","id":"DblInstallNeovim"}','{"winget":"Neovim.Neovim.Nightly","name":"Neovim Nightly","id":"DblInstallNeovimNightly"}','{"winget":"Notion.Notion","name":"Notion","id":"DblInstallNotion"}','{"winget":"Notepad++.Notepad++","name":"Notepad","id":"DblInstallNotepadplus"}','{"winget":"JackieLiu.NotepadsApp","name":"Notepads","id":"DblInstallNotepadsApp"}','{"winget":"Obsidian.Obsidian","name":"Obsidian","id":"DblInstallObsidian"}','{"winget":"ONLYOFFICE.DesktopEditors","name":"OnlyOffice","id":"DblInstallOnlyoffice"}','{"winget":"SublimeHQ.SublimeText.3","name":"Sublime Text 4","id":"DblInstallSublime4"}','{"winget":"SumatraPDF.SumatraPDF","name":"Sumatra","id":"DblInstallSumatra"}','{"winget":"Kingsoft.WPSOffice","name":"WPS Office","id":"DblInstallWPS"}','{"winget":"WinMerge.WinMerge","name":"WinMerge","id":"DblInstallWinmerge"}','{"winget":"AgileBits.1Password","name":"1Password","id":"DblInstall1Password"}','{"winget":"7zip.7zip","name":"7-zip","id":"DblInstall7zip"}','{"winget":"Google.PlatformTools","name":"Android Debug Bridge","id":"DblInstallADB"}','{"winget":"Alacritty.Alacritty","name":"Alacritty","id":"DblInstallAlacritty"}','{"winget":"Anydo.Anydo","name":"Anydo","id":"DblInstallAnydo"}','{"winget":"autohotkey","name":"AutoHotkey","id":"DblInstallAutohotkey"}','{"winget":"Bitwarden.Bitwarden","name":"Bitwarden","id":"DblInstallBitwarden"}','{"winget":"ChatterinoTeam.Chatterino","name":"Chatterino","id":"DblInstallChatterino"}','{"winget":"PopeenCom.ClassicVolumeMixer","name":"ClassicVolumeMixer","id":"DblInstallClasicMixer"}','{"winget":"CPUID.CPU-Z","name":"CPU-Z","id":"DblInstallCpuz"}','{"winget":"Cryptomator.Cryptomator","name":"Cryptomator","id":"DblInstallCryptomator"}','{"winget":"Wagnardsoft.DisplayDriverUninstaller","name":"Display Driver Uninstaller","id":"DblInstallDdu"}','{"winget":"JGraph.Draw","name":"Draw.io","id":"DblInstallDrawio"}','{"winget":"oidtools.Everything","name":"Everything","id":"DblInstallEsearch"}','{"winget":"Google.GoogleDrive ","name":"Google Drive","id":"DblInstallGoogleDrive"}','{"winget":"TechPowerUp.GPU-Z","name":"GPU-Z","id":"DblInstallGpuz"}','{"winget":"gerardog.gsudo","name":"gsudo","id":"DblInstallGsudo"}','{"winget":"9P1TBXR6QDCX","name":"HyperX NGENUITY","id":"DblInstallNGENUITY"}','{"winget":"REALiX.HWiNFO","name":"HWiNFO","id":"DblInstallHwinfo"}','{"winget":"AppWork.JDownloader","name":"JDownloader","id":"DblInstallJdownloader"}','{"winget":"KDE.KDEConnect","name":"KDE Connect","id":"DblInstallKDEConnect"}','{"winget":"KeePassXCTeam.KeePassXC","name":"KeePassXC","id":"DblInstallKeepass"}','{"winget":"Guru3D.Afterburner","name":"Afterburner","id":"DblInstallMsiafterburner"}','{"winget":"Mozilla.Thunderbird","name":"Thunderbird","id":"DblInstallThunderbird"}','{"winget":"M2Team.NanaZip","name":"NanaZip","id":"DblInstallNanazip"}','{"winget":"gsass1.NTop","name":"NTop","id":"DblInstallNTop"}','{"winget":"TechPowerUp.NVCleanstall","name":"NVCleanstall","id":"DblInstallNvclean"}','{"winget":"Oracle.VirtualBox","name":"VirtualBox","id":"DblInstallOVirtualBox"}','{"winget":"Ookla.Speedtest.Desktop","name":"Speedtest by Ookla","id":"DblInstallSpeedtest"}','{"winget":"CalcProgrammer1.OpenRGB","name":"OpenRGB","id":"DblInstallOpenrgb"}','{"winget":"Parsec.Parsec","name":"Parsec","id":"DblInstallParsec"}','{"winget":"Postbox.Postbox","name":"Postbox","id":"DblInstallPostbox"}','{"winget":"BitSum.ProcessLasso","name":"Process Lasso","id":"DblInstallProcesslasso"}','{"winget":"ProxymanLLC.Proxyman","name":"Proxyman","id":"DblInstallProxyman"}','{"winget":"qBittorrent.qBittorrent","name":"qBittorrent","id":"DblInstallQbittorrent"}','{"winget":"Rclone.Rclone","name":"Rclone","id":"DblInstallRclone"}','{"winget":"RevoUninstaller.RevoUninstaller","name":"Revo","id":"DblInstallRevo"}','{"winget":"Rufus.Rufus","name":"Rufus","id":"DblInstallRufus"}','{"winget":"9PF4KZ2VN4W9","name":"Ttaskbar","id":"DblInstallTtaskbar"}','{"winget":"SomePythonThings.WingetUIStore","name":"WingetUI","id":"DblInstallWingetUI"}','{"winget":"RARLab.WinRAR","name":"WinRAR","id":"DblInstallWinrar"}')
+$programs = @('{"name":"Docker Desktop","winget":"Docker.DockerDesktop","id":"DblInstallDockerdesktop"}','{"name":"Git","winget":"Git.Git","id":"DblInstallGit"}','{"name":"Git Extensions","winget":"GitExtensionsTeam.GitExtensions","id":"DblInstallGitextensions"}','{"name":"GitHub Desktop","winget":"GitHub.GitHubDesktop","id":"DblInstallGithubdesktop"}','{"name":"Godot Engine","winget":"GodotEngine.GodotEngine","id":"DblInstallGodotEngine"}','{"name":"Go Programming Language","winget":"GoLang.Go","id":"DblInstallGolang"}','{"name":"HeidiSQL","winget":"HeidiSQL.HeidiSQL","id":"DblInstallHeidisql"}','{"name":"MySQL","winget":"Oracle.MySQL","id":"DblInstallMySQL"}','{"name":"Node.js","winget":"OpenJS.NodeJS","id":"DblInstallNodejs"}','{"name":"Node.js LTS","winget":"OpenJS.NodeJS.LTS","id":"DblInstallNodejslts"}','{"name":"Node Version Manager (NVM)","winget":"CoreyButler.NVMforWindows","id":"DblInstallNodemanager"}','{"name":"Java 8","winget":"EclipseAdoptium.Temurin.8.JRE","id":"DblInstallJava8"}','{"name":"Java 11","winget":"EclipseAdoptium.Temurin.11.JRE","id":"DblInstallJava11"}','{"name":"Java 17","winget":"EclipseAdoptium.Temurin.17.JRE","id":"DblInstallJava17"}','{"name":"Java 21","winget":"EclipseAdoptium.Temurin.21.JDK","id":"DblInstallJava21"}','{"name":"Oh My Posh","winget":"JanDeDobbeleer.OhMyPosh","id":"DblInstallOhmyposh"}','{"name":"Python 3","winget":"Python.Python.3.12","id":"DblInstallPython3"}','{"name":"Podman","winget":"RedHat.Podman","id":"DblInstallPodman"}','{"name":"Postman","winget":"Postman.Postman","id":"DblInstallPostman"}','{"name":"Ruby 3.2","winget":"RubyInstallerTeam.Ruby.3.2","id":"DblInstallRuby"}','{"name":"Rust","winget":"Rustlang.Rust.MSVC","id":"DblInstallRust"}','{"name":"SQLite","winget":"DBBrowserForSQLite.DBBrowserForSQLite","id":"DblInstallSQLite"}','{"name":"SQL Server 2022 Developer","winget":"Microsoft.SQLServer.2022.Developer","id":"DblInstallSQLServer2022"}','{"name":"Unity 2022","winget":"Unity.Unity.2022","id":"DblInstallUnity"}','{"name":"Vagrant","winget":"Hashicorp.Vagrant","id":"DblInstallVagrant"}','{"name":"Visual Studio 2022","winget":"Microsoft.VisualStudio.2022.Community","id":"DblInstallVisualstudio2022"}','{"name":"Visual Studio Code","winget":"Microsoft.VisualStudioCode","id":"DblInstallCode"}','{"name":".NET Core 3","winget":"Microsoft.DotNet.DesktopRuntime.3_1","id":"DblInstallDotnet3"}','{"name":".NET 5","winget":"Microsoft.DotNet.DesktopRuntime.5","id":"DblInstallDotnet5"}','{"name":".NET 6","winget":"Microsoft.DotNet.DesktopRuntime.6","id":"DblInstallDotnet6"}','{"name":".NET 7","winget":"Microsoft.DotNet.DesktopRuntime.7","id":"DblInstallDotnet7"}','{"name":".NET 8","winget":"Microsoft.DotNet.DesktopRuntime.8","id":"DblInstallDotnet8"}','{"name":"Autoruns","winget":"Microsoft.Sysinternals.Autoruns","id":"DblInstallAutoruns"}','{"name":"HxD Hex Editor","winget":"MHNexus.HxD","id":"DblInstallHxD"}','{"name":"PowerShell","winget":"Microsoft.PowerShell","id":"DblInstallPowershell"}','{"name":"PowerToys","winget":"Microsoft.PowerToys","id":"DblInstallPowertoys"}','{"name":"Process Explorer","winget":"Microsoft.Sysinternals.ProcessExplorer","id":"DblInstallProcessExplorer"}','{"name":"Visual 2015 Redistributable (64-bit)","winget":"Microsoft.VCRedist.2015+.x64","id":"DblInstallvc2015_64"}','{"name":"Visual 2015 Redistributable (32-bit)","winget":"Microsoft.VCRedist.2015+.x86","id":"DblInstallvc2015_32"}','{"name":"Windows Terminal","winget":"Microsoft.WindowsTerminal","id":"DblInstallTerminal"}','{"name":"Brave","winget":"Brave.Brave","id":"DblInstallBrave"}','{"name":"Google Chrome","winget":"Google.Chrome","id":"DblInstallChrome"}','{"name":"Chromium","winget":"eloston.ungoogled-chromium","id":"DblInstallChromium"}','{"name":"Mozilla Firefox","winget":"Mozilla.Firefox","id":"DblInstallFirefox"}','{"name":"Mullvad","winget":"MullvadVPN.MullvadBrowser","id":"DblInstallMullvad"}','{"name":"Thorium","winget":"Alex313031.Thorium","id":"DblInstallThorium"}','{"name":"Thorium AVX2","winget":"Alex313031.Thorium.AVX2","id":"DblInstallThoriumAVX"}','{"name":"Tor Browser","winget":"TorProject.TorBrowser","id":"DblInstallTor"}','{"name":"Librewolf","winget":"Librewolf.Librewolf","id":"DblInstallLibrewolf"}','{"name":"Floorp","winget":"Ablaze.Floorp","id":"DblInstallFloorp"}','{"name":"Ungoogled","winget":"eloston.ungoogled-chromium","id":"DblInstallUngoogled"}','{"name":"Vivaldi","winget":"VivaldiTechnologies.Vivaldi","id":"DblInstallVivaldi"}','{"name":"Waterfox","winget":"Waterfox.Waterfox","id":"DblInstallWaterfox"}','{"name":"Discord","winget":"Discord.Discord","id":"DblInstallDiscord"}','{"name":"Element (Matrix)","winget":"Element.Element","id":"DblInstallMatrix"}','{"name":"Skype","winget":"Microsoft.Skype","id":"DblInstallSkype"}','{"name":"Slack","winget":"SlackTechnologies.Slack","id":"DblInstallSlack"}','{"name":"Microsoft Teams","winget":"Microsoft.Teams","id":"DblInstallTeams"}','{"name":"Telegram","winget":"Telegram.TelegramDesktop","id":"DblInstallTelegram"}','{"name":"Viber","winget":"Viber.Viber","id":"DblInstallViber"}','{"name":"Zoom","winget":"Zoom.Zoom","id":"DblInstallZoom"}','{"name":"Bluestacks","winget":"BlueStack.BlueStacks","id":"DblInstallBluestacks"}','{"name":"Cemu","winget":"Cemu.Cemu","id":"DblInstallCemu"}','{"name":"EA Desktop App","winget":"ElectronicArts.EADesktop","id":"DblInstallEaapp"}','{"name":"Emulation Station","winget":"Emulationstation.Emulationstation","id":"DblInstallEmulationstation"}','{"name":"Epic Games Store","winget":"EpicGames.EpicGamesLauncher","id":"DblInstallEpicgames"}','{"name":"NVIDIA GeForce NOW","winget":"Nvidia.GeforceNOW","id":"DblInstallGeforcenow"}','{"name":"GOG Galaxy","winget":"GOG.Galaxy","id":"DblInstallGog"}','{"name":"Playnite","winget":"Playnite.Playnite","id":"DblInstallPlaynite"}','{"name":"Prism Launcher","winget":"PrismLauncher.PrismLauncher","id":"DblInstallPrism"}','{"name":"SideQuestVR","winget":"SideQuestVR.SideQuest","id":"DblInstallSideQuest"}','{"name":"Steam","winget":"Valve.Steam","id":"DblInstallSteam"}','{"name":"Sunshine Stream Server","winget":"LizardByte.Sunshine","id":"DblInstallSunshine"}','{"name":"Heroic Games Launcher","winget":"HeroicGamesLauncher.HeroicGamesLauncher","id":"DblInstallHeroic"}','{"name":"itch.io","winget":"ItchIo.Itch","id":"DblInstallItch"}','{"name":"Medal","winget":"MedalB.V.Medal","id":"DblInstallMedal"}','{"name":"Moonlight Stream Client","winget":"MoonlightGameStreamingProject.Moonlight","id":"DblInstallMoonlight"}','{"name":"Legendary Epic (Python)","winget":null,"id":"DblPythonEpicCLI"}','{"name":"Ubisoft Connect","winget":"Ubisoft.Connect","id":"DblInstallUbisoft"}','{"name":"Wargaming Game Center","winget":"Wargaming.GameCenter","id":"DblInstallWargaming"}','{"name":"XEMU","winget":"xemu-project.xemu","id":"DblInstallXemu"}','{"name":"Audacity","winget":"Audacity.Audacity","id":"DblInstallAudacity"}','{"name":"AV1 Video Extension","winget":"9MVZQVXJBQ9V","id":"DblInstallAV1"}','{"name":"Blender","winget":"BlenderFoundation.Blender","id":"DblInstallBlender"}','{"name":"Figma","winget":"Figma.Figma","id":"DblInstallFigma"}','{"name":"FFmpeg","winget":"Gyan.FFmpeg","id":"DblInstallFFmpeg"}','{"name":"Cider","winget":"CiderCollective.Cider","id":"DblInstallCider"}','{"name":"Greenshot","winget":"Greenshot.Greenshot","id":"DblInstallGreenshot"}','{"name":"Handbrake","winget":"HandBrake.HandBrake","id":"DblInstallHandbrake"}','{"name":"ImageGlass","winget":"DuongDieuPhap.ImageGlass","id":"DblInstallImageglass"}','{"name":"Kodi","winget":"XBMCFoundation.Kodi","id":"DblInstallKodi"}','{"name":"K-Lite Codec Pack","winget":"CodecGuide.K-LiteCodecPack.Standard","id":"DblInstallKlite"}','{"name":"MediaInfo","winget":"MediaArea.MediaInfo.GUI","id":"DblInstallMediaInfo"}','{"name":"MKVToolNix","winget":"MoritzBunkus.MKVToolNix","id":"DblInstallMKVToolNix"}','{"name":"Plex Client","winget":"Plex.Plex","id":"DblInstallPlex"}','{"name":"Plex Server","winget":"Plex.PlexMediaServer","id":"DblInstallPlexServer"}','{"name":"OBS Studio","winget":"OBSProject.OBSStudio","id":"DblInstallObs"}','{"name":"Spotify","winget":"9NCBCSZSJRSB","id":"DblInstallSpotify"}','{"name":"ShareX","winget":"ShareX.ShareX","id":"DblInstallSharex"}','{"name":"VLC Media Player","winget":"VideoLAN.VLC","id":"DblInstallVlc"}','{"name":"VP9 Video Extensions","winget":"9N4D0MSMP0PT","id":"DblInstallVP9"}','{"name":"yt-dlp","winget":"yt-dlp.yt-dlp","id":"DblInstallYtdlp"}','{"name":"Anki","winget":"Anki.Anki","id":"DblInstallAnki"}','{"name":"Adobe","winget":"Adobe.Acrobat.Reader.64-bit","id":"DblInstallAdobe"}','{"name":"Joplin","winget":"Joplin.Joplin","id":"DblInstallJoplin"}','{"name":"LibreOffice","winget":"TheDocumentFoundation.LibreOffice","id":"DblInstallLibreoffice"}','{"name":"Neovim","winget":"Neovim.Neovim","id":"DblInstallNeovim"}','{"name":"Neovim Nightly","winget":"Neovim.Neovim.Nightly","id":"DblInstallNeovimNightly"}','{"name":"Notion","winget":"Notion.Notion","id":"DblInstallNotion"}','{"name":"Notepad","winget":"Notepad++.Notepad++","id":"DblInstallNotepadplus"}','{"name":"Notepads","winget":"JackieLiu.NotepadsApp","id":"DblInstallNotepadsApp"}','{"name":"Obsidian","winget":"Obsidian.Obsidian","id":"DblInstallObsidian"}','{"name":"OnlyOffice","winget":"ONLYOFFICE.DesktopEditors","id":"DblInstallOnlyoffice"}','{"name":"Sublime Text 4","winget":"SublimeHQ.SublimeText.3","id":"DblInstallSublime4"}','{"name":"Sumatra","winget":"SumatraPDF.SumatraPDF","id":"DblInstallSumatra"}','{"name":"WPS Office","winget":"Kingsoft.WPSOffice","id":"DblInstallWPS"}','{"name":"WinMerge","winget":"WinMerge.WinMerge","id":"DblInstallWinmerge"}','{"name":"1Password","winget":"AgileBits.1Password","id":"DblInstall1Password"}','{"name":"7-zip","winget":"7zip.7zip","id":"DblInstall7zip"}','{"name":"Android Debug Bridge","winget":"Google.PlatformTools","id":"DblInstallADB"}','{"name":"Alacritty","winget":"Alacritty.Alacritty","id":"DblInstallAlacritty"}','{"name":"Anydo","winget":"Anydo.Anydo","id":"DblInstallAnydo"}','{"name":"AutoHotkey","winget":"autohotkey","id":"DblInstallAutohotkey"}','{"name":"Bitwarden","winget":"Bitwarden.Bitwarden","id":"DblInstallBitwarden"}','{"name":"Chatterino","winget":"ChatterinoTeam.Chatterino","id":"DblInstallChatterino"}','{"name":"ClassicVolumeMixer","winget":"PopeenCom.ClassicVolumeMixer","id":"DblInstallClasicMixer"}','{"name":"CPU-Z","winget":"CPUID.CPU-Z","id":"DblInstallCpuz"}','{"name":"Cryptomator","winget":"Cryptomator.Cryptomator","id":"DblInstallCryptomator"}','{"name":"Display Driver Uninstaller","winget":"Wagnardsoft.DisplayDriverUninstaller","id":"DblInstallDdu"}','{"name":"Draw.io","winget":"JGraph.Draw","id":"DblInstallDrawio"}','{"name":"Everything","winget":"oidtools.Everything","id":"DblInstallEsearch"}','{"name":"Google Drive","winget":"Google.GoogleDrive ","id":"DblInstallGoogleDrive"}','{"name":"GPU-Z","winget":"TechPowerUp.GPU-Z","id":"DblInstallGpuz"}','{"name":"gsudo","winget":"gerardog.gsudo","id":"DblInstallGsudo"}','{"name":"HyperX NGENUITY","winget":"9P1TBXR6QDCX","id":"DblInstallNGENUITY"}','{"name":"HWiNFO","winget":"REALiX.HWiNFO","id":"DblInstallHwinfo"}','{"name":"JDownloader","winget":"AppWork.JDownloader","id":"DblInstallJdownloader"}','{"name":"KDE Connect","winget":"KDE.KDEConnect","id":"DblInstallKDEConnect"}','{"name":"KeePassXC","winget":"KeePassXCTeam.KeePassXC","id":"DblInstallKeepass"}','{"name":"Afterburner","winget":"Guru3D.Afterburner","id":"DblInstallMsiafterburner"}','{"name":"Thunderbird","winget":"Mozilla.Thunderbird","id":"DblInstallThunderbird"}','{"name":"NanaZip","winget":"M2Team.NanaZip","id":"DblInstallNanazip"}','{"name":"NTop","winget":"gsass1.NTop","id":"DblInstallNTop"}','{"name":"NVCleanstall","winget":"TechPowerUp.NVCleanstall","id":"DblInstallNvclean"}','{"name":"VirtualBox","winget":"Oracle.VirtualBox","id":"DblInstallOVirtualBox"}','{"name":"Speedtest by Ookla","winget":"Ookla.Speedtest.Desktop","id":"DblInstallSpeedtest"}','{"name":"OpenRGB","winget":"CalcProgrammer1.OpenRGB","id":"DblInstallOpenrgb"}','{"name":"Parsec","winget":"Parsec.Parsec","id":"DblInstallParsec"}','{"name":"Postbox","winget":"Postbox.Postbox","id":"DblInstallPostbox"}','{"name":"Process Lasso","winget":"BitSum.ProcessLasso","id":"DblInstallProcesslasso"}','{"name":"Proxyman","winget":"ProxymanLLC.Proxyman","id":"DblInstallProxyman"}','{"name":"qBittorrent","winget":"qBittorrent.qBittorrent","id":"DblInstallQbittorrent"}','{"name":"Rclone","winget":"Rclone.Rclone","id":"DblInstallRclone"}','{"name":"Revo","winget":"RevoUninstaller.RevoUninstaller","id":"DblInstallRevo"}','{"name":"Rufus","winget":"Rufus.Rufus","id":"DblInstallRufus"}','{"name":"Ttaskbar","winget":"9PF4KZ2VN4W9","id":"DblInstallTtaskbar"}','{"name":"WingetUI","winget":"SomePythonThings.WingetUIStore","id":"DblInstallWingetUI"}','{"name":"WinRAR","winget":"RARLab.WinRAR","id":"DblInstallWinrar"}')
 $appx = @('{"id":"MicrosoftCorporationIIQuickAssist","name":"MicrosoftCorporationII.QuickAssist"}','{"id":"ClipchampClipchamp","name":"Clipchamp.Clipchamp"}','{"id":"MicrosoftOutlookForWindows","name":"Microsoft.OutlookForWindows"}','{"id":"MicrosoftPowerAutomateDesktop","name":"Microsoft.PowerAutomateDesktop"}','{"id":"MicrosoftTodos","name":"Microsoft.Todos"}','{"id":"MicrosoftAppConnector","name":"Microsoft.AppConnector"}','{"id":"MicrosoftBingFinance","name":"Microsoft.BingFinance"}','{"id":"MicrosoftBingNews","name":"Microsoft.BingNews"}','{"id":"MicrosoftBingSports","name":"Microsoft.BingSports"}','{"id":"MicrosoftBingTranslator","name":"Microsoft.BingTranslator"}','{"id":"MicrosoftBingWeather","name":"Microsoft.BingWeather"}','{"id":"MicrosoftBingFoodAndDrink","name":"Microsoft.BingFoodAndDrink"}','{"id":"MicrosoftBingHealthAndFitness","name":"Microsoft.BingHealthAndFitness"}','{"id":"MicrosoftBingTravel","name":"Microsoft.BingTravel"}','{"id":"MicrosoftMinecraftUWP","name":"Microsoft.MinecraftUWP"}','{"id":"MicrosoftGamingServices","name":"Microsoft.GamingServices"}','{"id":"MicrosoftGetHelp","name":"Microsoft.GetHelp"}','{"id":"MicrosoftGetstarted","name":"Microsoft.Getstarted"}','{"id":"MicrosoftMessaging","name":"Microsoft.Messaging"}','{"id":"MicrosoftMicrosoft3DViewer","name":"Microsoft.Microsoft3DViewer"}','{"id":"MicrosoftMicrosoftSolitaireCollection","name":"Microsoft.MicrosoftSolitaireCollection"}','{"id":"MicrosoftNetworkSpeedTest","name":"Microsoft.NetworkSpeedTest"}','{"id":"MicrosoftNews","name":"Microsoft.News"}','{"id":"MicrosoftOfficeLens","name":"Microsoft.Office.Lens"}','{"id":"MicrosoftOfficeSway","name":"Microsoft.Office.Sway"}','{"id":"MicrosoftOfficeOneNote","name":"Microsoft.Office.OneNote"}','{"id":"MicrosoftOneConnect","name":"Microsoft.OneConnect"}','{"id":"MicrosoftPeople","name":"Microsoft.People"}','{"id":"MicrosoftPrint3D","name":"Microsoft.Print3D"}','{"id":"MicrosoftSkypeApp","name":"Microsoft.SkypeApp"}','{"id":"MicrosoftWallet","name":"Microsoft.Wallet"}','{"id":"MicrosoftWhiteboard","name":"Microsoft.Whiteboard"}','{"id":"MicrosoftWindowsAlarms","name":"Microsoft.WindowsAlarms"}','{"id":"microsoftwindowscommunicationsapps","name":"microsoft.windowscommunicationsapps"}','{"id":"MicrosoftWindowsFeedbackHub","name":"Microsoft.WindowsFeedbackHub"}','{"id":"MicrosoftWindowsMaps","name":"Microsoft.WindowsMaps"}','{"id":"MicrosoftWindowsPhone","name":"Microsoft.WindowsPhone"}','{"id":"MicrosoftWindowsSoundRecorder","name":"Microsoft.WindowsSoundRecorder"}','{"id":"MicrosoftXboxApp","name":"Microsoft.XboxApp"}','{"id":"MicrosoftGamingApp","name":"Microsoft.GamingApp"}','{"id":"MicrosoftConnectivityStore","name":"Microsoft.ConnectivityStore"}','{"id":"MicrosoftCommsPhone","name":"Microsoft.CommsPhone"}','{"id":"MicrosoftScreenSketch","name":"Microsoft.ScreenSketch"}','{"id":"MicrosoftXboxTCUI","name":"Microsoft.Xbox.TCUI"}','{"id":"MicrosoftXboxGameOverlay","name":"Microsoft.XboxGameOverlay"}','{"id":"MicrosoftXboxGamingOverlay","name":"Microsoft.XboxGamingOverlay"}','{"id":"MicrosoftXboxGameCallableUI","name":"Microsoft.XboxGameCallableUI"}','{"id":"MicrosoftXboxSpeechToTextOverlay","name":"Microsoft.XboxSpeechToTextOverlay"}','{"id":"MicrosoftXboxIdentityProvider","name":"Microsoft.XboxIdentityProvider"}','{"id":"MicrosoftMixedRealityPortal","name":"Microsoft.MixedReality.Portal"}','{"id":"MicrosoftYourPhone","name":"Microsoft.YourPhone"}','{"id":"MicrosoftZuneMusic","name":"Microsoft.ZuneMusic"}','{"id":"MicrosoftZuneVideo","name":"Microsoft.ZuneVideo"}','{"id":"MicrosoftGetstarted","name":"Microsoft.Getstarted"}','{"id":"MicrosoftFamily","name":"Microsoft.Family"}','{"id":"MicrosoftMicrosoftOfficeHub","name":"Microsoft.MicrosoftOfficeHub"}','{"id":"MicrosoftMicrosoftStickyNotes","name":"Microsoft.MicrosoftStickyNotes"}','{"id":"EclipseManager","name":"*EclipseManager*"}','{"id":"ActiproSoftwareLLC","name":"*ActiproSoftwareLLC*"}','{"id":"AdobePhotoshopExpress","name":"*AdobeSystemsIncorporated.AdobePhotoshopExpress*"}','{"id":"DuolingoLearnLanguagesforFree","name":"*Duolingo-LearnLanguagesforFree*"}','{"id":"PandoraMediaInc","name":"*PandoraMediaInc*"}','{"id":"CandyCrush","name":"*CandyCrush*"}','{"id":"BubbleWitch3Saga","name":"*BubbleWitch3Saga*"}','{"id":"Wunderlist","name":"*Wunderlist*"}','{"id":"Flipboard","name":"*Flipboard*"}','{"id":"Twitter","name":"*Twitter*"}','{"id":"Facebook","name":"*Facebook*"}','{"id":"RoyalRevolt","name":"*Royal Revolt*"}','{"id":"Sway","name":"*Sway*"}','{"id":"SpeedTest","name":"*Speed Test*"}','{"id":"Dolby","name":"*Dolby*"}','{"id":"Viber","name":"*Viber*"}','{"id":"ACGMediaPlayer","name":"*ACGMediaPlayer*"}','{"id":"Netflix","name":"*Netflix*"}','{"id":"OneCalendar","name":"*OneCalendar*"}','{"id":"LinkedInforWindows","name":"*LinkedInforWindows*"}','{"id":"HiddenCityMysteryofShadows","name":"*HiddenCityMysteryofShadows*"}','{"id":"Hulu","name":"*Hulu*"}','{"id":"HiddenCity","name":"*HiddenCity*"}','{"id":"AdobePhotoshopExpress","name":"*AdobePhotoshopExpress*"}','{"id":"HotspotShieldFreeVPN","name":"*HotspotShieldFreeVPN*"}','{"id":"MicrosoftAdvertisingXaml","name":"*Microsoft.Advertising.Xaml*"}','{"id":"WindowsDevHome","name":"*Windows.DevHome*"}')
 
 ################################################################################################################
@@ -1658,36 +1731,72 @@ function Invoke-UnselectApplicationAll {
 ###                                                                                                          ###
 ################################################################################################################
 
-function Get-RegistryValue {
-    <#
-    .SYNOPSIS
-        Safely retrieves a registry value. Returns $null if not found or access denied.
-    .PARAMETER Path
-        Registry path
-    .PARAMETER Name
-        Registry value name
-    #>
-    
-    param ($Path, $Name)
-    try {
-        return Get-ItemPropertyValue -Path $Path -Name $Name -ErrorAction Stop
-    } catch {
-        return $null
+# Load JSON from file
+$jsonPath = ".\config\tweaks.json"
+$sync = @{
+    configs = @{
+        tweaks = (Get-Content -Path $jsonPath -Raw | ConvertFrom-Json)
     }
 }
-function Get-ToggleValue {
-    <#
 
-    .SYNOPSIS
-        Handler function to get registry information for toggle tweakes
-        Get-ToggleValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled'
-    #>
-    param (
-        [string]$Path,
-        [string]$Name
-    )
+function Get-ToggleStatus {
+    Param([string]$ToggleSwitch)
 
-    return (Get-ItemProperty -Path $Path).$Name -ne 0
+    $ToggleSwitchReg = $sync.configs.tweaks.$ToggleSwitch.registry
+
+    try {
+        if (($ToggleSwitchReg.path -imatch "hku") -and !(Get-PSDrive -Name HKU -ErrorAction SilentlyContinue)) {
+            $null = (New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS)
+        }
+    } catch {
+        Write-Error "An error occurred regarding the HKU Drive: $_"
+        return $false
+    }
+
+    if ($ToggleSwitchReg) {
+        $count = 0
+
+        foreach ($regentry in $ToggleSwitchReg) {
+            try {
+                if (!(Test-Path $regentry.Path)) {
+                    New-Item -Path $regentry.Path -Force | Out-Null
+                }
+
+                $regstate = (Get-ItemProperty -Path $regentry.Path -ErrorAction Stop).$($regentry.Name)
+
+                if ($regstate -eq $regentry.Value) {
+                    $count += 1
+                }
+                elseif (-not $regstate) {
+                    switch ($regentry.DefaultState) {
+                        "true"  { $count += 1 }
+                        "false" { }
+                        default { }
+                    }
+                }
+            } catch {
+                Write-Error "An unexpected error occurred: $_"
+            }
+        }
+
+        return ($count -eq $ToggleSwitchReg.Count)
+    } else {
+        return $false
+    }
+}
+
+# Get all WPF ToggleButtons
+$toggleButtons = Get-Variable | Where-Object {
+    $_.Name -like "wpf_*" -and
+    $_.Value -ne $null -and
+    $_.Value.GetType().Name -eq "ToggleButton"
+} | ForEach-Object { $_.Value }
+
+# Set each ToggleButton's state at startup
+foreach ($btn in $toggleButtons) {
+    $toggleName = $btn.Name -replace '^wpf_', ''
+    $isChecked = Get-ToggleStatus -ToggleSwitch $toggleName
+    $btn.IsChecked = $isChecked
 }
 function Get-WindowsTheme {
     $themeRegistryPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize'
@@ -1796,702 +1905,645 @@ function Set-ScheduledTask {
         Write-Warning $psitem.Exception.StackTrace
     }
 }
-function Toggle-RegistryValue {
-    <#
-
-    .SYNOPSIS
-        Handler function to get registry information
-        Toggle-RegistryValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled'
-    #>
-
-    param (
-        [System.Windows.Controls.CheckBox]$CheckBox,
-        [string]$Path,
-        [string]$Name,
-        [int]$TrueValue,
-        [int]$FalseValue,
-        [string]$EnableMessage,
-        [string]$DisableMessage
-    )
-
-    $EnableMode = $CheckBox.IsChecked
-    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
-
-    If ($ToggleValue -ne 1){
-        Set-RegistryValue -Path $Path -Name $Name -Value $TrueValue
-        Write-Host $EnableMessage
-    }
-    if ($ToggleValue -ne 0){
-        Set-RegistryValue -Path $Path -Name $Name -Value $FalseValue
-        Write-Host $DisableMessage
-    }
-}
-function Get-CheckerTweaks {
+function Invoke-OptimizationButton {
     <#
     .SYNOPSIS
-        This function checks if toggle tweaks are already set
+        Applies all selected CheckBox tweaks dynamically and resets their state.
     #>
 
-    param ()
+    # Loop through all tweaks
+    foreach ($toggleName in $tweaks.PSObject.Properties.Name) {
+        $tweak = $tweaks.$toggleName
 
-    $a = $wpf_ToggleBingSearchMenu.IsChecked = Get-RegistryValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled'
-    $b = $wpf_ToggleNumLock.IsChecked = (Get-RegistryValue -Path 'HKCU:\Control Panel\Keyboard' -Name 'InitialKeyboardIndicators') -eq 2
-    $c = $wpf_ToggleExt.IsChecked = (Get-RegistryValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'HideFileExt') -eq 0
-    $d = $wpf_ToggleMouseAcceleration.IsChecked = (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseSpeed') -and (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold1') -and (Get-ToggleValue -Path 'HKCU:\Control Panel\Mouse' -Name 'MouseThreshold2')
-    $e = $wpf_ToggleHiddenFiles.IsChecked = (((Get-RegistryValue -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Hidden')))
-    $f = $wpf_ToggleSearch.IsChecked = (Get-RegistryValue -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'SearchBoxTaskbarMode') -eq 0
-    $g = $wpf_TogglefIPv6.IsChecked = $(If ((Get-NetAdapterBinding -Name 'Ethernet' -ComponentID ms_tcpip6).Enabled -eq "True" -And 
-        $(Get-NetAdapterBinding -Name 'Ethernet' -ComponentID ms_tcpip6).Enabled -eq "False") {$true} Else {$false})
-    $h = $wpf_ToggleSnapLayouts.IsChecked = (((Get-RegistryValue -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'EnableSnapAssistFlyout') -eq 0))
-    $i = $wpf_ToggleVerboseLogon.IsChecked = (((Get-RegistryValue -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' -Name 'VerboseStatus')))
-    $j = $wpf_ToggleCopilot.IsChecked = (((Get-RegistryValue -Path 'HKCU:\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot' -Name 'TurnOffWindowsCopilot')))
-    $k = $wpf_ToggleSticky.IsChecked = (((Get-RegistryValue -Path 'HKCU:\Control Panel\Accessibility\StickyKeys' -Name 'Flags') -eq 58))
-    $l = $wpf_ToggleEndTask.IsChecked = (((Get-RegistryValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings' -Name 'TaskbarEndTask') -eq 1))
-    $m = $wpf_ToggleCenterTaskbar.IsChecked = (((Get-RegistryValue -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'TaskbarAl') -eq 1))
-    $n = $wpf_ToggleDetailedBSoD.IsChecked = (((Get-RegistryValue -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl' -Name 'DisplayParameters') -eq 1))
-    $o = $wpf_TogglePasswordReveal.IsChecked = $(If ((Get-RegistryValue -Path 'HKLM:\Software\Policies\Microsoft\Windows\CredUI' -Name 'DisablePasswordReveal') -eq 0) {$true})
+        $apply = $false
 
-    return $a -and $b -and $c -and $d -and $e -and $f -and $g -and $h -and $i -and $j -and $k -and $l -and $m -and $n -and $o
-}
-
-# Invoke and discard result (to only update UI)
-Get-CheckerTweaks | Out-Null
-function Invoke-optimizationButton{
-    <#
-
-    .SYNOPSIS
-        This function run selected tweaks
-        Unselect tweaks after tweaking
-    #>
-
-    # Invoke restore point
-    If ( $wpf_DblSystemRestore.IsChecked -eq $true ) {
-        Write-Host "Making Restore Point..." -ForegroundColor Green
-        Set-RestorePoint
-    }
-    # Essential Tweaks
-    If ( $wpf_DblTelemetry.IsChecked -eq $true ) {
-        Write-Host "Disabling Telemetry..." -ForegroundColor Green
-        Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" -State "Disabled"
-        Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\ProgramDataUpdater" -State "Disabled"
-        Set-ScheduledTask -Name "Microsoft\Windows\Autochk\Proxy" -State "Disabled"
-        Set-ScheduledTask -Name "Microsoft\Windows\Customer Experience Improvement Program\Consolidator" -State "Disabled"
-        Set-ScheduledTask -Name "Microsoft\Windows\Customer Experience Improvement Program\UsbCeip" -State "Disabled"
-        Set-ScheduledTask -Name "Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector" -State "Disabled"
-        Set-ScheduledTask -Name "Microsoft\Windows\Feedback\Siuf\DmClient" -State "Disabled"
-        Set-ScheduledTask -Name "Microsoft\Windows\Feedback\Siuf\DmClientOnScenarioDownload" -State "Disabled"
-        Set-ScheduledTask -Name "Microsoft\Windows\Windows Error Reporting\QueueReporting" -State "Disabled"
-        Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\MareBackup" -State "Disabled"
-        Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\StartupAppTask" -State "Disabled"
-        Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\PcaPatchDbTask" -State "Disabled"
-        Set-ScheduledTask -Name "Microsoft\Windows\Maps\MapsUpdateTask" -State "Disabled"
-        
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "AllowTelemetry" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" -Name "AllowTelemetry" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "OemPreInstalledAppsEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "ContentDeliveryAllowed" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "PreInstalledAppsEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "PreInstalledAppsEverEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SilentInstalledAppsEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338387Enabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338388Enabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338389Enabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-353698Enabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SystemPaneSuggestionsEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" -Name "NumberOfSIUFInPeriod" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "DoNotShowFeedbackNotifications" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "DisableTailoredExperiencesWithDiagnosticData" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" -Name "DisabledByGroupPolicy" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting" -Name "Disabled" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config" -Name "DODownloadMode" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance" -Name "fAllowToGetHelp" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager" -Name "EnthusiastMode" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "PeopleBand" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "LongPathsEnabled" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching" -Name "SearchOrderConfig" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" -Name "SystemResponsiveness" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" -Name "NetworkThrottlingIndex" -Type "DWord" -Value 4294967295
-        Set-RegistryValue -Path "HKCU:\Control Panel\Desktop" -Name "MenuShowDelay" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKCU:\Control Panel\Desktop" -Name "AutoEndTasks" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" -Name "ClearPageFileAtShutdown" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKLM:\SYSTEM\ControlSet001\Services\Ndu" -Name "Start" -Type "DWord" -Value 2
-        Set-RegistryValue -Path "HKCU:\Control Panel\Mouse" -Name "MouseHoverTime" -Type "DWord" -Value 400
-        Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" -Name "IRPStackSize" -Type "DWord" -Value 30
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds" -Name "EnableFeeds" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds" -Name "ShellFeedsTaskbarViewMode" -Type "DWord" -Value 2
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "HideSCAMeetNow" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\UserProfileEngagement" -Name "ScoobeSystemSettingEnabled" -Type "DWord" -Value 0
-        
-        $InvokeScript = [ScriptBlock]::Create(@'
-bcdedit /set {current} bootmenupolicy Legacy | Out-Null
-
-If ((Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentBuild).CurrentBuild -lt 22557) {
-    $taskmgr = Start-Process -WindowStyle Hidden -FilePath taskmgr.exe -PassThru
-    Do {
-        Start-Sleep -Milliseconds 100
-        $preferences = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\TaskManager" -Name "Preferences" -ErrorAction SilentlyContinue
-    } Until ($preferences)
-    Stop-Process $taskmgr
-    $preferences.Preferences[28] = 0
-    Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\TaskManager" -Name "Preferences" -Type Binary -Value $preferences.Preferences
-}
-
-Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}" -Recurse -ErrorAction SilentlyContinue
-
-If (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge") {
-    Remove-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" -Recurse -ErrorAction SilentlyContinue
-}
-
-$ram = (Get-CimInstance -ClassName Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum).Sum / 1kb
-Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control" -Name "SvcHostSplitThresholdInKB" -Type DWord -Value $ram -Force
-
-$autoLoggerDir = "$env:PROGRAMDATA\Microsoft\Diagnosis\ETLLogs\AutoLogger"
-If (Test-Path "$autoLoggerDir\AutoLogger-Diagtrack-Listener.etl") {
-    Remove-Item "$autoLoggerDir\AutoLogger-Diagtrack-Listener.etl"
-}
-icacls $autoLoggerDir "/deny" "SYSTEM:(OI)(CI)F" | Out-Null
-
-Set-MpPreference -SubmitSamplesConsent 2 -ErrorAction SilentlyContinue | Out-Null
-'@)
-
-        Invoke-Scripts -ScriptBlock $InvokeScript -Name "InvokeScript"
-
-
-        $wpf_DblTelemetry.IsChecked = $false
-    }
-    If ( $wpf_DblWifi.IsChecked -eq $true ) {
-        Write-Host "Disabling Wi-Fi Sense..." -ForegroundColor Green
-        Set-RegistryValue -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting" -Name "Value" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" -Name "Value" -Type "DWord" -Value 0
-        $wpf_DblWifi.IsChecked = $false
-    }
-    If ( $wpf_DblAH.IsChecked -eq $true ) {
-            Write-Host "Disabling Activity History..." -ForegroundColor Green
-            Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "EnableActivityFeed" -Type "DWord" -Value 0
-            Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "PublishUserActivities" -Type "DWord" -Value 0
-            Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "UploadUserActivities" -Type "DWord" -Value 0
-            $wpf_DblAH.IsChecked = $false
-    }
-    If ( $wpf_DblDeleteTempFiles.IsChecked -eq $true ) {
-        Write-Host "Delete Temp Files" -ForegroundColor Green
-        Get-ChildItem -Path "C:\Windows\Temp" *.* -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
-        Get-ChildItem -Path $env:TEMP *.* -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
-        $wpf_DblDeleteTempFiles.IsChecked = $false
-        Write-Host "======================================="
-        Write-Host "--- Cleaned following folders:"
-        Write-Host "--- C:\Windows\Temp"
-        Write-Host "--- "$env:TEMP
-        Write-Host "======================================="
-    }
-    If ( $wpf_DblRecycleBin.IsChecked -eq $true ) {
-        Write-Host "Empting Recycle Bin..." -ForegroundColor Green
-        Clear-RecycleBin -Force
-        $wpf_DblRecycleBin.IsChecked = $false
-    }
-    If ( $wpf_DblDiskCleanup.IsChecked -eq $true ) {
-        Write-Host "Running Disk Cleanup on Drive C:..." -ForegroundColor Green
-        cmd /c cleanmgr.exe /d C: /VERYLOWDISK
-        $wpf_DblDiskCleanup.IsChecked = $false
-    }
-    If ( $wpf_DblLocTrack.IsChecked -eq $true ) {
-        Write-Host "Disabling Location Tracking..." -ForegroundColor Green
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "Value" -Type "String" -Value "Deny"
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}" -Name "SensorPermissionState" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration" -Name "Status" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKLM:\SYSTEM\Maps" -Name "AutoUpdateEnabled" -Type "DWord" -Value 0
-
-        $wpf_DblLocTrack.IsChecked = $false
-    }
-    If ( $wpf_DblStorage.IsChecked -eq $true ) {
-        Write-Host "Disabling Storage Sense..." -ForegroundColor Green
-        Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy" -Name "01" -Value 0 -Type Dword -Force
-        $wpf_DblStorage.IsChecked = $false
-    }
-    If ( $wpf_DblHiber.IsChecked -eq $true  ) {
-        Write-Host "Disabling Hibernation..." -ForegroundColor Green
-        Set-RegistryValue -Path "HKLM:\System\CurrentControlSet\Control\Session Manager\Power" -Name "HibernateEnabled" -Type "Dword" -Value 0
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings" -Name "ShowHibernateOption" -Type "Dword" -Value 0
-        
-        $InvokeScript = [ScriptBlock]::Create(@'
-        powercfg.exe /hibernate off
-'@)
-        Invoke-Scripts -ScriptBlock $InvokeScript -Name "InvokeScript"
-        $wpf_DblHiber.IsChecked = $false
-    }
-    If ( $wpf_DblDVR.IsChecked -eq $true ) {
-        Write-Host "Disabling GameDVR..." -ForegroundColor Green
-        Set-RegistryValue -Path "HKCU:\System\GameConfigStore" -Name "GameDVR_DXGIHonorFSEWindowsCompatible" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKCU:\System\GameConfigStore" -Name "GameDVR_HonorUserFSEBehaviorMode" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKCU:\System\GameConfigStore" -Name "GameDVR_EFSEFeatureFlags" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\System\GameConfigStore" -Name "GameDVR_Enabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\System\GameConfigStore" -Name "GameDVR_FSEBehavior" -Type "DWord" -Value 2
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR" -Name "AllowGameDVR" -Type "DWord" -Value 0
-        $wpf_DblDVR.IsChecked = $false
-    }
-    If ( $wpf_DblCoreIsolation.IsChecked -eq $true ) {
-        Write-Host "Disabling Core Isolation..." -ForegroundColor Green
-        Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" -Name "Enabled" -Type "DWord" -Value 0
-        $wpf_DblCoreIsolation.IsChecked = $false
-    }
-    If ( $wpf_DblDisableTeredo.IsChecked -eq $true ) {
-        Write-Host "Disabling Teredo..." -ForegroundColor Green
-        Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters" -Name "DisabledComponents" -Type "DWord" -Value 1
-        $wpf_DblDisableTeredo.IsChecked = $false
-    }
-    If ( $wpf_DblAutoAdjustVolume.IsChecked -eq $true ) {
-        Write-Host "Disabling Auto Adjust Volume..." -ForegroundColor Green
-        # dword:00000000: Mute all other sounds
-        # dword:00000001: Reduce all other by 80%
-        # dword:00000002: Reduce all other by 50%
-        # dword:00000003: Do nothing
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Multimedia\Audio" -Name "UserDuckingPreference" -Type "DWord" -Value 3
-        $wpf_DblAutoAdjustVolume.IsChecked = $false
-    }
-    If ( $wpf_DblSearchIndexer.IsChecked -eq $true ) {
-        Write-Host "Disabling search indexer..." -ForegroundColor Green
-        Get-Service -Name "wsearch" -ErrorAction SilentlyContinue | Stop-Service -ErrorAction SilentlyContinue
-        Get-Service -Name "wsearch" -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue
-        $wpf_DblSearchIndexer.IsChecked = $false
-    }
-    If ( $wpf_DblPS7Telemetry.IsChecked -eq $true ) {
-        Write-Host "Disabling Powershell 7 Telemetry..." -ForegroundColor Green
-        "[Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '1', 'Machine')"
-        $wpf_DblPS7Telemetry.IsChecked = $false
-    }
-    If ( $wpf_DblConsumerFeatures.IsChecked -eq $true ) {
-        Write-Host "Disabling ConsumerFeatures..." -ForegroundColor Green 
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" -Name "DisableWindowsConsumerFeatures" -Type "DWord" -Value 1
-        $wpf_DblConsumerFeatures.IsChecked = $false
-    }
-
-    # Additional Tweaks
-    If ( $wpf_DblPower.IsChecked -eq $true ) {
-        Write-Host "Disabling Power Throttling..." -ForegroundColor Green        
-        Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling" -Name "PowerThrottlingOff" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power" -Name "HiberbootEnabled" -Type "DWord" -Value 0
-        $wpf_DblPower.IsChecked = $false 
-    }
-    If ( $wpf_DblDisplay.IsChecked -eq $true ) {
-        # https://www.tenforums.com/tutorials/6377-change-visual-effects-settings-windows-10-a.html
-        # https://superuser.com/questions/1244934/reg-file-to-modify-windows-10-visual-effects
-        Write-Host "Adjusted visual effects for performance" -ForegroundColor Green        
-        Set-RegistryValue -Path "HKCU:\Control Panel\Desktop" -Name "DragFullWindows" -Type "String" -Value 1
-        Set-RegistryValue -Path "HKCU:\Control Panel\Desktop" -Name "MenuShowDelay" -Type "String" -Value 0
-        Set-RegistryValue -Path "HKCU:\Control Panel\Desktop\WindowMetrics" -Name "MinAnimate" -Type "String" -Value 0
-        Set-RegistryValue -Path "HKCU:\Control Panel\Keyboard" -Name "KeyboardDelay" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ListviewAlphaSelect" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ListviewShadow" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAnimations" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "IconsOnly" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" -Name "VisualFXSetting" -Type "DWord" -Value 3
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\DWM" -Name "EnableAeroPeek" -Type "DWord" -Value 1
-
-        $InvokeScript = [ScriptBlock]::Create(@'
-        Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "UserPreferencesMask" -Type Binary -Value ([byte[]](144, 18, 3, 128, 18, 0, 0, 0))
-'@)
-        Invoke-Scripts -ScriptBlock $InvokeScript -Name "InvokeScript"
-        $wpf_DblDisplay.IsChecked = $false
-    }
-    If ( $wpf_DblUTC.IsChecked -eq $true ) {
-        Write-Host "Setting BIOS time to UTC..." -ForegroundColor Green
-        Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\TimeZoneInformation" -Name "RealTimeIsUniversal" -Type "DWord" -Value 1
-        $wpf_DblUTC.IsChecked = $false
-    }
-    If ( $wpf_DblDisableUAC.IsChecked -eq $true) {
-        Write-Host "Disabling UAC..." -ForegroundColor Green
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "ConsentPromptBehaviorAdmin" -Type "DWord" -Value 0 # Default is 5
-        # This will set the GPO Entry in Security so that Admin users elevate without any prompt while normal users still elevate and u can even leave it ennabled.
-        $wpf_DblDisableUAC.IsChecked = $false
-    }
-    If ( $wpf_DblDisableNotifications.IsChecked -eq $true ) {
-        Write-Host "Disabling Notification Tray/Calendar..." -ForegroundColor Green
-        Set-RegistryValue -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "DisableNotificationCenter" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\PushNotifications" -Name "ToastEnabled" -Type "DWord" -Value 0
-        $wpf_DblDisableNotifications.IsChecked = $false
-    }
-    If ( $wpf_DblRemoveCortana.IsChecked -eq $true ) {
-        Write-Host "Removing Cortana..."
-        Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage
-        $wpf_DblRemoveCortana.IsChecked = $false
-    }
-    If ( $wpf_DblRemoveWidgets.IsChecked -eq $true ) {
-        Write-Host "Removing Widgets..."
-        Get-AppxPackage -allusers MicrosoftWindows.Client.WebExperience | Remove-AppxPackage
-        $wpf_DblRemoveWidgets.IsChecked = $false
-    }
-    If ( $wpf_DblClassicAltTab.IsChecked -eq $true ) {
-        Write-Host "Setting Classic Alt+Tab..." -ForegroundColor Green
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "MultiTaskingAltTabFilter" -Type "DWord" -Value 3       
-        $wpf_DblClassicAltTab.IsChecked = $false
-    }
-    If ( $wpf_DblRightClickMenu.IsChecked -eq $true ) {
-        Write-Host "Setting Classic Right-Click Menu..." -ForegroundColor Green
-        Write-Host Restarting explorer.exe ... -ForegroundColor Blue
-        taskkill.exe /F /IM "explorer.exe"
-        New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}" -Name "InprocServer32" -force -value ""       
-        Start-Process "explorer.exe"
-        $wpf_DblRightClickMenu.IsChecked = $false
-    }
-    If ( $wpf_DblGameMode.IsChecked -eq $true ) {
-        Write-Host "Enabling Game Mode..." -ForegroundColor Green
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\GameBar" -Name "AllowAutoGameMode" -Type "DWord" -Value 3       
-        $wpf_DblGameMode.IsChecked -eq $false
-    }
-    If ( $wpf_DblGameBar.IsChecked -eq $true ) {
-        Write-Host "Disabling Game Bar..." -ForegroundColor Green
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\GameBar" -Name "UseNexusForGameBarEnabled" -Type "DWord" -Value 0      
-        $wpf_DblGameBar.IsChecked = $false
-    }
-    If ( $wpf_DblWindowsSound.IsChecked -eq $true ) {
-        Write-Host "Disabling Windows Sound..." -ForegroundColor Green
-        Set-RegistryValue -Path "HKCU:\AppEvents\Schemes" -Name "(Default)" -Type "String" -Value ".None"
-        $wpf_DblWindowsSound.IsChecked = $false
-    }
-    If ( $wpf_DblPersonalize.IsChecked -eq $true ) {
-        Write-Host "Adjusting Personalization Settings..." -ForegroundColor Green       
-        #hide search icon, show transparency effect, colors, lock screen, power
-        Set-RegistryValue -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "HideTaskViewButton" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "HideTaskViewButton" -Type "DWord" -Value 1
-        
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "EnableTransparency" -Type "DWord" -Value 1
-        
-        Set-RegistryValue -Path "HKCU:\Control Panel\Desktop" -Name "AutoColorization" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Name "AccentColorMenu" -Type "DWord" -Value 0xffd47800
-
-        $InvokeScript = [ScriptBlock]::Create(@'
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Name "AccentPalette" -Type Binary -Value ([byte[]](0x99,0xEB,0xFF,0x00,0x41,0xF8,0x00,0x00,0x78,0xD4,0x00,0x00,0x67,0xC0,0x00,0x00,0x3E,0x92,0x00,0x00,0x1A,0x68,0x00,0xF7,0x63,0x0C,0x00))
-'@)
-        Invoke-Scripts -ScriptBlock $InvokeScript -Name "InvokeScript"
-
-        Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Name "StartColorMenu" -Type "DWord" -Value 0xffc06700
-        
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "ColorPrevalence" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\DWM" -Name "ColorPrevalence" -Type "DWord" -Value 0
-
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "NoLockScreen" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "NoLockScreenSlideshow" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "FeatureManagementEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "OemPreInstalledAppsEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "PreInstalledAppsEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "RotatingLockScreenEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "RotatingLockScreenOverlayEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SoftLandingEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SystemPaneSuggestionsEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContentEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "ContentDeliveryAllowed" -Type "DWord" -Value 1
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SilentInstalledAppsEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "PreInstalledAppsEverEnabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "RemediationRequired" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338387Enabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338388Enabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338389Enabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-310093Enabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338393Enabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-314563Enabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-353698Enabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-353694Enabled" -Type "DWord" -Value 0
-        Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "DisableLogonBackgroundImage" -Type "DWord" -Value 0
-
-        
-        powercfg -x -disk-timeout-ac 0
-        powercfg -x -disk-timeout-dc 0
-        powercfg -x -monitor-timeout-ac 20
-        powercfg -x -monitor-timeout-dc 20
-
-
-        $wpf_DblPersonalize.IsChecked = $false
-    }
-    If ( $wpf_DblRemoveEdge.IsChecked -eq $true ) {
-        # Standalone script by AveYo Source: https://raw.githubusercontent.com/AveYo/fox/main/Edge_Removal.bat
-
-        curl.exe "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/edgeremoval.bat" -o $ENV:temp\\edgeremoval.bat
-        Start-Process $ENV:temp\\edgeremoval.bat
-
-        $wpf_DblRemoveEdge.IsChecked= $false
-    }
-    If ( $wpf_DblOneDrive.IsChecked -eq $true ) {
-        $InvokeScript = [ScriptBlock]::Create(@'
-        
-        $OneDrivePath = $($env:OneDrive)
-        Write-Host "Removing OneDrive" -ForegroundColor Green
-        $regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\OneDriveSetup.exe"
-        if (Test-Path $regPath) {
-            $OneDriveUninstallString = Get-ItemPropertyValue "$regPath" -Name "UninstallString"
-            $OneDriveExe, $OneDriveArgs = $OneDriveUninstallString.Split(" ")
-            Start-Process -FilePath $OneDriveExe -ArgumentList "$OneDriveArgs /silent" -NoNewWindow -Wait
-        } else {
-            Write-Host "Onedrive dosn't seem to be installed anymore" -ForegroundColor Red
-            return
-        }
-        # Check if OneDrive got Uninstalled
-        if (-not (Test-Path $regPath)) {
-        Write-Host "Copy downloaded Files from the OneDrive Folder to Root UserProfile"
-        Start-Process -FilePath powershell -ArgumentList "robocopy '$($OneDrivePath)' '$($env:USERPROFILE.TrimEnd())\' /mov /e /xj" -NoNewWindow -Wait
-
-        Write-Host "Removing OneDrive leftovers"
-        Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$env:localappdata\Microsoft\OneDrive"
-        Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$env:localappdata\OneDrive"
-        Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$env:programdata\Microsoft OneDrive"
-        Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$env:systemdrive\OneDriveTemp"
-        reg delete "HKEY_CURRENT_USER\Software\Microsoft\OneDrive" -f
-        # check if directory is empty before removing:
-        If ((Get-ChildItem "$OneDrivePath" -Recurse | Measure-Object).Count -eq 0) {
-            Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$OneDrivePath"
+        switch ($tweak.Type) {
+            "ScheduledTask" {
+                $apply = $true
+            }
+            "CheckBox" {
+                $controlVar = Get-Variable -Name "wpf_$toggleName" -ErrorAction SilentlyContinue
+                if ($controlVar) {
+                    $apply = [bool]$controlVar.Value.IsChecked
+                } elseif ($tweak.DefaultState) {
+                    $apply = [bool]$tweak.DefaultState
+                }
+            }
+            "InvokeScript" {
+                $apply = $true
+            }
         }
 
-        Write-Host "Remove Onedrive from explorer sidebar"
-        Set-ItemProperty -Path "Registry::HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" -Name "System.IsPinnedToNameSpaceTree" -Value 0
-        Set-ItemProperty -Path "Registry::HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" -Name "System.IsPinnedToNameSpaceTree" -Value 0
+        # Apply registry changes if available and checkbox/toggle is checked
+        if ($apply) {
+            if ($tweak.ScheduledTask) {
+                Write-Host "ScheduledTask:" $tweak.message -ForegroundColor Green
+                foreach ($task in $tweak.ScheduledTask) {
+                    try {
+                        Set-ScheduledTask -Name $task.Name -State $task.State
+                    } catch {
+                        Write-Warning "Failed to set scheduled task '$($task.Name)' to $($task.State): $_"
+                    }
+                }
+            }
 
-        Write-Host "Removing run hook for new users"
-        reg load "hku\Default" "C:\Users\Default\NTUSER.DAT"
-        reg delete "HKEY_USERS\Default\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "OneDriveSetup" /f
-        reg unload "hku\Default"
-
-        Write-Host "Removing startmenu entry"
-        Remove-Item -Force -ErrorAction SilentlyContinue "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk"
-
-        Write-Host "Removing scheduled task"
-        Get-ScheduledTask -TaskPath '\' -TaskName 'OneDrive*' -ea SilentlyContinue | Unregister-ScheduledTask -Confirm:$false
-
-        # Add Shell folders restoring default locations
-        Write-Host "Shell Fixing"
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "AppData" -Value "$env:userprofile\AppData\Roaming" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Cache" -Value "$env:userprofile\AppData\Local\Microsoft\Windows\INetCache" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Cookies" -Value "$env:userprofile\AppData\Local\Microsoft\Windows\INetCookies" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Favorites" -Value "$env:userprofile\Favorites" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "History" -Value "$env:userprofile\AppData\Local\Microsoft\Windows\History" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Local AppData" -Value "$env:userprofile\AppData\Local" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Music" -Value "$env:userprofile\Music" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Video" -Value "$env:userprofile\Videos" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "NetHood" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Network Shortcuts" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "PrintHood" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Printer Shortcuts" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Programs" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Recent" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Recent" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "SendTo" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\SendTo" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Start Menu" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Startup" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Templates" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Templates" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}" -Value "$env:userprofile\Downloads" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Desktop" -Value "$env:userprofile\Desktop" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Pictures" -Value "$env:userprofile\Pictures" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Personal" -Value "$env:userprofile\Documents" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{F42EE2D3-909F-4907-8871-4C22FC0BF756}" -Value "$env:userprofile\Documents" -Type ExpandString
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{0DDD015D-B06C-45D5-8C4C-F59713854639}" -Value "$env:userprofile\Pictures" -Type ExpandString
-        Write-Host "Restarting explorer"
-        taskkill.exe /F /IM "explorer.exe"
-        Start-Process "explorer.exe"
-
-        Write-Host "Waiting for explorer to complete loading"
-        Write-Host "Please Note - The OneDrive folder at $OneDrivePath may still have items in it. You must manually delete it, but all the files should already be copied to the base user folder."
-        Write-Host "If there are Files missing afterwards, please Login to Onedrive.com and Download them manually" -ForegroundColor Yellow
-        Start-Sleep 5
-        } else {
-            Write-Host "Something went Wrong during the Unistallation of OneDrive" -ForegroundColor Red
+            if ($tweak.Registry) {
+                Write-Host "Registry:" $tweak.message -ForegroundColor Green
+                foreach ($regEntry in $tweak.Registry) {
+                    try { 
+                        Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.Value }
+                    catch { 
+                        Write-Warning "Failed to apply registry tweak: $_" }
+                }
+            }
+            if ($tweak.InvokeScript) {
+                Write-Host "InvokeScript:" $tweak.message -ForegroundColor Green
+                foreach ($script in $tweak.InvokeScript) {
+                    Invoke-Expression $script
+                }
+            }
         }
-'@)
-        Invoke-Scripts -ScriptBlock $InvokeScript -Name "InvokeScript"
 
-        $wpf_DblOneDrive.IsChecked = $false
     }
-    if ( $wpf_DblModernCursorDark.IsChecked -eq $true ) {
-        Write-Host "Downloading cursor..." -ForegroundColor Green
-        $downloadUrl = "https://github.com/vukilis/Windows11-Optimizer-Debloater/raw/dev/cursor.zip" #github link
-        $outputPath = "$env:TEMP\win11app"
 
-        # Check if the file already exists
-        if (-not (Test-Path -Path "$outputPath\cursor.zip")) {
-            # File does not exist, download it
-            New-Item -ItemType Directory -Force -Path $outputPath
-            Invoke-WebRequest -Uri $downloadUrl -OutFile "$outputPath\cursor.zip"
-            Write-Host "File downloaded to: $outputPath" -ForegroundColor Green
-        } else {
-            Write-Host "File already exists at: $outputPath" -ForegroundColor Magenta
-        }
-
-        # Unzip the downloaded file
-        Write-Host "Unziping content..." -ForegroundColor Green
-        Expand-Archive -Path "$outputPath\cursor.zip" -DestinationPath $outputPath -Force
-
-        Write-Host "Installing cursor..." -ForegroundColor Green   
-        # Step 2: Run install.inf
-        $infPath = Join-Path $outputPath "dark\Install.inf"
-        # Check if the install.inf file exists
-        if (Test-Path $infPath) {
-            # Run the installation file
-            Start-Process "C:\Windows\System32\rundll32.exe" -ArgumentList "advpack.dll,LaunchINFSection $infPath,DefaultInstall"
-        } else {
-            Write-Host "Install.inf not found in the specified location."
-        }
-
-        # Set the cursor scheme values
-        Write-Host "Seting cursor..." -ForegroundColor Green
-        $cursorScheme = @"
-C:\Windows\Cursors\Windows_11_dark_v2\pointer.cur,C:\Windows\Cursors\Windows_11_dark_v2\help.cur,C:\Windows\Cursors\Windows_11_dark_v2\working.ani,C:\Windows\Cursors\Windows_11_dark_v2\busy.ani,C:\Windows\Cursors\Windows_11_dark_v2\precision.cur,C:\Windows\Cursors\Windows_11_dark_v2\beam.cur,C:\Windows\Cursors\Windows_11_dark_v2\handwriting.cur,C:\Windows\Cursors\Windows_11_dark_v2\unavailable.cur,C:\Windows\Cursors\Windows_11_dark_v2\vert.cur,C:\Windows\Cursors\Windows_11_dark_v2\horz.cur,C:\Windows\Cursors\Windows_11_dark_v2\dgn1.cur,C:\Windows\Cursors\Windows_11_dark_v2\dgn2.cur,C:\Windows\Cursors\Windows_11_dark_v2\move.cur,C:\Windows\Cursors\Windows_11_dark_v2\alternate.cur,C:\Windows\Cursors\Windows_11_dark_v2\link.cur,C:\Windows\Cursors\Windows_11_dark_v2\person.cur,C:\Windows\Cursors\Windows_11_dark_v2\pin.cur
-"@
-
-        # Define the Registry path for the cursor scheme
-        $registryPath = "HKCU:\Control Panel\Cursors"
-
-        # Set the new cursor scheme for each individual cursor type
-        $cursorTypes = @("AppStarting", "Arrow", "Crosshair", "Hand", "Help", "IBeam", "No", "NWPen", "SizeAll", "SizeNESW", "SizeNS", "SizeNWSE", "SizeWE", "UpArrow", "Wait")
-        
-        Write-Host "Updating cursor..." -ForegroundColor Green
-        foreach ($cursorType in $cursorTypes) {
-            Set-ItemProperty -Path $registryPath -Name $cursorType -Value $cursorScheme
-        }
-
-        Start-Sleep 1
-
-        Add-Type @"
-    using System;
-    using System.Runtime.InteropServices;
-
-    public class SystemParamInfo
-    {
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
-    }
-"@
-
-        [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
-
-    
-        $wpf_DblModernCursorDark.IsChecked = $false
-    }
-    if ( $wpf_DblModernCursorLight.IsChecked -eq $true ) {
-        Write-Host "Downloading cursor..." -ForegroundColor Green
-        $downloadUrl = "https://github.com/vukilis/Windows11-Optimizer-Debloater/raw/dev/cursor.zip" #github link
-        $outputPath = "$env:TEMP\win11app"
-
-        # Check if the file already exists
-        if (-not (Test-Path -Path "$outputPath\cursor.zip")) {
-            # File does not exist, download it
-            New-Item -ItemType Directory -Force -Path $outputPath
-            Invoke-WebRequest -Uri $downloadUrl -OutFile "$outputPath\cursor.zip"
-            Write-Host "File downloaded to: $outputPath" -ForegroundColor Green
-        } else {
-            Write-Host "File already exists at: $outputPath" -ForegroundColor Magenta
-        }
-
-        # Unzip the downloaded file
-        Write-Host "Unziping content..." -ForegroundColor Green
-        Expand-Archive -Path "$outputPath\cursor.zip" -DestinationPath $outputPath -Force
-
-        Write-Host "Installing cursor..." -ForegroundColor Green   
-        # Step 2: Run install.inf
-        $infPath = Join-Path $outputPath "light\Install.inf"
-        # Check if the install.inf file exists
-        if (Test-Path $infPath) {
-            # Run the installation file
-            Start-Process "C:\Windows\System32\rundll32.exe" -ArgumentList "advpack.dll,LaunchINFSection $infPath,DefaultInstall"
-        } else {
-            Write-Host "Install.inf not found in the specified location."
-        }
-
-        # Set the cursor scheme values
-        Write-Host "Seting cursor..." -ForegroundColor Green
-        $cursorScheme = @"
-C:\Windows\Cursors\Windows_11_light_v2\pointer.cur,C:\Windows\Cursors\Windows_11_light_v2\help.cur,C:\Windows\Cursors\Windows_11_light_v2\working.ani,C:\Windows\Cursors\Windows_11_light_v2\busy.ani,C:\Windows\Cursors\Windows_11_light_v2\precision.cur,C:\Windows\Cursors\Windows_11_light_v2\beam.cur,C:\Windows\Cursors\Windows_11_light_v2\handwriting.cur,C:\Windows\Cursors\Windows_11_light_v2\unavailable.cur,C:\Windows\Cursors\Windows_11_light_v2\vert.cur,C:\Windows\Cursors\Windows_11_light_v2\horz.cur,C:\Windows\Cursors\Windows_11_light_v2\dgn1.cur,C:\Windows\Cursors\Windows_11_light_v2\dgn2.cur,C:\Windows\Cursors\Windows_11_light_v2\move.cur,C:\Windows\Cursors\Windows_11_light_v2\alternate.cur,C:\Windows\Cursors\Windows_11_light_v2\link.cur,C:\Windows\Cursors\Windows_11_light_v2\person.cur,C:\Windows\Cursors\Windows_11_light_v2\pin.cur
-"@
-
-        # Define the Registry path for the cursor scheme
-        $registryPath = "HKCU:\Control Panel\Cursors"
-
-        # Set the new cursor scheme for each individual cursor type
-        $cursorTypes = @("AppStarting", "Arrow", "Crosshair", "Hand", "Help", "IBeam", "No", "NWPen", "SizeAll", "SizeNESW", "SizeNS", "SizeNWSE", "SizeWE", "UpArrow", "Wait")
-        
-        Write-Host "Updating cursor..." -ForegroundColor Green
-        foreach ($cursorType in $cursorTypes) {
-            Set-ItemProperty -Path $registryPath -Name $cursorType -Value $cursorScheme
-        }
-
-        Start-Sleep 1
-
-        Add-Type @"
-    using System;
-    using System.Runtime.InteropServices;
-
-    public class SystemParamInfo
-    {
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
-    }
-"@
-
-        [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
-
-    
-        $wpf_DblModernCursorLight.IsChecked = $false
-    }
     Invoke-MessageBox -msg "tweak"
-    # Invoke restart computer
-    If ( $wpf_DblRestartPC.IsChecked -eq $true ) {
-        Restart-Computer
-    }
 }
-function Invoke-ToggleBingSearchMenu{
-    Toggle-RegistryValue -CheckBox $wpf_ToggleBingSearchMenu -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search' -Name 'BingSearchEnabled' -TrueValue 1 -FalseValue 0 -EnableMessage "Enabled Bing Search" -DisableMessage "Disabling Bing Search"
-}
-function Invoke-ToggleCenterTaskbar{
 
-    If (!(Test-Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarAl")) {
-        New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarAl" -Force | Out-Null
-    }
-    Toggle-RegistryValue -CheckBox $wpf_ToggleCenterTaskbar -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'TaskbarAl' -TrueValue 1 -FalseValue 0 -EnableMessage "Taskbar Alignment to Center" -DisableMessage "Taskbar Alignment to Left"
-}
-function Invoke-ToggleCopilot{
-    If (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot")) {
-        New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" -Force | Out-Null
-        New-ItemProperty -Path 'HKCU:\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot' -Name 'TurnOffWindowsCopilot' -PropertyType DWord -Value 0 -Force
-    }
-    else {
-        New-ItemProperty -Path 'HKCU:\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot' -Name 'TurnOffWindowsCopilot' -PropertyType DWord -Value 0 -Force
-    }
-    taskkill.exe /F /IM "explorer.exe"
-    Toggle-RegistryValue -CheckBox $wpf_ToggleCopilot -Path 'HKCU:\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot' -Name 'TurnOffWindowsCopilot' -TrueValue 1 -FalseValue 0 -EnableMessage "Disabling Copilot" -DisableMessage "Enabling Copilot"
-    Start-Process "explorer.exe"
-}
-function Invoke-ToggleDarkMode {
-    $themeRegistryPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize'
-    $EnableDarkMode = $wpf_ToggleDarkMode.IsChecked
-    $appsTheme = Get-ItemProperty -Path $themeRegistryPath -Name 'AppsUseLightTheme'
-    $systemTheme = Get-ItemProperty -Path $themeRegistryPath -Name 'SystemUsesLightTheme'
 
-    if ($appsTheme.AppsUseLightTheme -eq 1) {
-        # Dark theme is currently active, switch to light theme
-        Set-ItemProperty -Path $themeRegistryPath -Name 'AppsUseLightTheme' -Value 0
-        Set-ItemProperty -Path $themeRegistryPath -Name 'SystemUsesLightTheme' -Value 0
-        #Write-Host "Switched to Dark Theme."
-    } else {
-        # Light theme is currently active, switch to dark theme
-        Set-ItemProperty -Path $themeRegistryPath -Name 'AppsUseLightTheme' -Value 1
-        Set-ItemProperty -Path $themeRegistryPath -Name 'SystemUsesLightTheme' -Value 1
-        #Write-Host "Switched to Light Theme."
-    }
-    Write-Host $(If ( $EnableDarkMode ) {"Enabling Dark Mode"} Else {"Disabling Dark Mode"})
-}
-function Invoke-ToggleDetailedBSoD{
+# function Invoke-optimizationButton{
+#     <#
 
-    If (!(Test-Path "HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl")) {
-        New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl" -Force | Out-Null
-        New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl' -Name 'DisplayParameters' -PropertyType DWord -Value 0 -Force
-    }
-    else {
-        New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl' -Name 'DisplayParameters' -PropertyType DWord -Value 0 -Force
-    }
-    Toggle-RegistryValue -CheckBox $wpf_ToggleDetailedBSoD -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl' -Name 'DisplayParameters' -TrueValue 1 -FalseValue 0 -EnableMessage "Enabling Detailed BSoD" -DisableMessage "Disabling Detailed BSoD"
-}
-function Invoke-ToggleEndTask{
+#     .SYNOPSIS
+#         This function run selected tweaks
+#         Unselect tweaks after tweaking
+#     #>
 
-    If (!(Test-Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings")) {
-        New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings" -Force | Out-Null
-    }
-    Toggle-RegistryValue -CheckBox $wpf_ToggleEndTask -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings' -Name 'TaskbarEndTask' -TrueValue 1 -FalseValue 0 -EnableMessage "Showing End Button" -DisableMessage "Hiding End Button"
-}
-function Invoke-ToggleExt{
-    Toggle-RegistryValue -CheckBox $wpf_ToggleExt -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'HideFileExt' -TrueValue 0 -FalseValue 1 -EnableMessage "Showing file extentions" -DisableMessage "Hiding file extensions"
-}
+#     # Invoke restore point
+#     If ( $wpf_DblSystemRestore.IsChecked -eq $true ) {
+#         Write-Host "Making Restore Point..." -ForegroundColor Green
+#         Set-RestorePoint
+#     }
+#     # Essential Tweaks
+#     If ( $wpf_DblTelemetry.IsChecked -eq $true ) {
+#         Write-Host "Disabling Telemetry..." -ForegroundColor Green
+#         Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" -State "Disabled"
+#         Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\ProgramDataUpdater" -State "Disabled"
+#         Set-ScheduledTask -Name "Microsoft\Windows\Autochk\Proxy" -State "Disabled"
+#         Set-ScheduledTask -Name "Microsoft\Windows\Customer Experience Improvement Program\Consolidator" -State "Disabled"
+#         Set-ScheduledTask -Name "Microsoft\Windows\Customer Experience Improvement Program\UsbCeip" -State "Disabled"
+#         Set-ScheduledTask -Name "Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector" -State "Disabled"
+#         Set-ScheduledTask -Name "Microsoft\Windows\Feedback\Siuf\DmClient" -State "Disabled"
+#         Set-ScheduledTask -Name "Microsoft\Windows\Feedback\Siuf\DmClientOnScenarioDownload" -State "Disabled"
+#         Set-ScheduledTask -Name "Microsoft\Windows\Windows Error Reporting\QueueReporting" -State "Disabled"
+#         Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\MareBackup" -State "Disabled"
+#         Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\StartupAppTask" -State "Disabled"
+#         Set-ScheduledTask -Name "Microsoft\Windows\Application Experience\PcaPatchDbTask" -State "Disabled"
+#         Set-ScheduledTask -Name "Microsoft\Windows\Maps\MapsUpdateTask" -State "Disabled"
+        
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "AllowTelemetry" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" -Name "AllowTelemetry" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "OemPreInstalledAppsEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "ContentDeliveryAllowed" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "PreInstalledAppsEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "PreInstalledAppsEverEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SilentInstalledAppsEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338387Enabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338388Enabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338389Enabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-353698Enabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SystemPaneSuggestionsEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" -Name "NumberOfSIUFInPeriod" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "DoNotShowFeedbackNotifications" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "DisableTailoredExperiencesWithDiagnosticData" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" -Name "DisabledByGroupPolicy" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting" -Name "Disabled" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config" -Name "DODownloadMode" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance" -Name "fAllowToGetHelp" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager" -Name "EnthusiastMode" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "PeopleBand" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "LongPathsEnabled" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching" -Name "SearchOrderConfig" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" -Name "SystemResponsiveness" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" -Name "NetworkThrottlingIndex" -Type "DWord" -Value 4294967295
+#         Set-RegistryValue -Path "HKCU:\Control Panel\Desktop" -Name "MenuShowDelay" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKCU:\Control Panel\Desktop" -Name "AutoEndTasks" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" -Name "ClearPageFileAtShutdown" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKLM:\SYSTEM\ControlSet001\Services\Ndu" -Name "Start" -Type "DWord" -Value 2
+#         Set-RegistryValue -Path "HKCU:\Control Panel\Mouse" -Name "MouseHoverTime" -Type "DWord" -Value 400
+#         Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" -Name "IRPStackSize" -Type "DWord" -Value 30
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds" -Name "EnableFeeds" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds" -Name "ShellFeedsTaskbarViewMode" -Type "DWord" -Value 2
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "HideSCAMeetNow" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\UserProfileEngagement" -Name "ScoobeSystemSettingEnabled" -Type "DWord" -Value 0
+        
+#         $InvokeScript = [ScriptBlock]::Create(@'
+# bcdedit /set {current} bootmenupolicy Legacy | Out-Null
+
+# If ((Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentBuild).CurrentBuild -lt 22557) {
+#     $taskmgr = Start-Process -WindowStyle Hidden -FilePath taskmgr.exe -PassThru
+#     Do {
+#         Start-Sleep -Milliseconds 100
+#         $preferences = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\TaskManager" -Name "Preferences" -ErrorAction SilentlyContinue
+#     } Until ($preferences)
+#     Stop-Process $taskmgr
+#     $preferences.Preferences[28] = 0
+#     Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\TaskManager" -Name "Preferences" -Type Binary -Value $preferences.Preferences
+# }
+
+# Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}" -Recurse -ErrorAction SilentlyContinue
+
+# If (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge") {
+#     Remove-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" -Recurse -ErrorAction SilentlyContinue
+# }
+
+# $ram = (Get-CimInstance -ClassName Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum).Sum / 1kb
+# Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control" -Name "SvcHostSplitThresholdInKB" -Type DWord -Value $ram -Force
+
+# $autoLoggerDir = "$env:PROGRAMDATA\Microsoft\Diagnosis\ETLLogs\AutoLogger"
+# If (Test-Path "$autoLoggerDir\AutoLogger-Diagtrack-Listener.etl") {
+#     Remove-Item "$autoLoggerDir\AutoLogger-Diagtrack-Listener.etl"
+# }
+# icacls $autoLoggerDir "/deny" "SYSTEM:(OI)(CI)F" | Out-Null
+
+# Set-MpPreference -SubmitSamplesConsent 2 -ErrorAction SilentlyContinue | Out-Null
+# '@)
+
+#         Invoke-Scripts -ScriptBlock $InvokeScript -Name "InvokeScript"
+
+
+#         $wpf_DblTelemetry.IsChecked = $false
+#     }
+#     If ( $wpf_DblWifi.IsChecked -eq $true ) {
+#         Write-Host "Disabling Wi-Fi Sense..." -ForegroundColor Green
+#         Set-RegistryValue -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting" -Name "Value" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" -Name "Value" -Type "DWord" -Value 0
+#         $wpf_DblWifi.IsChecked = $false
+#     }
+#     If ( $wpf_DblAH.IsChecked -eq $true ) {
+#             Write-Host "Disabling Activity History..." -ForegroundColor Green
+#             Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "EnableActivityFeed" -Type "DWord" -Value 0
+#             Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "PublishUserActivities" -Type "DWord" -Value 0
+#             Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "UploadUserActivities" -Type "DWord" -Value 0
+#             $wpf_DblAH.IsChecked = $false
+#     }
+#     If ( $wpf_DblDeleteTempFiles.IsChecked -eq $true ) {
+#         Write-Host "Delete Temp Files" -ForegroundColor Green
+#         Get-ChildItem -Path "C:\Windows\Temp" *.* -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
+#         Get-ChildItem -Path $env:TEMP *.* -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
+#         $wpf_DblDeleteTempFiles.IsChecked = $false
+#         Write-Host "======================================="
+#         Write-Host "--- Cleaned following folders:"
+#         Write-Host "--- C:\Windows\Temp"
+#         Write-Host "--- "$env:TEMP
+#         Write-Host "======================================="
+#     }
+#     If ( $wpf_DblRecycleBin.IsChecked -eq $true ) {
+#         Write-Host "Empting Recycle Bin..." -ForegroundColor Green
+#         Clear-RecycleBin -Force
+#         $wpf_DblRecycleBin.IsChecked = $false
+#     }
+#     If ( $wpf_DblDiskCleanup.IsChecked -eq $true ) {
+#         Write-Host "Running Disk Cleanup on Drive C:..." -ForegroundColor Green
+#         cmd /c cleanmgr.exe /d C: /VERYLOWDISK
+#         $wpf_DblDiskCleanup.IsChecked = $false
+#     }
+#     If ( $wpf_DblLocTrack.IsChecked -eq $true ) {
+#         Write-Host "Disabling Location Tracking..." -ForegroundColor Green
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "Value" -Type "String" -Value "Deny"
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}" -Name "SensorPermissionState" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration" -Name "Status" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKLM:\SYSTEM\Maps" -Name "AutoUpdateEnabled" -Type "DWord" -Value 0
+
+#         $wpf_DblLocTrack.IsChecked = $false
+#     }
+#     If ( $wpf_DblStorage.IsChecked -eq $true ) {
+#         Write-Host "Disabling Storage Sense..." -ForegroundColor Green
+#         Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy" -Name "01" -Value 0 -Type Dword -Force
+#         $wpf_DblStorage.IsChecked = $false
+#     }
+#     If ( $wpf_DblHiber.IsChecked -eq $true  ) {
+#         Write-Host "Disabling Hibernation..." -ForegroundColor Green
+#         Set-RegistryValue -Path "HKLM:\System\CurrentControlSet\Control\Session Manager\Power" -Name "HibernateEnabled" -Type "Dword" -Value 0
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings" -Name "ShowHibernateOption" -Type "Dword" -Value 0
+        
+#         $InvokeScript = [ScriptBlock]::Create(@'
+#         powercfg.exe /hibernate off
+# '@)
+#         Invoke-Scripts -ScriptBlock $InvokeScript -Name "InvokeScript"
+#         $wpf_DblHiber.IsChecked = $false
+#     }
+#     If ( $wpf_DblDVR.IsChecked -eq $true ) {
+#         Write-Host "Disabling GameDVR..." -ForegroundColor Green
+#         Set-RegistryValue -Path "HKCU:\System\GameConfigStore" -Name "GameDVR_DXGIHonorFSEWindowsCompatible" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKCU:\System\GameConfigStore" -Name "GameDVR_HonorUserFSEBehaviorMode" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKCU:\System\GameConfigStore" -Name "GameDVR_EFSEFeatureFlags" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\System\GameConfigStore" -Name "GameDVR_Enabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\System\GameConfigStore" -Name "GameDVR_FSEBehavior" -Type "DWord" -Value 2
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR" -Name "AllowGameDVR" -Type "DWord" -Value 0
+#         $wpf_DblDVR.IsChecked = $false
+#     }
+#     If ( $wpf_DblCoreIsolation.IsChecked -eq $true ) {
+#         Write-Host "Disabling Core Isolation..." -ForegroundColor Green
+#         Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" -Name "Enabled" -Type "DWord" -Value 0
+#         $wpf_DblCoreIsolation.IsChecked = $false
+#     }
+#     If ( $wpf_DblDisableTeredo.IsChecked -eq $true ) {
+#         Write-Host "Disabling Teredo..." -ForegroundColor Green
+#         Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters" -Name "DisabledComponents" -Type "DWord" -Value 1
+#         $wpf_DblDisableTeredo.IsChecked = $false
+#     }
+#     If ( $wpf_DblAutoAdjustVolume.IsChecked -eq $true ) {
+#         Write-Host "Disabling Auto Adjust Volume..." -ForegroundColor Green
+#         # dword:00000000: Mute all other sounds
+#         # dword:00000001: Reduce all other by 80%
+#         # dword:00000002: Reduce all other by 50%
+#         # dword:00000003: Do nothing
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Multimedia\Audio" -Name "UserDuckingPreference" -Type "DWord" -Value 3
+#         $wpf_DblAutoAdjustVolume.IsChecked = $false
+#     }
+#     If ( $wpf_DblSearchIndexer.IsChecked -eq $true ) {
+#         Write-Host "Disabling search indexer..." -ForegroundColor Green
+#         Get-Service -Name "wsearch" -ErrorAction SilentlyContinue | Stop-Service -ErrorAction SilentlyContinue
+#         Get-Service -Name "wsearch" -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue
+#         $wpf_DblSearchIndexer.IsChecked = $false
+#     }
+#     If ( $wpf_DblPS7Telemetry.IsChecked -eq $true ) {
+#         Write-Host "Disabling Powershell 7 Telemetry..." -ForegroundColor Green
+#         "[Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '1', 'Machine')"
+#         $wpf_DblPS7Telemetry.IsChecked = $false
+#     }
+#     If ( $wpf_DblConsumerFeatures.IsChecked -eq $true ) {
+#         Write-Host "Disabling ConsumerFeatures..." -ForegroundColor Green 
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" -Name "DisableWindowsConsumerFeatures" -Type "DWord" -Value 1
+#         $wpf_DblConsumerFeatures.IsChecked = $false
+#     }
+
+#     # Additional Tweaks
+#     If ( $wpf_DblPower.IsChecked -eq $true ) {
+#         Write-Host "Disabling Power Throttling..." -ForegroundColor Green        
+#         Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling" -Name "PowerThrottlingOff" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power" -Name "HiberbootEnabled" -Type "DWord" -Value 0
+#         $wpf_DblPower.IsChecked = $false 
+#     }
+#     If ( $wpf_DblDisplay.IsChecked -eq $true ) {
+#         # https://www.tenforums.com/tutorials/6377-change-visual-effects-settings-windows-10-a.html
+#         # https://superuser.com/questions/1244934/reg-file-to-modify-windows-10-visual-effects
+#         Write-Host "Adjusted visual effects for performance" -ForegroundColor Green        
+#         Set-RegistryValue -Path "HKCU:\Control Panel\Desktop" -Name "DragFullWindows" -Type "String" -Value 1
+#         Set-RegistryValue -Path "HKCU:\Control Panel\Desktop" -Name "MenuShowDelay" -Type "String" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Control Panel\Desktop\WindowMetrics" -Name "MinAnimate" -Type "String" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Control Panel\Keyboard" -Name "KeyboardDelay" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ListviewAlphaSelect" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ListviewShadow" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAnimations" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "IconsOnly" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" -Name "VisualFXSetting" -Type "DWord" -Value 3
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\DWM" -Name "EnableAeroPeek" -Type "DWord" -Value 1
+
+#         $InvokeScript = [ScriptBlock]::Create(@'
+#         Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name "UserPreferencesMask" -Type Binary -Value ([byte[]](144, 18, 3, 128, 18, 0, 0, 0))
+# '@)
+#         Invoke-Scripts -ScriptBlock $InvokeScript -Name "InvokeScript"
+#         $wpf_DblDisplay.IsChecked = $false
+#     }
+#     If ( $wpf_DblUTC.IsChecked -eq $true ) {
+#         Write-Host "Setting BIOS time to UTC..." -ForegroundColor Green
+#         Set-RegistryValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\TimeZoneInformation" -Name "RealTimeIsUniversal" -Type "DWord" -Value 1
+#         $wpf_DblUTC.IsChecked = $false
+#     }
+#     If ( $wpf_DblDisableUAC.IsChecked -eq $true) {
+#         Write-Host "Disabling UAC..." -ForegroundColor Green
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "ConsentPromptBehaviorAdmin" -Type "DWord" -Value 0 # Default is 5
+#         # This will set the GPO Entry in Security so that Admin users elevate without any prompt while normal users still elevate and u can even leave it ennabled.
+#         $wpf_DblDisableUAC.IsChecked = $false
+#     }
+#     If ( $wpf_DblDisableNotifications.IsChecked -eq $true ) {
+#         Write-Host "Disabling Notification Tray/Calendar..." -ForegroundColor Green
+#         Set-RegistryValue -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "DisableNotificationCenter" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\PushNotifications" -Name "ToastEnabled" -Type "DWord" -Value 0
+#         $wpf_DblDisableNotifications.IsChecked = $false
+#     }
+#     If ( $wpf_DblRemoveCortana.IsChecked -eq $true ) {
+#         Write-Host "Removing Cortana..."
+#         Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage
+#         $wpf_DblRemoveCortana.IsChecked = $false
+#     }
+#     If ( $wpf_DblRemoveWidgets.IsChecked -eq $true ) {
+#         Write-Host "Removing Widgets..."
+#         Get-AppxPackage -allusers MicrosoftWindows.Client.WebExperience | Remove-AppxPackage
+#         $wpf_DblRemoveWidgets.IsChecked = $false
+#     }
+#     If ( $wpf_DblClassicAltTab.IsChecked -eq $true ) {
+#         Write-Host "Setting Classic Alt+Tab..." -ForegroundColor Green
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "MultiTaskingAltTabFilter" -Type "DWord" -Value 3       
+#         $wpf_DblClassicAltTab.IsChecked = $false
+#     }
+#     If ( $wpf_DblRightClickMenu.IsChecked -eq $true ) {
+#         Write-Host "Setting Classic Right-Click Menu..." -ForegroundColor Green
+#         Write-Host Restarting explorer.exe ... -ForegroundColor Blue
+#         taskkill.exe /F /IM "explorer.exe"
+#         New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}" -Name "InprocServer32" -force -value ""       
+#         Start-Process "explorer.exe"
+#         $wpf_DblRightClickMenu.IsChecked = $false
+#     }
+#     If ( $wpf_DblGameMode.IsChecked -eq $true ) {
+#         Write-Host "Enabling Game Mode..." -ForegroundColor Green
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\GameBar" -Name "AllowAutoGameMode" -Type "DWord" -Value 3       
+#         $wpf_DblGameMode.IsChecked -eq $false
+#     }
+#     If ( $wpf_DblGameBar.IsChecked -eq $true ) {
+#         Write-Host "Disabling Game Bar..." -ForegroundColor Green
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\GameBar" -Name "UseNexusForGameBarEnabled" -Type "DWord" -Value 0      
+#         $wpf_DblGameBar.IsChecked = $false
+#     }
+#     If ( $wpf_DblWindowsSound.IsChecked -eq $true ) {
+#         Write-Host "Disabling Windows Sound..." -ForegroundColor Green
+#         Set-RegistryValue -Path "HKCU:\AppEvents\Schemes" -Name "(Default)" -Type "String" -Value ".None"
+#         $wpf_DblWindowsSound.IsChecked = $false
+#     }
+#     If ( $wpf_DblPersonalize.IsChecked -eq $true ) {
+#         Write-Host "Adjusting Personalization Settings..." -ForegroundColor Green       
+#         #hide search icon, show transparency effect, colors, lock screen, power
+#         Set-RegistryValue -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "HideTaskViewButton" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "HideTaskViewButton" -Type "DWord" -Value 1
+        
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "EnableTransparency" -Type "DWord" -Value 1
+        
+#         Set-RegistryValue -Path "HKCU:\Control Panel\Desktop" -Name "AutoColorization" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Name "AccentColorMenu" -Type "DWord" -Value 0xffd47800
+
+#         $InvokeScript = [ScriptBlock]::Create(@'
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Name "AccentPalette" -Type Binary -Value ([byte[]](0x99,0xEB,0xFF,0x00,0x41,0xF8,0x00,0x00,0x78,0xD4,0x00,0x00,0x67,0xC0,0x00,0x00,0x3E,0x92,0x00,0x00,0x1A,0x68,0x00,0xF7,0x63,0x0C,0x00))
+# '@)
+#         Invoke-Scripts -ScriptBlock $InvokeScript -Name "InvokeScript"
+
+#         Set-RegistryValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent" -Name "StartColorMenu" -Type "DWord" -Value 0xffc06700
+        
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "ColorPrevalence" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\DWM" -Name "ColorPrevalence" -Type "DWord" -Value 0
+
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "NoLockScreen" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "NoLockScreenSlideshow" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "FeatureManagementEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "OemPreInstalledAppsEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "PreInstalledAppsEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "RotatingLockScreenEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "RotatingLockScreenOverlayEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SoftLandingEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SystemPaneSuggestionsEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContentEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "ContentDeliveryAllowed" -Type "DWord" -Value 1
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SilentInstalledAppsEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "PreInstalledAppsEverEnabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "RemediationRequired" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338387Enabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338388Enabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338389Enabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-310093Enabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-338393Enabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-314563Enabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-353698Enabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name "SubscribedContent-353694Enabled" -Type "DWord" -Value 0
+#         Set-RegistryValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "DisableLogonBackgroundImage" -Type "DWord" -Value 0
+
+        
+#         powercfg -x -disk-timeout-ac 0
+#         powercfg -x -disk-timeout-dc 0
+#         powercfg -x -monitor-timeout-ac 20
+#         powercfg -x -monitor-timeout-dc 20
+
+
+#         $wpf_DblPersonalize.IsChecked = $false
+#     }
+#     If ( $wpf_DblRemoveEdge.IsChecked -eq $true ) {
+#         # Standalone script by AveYo Source: https://raw.githubusercontent.com/AveYo/fox/main/Edge_Removal.bat
+
+#         curl.exe "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/edgeremoval.bat" -o $ENV:temp\\edgeremoval.bat
+#         Start-Process $ENV:temp\\edgeremoval.bat
+
+#         $wpf_DblRemoveEdge.IsChecked= $false
+#     }
+#     If ( $wpf_DblOneDrive.IsChecked -eq $true ) {
+#         $InvokeScript = [ScriptBlock]::Create(@'
+        
+#         $OneDrivePath = $($env:OneDrive)
+#         Write-Host "Removing OneDrive" -ForegroundColor Green
+#         $regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\OneDriveSetup.exe"
+#         if (Test-Path $regPath) {
+#             $OneDriveUninstallString = Get-ItemPropertyValue "$regPath" -Name "UninstallString"
+#             $OneDriveExe, $OneDriveArgs = $OneDriveUninstallString.Split(" ")
+#             Start-Process -FilePath $OneDriveExe -ArgumentList "$OneDriveArgs /silent" -NoNewWindow -Wait
+#         } else {
+#             Write-Host "Onedrive dosn't seem to be installed anymore" -ForegroundColor Red
+#             return
+#         }
+#         # Check if OneDrive got Uninstalled
+#         if (-not (Test-Path $regPath)) {
+#         Write-Host "Copy downloaded Files from the OneDrive Folder to Root UserProfile"
+#         Start-Process -FilePath powershell -ArgumentList "robocopy '$($OneDrivePath)' '$($env:USERPROFILE.TrimEnd())\' /mov /e /xj" -NoNewWindow -Wait
+
+#         Write-Host "Removing OneDrive leftovers"
+#         Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$env:localappdata\Microsoft\OneDrive"
+#         Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$env:localappdata\OneDrive"
+#         Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$env:programdata\Microsoft OneDrive"
+#         Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$env:systemdrive\OneDriveTemp"
+#         reg delete "HKEY_CURRENT_USER\Software\Microsoft\OneDrive" -f
+#         # check if directory is empty before removing:
+#         If ((Get-ChildItem "$OneDrivePath" -Recurse | Measure-Object).Count -eq 0) {
+#             Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$OneDrivePath"
+#         }
+
+#         Write-Host "Remove Onedrive from explorer sidebar"
+#         Set-ItemProperty -Path "Registry::HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" -Name "System.IsPinnedToNameSpaceTree" -Value 0
+#         Set-ItemProperty -Path "Registry::HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" -Name "System.IsPinnedToNameSpaceTree" -Value 0
+
+#         Write-Host "Removing run hook for new users"
+#         reg load "hku\Default" "C:\Users\Default\NTUSER.DAT"
+#         reg delete "HKEY_USERS\Default\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "OneDriveSetup" /f
+#         reg unload "hku\Default"
+
+#         Write-Host "Removing startmenu entry"
+#         Remove-Item -Force -ErrorAction SilentlyContinue "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk"
+
+#         Write-Host "Removing scheduled task"
+#         Get-ScheduledTask -TaskPath '\' -TaskName 'OneDrive*' -ea SilentlyContinue | Unregister-ScheduledTask -Confirm:$false
+
+#         # Add Shell folders restoring default locations
+#         Write-Host "Shell Fixing"
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "AppData" -Value "$env:userprofile\AppData\Roaming" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Cache" -Value "$env:userprofile\AppData\Local\Microsoft\Windows\INetCache" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Cookies" -Value "$env:userprofile\AppData\Local\Microsoft\Windows\INetCookies" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Favorites" -Value "$env:userprofile\Favorites" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "History" -Value "$env:userprofile\AppData\Local\Microsoft\Windows\History" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Local AppData" -Value "$env:userprofile\AppData\Local" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Music" -Value "$env:userprofile\Music" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Video" -Value "$env:userprofile\Videos" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "NetHood" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Network Shortcuts" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "PrintHood" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Printer Shortcuts" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Programs" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Recent" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Recent" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "SendTo" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\SendTo" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Start Menu" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Startup" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Templates" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Templates" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}" -Value "$env:userprofile\Downloads" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Desktop" -Value "$env:userprofile\Desktop" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Pictures" -Value "$env:userprofile\Pictures" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "Personal" -Value "$env:userprofile\Documents" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{F42EE2D3-909F-4907-8871-4C22FC0BF756}" -Value "$env:userprofile\Documents" -Type ExpandString
+#         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{0DDD015D-B06C-45D5-8C4C-F59713854639}" -Value "$env:userprofile\Pictures" -Type ExpandString
+#         Write-Host "Restarting explorer"
+#         taskkill.exe /F /IM "explorer.exe"
+#         Start-Process "explorer.exe"
+
+#         Write-Host "Waiting for explorer to complete loading"
+#         Write-Host "Please Note - The OneDrive folder at $OneDrivePath may still have items in it. You must manually delete it, but all the files should already be copied to the base user folder."
+#         Write-Host "If there are Files missing afterwards, please Login to Onedrive.com and Download them manually" -ForegroundColor Yellow
+#         Start-Sleep 5
+#         } else {
+#             Write-Host "Something went Wrong during the Unistallation of OneDrive" -ForegroundColor Red
+#         }
+# '@)
+#         Invoke-Scripts -ScriptBlock $InvokeScript -Name "InvokeScript"
+
+#         $wpf_DblOneDrive.IsChecked = $false
+#     }
+#     if ( $wpf_DblModernCursorDark.IsChecked -eq $true ) {
+#         Write-Host "Downloading cursor..." -ForegroundColor Green
+#         $downloadUrl = "https://github.com/vukilis/Windows11-Optimizer-Debloater/raw/dev/cursor.zip" #github link
+#         $outputPath = "$env:TEMP\win11app"
+
+#         # Check if the file already exists
+#         if (-not (Test-Path -Path "$outputPath\cursor.zip")) {
+#             # File does not exist, download it
+#             New-Item -ItemType Directory -Force -Path $outputPath
+#             Invoke-WebRequest -Uri $downloadUrl -OutFile "$outputPath\cursor.zip"
+#             Write-Host "File downloaded to: $outputPath" -ForegroundColor Green
+#         } else {
+#             Write-Host "File already exists at: $outputPath" -ForegroundColor Magenta
+#         }
+
+#         # Unzip the downloaded file
+#         Write-Host "Unziping content..." -ForegroundColor Green
+#         Expand-Archive -Path "$outputPath\cursor.zip" -DestinationPath $outputPath -Force
+
+#         Write-Host "Installing cursor..." -ForegroundColor Green   
+#         # Step 2: Run install.inf
+#         $infPath = Join-Path $outputPath "dark\Install.inf"
+#         # Check if the install.inf file exists
+#         if (Test-Path $infPath) {
+#             # Run the installation file
+#             Start-Process "C:\Windows\System32\rundll32.exe" -ArgumentList "advpack.dll,LaunchINFSection $infPath,DefaultInstall"
+#         } else {
+#             Write-Host "Install.inf not found in the specified location."
+#         }
+
+#         # Set the cursor scheme values
+#         Write-Host "Seting cursor..." -ForegroundColor Green
+#         $cursorScheme = @"
+# C:\Windows\Cursors\Windows_11_dark_v2\pointer.cur,C:\Windows\Cursors\Windows_11_dark_v2\help.cur,C:\Windows\Cursors\Windows_11_dark_v2\working.ani,C:\Windows\Cursors\Windows_11_dark_v2\busy.ani,C:\Windows\Cursors\Windows_11_dark_v2\precision.cur,C:\Windows\Cursors\Windows_11_dark_v2\beam.cur,C:\Windows\Cursors\Windows_11_dark_v2\handwriting.cur,C:\Windows\Cursors\Windows_11_dark_v2\unavailable.cur,C:\Windows\Cursors\Windows_11_dark_v2\vert.cur,C:\Windows\Cursors\Windows_11_dark_v2\horz.cur,C:\Windows\Cursors\Windows_11_dark_v2\dgn1.cur,C:\Windows\Cursors\Windows_11_dark_v2\dgn2.cur,C:\Windows\Cursors\Windows_11_dark_v2\move.cur,C:\Windows\Cursors\Windows_11_dark_v2\alternate.cur,C:\Windows\Cursors\Windows_11_dark_v2\link.cur,C:\Windows\Cursors\Windows_11_dark_v2\person.cur,C:\Windows\Cursors\Windows_11_dark_v2\pin.cur
+# "@
+
+#         # Define the Registry path for the cursor scheme
+#         $registryPath = "HKCU:\Control Panel\Cursors"
+
+#         # Set the new cursor scheme for each individual cursor type
+#         $cursorTypes = @("AppStarting", "Arrow", "Crosshair", "Hand", "Help", "IBeam", "No", "NWPen", "SizeAll", "SizeNESW", "SizeNS", "SizeNWSE", "SizeWE", "UpArrow", "Wait")
+        
+#         Write-Host "Updating cursor..." -ForegroundColor Green
+#         foreach ($cursorType in $cursorTypes) {
+#             Set-ItemProperty -Path $registryPath -Name $cursorType -Value $cursorScheme
+#         }
+
+#         Start-Sleep 1
+
+#         Add-Type @"
+#     using System;
+#     using System.Runtime.InteropServices;
+
+#     public class SystemParamInfo
+#     {
+#         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+#         public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+#     }
+# "@
+
+#         [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
+
+    
+#         $wpf_DblModernCursorDark.IsChecked = $false
+#     }
+#     if ( $wpf_DblModernCursorLight.IsChecked -eq $true ) {
+#         Write-Host "Downloading cursor..." -ForegroundColor Green
+#         $downloadUrl = "https://github.com/vukilis/Windows11-Optimizer-Debloater/raw/dev/cursor.zip" #github link
+#         $outputPath = "$env:TEMP\win11app"
+
+#         # Check if the file already exists
+#         if (-not (Test-Path -Path "$outputPath\cursor.zip")) {
+#             # File does not exist, download it
+#             New-Item -ItemType Directory -Force -Path $outputPath
+#             Invoke-WebRequest -Uri $downloadUrl -OutFile "$outputPath\cursor.zip"
+#             Write-Host "File downloaded to: $outputPath" -ForegroundColor Green
+#         } else {
+#             Write-Host "File already exists at: $outputPath" -ForegroundColor Magenta
+#         }
+
+#         # Unzip the downloaded file
+#         Write-Host "Unziping content..." -ForegroundColor Green
+#         Expand-Archive -Path "$outputPath\cursor.zip" -DestinationPath $outputPath -Force
+
+#         Write-Host "Installing cursor..." -ForegroundColor Green   
+#         # Step 2: Run install.inf
+#         $infPath = Join-Path $outputPath "light\Install.inf"
+#         # Check if the install.inf file exists
+#         if (Test-Path $infPath) {
+#             # Run the installation file
+#             Start-Process "C:\Windows\System32\rundll32.exe" -ArgumentList "advpack.dll,LaunchINFSection $infPath,DefaultInstall"
+#         } else {
+#             Write-Host "Install.inf not found in the specified location."
+#         }
+
+#         # Set the cursor scheme values
+#         Write-Host "Seting cursor..." -ForegroundColor Green
+#         $cursorScheme = @"
+# C:\Windows\Cursors\Windows_11_light_v2\pointer.cur,C:\Windows\Cursors\Windows_11_light_v2\help.cur,C:\Windows\Cursors\Windows_11_light_v2\working.ani,C:\Windows\Cursors\Windows_11_light_v2\busy.ani,C:\Windows\Cursors\Windows_11_light_v2\precision.cur,C:\Windows\Cursors\Windows_11_light_v2\beam.cur,C:\Windows\Cursors\Windows_11_light_v2\handwriting.cur,C:\Windows\Cursors\Windows_11_light_v2\unavailable.cur,C:\Windows\Cursors\Windows_11_light_v2\vert.cur,C:\Windows\Cursors\Windows_11_light_v2\horz.cur,C:\Windows\Cursors\Windows_11_light_v2\dgn1.cur,C:\Windows\Cursors\Windows_11_light_v2\dgn2.cur,C:\Windows\Cursors\Windows_11_light_v2\move.cur,C:\Windows\Cursors\Windows_11_light_v2\alternate.cur,C:\Windows\Cursors\Windows_11_light_v2\link.cur,C:\Windows\Cursors\Windows_11_light_v2\person.cur,C:\Windows\Cursors\Windows_11_light_v2\pin.cur
+# "@
+
+#         # Define the Registry path for the cursor scheme
+#         $registryPath = "HKCU:\Control Panel\Cursors"
+
+#         # Set the new cursor scheme for each individual cursor type
+#         $cursorTypes = @("AppStarting", "Arrow", "Crosshair", "Hand", "Help", "IBeam", "No", "NWPen", "SizeAll", "SizeNESW", "SizeNS", "SizeNWSE", "SizeWE", "UpArrow", "Wait")
+        
+#         Write-Host "Updating cursor..." -ForegroundColor Green
+#         foreach ($cursorType in $cursorTypes) {
+#             Set-ItemProperty -Path $registryPath -Name $cursorType -Value $cursorScheme
+#         }
+
+#         Start-Sleep 1
+
+#         Add-Type @"
+#     using System;
+#     using System.Runtime.InteropServices;
+
+#     public class SystemParamInfo
+#     {
+#         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+#         public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+#     }
+# "@
+
+#         [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
+
+    
+#         $wpf_DblModernCursorLight.IsChecked = $false
+#     }
+#     Invoke-MessageBox -msg "tweak"
+#     # Invoke restart computer
+#     If ( $wpf_DblRestartPC.IsChecked -eq $true ) {
+#         Restart-Computer
+#     }
+# }
 function Invoke-ToggleFastPreset {
     <#
 
@@ -2522,20 +2574,6 @@ function Invoke-ToggleFastPreset {
 
     if ($IsChecked) { Write-Host "Enabling Fast Preset" -ForegroundColor Green } else { Write-Host "Disabling Fast Preset" -ForegroundColor Red }
 }
-function Invoke-TogglefIPv6{    
-    $EnableMode = $wpf_TogglefIPv6.IsChecked
-    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
-    If ($ToggleValue -ne 1){
-        Enable-NetAdapterBinding -Name "Ethernet" -ComponentID ms_tcpip6
-    }
-    if ($ToggleValue -ne 0){
-        Disable-NetAdapterBinding -Name "Ethernet" -ComponentID ms_tcpip6
-    }
-    Write-Host $(If ( $EnableMode ) {"Enabling IPv6"} Else {"Disabling IPv6"})
-}
-function Invoke-ToggleHiddenFiles{
-    Toggle-RegistryValue -CheckBox $wpf_ToggleHiddenFiles -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'Hidden' -TrueValue 1 -FalseValue 0 -EnableMessage "Showing hidden files" -DisableMessage "Hide hidden files"
-}
 function Invoke-ToggleMegaPreset {
     <#
 
@@ -2565,55 +2603,6 @@ function Invoke-ToggleMegaPreset {
     }
 
     if ($IsChecked) { Write-Host "Enabling Mega Preset" -ForegroundColor Green } else { Write-Host "Disabling Mega Preset" -ForegroundColor Red }
-}
-function Invoke-ToggleMouseAcceleration{    
-    $EnableMode = $wpf_ToggleMouseAcceleration.IsChecked
-    $ToggleValue = $(If ( $EnableMode ) {0} Else {1})
-    If ($ToggleValue -ne 1){
-        $Path = "HKCU:\Control Panel\Mouse"
-        Set-ItemProperty -Path $Path -Name MouseSpeed -Value 1
-        Set-ItemProperty -Path $Path -Name MouseThreshold1 -Value 6
-        Set-ItemProperty -Path $Path -Name MouseThreshold2 -Value 10
-    }
-    if ($ToggleValue -ne 0){
-        $Path = "HKCU:\Control Panel\Mouse"
-        Set-ItemProperty -Path $Path -Name MouseSpeed -Value 0
-        Set-ItemProperty -Path $Path -Name MouseThreshold1 -Value 0
-        Set-ItemProperty -Path $Path -Name MouseThreshold2 -Value 0
-    }
-    Write-Host $(If ( $EnableMode ) {"Enabling Mouse Acceleration"} Else {"Disabling Mouse Acceleration"})
-}
-function Invoke-ToggleNumLock{
-    Toggle-RegistryValue -CheckBox $wpf_ToggleNumLock -Path 'HKCU:\Control Panel\Keyboard' -Name 'InitialKeyboardIndicators' -TrueValue 2 -FalseValue 0 -EnableMessage "Enabling Numlock on startup" -DisableMessage "Disabling Numlock on startup"
-}
-
-function Invoke-TogglePasswordReveal{    
-
-    If (!(Test-Path "HKLM:\Software\Policies\Microsoft\Windows\CredUI")) {
-        New-Item -Path "HKLM:\Software\Policies\Microsoft\Windows\CredUI" -Force | Out-Null
-        New-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\CredUI' -Name 'DisablePasswordReveal' -PropertyType DWord -Value 0 -Force
-    }
-    else {
-        New-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\Windows\CredUI' -Name 'DisablePasswordReveal' -PropertyType DWord -Value 0 -Force
-    }
-
-    Toggle-RegistryValue -CheckBox $wpf_TogglePasswordReveal -Path 'HKLM:\Software\Policies\Microsoft\Windows\CredUI' -Name 'DisablePasswordReveal' -TrueValue 0 -FalseValue 1 -EnableMessage "Enabling Password Reveal" -DisableMessage "Disabling Password Reveal"
-}
-function Invoke-ToggleSearch{
-    Toggle-RegistryValue -CheckBox $wpf_ToggleSearch -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' -Name 'SearchBoxTaskbarMode' -TrueValue 0 -FalseValue 2 -EnableMessage "Hiding search box" -DisableMessage "Showing search box"
-}
-function Invoke-ToggleSnapLayouts{
-    taskkill.exe /F /IM "explorer.exe"
-    Toggle-RegistryValue -CheckBox $wpf_ToggleSnapLayouts -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'EnableSnapAssistFlyout' -TrueValue 0 -FalseValue 1 -EnableMessage "Disabling Snap Layouts" -DisableMessage "Enabled Snap Layouts"
-    Start-Process "explorer.exe"
-}
-function Invoke-ToggleSticky{
-    Toggle-RegistryValue -CheckBox $wpf_ToggleSticky -Path 'HKCU:\Control Panel\Accessibility\StickyKeys' -Name 'Flags' -TrueValue 58 -FalseValue 510 -EnableMessage "Disabling Sticky Keys" -DisableMessage "Enabling Sticky Keys"
-}
-function Invoke-ToggleVerboseLogon{
-
-    New-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' -Name 'VerboseStatus' -PropertyType DWord -Value 0 -Force
-    Toggle-RegistryValue -CheckBox $wpf_ToggleVerboseLogon -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' -Name 'VerboseStatus' -TrueValue 1 -FalseValue 0 -EnableMessage "Enabling Verbose Logon" -DisableMessage "Disabling Verbose Logon"
 }
 
 ################################################################################################################

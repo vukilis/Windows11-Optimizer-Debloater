@@ -207,10 +207,10 @@ foreach ($button in $buttons){
 }
 
 $toggleButtons = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "ToggleButton"}
-foreach ($button in $toggleButtons){
-    $button.value.Add_Click({
-        [System.Object]$Sender = $args[0]
-        Invoke-ToggleButtons "wpf_$($Sender.name)"
+foreach ($btn in $toggleButtons) {
+    $btn.Value.Add_Click({
+        $Sender = $args[0]
+        Invoke-ToggleButtons -toggle "wpf_$($Sender.Name)" -isChecked ([bool]$Sender.IsChecked)
     })
 }
 
@@ -222,23 +222,112 @@ foreach ($box in $checkbox){
     })
 }
 
+# Load tweaks.json
+$tweaksJsonPath = ".\config\tweaks.json"
+$tweaks = Get-Content $tweaksJsonPath -Raw | ConvertFrom-Json
+
 function Invoke-ToggleButtons {
+    Param ([string]$ToggleButton, [bool]$isChecked)
 
-    <#
-    
-        .DESCRIPTION
-        Meant to make creating ToggleButtons easier. There is a section below in the gui that will assign this function to every ToggleButton.
-        This way you can dictate what each ToggleButton does from this function. 
-    
-        Input will be the name of the ToggleButton that is clicked. 
-    #>
-    
-    Param ([string]$ToggleButton) 
+    switch -Wildcard ($ToggleButton) {
+        # Static / hard-coded buttons
+        "wpf_AboutButton" { Invoke-AboutButton }
+        "wpf_SettingsButton" { Invoke-SettingsButton }
 
-    Switch -Wildcard ($ToggleButton){
-        "wpf_AboutButton" {Invoke-AboutButton}
+        # Dynamic toggle buttons from JSON
+        default {
+            # Strip off "wpf_" prefix for JSON lookup
+            $toggleName = $ToggleButton -replace '^wpf_', ''
+
+            if ($tweaks.PSObject.Properties.Name -contains $toggleName) {
+                $toggleEntry = $tweaks.$toggleName
+
+                foreach ($regEntry in $toggleEntry.registry) {
+                    $path = $regEntry.Path
+                    $name = $regEntry.Name
+                    $type = $regEntry.Type
+
+                    if ($isChecked) {
+                        $valueToSet = $regEntry.Value
+                    } else {
+                        $valueToSet = $regEntry.OriginalValue
+                    }
+
+                    # Write-Host "Setting registry $path\$name to $valueToSet"
+
+                    try {
+                        Set-RegistryValue -Path $path -Name $name -Type $type -Value $valueToSet
+
+                    } catch {
+                        # Write-Warning "Failed to set registry ${path}\${name}: $_"
+                    }
+                }
+            }
+            else {
+                Write-Warning "No toggle matched for '$toggle'"
+            }
+        }
     }
 }
+
+
+
+# function Invoke-ToggleButtons {
+#     Param (
+#         [string]$toggle,
+#         [bool]$isChecked
+#     ) 
+
+#     # Write-Host "Invoke-Toggle called with isChecked = '$isChecked'"
+
+#     $toggleName = $toggle -replace '^wpf_', ''
+
+#     if ($tweaks.PSObject.Properties.Name -contains $toggleName) {
+#         $toggleEntry = $tweaks.$toggleName
+
+#         foreach ($regEntry in $toggleEntry.registry) {
+#             $path = $regEntry.Path
+#             $name = $regEntry.Name
+#             $type = $regEntry.Type
+
+#             if ($isChecked) {
+#                 $valueToSet = $regEntry.Value
+#             } else {
+#                 $valueToSet = $regEntry.OriginalValue
+#             }
+
+#             # Write-Host "Setting registry $path\$name to $valueToSet"
+
+#             try {
+#                 Set-RegistryValue -Path $path -Name $name -Type $type -Value $valueToSet -ErrorAction Stop
+
+#             } catch {
+#                 Write-Warning "Failed to set registry ${path}\${name}: $_"
+#             }
+#         }
+#     }
+#     else {
+#         Write-Warning "No toggle matched for '$toggle'"
+#     }
+# }
+
+# function Invoke-ToggleButtons {
+
+#     <#
+    
+#         .DESCRIPTION
+#         Meant to make creating ToggleButtons easier. There is a section below in the gui that will assign this function to every ToggleButton.
+#         This way you can dictate what each ToggleButton does from this function. 
+    
+#         Input will be the name of the ToggleButton that is clicked. 
+#     #>
+    
+#     Param ([string]$ToggleButton) 
+
+#     Switch -Wildcard ($ToggleButton){
+#         "wpf_AboutButton" {Invoke-AboutButton}
+#     }
+# }
 function Invoke-Button {
 
     <#
@@ -336,22 +425,6 @@ function Invoke-Checkbox {
         "wpf_ToggleLitePreset" {Invoke-ToggleLitePreset}
         "wpf_ToggleDevPreset" {Invoke-ToggleDevPreset}
         "wpf_ToggleGamingPreset" {Invoke-ToggleGamingPreset}
-        "wpf_ToggleDarkMode" {Invoke-ToggleDarkMode}
-        "wpf_ToggleBingSearchMenu" {Invoke-ToggleBingSearchMenu}
-        "wpf_ToggleNumLock" {Invoke-ToggleNumLock}
-        "wpf_ToggleExt" {Invoke-ToggleExt}
-        "wpf_ToggleMouseAcceleration" {Invoke-ToggleMouseAcceleration}
-        "wpf_TogglefIPv6" {Invoke-TogglefIPv6}
-        "wpf_ToggleHiddenFiles" {Invoke-ToggleHiddenFiles}
-        "wpf_ToggleSearch" {Invoke-ToggleSearch}
-        "wpf_ToggleSnapLayouts" {Invoke-ToggleSnapLayouts}
-        "wpf_ToggleVerboseLogon" {Invoke-ToggleVerboseLogon}
-        "wpf_ToggleCopilot" {Invoke-ToggleCopilot}
-        "wpf_ToggleSticky" {Invoke-ToggleSticky}
-        "wpf_ToggleEndTask" {Invoke-ToggleEndTask}
-        "wpf_ToggleCenterTaskbar" {Invoke-ToggleCenterTaskbar}
-        "wpf_ToggleDetailedBSoD" {Invoke-ToggleDetailedBSoD}
-        "wpf_TogglePasswordReveal" {Invoke-TogglePasswordReveal}
     }
 }
 ################################
@@ -395,7 +468,7 @@ Function Get-Author7 {
         This is for powershell v7.1+
     #>
     
-    Clear-Host
+    #Clear-Host
     $colors = @("`e[38;5;200m", "`e[38;5;51m", "`e[38;5;98m")
 
     function Get-RandomColor {

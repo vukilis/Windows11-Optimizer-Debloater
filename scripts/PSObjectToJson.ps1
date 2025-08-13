@@ -1,10 +1,8 @@
-$jsonFilePath = "..\config\*.json"
+$jsonFolderPath = "..\config"
 
-if (Test-Path $jsonFilePath) {
-    $jsonContent = Get-Content -Path $jsonFilePath -Raw
-    $jsonContentWithoutQuotes = $jsonContent -replace "'", ""
-    $jsonContentWithoutQuotes | Set-Content -Path $jsonFilePath
-    Write-Host "Single quotes removed from $jsonFilePath."
-} else {
-    Write-Host "File not found: $jsonFilePath"
+Get-ChildItem -Path $jsonFolderPath -Filter *.json | ForEach-Object {
+    $content = Get-Content -Path $_.FullName -Raw
+    $fixedContent = $content -replace "'", ""
+    Set-Content -Path $_.FullName -Value $fixedContent
+    Write-Host "Single quotes removed from $($_.Name)."
 }

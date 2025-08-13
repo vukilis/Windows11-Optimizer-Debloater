@@ -1,0 +1,606 @@
+{
+    "DblSystemRestore": {
+        "Type": "CheckBox",
+        "Content": "Create restore point",
+        "Description": "Creating system restore point before applying tweaks.",
+        "message": "Creating system restore point...",
+        "InvokeScript": [
+            "Start-Process control"
+        ]
+    },
+    "DblTelemetry": {
+        "Type": "CheckBox",
+        "Content": "Disable Telemetry",
+        "Description": "Disables Windows telemetry and data collection services.",
+        "message": "Disabling Telemetry...",
+        "ScheduledTask": [
+        {
+            "Name": "Microsoft\\Windows\\Application Experience\\Microsoft Compatibility Appraiser",
+            "State": "Disabled",
+            "OriginalState": "Enabled"
+        },
+        {
+            "Name": "Microsoft\\Windows\\Application Experience\\ProgramDataUpdater",
+            "State": "Disabled",
+            "OriginalState": "Enabled"
+        },
+        {
+            "Name": "Microsoft\\Windows\\Autochk\\Proxy",
+            "State": "Disabled",
+            "OriginalState": "Enabled"
+        },
+        {
+            "Name": "Microsoft\\Windows\\Customer Experience Improvement Program\\Consolidator",
+            "State": "Disabled",
+            "OriginalState": "Enabled"
+        },
+        {
+            "Name": "Microsoft\\Windows\\Customer Experience Improvement Program\\UsbCeip",
+            "State": "Disabled",
+            "OriginalState": "Enabled"
+        },
+        {
+            "Name": "Microsoft\\Windows\\DiskDiagnostic\\Microsoft-Windows-DiskDiagnosticDataCollector",
+            "State": "Disabled",
+            "OriginalState": "Enabled"
+        },
+        {
+            "Name": "Microsoft\\Windows\\Feedback\\Siuf\\DmClient",
+            "State": "Disabled",
+            "OriginalState": "Enabled"
+        },
+        {
+            "Name": "Microsoft\\Windows\\Feedback\\Siuf\\DmClientOnScenarioDownload",
+            "State": "Disabled",
+            "OriginalState": "Enabled"
+        },
+        {
+            "Name": "Microsoft\\Windows\\Windows Error Reporting\\QueueReporting",
+            "State": "Disabled",
+            "OriginalState": "Enabled"
+        },
+        {
+            "Name": "Microsoft\\Windows\\Application Experience\\MareBackup",
+            "State": "Disabled",
+            "OriginalState": "Enabled"
+        },
+        {
+            "Name": "Microsoft\\Windows\\Application Experience\\StartupAppTask",
+            "State": "Disabled",
+            "OriginalState": "Enabled"
+        },
+        {
+            "Name": "Microsoft\\Windows\\Application Experience\\PcaPatchDbTask",
+            "State": "Disabled",
+            "OriginalState": "Enabled"
+        },
+        {
+            "Name": "Microsoft\\Windows\\Maps\\MapsUpdateTask",
+            "State": "Disabled",
+            "OriginalState": "Enabled"
+        }
+        ],
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+                "OriginalValue": "1",
+                "Name": "AllowTelemetry",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                "OriginalValue": "1",
+                "Name": "ContentDeliveryAllowed",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                "OriginalValue": "1",
+                "Name": "OemPreInstalledAppsEnabled",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                "OriginalValue": "1",
+                "Name": "PreInstalledAppsEnabled",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                "OriginalValue": "1",
+                "Name": "PreInstalledAppsEverEnabled",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                "OriginalValue": "1",
+                "Name": "SilentInstalledAppsEnabled",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                "OriginalValue": "1",
+                "Name": "SubscribedContent-338387Enabled",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                "OriginalValue": "1",
+                "Name": "SubscribedContent-338388Enabled",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                "OriginalValue": "1",
+                "Name": "SubscribedContent-338389Enabled",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                "OriginalValue": "1",
+                "Name": "SubscribedContent-353698Enabled",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                "OriginalValue": "1",
+                "Name": "SystemPaneSuggestionsEnabled",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Siuf\\Rules",
+                "OriginalValue": "0",
+                "Name": "NumberOfSIUFInPeriod",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+                "OriginalValue": "0",
+                "Name": "DoNotShowFeedbackNotifications",
+                "Value": "1",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+                "OriginalValue": "0",
+                "Name": "DisableTailoredExperiencesWithDiagnosticData",
+                "Value": "1",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\AdvertisingInfo",
+                "OriginalValue": "0",
+                "Name": "DisabledByGroupPolicy",
+                "Value": "1",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting",
+                "OriginalValue": "0",
+                "Name": "Disabled",
+                "Value": "1",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\\Config",
+                "OriginalValue": "1",
+                "Name": "DODownloadMode",
+                "Value": "1",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Remote Assistance",
+                "OriginalValue": "1",
+                "Name": "fAllowToGetHelp",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\OperationStatusManager",
+                "OriginalValue": "0",
+                "Name": "EnthusiastMode",
+                "Value": "1",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                "OriginalValue": "1",
+                "Name": "ShowTaskViewButton",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\People",
+                "OriginalValue": "1",
+                "Name": "PeopleBand",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                "OriginalValue": "1",
+                "Name": "LaunchTo",
+                "Value": "1",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem",
+                "OriginalValue": "0",
+                "Name": "LongPathsEnabled",
+                "Value": "1",
+                "Type": "DWord"
+            },
+            {
+                "_Comment": "Driver searching is a function that should be left in",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DriverSearching",
+                "OriginalValue": "1",
+                "Name": "SearchOrderConfig",
+                "Value": "1",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+                "OriginalValue": "1",
+                "Name": "SystemResponsiveness",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+                "OriginalValue": "1",
+                "Name": "NetworkThrottlingIndex",
+                "Value": "4294967295",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\Control Panel\\Desktop",
+                "OriginalValue": "1",
+                "Name": "MenuShowDelay",
+                "Value": "1",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\Control Panel\\Desktop",
+                "OriginalValue": "1",
+                "Name": "AutoEndTasks",
+                "Value": "1",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management",
+                "OriginalValue": "0",
+                "Name": "ClearPageFileAtShutdown",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKLM:\\SYSTEM\\ControlSet001\\Services\\Ndu",
+                "OriginalValue": "1",
+                "Name": "Start",
+                "Value": "2",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\Control Panel\\Mouse",
+                "OriginalValue": "400",
+                "Name": "MouseHoverTime",
+                "Value": "400",
+                "Type": "String"
+            },
+            {
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+                "OriginalValue": "20",
+                "Name": "IRPStackSize",
+                "Value": "30",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Feeds",
+                "OriginalValue": "1",
+                "Name": "EnableFeeds",
+                "Value": "0",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Feeds",
+                "OriginalValue": "1",
+                "Name": "ShellFeedsTaskbarViewMode",
+                "Value": "2",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                "OriginalValue": "1",
+                "Name": "HideSCAMeetNow",
+                "Value": "1",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\UserProfileEngagement",
+                "OriginalValue": "1",
+                "Name": "ScoobeSystemSettingEnabled",
+                "Value": "0",
+                "Type": "DWord"
+            }
+        ],
+        "InvokeScript": [
+            "
+            bcdedit /set `{current`} bootmenupolicy Legacy | Out-Null
+                If ((get-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\" -Name CurrentBuild).CurrentBuild -lt 22557) {
+                    $taskmgr = Start-Process -WindowStyle Hidden -FilePath taskmgr.exe -PassThru
+                    Do {
+                        Start-Sleep -Milliseconds 100
+                        $preferences = Get-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\TaskManager\" -Name \"Preferences\" -ErrorAction SilentlyContinue
+                    } Until ($preferences)
+                    Stop-Process $taskmgr
+                    $preferences.Preferences[28] = 0
+                    Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\TaskManager\" -Name \"Preferences\" -Type Binary -Value $preferences.Preferences
+                }
+                Remove-Item -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}\" -Recurse -ErrorAction SilentlyContinue
+
+                # Fix Managed by your organization in Edge if regustry path exists then remove it
+
+                If (Test-Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge\") {
+                    Remove-Item -Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge\" -Recurse -ErrorAction SilentlyContinue
+                }
+
+                # Group svchost.exe processes
+                $ram = (Get-CimInstance -ClassName Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum).Sum / 1kb
+                Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\" -Name \"SvcHostSplitThresholdInKB\" -Type DWord -Value $ram -Force
+
+                $autoLoggerDir = \"$env:PROGRAMDATA\\Microsoft\\Diagnosis\\ETLLogs\\AutoLogger\"
+                If (Test-Path \"$autoLoggerDir\\AutoLogger-Diagtrack-Listener.etl\") {
+                    Remove-Item \"$autoLoggerDir\\AutoLogger-Diagtrack-Listener.etl\"
+                }
+                icacls $autoLoggerDir /deny SYSTEM:`(OI`)`(CI`)F | Out-Null
+
+                # Disable Defender Auto Sample Submission
+                Set-MpPreference -SubmitSamplesConsent 2 -ErrorAction SilentlyContinue | Out-Null
+                "
+        ],
+    },
+        "DblWifi": {
+        "Type": "CheckBox",
+        "Content": "Disable Wi-Fi Sense",
+        "Description": "Disables automatic connection to open hotspots and Wi-Fi reporting.",
+        "message": "Disabling Wi-Fi Sense...",
+        "Registry": [
+        {
+            "Path": "HKLM:\\SOFTWARE\\Microsoft\\PolicyManager\\default\\WiFi\\AllowWiFiHotSpotReporting",
+            "Name": "Value",
+            "Value": 0,
+            "OriginalValue": 1,
+            "Type": "DWord"
+        },
+        {
+            "Path": "HKLM:\\SOFTWARE\\Microsoft\\PolicyManager\\default\\WiFi\\AllowAutoConnectToWiFiSenseHotspots",
+            "Name": "Value",
+            "Value": 0,
+            "OriginalValue": 1,
+            "Type": "DWord"
+        }
+        ]
+    },
+    "ToggleBingSearchMenu": {
+        "Type": "Toggle",
+        "Content": "Bing Search in Start Menu",
+        "Description": "Disables Bing search results in the Start Menu.",
+        "message": "Disabling Bing Search in Start Menu...",
+        "registry": [
+        {
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+            "Name": "BingSearchEnabled",
+            "Value": 1,
+            "OriginalValue": 0,
+            "Type": "Dword"
+        }
+        ]
+    },
+    "ToggleNumLock": {
+        "Type": "Toggle",
+        "Content": "NumLock on Startup",
+        "Description": "Enables Num Lock to be on by default when starting Windows.",
+        "message": "Enabling Num Lock on Startup...",
+        "registry": [
+        {
+            "Path": "HKCU:\\Control Panel\\Keyboard",
+            "Name": "InitialKeyboardIndicators",
+            "Value": 2,
+            "OriginalValue": 0,
+            "Type": "Dword"
+        }
+        ]
+    },
+    "ToggleExt": {
+        "Type": "Toggle",
+        "Content": "Show File Extensions",
+        "Description": "Enables file extensions to be visible in File Explorer.",
+        "message": "Enabling File Extensions visibility...",
+        "registry": [
+        {
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "HideFileExt",
+            "Value": 0,
+            "OriginalValue": 1,
+            "Type": "Dword"
+        }
+        ]
+    },
+    "ToggleMouseAcceleration": {
+        "Type": "Toggle",
+        "Content": "Mouse Acceleration",
+        "Description": "Disables mouse acceleration for a more consistent pointer movement.",
+        "message": "Disabling Mouse Acceleration...",
+        "registry": [
+        {
+            "Path": "HKCU:\\Control Panel\\Mouse",
+            "Name": "MouseSpeed",
+            "Value": 0,
+            "OriginalValue": 1,
+            "Type": "Dword"
+        }
+        ]
+    },
+    "ToggleHiddenFiles": {
+        "Type": "Toggle",
+        "Content": "Show Hidden Files",
+        "Description": "Enables the visibility of hidden files and folders in File Explorer.",
+        "message": "Enabling visibility of hidden files...",
+        "registry": [
+        {
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "Hidden",
+            "Value": 1,
+            "OriginalValue": 2,
+            "Type": "Dword"
+        }
+        ]
+    },
+    "ToggleSearch": {
+        "Type": "Toggle",
+        "Content": "Hide Search Box",
+        "Description": "Disables the search box in the taskbar",
+        "message": "Hiding Search Box in Taskbar...",
+        "registry": [
+        {
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+            "Name": "SearchBoxTaskbarMode",
+            "Value": 0,
+            "OriginalValue": 1,
+            "Type": "Dword"
+        }
+        ]
+    },
+    "ToggleSnapLayouts": {
+        "Type": "Toggle",
+        "Content": "Disable Snap Layouts",
+        "Description": "Disables Snap Assist and Snap Layouts features in Windows 11.",
+        "message": "Disabling Snap Layouts...",
+        "registry": [
+        {
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "EnableSnapAssistFlyout",
+            "Value": 0,
+            "OriginalValue": 1,
+            "Type": "Dword"
+        }
+        ]
+    },
+    "ToggleVerboseLogon": {
+        "Type": "Toggle",
+        "Content": "Verbose Logon Messages",
+        "Description": "Enables detailed logon messages during the startup process.",
+        "message": "Enabling Verbose Logon Messages...",
+        "registry": [
+        {
+            "Path": "HKLM:\\Software\\Policies\\Microsoft\\Windows\\System",
+            "Name": "VerboseStatus",
+            "Value": 1,
+            "OriginalValue": 0,
+            "Type": "Dword"
+        }
+        ]
+    },
+    "ToggleCopilot": {
+        "Type": "Toggle",
+        "Content": "Disable Copilot",
+        "Description": "Disables the Windows Copilot feature in the taskbar.",
+        "message": "Disabling Windows Copilot...",
+        "registry": [
+        {
+            "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot",
+            "Name": "TurnOffWindowsCopilot",
+            "Value": 1,
+            "OriginalValue": 0,
+            "Type": "Dword"
+        }
+        ]
+    },
+    "ToggleSticky": {
+        "Type": "Toggle",
+        "Content": "Disable Sticky Keys",
+        "Description": "Disables Sticky Keys feature in Windows.",
+        "message": "Disabling Sticky Keys...",
+        "registry": [
+        {
+            "Path": "HKCU:\\Control Panel\\Accessibility\\StickyKeys",
+            "Name": "Flags",
+            "Value": 58,
+            "OriginalValue": 510,
+            "Type": "Dword"
+        }
+        ]
+    },
+    "ToggleEndTask": {
+        "Type": "Toggle",
+        "Content": "Enable End Task",
+        "Description": "Enables the End Task option in the taskbar context menu.",
+        "message": "Enabling End Task option in Taskbar...",
+        "registry": [
+        {
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\Taskbar",
+            "Name": "ShowEndTask",
+            "Value": 1,
+            "OriginalValue": 0,
+            "Type": "Dword"
+        }
+        ]
+    },
+    "ToggleCenterTaskbar": {
+        "Type": "Toggle",
+        "Content": "Center Taskbar Items",
+        "Description": "Centers the taskbar items in the taskbar.",
+        "message": "Centering Taskbar Items...",
+        "registry": [
+        {
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "TaskbarAl",
+            "Value": 1,
+            "OriginalValue": 0,
+            "Type": "Dword"
+        }
+        ]
+    },
+    "ToggleDetailedBSoD": {
+        "Type": "Toggle",
+        "Content": "Enabled Detailed BSoD",
+        "Description": "Enables detailed Blue Screen of Death (BSoD) messages.",
+        "message": "Enabling Detailed BSoD messages...",
+        "registry": [
+        {
+            "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\CrashControl",
+            "Name": "DisplayParameters",
+            "Value": 1,
+            "OriginalValue": 0,
+            "Type": "Dword"
+        }
+        ]
+    },
+    "TogglePasswordReveal": {
+        "Type": "Toggle",
+        "Content": "Password Reveal Button",
+        "Description": "Enables the password reveal button on login screens.",
+        "message": "Enabling Password Reveal Button...",
+        "registry": [
+        {
+            "Path": "HKLM:\\Software\\Policies\\Microsoft\\Windows\\CredUI",
+            "Name": "DisablePasswordReveal",
+            "Value": 1,
+            "OriginalValue": 0,
+            "Type": "Dword"
+        }
+        ]
+    }
+}
