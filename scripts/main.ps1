@@ -223,16 +223,20 @@ foreach ($box in $checkbox){
 }
 
 # Load all JSON configs automatically
+$configUrl = "https://api.github.com/repos/vukilis/Windows11-Optimizer-Debloater/contents/config"
 $sync = @{ configs = @{} }
-Get-ChildItem -Path ".\config" -Filter "*.json" | ForEach-Object {
-    $baseName = $_.BaseName   # e.g. "tweaks", "preset"
-    try {
-        # Write-Host "Loading JSON config: $baseName" -ForegroundColor Cyan
-        $sync.configs[$baseName] = Get-Content $_.FullName -Raw | ConvertFrom-Json
+try {
+    $files = Invoke-RestMethod -Uri $configUrl -UseBasicParsing
+    foreach ($file in $files | Where-Object { $_.name -like "*.json" }) {
+        $rawUrl = $file.download_url
+        $json   = Invoke-RestMethod -Uri $rawUrl -UseBasicParsing
+        $baseName = [System.IO.Path]::GetFileNameWithoutExtension($file.name)
+        $sync.configs[$baseName] = $json
+        #Write-Host "Loaded remote config: $($file.name)" -ForegroundColor Green
     }
-    catch {
-        Write-Warning "Failed to load JSON file $_ : $_"
-    }
+}
+catch {
+    Write-Warning "Failed to fetch configs from GitHub API: $_"
 }
 
 function Invoke-ToggleButtons {
