@@ -12,13 +12,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- New config JSON files for managing tweaks and presets.
 - New helper function to invoke a provided script block - **Invoke-SCripts**
 - New optimization function **Set-ScheduledTask** to disable the specified scheduled task.
+- New function **Get-ToggleStatus** to check whether toggle tweaks should be enabled or disabled.
+- New function **Set-DynamicToolTip** to dynamically assign descriptions to tweak buttons.
+- New function **Invoke-ExplorerUpdate** to restart Windows Explorer.
+- New Tweaks: **Snap Window**,  **Snap Assist Suggestion**, **Snap Assist Bar**, **Widget Button in Taskbar**, **Prefer IPv4 over IPv6**, **Disable Microsoft Copilot**
 
 ### Changed
 
-- Enhanced **Set-RegistryValue** function to better handle registry operations based on provided inputs
-- Enhanced all optimization tweaks
+- Enhanced **Set-RegistryValue** function to better handle registry operations based on provided inputs.
+- Optimization tweaks are now stored as JSON objects in external files.
+- Enhanced all optimization tweaks and improved compatibility with the latest Windows build.
+- Changed logic for handling **ToggleButton** components and improve consistency and maintainability.
+- Modified XAML layout: replaced preset **ToggleButtons** (acting as checkboxes) with updated ToggleButton components for improved UI. control.
+- Introduced new logic for the **Invoke-OptimizationButton**, **Invoke-ToggleFastPreset** and **Invoke-ToggleMegaPreset** function to handle checkbox tweaks from the JSON file.
+- Replaced **Remove Microsoft Edge** option with **Debloat Microsoft Edge** for more control over Edge customization.
+- Moved tweaks **Disable IPv6**, **Disable Teredo**, **Classic Right-Click Menu**, **Time UTC (Dual Boot)**, **Remove Cortana (deprecated)**, **Remove OneDrive** to the new **Advanced Tweaks** section.
+- Removed all unnecessary legacy functions and files.
 
 ## [3.1] - 2025-08-03
 
