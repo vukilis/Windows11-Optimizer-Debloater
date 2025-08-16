@@ -4,7 +4,7 @@ function Invoke-ToggleFastPreset {
     )
 
     $configUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/config"
-    $files   = @("preset.json")  # add all your JSON files here
+    $files   = @("preset.json")
 
     $sync = @{ configs = @{} }
 
@@ -14,7 +14,7 @@ function Invoke-ToggleFastPreset {
             $json = Invoke-RestMethod -Uri $url -UseBasicParsing
             $baseName = [System.IO.Path]::GetFileNameWithoutExtension($file)
             $sync.configs[$baseName] = $json
-            Write-Host "Loaded remote config: $file" -ForegroundColor Cyan
+            #Write-Host "Loaded remote config: $file" -ForegroundColor Cyan
         }
         catch {
             Write-Warning "Failed to load JSON from $url : $_"
