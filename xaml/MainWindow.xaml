@@ -252,80 +252,82 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="ToggleSwitchStyle" TargetType="CheckBox">
+        <Style x:Key="ToggleSwitchStyle" TargetType="ToggleButton">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="CheckBox">
+                    <ControlTemplate TargetType="ToggleButton">
                         <StackPanel>
                             <Grid>
+                                <!-- Background Track -->
                                 <Border Width="45" 
                                         Height="20"
                                         Background="#555555" 
                                         CornerRadius="10" 
-                                        Margin="5,0"
-                                />
-                                <Border Name="ToggleSwitchButton"
+                                        Margin="5,0" />
+
+                                <!-- Movable Knob -->
+                                <Border x:Name="ToggleSwitchButton"
                                         Width="25" 
                                         Height="25"
                                         Background="Black" 
                                         CornerRadius="12.5" 
-                                        HorizontalAlignment="Left"
-                                />
-                                <ContentPresenter Name="ToggleSwitchContent"
-                                                  Margin="10,0,0,0"
-                                                  Content="{TemplateBinding Content}"
-                                                  VerticalAlignment="Center"
-                                />
+                                        HorizontalAlignment="Left" />
+
+                                <!-- Optional content -->
+                                <ContentPresenter x:Name="ToggleSwitchContent"
+                                                Margin="10,0,0,0"
+                                                Content="{TemplateBinding Content}"
+                                                VerticalAlignment="Center" />
                             </Grid>
                         </StackPanel>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="false">
+                            <!-- Off State -->
+                            <Trigger Property="IsChecked" Value="False">
                                 <Trigger.ExitActions>
                                     <RemoveStoryboard BeginStoryboardName="ToggleSwitchLeft" />
                                     <BeginStoryboard x:Name="ToggleSwitchRight">
                                         <Storyboard>
                                             <ThicknessAnimation Storyboard.TargetProperty="Margin"
-                                                    Storyboard.TargetName="ToggleSwitchButton"
-                                                    Duration="0:0:0:0"
-                                                    From="0,0,0,0"
-                                                    To="28,0,0,0">
-                                            </ThicknessAnimation>
+                                                                Storyboard.TargetName="ToggleSwitchButton"
+                                                                Duration="0:0:0"
+                                                                From="0,0,0,0"
+                                                                To="28,0,0,0" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.ExitActions>
                                 <Setter TargetName="ToggleSwitchButton"
                                         Property="Background"
-                                        Value="#fff9f4f4"
-                                />
+                                        Value="#fff9f4f4" />
                             </Trigger>
-                            <Trigger Property="IsChecked" Value="true">
+
+                            <!-- On State -->
+                            <Trigger Property="IsChecked" Value="True">
                                 <Trigger.ExitActions>
                                     <RemoveStoryboard BeginStoryboardName="ToggleSwitchRight" />
                                     <BeginStoryboard x:Name="ToggleSwitchLeft">
                                         <Storyboard>
                                             <ThicknessAnimation Storyboard.TargetProperty="Margin"
-                                                    Storyboard.TargetName="ToggleSwitchButton"
-                                                    Duration="0:0:0:0"
-                                                    From="28,0,0,0"
-                                                    To="0,0,0,0">
-                                            </ThicknessAnimation>
+                                                                Storyboard.TargetName="ToggleSwitchButton"
+                                                                Duration="0:0:0"
+                                                                From="28,0,0,0"
+                                                                To="0,0,0,0" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.ExitActions>
                                 <Setter TargetName="ToggleSwitchButton"
                                         Property="Background"
-                                        Value="#ff060600"
-                                />
+                                        Value="#ff060600" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="ToggleSwitchStyleDisabled" TargetType="CheckBox">
+
+        <Style x:Key="ToggleSwitchStyleDisabled" TargetType="ToggleButton">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="CheckBox">
+                    <ControlTemplate TargetType="ToggleButton">
                         <StackPanel>
                             <Grid>
                                 <Border Width="45" 
@@ -392,10 +394,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="ToggleSwitchStyleGreen" TargetType="CheckBox">
+        <Style x:Key="ToggleSwitchStyleGreen" TargetType="ToggleButton">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="CheckBox">
+                    <ControlTemplate TargetType="ToggleButton">
                         <StackPanel>
                             <Grid>
                                 <Border Width="45" 
@@ -462,10 +464,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="ToggleSwitchStylePurple" TargetType="CheckBox">
+        <Style x:Key="ToggleSwitchStylePurple" TargetType="ToggleButton">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="CheckBox">
+                    <ControlTemplate TargetType="ToggleButton">
                         <StackPanel>
                             <Grid>
                                 <Border Width="45" 
@@ -482,9 +484,9 @@
                                         HorizontalAlignment="Left"
                                 />
                                 <ContentPresenter Name="ToggleSwitchContent"
-                                                  Margin="10,0,0,0"
-                                                  Content="{TemplateBinding Content}"
-                                                  VerticalAlignment="Center"
+                                                Margin="10,0,0,0"
+                                                Content="{TemplateBinding Content}"
+                                                VerticalAlignment="Center"
                                 />
                             </Grid>
                         </StackPanel>
@@ -495,18 +497,16 @@
                                     <BeginStoryboard x:Name="ToggleSwitchRight">
                                         <Storyboard>
                                             <ThicknessAnimation Storyboard.TargetProperty="Margin"
-                                                    Storyboard.TargetName="ToggleSwitchButton"
-                                                    Duration="0:0:0:0"
-                                                    From="0,0,0,0"
-                                                    To="28,0,0,0">
-                                            </ThicknessAnimation>
+                                                                Storyboard.TargetName="ToggleSwitchButton"
+                                                                Duration="0:0:0:0"
+                                                                From="0,0,0,0"
+                                                                To="28,0,0,0"/>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.ExitActions>
                                 <Setter TargetName="ToggleSwitchButton"
                                         Property="Background"
-                                        Value="#fff9f4f4"
-                                />
+                                        Value="#fff9f4f4"/>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="true">
                                 <Trigger.ExitActions>
@@ -514,28 +514,26 @@
                                     <BeginStoryboard x:Name="ToggleSwitchLeft">
                                         <Storyboard>
                                             <ThicknessAnimation Storyboard.TargetProperty="Margin"
-                                                    Storyboard.TargetName="ToggleSwitchButton"
-                                                    Duration="0:0:0:0"
-                                                    From="28,0,0,0"
-                                                    To="0,0,0,0">
-                                            </ThicknessAnimation>
+                                                                Storyboard.TargetName="ToggleSwitchButton"
+                                                                Duration="0:0:0:0"
+                                                                From="28,0,0,0"
+                                                                To="0,0,0,0"/>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.ExitActions>
                                 <Setter TargetName="ToggleSwitchButton"
                                         Property="Background"
-                                        Value="#ca35de"
-                                />
+                                        Value="#ca35de"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="ToggleSwitchStyleBlue" TargetType="CheckBox">
+        <Style x:Key="ToggleSwitchStyleBlue" TargetType="ToggleButton">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="CheckBox">
+                    <ControlTemplate TargetType="ToggleButton">
                         <StackPanel>
                             <Grid>
                                 <Border Width="45" 
@@ -1114,7 +1112,7 @@
                         <StackPanel Width="auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                             <Image Height="50" Width="100" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
                             <Label Foreground="#FFF4AB51" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,5,5,0" Content="Windows11 Optimizer&amp;Debloater"></Label>
-                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 3.1 - 03.08.2025"></Label>
+                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 3.2 - 16.08.2025"></Label>
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Orientation="Vertical" HorizontalAlignment="Left" Width="auto" Margin="5,5" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
@@ -2219,7 +2217,18 @@
                             </StackPanel>
                         </Border>
                         <Border Margin="5,5,0,10" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
-                            <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Margin="10,5,10,5">
+                            <StackPanel Name="TweaksEssential" Background="#1f1f21" SnapsToDevicePixels="True" Margin="10,5,10,5">
+                                <CheckBox Name="DblSystemRestore" Content="System Restore Point" IsChecked="True" Foreground="gold" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="Enable or disable system restore point before tweaking. Enabled by default!">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblRestartPC" Content="Restart Computer" Foreground="gold" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="Restart computer after tweaking.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <Separator Background="#FFF4AB51" Width="250" Margin="10,10" Height="2"/>
                                 <CheckBox Name="DblTelemetry" Content="Disable Telemetry" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Disables Microsoft Telemetry. Note: This will lock many Edge Browser settings. Microsoft spys heavily on you when using the Edge browser.">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -2236,6 +2245,11 @@
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
                                 <CheckBox Name="DblAH" Content="Disable Activity History" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="This erases recent docs, clipboard, and run history.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblDebloatEdge" Content="Debloat Microsoft Edge" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
@@ -2280,12 +2294,7 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
-                                <CheckBox Name="DblDisableTeredo" Content="Disable Teredo" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Teredo network tunneling is a ipv6 feature that can cause additional latancy.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblAutoAdjustVolume" Content="Disable Auto Adjust Volume" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="Windows can automatically adjust the volume of dofferent sounds when you are using your PC to place or receive telephone calls.">
+                                <CheckBox Name="DblAutoAdjustVolume" Content="Disable Auto Adjust Volume" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="Windows can automatically adjust the volume of different sounds when you are using your PC to place or receive telephone calls.">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
@@ -2301,12 +2310,45 @@
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
                                 <Separator Background="#FFF4AB51" Width="250" Margin="10,10" Height="2"/>
-                                <CheckBox Name="DblSystemRestore" Content="System Restore Point" IsChecked="True" Foreground="gold" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="Enable or disable system restore point before tweaking. Enabled by default!">
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Margin="3">
+                                    <Label Content="Advanced Tweaks" FontSize="18"  Foreground="#FFF4AB51" HorizontalAlignment="Center" Style="{StaticResource chfont}" FontWeight="Bold"/>
+                                </StackPanel>
+                                <CheckBox Name="DblIPv46" Content="Prefer IPv4 over IPv6" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
-                                <CheckBox Name="DblRestartPC" Content="Restart Computer" Foreground="gold" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="Restart computer after tweaking.">
+                                <CheckBox Name="DblIPv6" Content="Disable IPv6" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblDisableTeredo" Content="Disable Teredo" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Teredo network tunneling is a ipv6 feature that can cause additional latancy.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblRightClickMenu" Content="Classic Right-Click Menu" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Great Windows 11 tweak to bring back good context menus when right clicking things in explorer.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblUTC" Content="Time UTC (Dual Boot)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Essential for computers that are dual booting. Fixes the time sync with Linux Systems.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblToggleCopilot" Content="Disable Microsoft Copilot" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Disables MS Copilot AI built into Windows since 23H2.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblRemoveCortana" Content="Remove Cortana (deprecated)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Cortana, as a standalone app and in certain Microsoft products, has been retired in late 2023. While Cortana is still present in Windows 10 and older versions of Windows 11">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblOneDrive" Content="Remove OneDrive ⚠️" Foreground="DarkRed" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi"  ToolTip="Copies OneDrive file to default home folders and uninstalls it. RECOMMENDED ON FRESH WINDOWS❗">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
@@ -2325,12 +2367,7 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
-                                <CheckBox Name="DblDisplay" Content="Set Display Performance" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Sets the system preferences to performance. You can do this manually with sysdm.cpl as well.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblUTC" Content="Time UTC (Dual Boot)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Essential for computers that are dual booting. Fixes the time sync with Linux Systems.">
+                                <CheckBox Name="DblDisplay" Content="Set Display for Performance" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Sets the system preferences to performance. You can do this manually with sysdm.cpl as well.">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
@@ -2345,22 +2382,7 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
-                                <CheckBox Name="DblRemoveCortana" Content="Remove Cortana" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Removes Cortana, but often breaks search... if you are a heavy windows search users, this is NOT recommended.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblRemoveWidgets" Content="Remove Widgets" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Removes Cortana, but often breaks search... if you are a heavy windows search users, this is NOT recommended.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
                                 <CheckBox Name="DblClassicAltTab" Content="Classic Alt+TAB" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi"  ToolTip="All tabs open in Microsoft Edge will start appearing in Alt + TAB, not just the active one in each browser window. If you would prefer fewer tabs or the classic Alt + TAB experience then enable this tweak.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblRightClickMenu" Content="Classic Right-Click Menu" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Great Windows 11 tweak to bring back good context menus when right clicking things in explorer.">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
@@ -2395,16 +2417,6 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
-                                <CheckBox Name="DblRemoveEdge" Content="Remove Microsoft Edge ⚠️" Foreground="DarkRed" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi"  ToolTip="Removes Microsoft Edge when it gets reinstalld by updates. If you reinstall, it may not work. NOT RECOMMENDED❗">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-                                <CheckBox Name="DblOneDrive" Content="Remove OneDrive ⚠️" Foreground="DarkRed" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi"  ToolTip="Copies OneDrive file to default home folders and uninstalls it. RECOMMENDED ON FRESH WINDOWS❗">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
                             </StackPanel>
                         </Border>
                         <Border Margin="10,5,5,5" Height="40" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
@@ -2428,55 +2440,61 @@
                                     <Label Content="Fast Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="fastPresetButton" Style="{StaticResource ToggleSwitchStyleGreen}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                        <Label Content="On" Foreground="#2eb50d" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="FastPresetButton" Style="{StaticResource ToggleSwitchStyleGreen}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#2eb50d" FontWeight="UltraBold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
-                                    <Label Content="Bing Search In Start Menu" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <Label Content="Bing Search In Start Menu" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5" />
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="ToggleBingSearchMenu" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi" />
+                                        <ToggleButton Name="ToggleBingSearchMenu" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi" />
                                     </StackPanel>
                                     <Label Content="NumLock On Startup" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="ToggleNumLock" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <ToggleButton Name="ToggleNumLock" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
-                                    <Label Content="IPv6" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <Label Content="Search Button in Taskbar" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="TogglefIPv6" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <ToggleButton Name="ToggleSearch" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
-                                    <Label Content="Hide Search Box" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <Label Content="Snap Window" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="ToggleSearch" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <ToggleButton Name="ToggleSnapWindow" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
-                                    <Label Content="Disable Snap Layouts" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <Label Content="Snap Assist Flyout" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="ToggleSnapLayouts" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <ToggleButton Name="ToggleSnapFlyout" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
-                                    <Label Content="Disable Copilot" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <Label Content="Snap Assist Suggestion" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="ToggleCopilot" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <ToggleButton Name="ToggleSnapSuggestion" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Snap Assist Bar" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="ToggleSnapBar" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                     <Label Content="Enable End Task" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="ToggleEndTask" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0" ToolTip="Toggle tweak to disable/enable End Task in Taskbar by Right Click"/>
+                                        <ToggleButton Name="ToggleEndTask" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                     <Label Content="Enable Detailed BSoD" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="ToggleDetailedBSoD" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0" ToolTip="Toggle tweak to disable/enable detailed BSoD"/>
+                                        <ToggleButton Name="ToggleDetailedBSoD" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                 </StackPanel>
@@ -2484,55 +2502,61 @@
                                     <Label Content="Mega Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#ca35de" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="megaPresetButton" Style="{StaticResource ToggleSwitchStylePurple}" Cursor="Hand" Margin="2.5,0"/>
+                                        <ToggleButton Name="megaPresetButton" Style="{StaticResource ToggleSwitchStylePurple}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#ca35de" FontWeight="UltraBold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                     <Label Content="Dark Theme" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="ToggleDarkMode" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <ToggleButton Name="ToggleDarkMode" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                     <Label Content="Show File Extensions" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="ToggleExt" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <ToggleButton Name="ToggleExt" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                     <Label Content="Show Hidden Files" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="ToggleHiddenFiles" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <ToggleButton Name="ToggleHiddenFiles" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                     <Label Content="Mouse Acceleration" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="ToggleMouseAcceleration" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <ToggleButton Name="ToggleMouseAcceleration" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                     <Label Content="Verbose Logon Messages" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="ToggleVerboseLogon" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <ToggleButton Name="ToggleVerboseLogon" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
-                                    <Label Content="Disable Sticky Keys" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <Label Content="Sticky Keys" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="ToggleSticky" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
+                                        <ToggleButton Name="ToggleSticky" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                    </StackPanel>   
+                                    </StackPanel>
                                     <Label Content="Center Taskbar Items" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="ToggleCenterTaskbar" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0" ToolTip="Toggle tweak to Left/Center taskbar items"/>
+                                        <ToggleButton Name="ToggleCenterTaskbar" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                     <Label Content="Password Reveal Button" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <CheckBox Name="TogglePasswordReveal" Style="{StaticResource ToggleSwitchStyle}" ForceCursor="true" Cursor="Hand" Margin="2.5,0" ToolTip="Toggle tweak to Left/Center taskbar items"/>
+                                        <ToggleButton Name="TogglePasswordReveal" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Widgets Button in Taskbar" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="ToggleTaskbarWidgets" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                 </StackPanel>

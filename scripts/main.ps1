@@ -1,4 +1,4 @@
-# $xamlFile="C:\Users\vukilis\Pictures\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
+# $xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
 # $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
 $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
@@ -34,7 +34,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 3.1 - 03.08.2025"
+$wpf_AppVersion.Content = "Version: 3.2 - 16.08.2025"
 
 function Invoke-CloseButton {
     <#
@@ -207,10 +207,10 @@ foreach ($button in $buttons){
 }
 
 $toggleButtons = get-variable | Where-Object {$psitem.name -like "wpf_*" -and $psitem.value -ne $null -and $psitem.value.GetType().name -eq "ToggleButton"}
-foreach ($button in $toggleButtons){
-    $button.value.Add_Click({
-        [System.Object]$Sender = $args[0]
-        Invoke-ToggleButtons "wpf_$($Sender.name)"
+foreach ($btn in $toggleButtons) {
+    $btn.Value.Add_Click({
+        $Sender = $args[0]
+        Invoke-ToggleButtons -toggle "wpf_$($Sender.Name)" -isChecked ([bool]$Sender.IsChecked)
     })
 }
 
@@ -222,23 +222,56 @@ foreach ($box in $checkbox){
     })
 }
 
-function Invoke-ToggleButtons {
-
-    <#
-    
-        .DESCRIPTION
-        Meant to make creating ToggleButtons easier. There is a section below in the gui that will assign this function to every ToggleButton.
-        This way you can dictate what each ToggleButton does from this function. 
-    
-        Input will be the name of the ToggleButton that is clicked. 
-    #>
-    
-    Param ([string]$ToggleButton) 
-
-    Switch -Wildcard ($ToggleButton){
-        "wpf_AboutButton" {Invoke-AboutButton}
+# Load all JSON configs automatically
+$sync = @{ configs = @{} }
+Get-ChildItem -Path ".\config" -Filter "*.json" | ForEach-Object {
+    $baseName = $_.BaseName   # e.g. "tweaks", "preset"
+    try {
+        # Write-Host "Loading JSON config: $baseName" -ForegroundColor Cyan
+        $sync.configs[$baseName] = Get-Content $_.FullName -Raw | ConvertFrom-Json
+    }
+    catch {
+        Write-Warning "Failed to load JSON file $_ : $_"
     }
 }
+
+function Invoke-ToggleButtons {
+    Param ([string]$ToggleButton, [bool]$isChecked)
+
+    switch -Wildcard ($ToggleButton) {
+        "wpf_AboutButton"    { Invoke-AboutButton }
+        "wpf_SettingsButton" { Invoke-SettingsButton }
+        "wpf_megaPresetButton" { Invoke-ToggleMegaPreset }
+        "wpf_fastPresetButton" {Invoke-ToggleFastPreset}
+
+        default {
+            $toggleName = $ToggleButton -replace '^wpf_', ''
+            $toggleEntry = $null
+            $action = if ($isChecked) { "Enabling" } else { "Disabling" }
+
+            if ($sync.configs.tweaks.PSObject.Properties.Name -contains $toggleName) {
+                $toggleEntry = $sync.configs.tweaks.$toggleName
+            }
+
+            if (-not $toggleEntry) {
+                Write-Warning "No toggle matched for '$toggleName'"
+                return
+            }
+
+            Write-Host "$action $($toggleEntry.message)" -ForegroundColor Green
+
+            foreach ($regEntry in $toggleEntry.registry) {
+                $value = if ($isChecked) { $regEntry.Value } else { $regEntry.OriginalValue }
+                try { Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $value } catch {}
+            }
+
+            foreach ($script in $toggleEntry.InvokeScript) {
+                try { Invoke-Expression $script } catch { Write-Warning "Failed to run InvokeScript for '$toggleName': $_" }
+            }
+        }
+    }
+}
+
 function Invoke-Button {
 
     <#
@@ -264,8 +297,6 @@ function Invoke-Button {
         "wpf_SelectDebloatAll" {Invoke-SelectApplicationAll}
         "wpf_UnselectDebloatAll" {Invoke-UnselectApplicationAll}
         "wpf_UninstallDebloat" {Invoke-UninstallDebloat}
-        # "wpf_debloatALL" {Invoke-debloatALL}
-        # "wpf_debloatGaming" {Invoke-debloatGaming}
         "wpf_optimizationButton" {Invoke-optimizationButton}
         "wpf_recommended" {Invoke-recommended}
         "wpf_gaming" {Invoke-gaming}
@@ -331,27 +362,9 @@ function Invoke-Checkbox {
 
     Switch -Wildcard ($checkbox){
         "wpf_ToggleXboxPreset" {Invoke-ToggleXboxPreseta}
-        "wpf_fastPresetButton" {Invoke-ToggleFastPreset}
-        "wpf_megaPresetButton" {Invoke-ToggleMegaPreset}
         "wpf_ToggleLitePreset" {Invoke-ToggleLitePreset}
         "wpf_ToggleDevPreset" {Invoke-ToggleDevPreset}
         "wpf_ToggleGamingPreset" {Invoke-ToggleGamingPreset}
-        "wpf_ToggleDarkMode" {Invoke-ToggleDarkMode}
-        "wpf_ToggleBingSearchMenu" {Invoke-ToggleBingSearchMenu}
-        "wpf_ToggleNumLock" {Invoke-ToggleNumLock}
-        "wpf_ToggleExt" {Invoke-ToggleExt}
-        "wpf_ToggleMouseAcceleration" {Invoke-ToggleMouseAcceleration}
-        "wpf_TogglefIPv6" {Invoke-TogglefIPv6}
-        "wpf_ToggleHiddenFiles" {Invoke-ToggleHiddenFiles}
-        "wpf_ToggleSearch" {Invoke-ToggleSearch}
-        "wpf_ToggleSnapLayouts" {Invoke-ToggleSnapLayouts}
-        "wpf_ToggleVerboseLogon" {Invoke-ToggleVerboseLogon}
-        "wpf_ToggleCopilot" {Invoke-ToggleCopilot}
-        "wpf_ToggleSticky" {Invoke-ToggleSticky}
-        "wpf_ToggleEndTask" {Invoke-ToggleEndTask}
-        "wpf_ToggleCenterTaskbar" {Invoke-ToggleCenterTaskbar}
-        "wpf_ToggleDetailedBSoD" {Invoke-ToggleDetailedBSoD}
-        "wpf_TogglePasswordReveal" {Invoke-TogglePasswordReveal}
     }
 }
 ################################
@@ -414,7 +427,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.1    
+Windows11 Optimizer&Debloater           3.2  
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -450,7 +463,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.1    
+Windows11 Optimizer&Debloater           3.2    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {

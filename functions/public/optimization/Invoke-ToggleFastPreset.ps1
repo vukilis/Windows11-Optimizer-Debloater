@@ -1,30 +1,55 @@
 function Invoke-ToggleFastPreset {
-    <#
+    param(
+        [switch]$IsChecked  # Optional: allows forcing check/uncheck
+    )
 
-    .SYNOPSIS
-        Fast preset to help when tweaking  
-    #>
+    $path = ".\config\preset.json"
+    $sync = @{
+        configs = @{
+            preset = (Get-Content -Path $path -Raw | ConvertFrom-Json)
+        }
+    }
+    $tweak = $sync.configs.preset.fastPresetButton
+    # Write-Host "Found $($tweak.Count) checkboxes: $($tweak -join ', ')"
 
-    $IsChecked = $wpf_fastPresetButton.IsChecked
+    # Determine the toggle state for Fast Preset
+    $IsChecked = if ($PSBoundParameters.ContainsKey('IsChecked')) { $IsChecked } else { $wpf_fastPresetButton.IsChecked }
+    
+    # Enable/disable the mega preset button depending on state
+    $wpf_megaPresetButton.IsEnabled = -not $IsChecked
+    $styleName = ('ToggleSwitchStyleDisabled', 'ToggleSwitchStylePurple')[[int](-not $IsChecked)]
+    $styleResource = $wpf_megaPresetButton.TryFindResource($styleName)
+    if ($styleResource -and $styleResource.TargetType -eq [System.Windows.Controls.Primitives.ToggleButton]) {
+        $wpf_megaPresetButton.Style = $styleResource
+    } else {
+        Write-Warning "Style '$styleName' not found or incompatible with ToggleButton."
+    }
 
-    $wpf_megaPresetButton.IsEnabled = !$IsChecked; $wpf_megaPresetButton.Style = $wpf_megaPresetButton.TryFindResource(('ToggleSwitchStyle' + ('Purple', 'Disabled')[$IsChecked]))
 
+    # Find the tab containing the checkboxes
     $tabItemName = "Tab4"
     $tabItem = $psform.FindName($tabItemName)
 
     if ($tabItem -eq $null) {
-        Write-Host "TabItem not found"
+        Write-Host "TabItem '$tabItemName' not found"
         return
     }
 
-    $checkBoxNames = "Telemetry", "Wifi", "AH", "DeleteTempFiles", "RecycleBin", "LocTrack", "Storage", "Hiber", "DVR", 
-                    "DisableTeredo", "AutoAdjustVolume", "Power", "Display", "DisableUAC", "ClassicAltTab", 
-                    "RightClickMenu", "Personalize", "ModernCursorLight"
-    $checkBoxes = $checkBoxNames | ForEach-Object { $tabItem.FindName("Dbl$_") }
+    $checkBoxes = $tweak | ForEach-Object { $tabItem.FindName($_) }
 
+    # Set all checkboxes to the same state as Fast Preset
     foreach ($checkBox in $checkBoxes) {
-        $checkBox.IsChecked = $IsChecked
+        if ($checkBox -ne $null) {
+            $checkBox.IsChecked = $IsChecked
+        } else {
+            # Write-Warning "Checkbox '$_' not found in Tab4"
+        }
     }
 
-    if ($IsChecked) { Write-Host "Enabling Fast Preset" -ForegroundColor Green } else { Write-Host "Disabling Fast Preset" -ForegroundColor Red }
+    # Log status
+    if ($IsChecked) { 
+        Write-Host "Enabling Fast Preset" -ForegroundColor Green 
+    } else { 
+        Write-Host "Disabling Fast Preset" -ForegroundColor Red 
+    }
 }
