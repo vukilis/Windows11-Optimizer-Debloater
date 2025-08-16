@@ -1,6 +1,6 @@
 # Load JSON from file
 $configUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/config"
-$files   = @("tweaks.json")  # add all your JSON files here
+$files   = @("tweaks.json")
 
 $sync = @{ configs = @{} }
 
