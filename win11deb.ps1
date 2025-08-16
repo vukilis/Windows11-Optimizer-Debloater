@@ -1806,12 +1806,24 @@ function Set-ScheduledTask {
     }
 }
 # Load JSON from file
-$jsonPath = ".\config\tweaks.json"
-$sync = @{
-    configs = @{
-        tweaks = (Get-Content -Path $jsonPath -Raw | ConvertFrom-Json)
+$configUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/config"
+$files   = @("tweak.json")  # add all your JSON files here
+
+$sync = @{ configs = @{} }
+
+foreach ($file in $files) {
+    $url = "$configUrl/$file"
+    try {
+        $json = Invoke-RestMethod -Uri $url -UseBasicParsing
+        $baseName = [System.IO.Path]::GetFileNameWithoutExtension($file)
+        $sync.configs[$baseName] = $json
+        Write-Host "Loaded remote config: $file" -ForegroundColor Cyan
+    }
+    catch {
+        Write-Warning "Failed to load JSON from $url : $_"
     }
 }
+
 
 function Get-ToggleStatus {
     Param([string]$ToggleSwitch)
