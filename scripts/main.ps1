@@ -222,112 +222,56 @@ foreach ($box in $checkbox){
     })
 }
 
-# Load tweaks.json
-$tweaksJsonPath = ".\config\tweaks.json"
-$tweaks = Get-Content $tweaksJsonPath -Raw | ConvertFrom-Json
+# Load all JSON configs automatically
+$sync = @{ configs = @{} }
+Get-ChildItem -Path ".\config" -Filter "*.json" | ForEach-Object {
+    $baseName = $_.BaseName   # e.g. "tweaks", "preset"
+    try {
+        # Write-Host "Loading JSON config: $baseName" -ForegroundColor Cyan
+        $sync.configs[$baseName] = Get-Content $_.FullName -Raw | ConvertFrom-Json
+    }
+    catch {
+        Write-Warning "Failed to load JSON file $_ : $_"
+    }
+}
 
 function Invoke-ToggleButtons {
     Param ([string]$ToggleButton, [bool]$isChecked)
 
     switch -Wildcard ($ToggleButton) {
-        # Static / hard-coded buttons
-        "wpf_AboutButton" { Invoke-AboutButton }
+        "wpf_AboutButton"    { Invoke-AboutButton }
         "wpf_SettingsButton" { Invoke-SettingsButton }
+        "wpf_megaPresetButton" { Invoke-ToggleMegaPreset }
+        "wpf_fastPresetButton" {Invoke-ToggleFastPreset}
 
-        # Dynamic toggle buttons from JSON
         default {
-            # Strip off "wpf_" prefix for JSON lookup
             $toggleName = $ToggleButton -replace '^wpf_', ''
+            $toggleEntry = $null
+            $action = if ($isChecked) { "Enabling" } else { "Disabling" }
 
-            if ($tweaks.PSObject.Properties.Name -contains $toggleName) {
-                $toggleEntry = $tweaks.$toggleName
-
-                foreach ($regEntry in $toggleEntry.registry) {
-                    $path = $regEntry.Path
-                    $name = $regEntry.Name
-                    $type = $regEntry.Type
-
-                    if ($isChecked) {
-                        $valueToSet = $regEntry.Value
-                    } else {
-                        $valueToSet = $regEntry.OriginalValue
-                    }
-
-                    # Write-Host "Setting registry $path\$name to $valueToSet"
-
-                    try {
-                        Set-RegistryValue -Path $path -Name $name -Type $type -Value $valueToSet
-
-                    } catch {
-                        # Write-Warning "Failed to set registry ${path}\${name}: $_"
-                    }
-                }
+            if ($sync.configs.tweaks.PSObject.Properties.Name -contains $toggleName) {
+                $toggleEntry = $sync.configs.tweaks.$toggleName
             }
-            else {
-                Write-Warning "No toggle matched for '$toggle'"
+
+            if (-not $toggleEntry) {
+                Write-Warning "No toggle matched for '$toggleName'"
+                return
+            }
+
+            Write-Host "$action $($toggleEntry.message)" -ForegroundColor Green
+
+            foreach ($regEntry in $toggleEntry.registry) {
+                $value = if ($isChecked) { $regEntry.Value } else { $regEntry.OriginalValue }
+                try { Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $value } catch {}
+            }
+
+            foreach ($script in $toggleEntry.InvokeScript) {
+                try { Invoke-Expression $script } catch { Write-Warning "Failed to run InvokeScript for '$toggleName': $_" }
             }
         }
     }
 }
 
-
-
-# function Invoke-ToggleButtons {
-#     Param (
-#         [string]$toggle,
-#         [bool]$isChecked
-#     ) 
-
-#     # Write-Host "Invoke-Toggle called with isChecked = '$isChecked'"
-
-#     $toggleName = $toggle -replace '^wpf_', ''
-
-#     if ($tweaks.PSObject.Properties.Name -contains $toggleName) {
-#         $toggleEntry = $tweaks.$toggleName
-
-#         foreach ($regEntry in $toggleEntry.registry) {
-#             $path = $regEntry.Path
-#             $name = $regEntry.Name
-#             $type = $regEntry.Type
-
-#             if ($isChecked) {
-#                 $valueToSet = $regEntry.Value
-#             } else {
-#                 $valueToSet = $regEntry.OriginalValue
-#             }
-
-#             # Write-Host "Setting registry $path\$name to $valueToSet"
-
-#             try {
-#                 Set-RegistryValue -Path $path -Name $name -Type $type -Value $valueToSet -ErrorAction Stop
-
-#             } catch {
-#                 Write-Warning "Failed to set registry ${path}\${name}: $_"
-#             }
-#         }
-#     }
-#     else {
-#         Write-Warning "No toggle matched for '$toggle'"
-#     }
-# }
-
-# function Invoke-ToggleButtons {
-
-#     <#
-    
-#         .DESCRIPTION
-#         Meant to make creating ToggleButtons easier. There is a section below in the gui that will assign this function to every ToggleButton.
-#         This way you can dictate what each ToggleButton does from this function. 
-    
-#         Input will be the name of the ToggleButton that is clicked. 
-#     #>
-    
-#     Param ([string]$ToggleButton) 
-
-#     Switch -Wildcard ($ToggleButton){
-#         "wpf_AboutButton" {Invoke-AboutButton}
-#     }
-# }
 function Invoke-Button {
 
     <#
@@ -353,8 +297,6 @@ function Invoke-Button {
         "wpf_SelectDebloatAll" {Invoke-SelectApplicationAll}
         "wpf_UnselectDebloatAll" {Invoke-UnselectApplicationAll}
         "wpf_UninstallDebloat" {Invoke-UninstallDebloat}
-        # "wpf_debloatALL" {Invoke-debloatALL}
-        # "wpf_debloatGaming" {Invoke-debloatGaming}
         "wpf_optimizationButton" {Invoke-optimizationButton}
         "wpf_recommended" {Invoke-recommended}
         "wpf_gaming" {Invoke-gaming}
@@ -420,8 +362,6 @@ function Invoke-Checkbox {
 
     Switch -Wildcard ($checkbox){
         "wpf_ToggleXboxPreset" {Invoke-ToggleXboxPreseta}
-        "wpf_fastPresetButton" {Invoke-ToggleFastPreset}
-        "wpf_megaPresetButton" {Invoke-ToggleMegaPreset}
         "wpf_ToggleLitePreset" {Invoke-ToggleLitePreset}
         "wpf_ToggleDevPreset" {Invoke-ToggleDevPreset}
         "wpf_ToggleGamingPreset" {Invoke-ToggleGamingPreset}
@@ -504,7 +444,7 @@ Function Get-Author5 {
         This is for powershell v5.1
     #>
 
-    Clear-Host
+    #Clear-Host
     $colors = @("Red", "Cyan", "Magenta")
 
     function Get-RandomColor {

@@ -59,7 +59,7 @@ $toggleButtons = Get-Variable | Where-Object {
     $_.Value.GetType().Name -eq "ToggleButton"
 } | ForEach-Object { $_.Value }
 
-# Set each ToggleButton's state at startup
+# Set each ToggleButton state at startup
 foreach ($btn in $toggleButtons) {
     $toggleName = $btn.Name -replace '^wpf_', ''
     $isChecked = Get-ToggleStatus -ToggleSwitch $toggleName

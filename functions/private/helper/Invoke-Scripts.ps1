@@ -1,29 +1,39 @@
 function Invoke-Scripts {
     <#
-
     .SYNOPSIS
-        Invokes the provided scriptblock. Intended for things that can't be handled with the other functions.
+        Invokes the provided script or scriptblock. Intended for tweaks that can't be handled with the other functions.
 
     .PARAMETER Name
-        The name of the scriptblock being invoked
+        The name of the script being invoked.
 
-    .PARAMETER scriptblock
-        The scriptblock to be invoked
+    .PARAMETER Script
+        The script content as a string or scriptblock.
 
     .EXAMPLE
-        $Scriptblock = [scriptblock]::Create({"Write-output 'Hello World'"})
-        Invoke-Scripts -ScriptBlock $scriptblock -Name "Hello World"
-
+        Invoke-Scripts -Name "Hello World" -Script {"Write-Output 'Hello World'"}
+        Invoke-Scripts -Name "Hello World" -Script "Write-Output 'Hello World'"
     #>
     param (
-        $Name,
-        [scriptblock]$scriptblock
+        [string]$Name,
+        [Parameter(Mandatory)]
+        $Script
     )
 
     try {
-        Write-Host "Running Script for $name"
-        Invoke-Command $scriptblock -ErrorAction Stop
-    } catch [System.Management.Automation.CommandNotFoundException] {
+        #Write-Host "Running script for $Name"
+
+        # Convert string to scriptblock if needed
+        if ($Script -is [string]) {
+            $ScriptBlock = [scriptblock]::Create($Script)
+        } elseif ($Script -is [scriptblock]) {
+            $ScriptBlock = $Script
+        } else {
+            throw "Unsupported script type: $($Script.GetType().FullName)"
+        }
+
+        Invoke-Command $ScriptBlock -ErrorAction Stop
+    }
+    catch [System.Management.Automation.CommandNotFoundException] {
         Write-Warning "The specified command was not found."
         Write-Warning $PSItem.Exception.message
     } catch [System.Management.Automation.RuntimeException] {
@@ -40,5 +50,4 @@ function Invoke-Scripts {
         Write-Warning "Unable to run script for $name due to unhandled exception"
         Write-Warning $psitem.Exception.StackTrace
     }
-
 }
