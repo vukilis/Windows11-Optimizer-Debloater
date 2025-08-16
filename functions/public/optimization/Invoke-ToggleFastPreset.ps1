@@ -3,7 +3,7 @@ function Invoke-ToggleFastPreset {
         [switch]$IsChecked  # Optional: allows forcing check/uncheck
     )
 
-    $path = "./config/preset.json"
+    $path = ".\config\preset.json"
     $sync = @{
         configs = @{
             preset = (Get-Content -Path $path -Raw | ConvertFrom-Json)
