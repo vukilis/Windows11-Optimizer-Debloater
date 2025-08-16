@@ -1,6 +1,6 @@
-$xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
-$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-# $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+# $xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
+# $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
+$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
@@ -34,7 +34,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 3.1 - 03.08.2025"
+$wpf_AppVersion.Content = "Version: 3.2 - 16.08.2025"
 
 function Invoke-CloseButton {
     <#
@@ -408,7 +408,7 @@ Function Get-Author7 {
         This is for powershell v7.1+
     #>
     
-    #Clear-Host
+    Clear-Host
     $colors = @("`e[38;5;200m", "`e[38;5;51m", "`e[38;5;98m")
 
     function Get-RandomColor {
@@ -427,7 +427,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.1    
+Windows11 Optimizer&Debloater           3.2  
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -444,7 +444,7 @@ Function Get-Author5 {
         This is for powershell v5.1
     #>
 
-    #Clear-Host
+    Clear-Host
     $colors = @("Red", "Cyan", "Magenta")
 
     function Get-RandomColor {
@@ -463,7 +463,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.1    
+Windows11 Optimizer&Debloater           3.2    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {
