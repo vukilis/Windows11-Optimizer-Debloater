@@ -1136,7 +1136,7 @@
                         <StackPanel Width="auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                             <Image Height="50" Width="100" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
                             <Label Foreground="#FFF4AB51" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,5,5,0" Content="Windows11 Optimizer&amp;Debloater"></Label>
-                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 3.2 - 16.08.2025"></Label>
+                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 3.3 - 20.08.2025"></Label>
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Orientation="Vertical" HorizontalAlignment="Left" Width="auto" Margin="5,5" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
@@ -2490,7 +2490,7 @@
                                 <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Margin="3">
                                     <Label Content="Performance Plans" FontSize="18"  Foreground="#FFF4AB51" HorizontalAlignment="Center" Style="{StaticResource chfont}" FontWeight="Bold"/>
                                 </StackPanel>
-                                <CheckBox Name="ToggleUltimatePerformance" Content="Ultimate Performance Plan" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Core isolation [includes] security features available on your device that use virtualization-based security. If you are using VirtualBox, you must disable this feature to make VB to work!">
+                                <CheckBox Name="UltimatePerformance" Content="Ultimate Performance Plan" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Core isolation [includes] security features available on your device that use virtualization-based security. If you are using VirtualBox, you must disable this feature to make VB to work!">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
@@ -2519,6 +2519,9 @@
                                     </StackPanel>
                                     <StackPanel Background="#1f1f21" Orientation="Horizontal" Margin="2" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Button Name="optimizationUndoButton" Style="{DynamicResource ButtonStyle}" Content="UNDO TWEAKS" ForceCursor="true" Cursor="Hand" Height="25" Width="120" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold"/>
+                                    </StackPanel>
+                                    <StackPanel Background="#1f1f21" Orientation="Horizontal" Margin="2" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Button Name="optimizationClearButton" Style="{DynamicResource ButtonStyle}" Content="CLEAR TWEAKS" ForceCursor="true" Cursor="Hand" Height="25" Width="120" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold"/>
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Background="#1f1f21" SnapsToDevicePixels="True" Margin="1" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="1">

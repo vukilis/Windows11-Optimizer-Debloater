@@ -21,7 +21,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "System Restore Point",
         "Description": "Creating system restore point before applying tweaks.",
-        "message": "Creating system restore point...",
+        "EnableMessage": "Creating system restore point...",
         "InvokeScript": [
             "Set-RestorePoint"
         ]
@@ -30,7 +30,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Telemetry",
         "Description": "Disables Windows telemetry and data collection services.",
-        "message": "Telemetry...",
+        "DisableMessage": "Disable Telemetry...",
         "ScheduledTask": [
         {
             "Name": "Microsoft\\Windows\\Application Experience\\Microsoft Compatibility Appraiser",
@@ -393,7 +393,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable WiFi Sense",
         "Description": "Disables automatic connection to open hotspots and Wi-Fi reporting.",
-        "message": "Disabling Wi-Fi Sense...",
+        "DisableMessage": "Disabling Wi-Fi Sense...",
         "Registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Microsoft\\PolicyManager\\default\\WiFi\\AllowWiFiHotSpotReporting",
@@ -415,7 +415,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Activity History",
         "Description": "This erases recent docs, clipboard, and run history.",
-        "message": "Disabling Activity History...",
+        "DisableMessage": "Disabling Activity History...",
         "Registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
@@ -444,7 +444,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Explorer Auto Folder Discovery",
         "Description": "Windows Explorer automatically tries to guess the type of the folder based on its contents, slowing down the browsing experience.",
-        "message": "Explorer Automatic Folder Discovery...",
+        "DisableMessage": "Disable Explorer Automatic Folder Discovery...",
         "InvokeScript": [
             "
             # Previously detected folders
@@ -515,7 +515,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "PowerShell 5 -> PowerShell 7",
         "Description": "This will edit the config file of the Windows Terminal replacing PowerShell 5 with PowerShell 7 and installing PS7 if necessary",
-        "message": "PowerShell 7...",
+        "EnableMessage": "Installing PowerShell 7...",
         "InvokeScript": [
             "Invoke-TweakPS7 -action \"PS7\""
         ],
@@ -527,7 +527,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Recall",
         "Description": "Turn Recall off",
-        "message": "Recall...",
+        "DisableMessage": "Disable Recall...",
         "registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
@@ -570,7 +570,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Set Hibernation as default (laptops)",
         "Description": "Most modern laptops have connected standby enabled which drains the battery, this sets hibernation as default which will not drain the battery.",
-        "message": "Setting Hibernation as default...",
+        "EnableMessage": "Setting Hibernation as default...",
         "registry": [
             {
                 "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power\\PowerSettings\\238C9FA8-0AAD-41ED-83F4-97BE242C8F20\\7bc4a2f9-d8fc-4469-b07b-33eb785aaca0",
@@ -616,7 +616,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Debloat Microsoft Edge",
         "Description": "Disables various telemetry options, popups, and other annoyances in Edge.",
-        "message": "Debloating Microsoft Edge...",
+        "EnableMessage": "Debloating Microsoft Edge...",
         "registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\EdgeUpdate",
@@ -771,7 +771,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Delete Temporary Files",
         "Description": "Deletes temporary files from the system.",
-        "message": "Deleting temporary files...",
+        "EnableMessage": "Deleting temporary files...",
         "InvokeScript": [
             "Get-ChildItem -Path 'C:\\Windows\\Temp' *.* -Recurse -Force | ForEach-Object {
             try { Remove-Item $_.FullName -Force -Recurse -ErrorAction Stop } 
@@ -792,7 +792,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Empty Recycle Bin",
         "Description": "Deletes all files in the Recycle Bin.",
-        "message": "Deleting Recycle Bin contents...",
+        "EnableMessage": "Deleting Recycle Bin contents...",
         "InvokeScript": [
             "Clear-RecycleBin -Force"
         ]
@@ -801,7 +801,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Run Disk Cleanup",
         "Description": "Runs Disk Cleanup on Drive C: and removes old Windows Updates.",
-        "message": "Running Disk Cleanup on Drive C:...",
+        "EnableMessage": "Running Disk Cleanup on Drive C:...",
         "InvokeScript": [
             "
             cleanmgr.exe /d C: /VERYLOWDISK
@@ -813,7 +813,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Location Tracking",
         "Description": "Disables location tracking... :(",
-        "message": "Disabling Location Tracking...",
+        "DisableMessage": "Disabling Location Tracking...",
         "registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",
@@ -849,7 +849,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Storage Sense",
         "Description": "Storage Sense deletes temp files automatically.",
-        "message": "Storage Sense...",
+        "DisableMessage": "Disable Storage Sense...",
         "InvokeScript": [
             "Set-RegistryValue -Path \"HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\StorageSense\\Parameters\\StoragePolicy\" -Name \"01\" -Value 0 -Type \"Dword\""
         ],
@@ -861,7 +861,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Hibernation",
         "Description": "Hibernation is really meant for laptops as it saves what's in memory before turning the pc off. It really should never be used, but some people are lazy and rely on it. Don't be like Bob. Bob likes hibernation.",
-        "message": "Hibernation...",
+        "DisableMessage": "Disable Hibernation...",
         "registry": [
             {
                 "Path": "HKLM:\\System\\CurrentControlSet\\Control\\Session Manager\\Power",
@@ -889,7 +889,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable GameDVR",
         "Description": "GameDVR is a Windows App that is a dependency for some Store Games. I've never met someone that likes it, but it's there for the XBOX crowd.",
-        "message": "Disabling GameDVR...",
+        "DisableMessage": "Disabling GameDVR...",
         "registry": [
             {
                 "Path": "HKCU:\\System\\GameConfigStore",
@@ -932,7 +932,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Auto Adjust Volume",
         "Description": "Disables the automatic adjustment of volume levels for applications.",
-        "message": "Disabling Auto Adjust Volume...",
+        "DisableMessage": "Disabling Auto Adjust Volume...",
         "registry": [          
             {
             "Path": "HKCU:\\Software\\Microsoft\\Multimedia\\Audio",
@@ -947,7 +947,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Search Indexer",
         "Description": "Disables the Windows Search Indexer, which can improve performance but may slow down file searches.",
-        "message": "Search Indexer...",
+        "DisableMessage": "Disable Search Indexer...",
         "service": [
             {
                 "Name": "wsearch",
@@ -960,7 +960,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable PowerShell 7 Telemetry",
         "Description": "Disables telemetry in PowerShell 7, which can help protect your privacy.",
-        "message": "PowerShell 7 Telemetry...",
+        "DisableMessage": "Disable PowerShell 7 Telemetry...",
         "InvokeScript": [
             "[Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '1', 'Machine')"
         ],
@@ -972,7 +972,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable ConsumerFeatures",
         "Description": "Windows 10 will not automatically install any games, third-party apps, or application links from the Windows Store for the signed-in user. Some default Apps will be inaccessible (eg. Phone Link)",
-        "message": "Disabling ConsumerFeatures...",
+        "DisableMessage": "Disabling ConsumerFeatures...",
         "registry": [
             {
             "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
@@ -988,7 +988,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Adobe Network Block",
         "Description": "Reduce user interruptions by selectively blocking connections to Adobe's activation and telemetry servers. Credit: Ruddernation-Designs.",
-        "message": "Blocking Adobe Network Connections...",
+        "EnableMessage": "Blocking Adobe Network Connections...",
         "InvokeScript": [
             "
             # Define the URL of the remote HOSTS file and the local paths
@@ -1094,7 +1094,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable IPv6",
         "Description": "Disables IPv6 protocol on the system.",
-        "message": "IPv6...",
+        "DisableMessage": "Disable IPv6...",
         "registry": [
             {
                 "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
@@ -1115,7 +1115,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Prefer IPv4 over IPv6",
         "Description": "To set the IPv4 preference can have latency and security benefits on private networks where IPv6 is not configured.",
-        "message": "Setting IPv4 preference over IPv6...",
+        "EnableMessage": "Setting IPv4 preference over IPv6...",
         "registry": [
             {
                 "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
@@ -1130,7 +1130,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Teredo",
         "Description": "Teredo network tunneling is a ipv6 feature that can cause additional latency, but may cause problems with some games",
-        "message": "Teredo...",
+        "DisableMessage": "Disable Teredo...",
         "registry": [
             {
             "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
@@ -1151,7 +1151,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Classic Right-Click Menu",
         "Description": "Great Windows 11 tweak to bring back good context menus when right clicking things in explorer.",
-        "message": "Setting Classic Right-Click Menu...",
+        "EnableMessage": "Setting Classic Right-Click Menu...",
         "InvokeScript": [
             "
                 New-Item -Path \"HKCU:\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\" -Name \"InprocServer32\" -force -value \"\"
@@ -1173,7 +1173,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Time UTC (Dual Boot)",
         "Description": "Essential for computers that are dual booting. Fixes the time sync with Linux Systems.",
-        "message": "Setting time to UTC...",
+        "EnableMessage": "Setting time to UTC...",
         "registry": [
             {
                 "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation",
@@ -1188,7 +1188,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Microsoft Copilot",
         "Description": "Disables MS Copilot AI built into Windows since 23H2.",
-        "message": "Microsoft Copilot...",
+        "DisableMessage": "Disabling Microsoft Copilot...",
         "registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot",
@@ -1267,7 +1267,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Remove Cortana (deprecated)",
         "Description": "Cortana, as a standalone app and in certain Microsoft products, has been retired in late 2023. While Cortana is still present in Windows 10 and older versions of Windows 11",
-        "message": "Removing Cortana...",
+        "DisableMessage": "Removing Cortana...",
         "InvokeScript": [
             "Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage"
         ],
@@ -1279,7 +1279,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Background Apps",
         "Description": "Disables all Microsoft Store apps from running in the background, which has to be done individually since Win11",
-        "message": "Disabling Background Apps...",
+        "DisableMessage": "Disabling Background Apps...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications",
@@ -1294,7 +1294,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Remove Home from Explorer",
         "Description": "Removes the Home from Explorer and sets This PC as default",
-        "message": "Home from Explorer...",
+        "DisableMessage": "Remove Home from Explorer...",
         "InvokeScript": [
             "
             REG DELETE \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}\" /f
@@ -1312,7 +1312,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Remove Gallery from Explorer",
         "Description": "Removes the Gallery  from Explorer and sets This PC as default",
-        "message": "Gallery from Explorer...",
+        "DisableMessage": "Remove Gallery from Explorer...",
         "InvokeScript": [
             "
             REG DELETE \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}\" /f
@@ -1330,7 +1330,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Fullscreen Optimizations",
         "Description": "Disables FSO in all applications. NOTE: This will disable Color Management in Exclusive Fullscreen",
-        "message": "Disabling Fullscreen Optimizations...",
+        "DisableMessage": "Disabling Fullscreen Optimizations...",
         "registry": [
             {
                 "Path": "HKCU:\\System\\GameConfigStore",
@@ -1345,7 +1345,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Remove OneDrive âš ï¸",
         "Description": "Moves OneDrive files to Default Home Folders and Uninstalls it. Recomended on fresh installs!",
-        "message": "Removing OneDrive...",
+        "DisableMessage": "Removing OneDrive...",
         "InvokeScript": [
             "
                 $OneDrivePath = $($env:OneDrive)
@@ -1439,7 +1439,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Power Throttling",
         "Description": "This is mainly for Laptops, It disables Power Throttling and will use more battery.",
-        "message": "Disabling Power Throttling...",
+        "DisableMessage": "Disabling Power Throttling...",
         "registry": [
             {
                 "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling",
@@ -1461,7 +1461,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Set Display for Performance",
         "Description": "Adjusts visual effects for best performance by disabling animations and transparency effects.",
-        "message": "Adjusting visual effects for best performance...",
+        "EnableMessage": "Adjusting visual effects for best performance...",
         "registry": [
             {
                 "Path": "HKCU:\\Control Panel\\Desktop",
@@ -1559,7 +1559,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable UAC",
         "Description": "Disables User Account Control (UAC) prompts",
-        "message": "Disabling UAC...",
+        "DisableMessage": "Disabling UAC...",
         "registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
@@ -1581,7 +1581,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Core Isolation",
         "Description": "Core Isolation is a security feature that uses virtualization to protect critical processes from malware. Disabling it may reduce security but can improve performance on some systems.",
-        "message": "Disabling Core Isolation...",
+        "DisableMessage": "Disabling Core Isolation...",
         "registry": [
             {
                 "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity",
@@ -1596,7 +1596,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Notifications",
         "Description": "Disables all Notifications INCLUDING Calendar",
-        "message": "Disabling Notifications Tray/Calendar...",
+        "DisableMessage": "Disabling Notifications Tray/Calendar...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Explorer",
@@ -1618,7 +1618,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Classic Alt+Tab",
         "Description": "Reverts the Alt-Tab behavior to the classic style, showing only open windows without thumbnails.",
-        "message": "Setting Classic Alt+Tab...",
+        "EnableMessage": "Enabling Classic Alt+Tab...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -1633,7 +1633,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Enable Game Mode",
         "Description": "Enables Game Mode, which optimizes system resources for gaming.",
-        "message": "Enabling Game Mode...",
+        "EnableMessage": "Enabling Game Mode...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\GameBar",
@@ -1648,7 +1648,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Game Bar",
         "Description": "Disables the Game Bar, which is used for capturing gameplay and broadcasting.",
-        "message": "Disabling Game Bar...",
+        "DisableMessage": "Disabling Game Bar...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\GameBar",
@@ -1663,7 +1663,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Disable Windows Sounds",
         "Description": "Disables all system sounds in Windows.",
-        "message": "Windows Sounds...",
+        "DisableMessage": "Disabling Windows Sounds...",
         "registry": [
             {
                 "Path": "HKCU:\\AppEvents\\Schemes",
@@ -1710,7 +1710,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Personalization Settings",
         "Description": "Hide search icon, show transparency effects, color adjustments, lock screen adjustments and turn off the display to 20min..",
-        "message": "Adjusting Personalization Settings...",
+        "EnableMessage": "Enabling Personalization Settings...",
         "registry": [
             {
             "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Explorer",
@@ -1723,57 +1723,57 @@ $tweaks = @'
             "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
             "Name": "EnableTransparency",
             "Type": "DWord",
-            "Value": 1,
-            "OriginalValue": 0
+            "Value": 0,
+            "OriginalValue": 1
             },
             {
             "Path": "HKCU:\\Control Panel\\Desktop",
             "Name": "AutoColorization",
             "Type": "DWord",
             "Value": 0,
-            "OriginalValue": 1
+            "OriginalValue": 0
             },
             {
             "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Accent",
             "Name": "AccentColorMenu",
             "Type": "DWord",
             "Value": 4292666368,
-            "OriginalValue": 0
+            "OriginalValue": "<RemoveEntry>"
             },
             {
             "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Accent",
             "Name": "StartColorMenu",
             "Type": "DWord",
             "Value": 4291811328,
-            "OriginalValue": 0
+            "OriginalValue": "<RemoveEntry>"
             },
             {
             "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
             "Name": "ColorPrevalence",
             "Type": "DWord",
             "Value": 0,
-            "OriginalValue": 1
+            "OriginalValue": 0
             },
             {
             "Path": "HKCU:\\Software\\Microsoft\\Windows\\DWM",
             "Name": "ColorPrevalence",
             "Type": "DWord",
             "Value": 0,
-            "OriginalValue": 1
+            "OriginalValue": 0
             },
             {
             "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
             "Name": "NoLockScreen",
             "Type": "DWord",
             "Value": 1,
-            "OriginalValue": 0
+            "OriginalValue": "<RemoveEntry>"
             },
             {
             "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
             "Name": "NoLockScreenSlideshow",
             "Type": "DWord",
             "Value": 1,
-            "OriginalValue": 0
+            "OriginalValue": "<RemoveEntry>"
             },
             {
             "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
@@ -1836,7 +1836,7 @@ $tweaks = @'
             "Name": "ContentDeliveryAllowed",
             "Type": "DWord",
             "Value": 1,
-            "OriginalValue": 0
+            "OriginalValue": 1
             },
             {
             "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
@@ -1928,14 +1928,27 @@ $tweaks = @'
             "powercfg -x -disk-timeout-ac 0",
             "powercfg -x -disk-timeout-dc 0",
             "powercfg -x -monitor-timeout-ac 20",
-            "powercfg -x -monitor-timeout-dc 20"
+            "powercfg -x -monitor-timeout-dc 20",
+
+            "Write-Host \"Restarting Explorer to apply Tweak...\" -ForegroundColor Green",
+            "Invoke-ExplorerUpdate"
+        ],
+        "UndoScript": [
+            "Remove-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Accent\" -Name \"AccentPalette\"",
+            "powercfg -x -disk-timeout-ac 20",
+            "powercfg -x -disk-timeout-dc 10",
+            "powercfg -x -monitor-timeout-ac 10",
+            "powercfg -x -monitor-timeout-dc 5",
+
+            "Write-Host \"Restarting Explorer to apply Tweak...\" -ForegroundColor Green",
+            "Invoke-ExplorerUpdate"
         ]
     },
     "DblModernCursorDark": {
         "Type": "CheckBox",
         "Content": "Modern Cursor Dark",
         "Description": "Amazing modern dark cursor concept by jepriCreations.",
-        "message": "dark cursor...",
+        "EnableMessage": "Enabling Modern Cursor Dark...",
         "InvokeScript": [
             "
                 $downloadUrl = \"https://github.com/vukilis/Windows11-Optimizer-Debloater/raw/dev/cursor.zip\" #github link
@@ -1993,20 +2006,37 @@ $tweaks = @'
             "
                 # Remove the cursor scheme
                 $registryPath = \"HKCU:\\Control Panel\\Cursors\"
+                $schemeRegPath = \"HKCU:\\Control Panel\\Cursors\\Schemes\"
                 $cursorTypes = @(\"AppStarting\", \"Arrow\", \"Crosshair\", \"Hand\", \"Help\", \"IBeam\", \"No\", \"NWPen\", \"SizeAll\", \"SizeNESW\", \"SizeNS\", \"SizeNWSE\", \"SizeWE\", \"UpArrow\", \"Wait\")
                 
                 Write-Host \"Removing cursor...\" -ForegroundColor Green
                 foreach ($cursorType in $cursorTypes) {
-                Remove-ItemProperty -Path $registryPath -Name $cursorType -ErrorAction SilentlyContinue
-                #Set-ItemProperty -Path $registryPath -Name $cursorType -Value $defaultCursors[$cursorType]
+                    Remove-ItemProperty -Path $registryPath -Name $cursorType -ErrorAction SilentlyContinue
                 }
 
+                Write-Host \"Set cursor to defalt...\" -ForegroundColor Green
+                Set-ItemProperty -Path $registryPath -Name \"AppStarting\" -Value \"%SystemRoot%\\cursors\\aero_working.ani\"
+                Set-ItemProperty -Path $registryPath -Name \"Arrow\" -Value \"%SystemRoot%\\cursors\\aero_arrow.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"Crosshair\" -Value \"%SystemRoot%\\cursors\\aero_cross.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"Hand\" -Value \"%SystemRoot%\\cursors\\aero_link.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"Help\" -Value \"%SystemRoot%\\cursors\\aero_helpsel.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"IBeam\" -Value \"%SystemRoot%\\cursors\\aero_iva.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"No\" -Value \"%SystemRoot%\\cursors\\aero_no.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"NWPen\" -Value \"%SystemRoot%\\cursors\\aero_pen.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"SizeAll\" -Value \"%SystemRoot%\\cursors\\aero_move.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"SizeNESW\" -Value \"%SystemRoot%\\cursors\\aero_nesw.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"SizeNS\" -Value \"%SystemRoot%\\cursors\\aero_ns.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"SizeNWSE\" -Value \"%SystemRoot%\\cursors\\aero_nwse.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"SizeWE\" -Value \"%SystemRoot%\\cursors\\aero_we.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"UpArrow\" -Value \"%SystemRoot%\\cursors\\aero_up.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"Wait\" -Value \"%SystemRoot%\\cursors\\aero_busy.ani\"
+
+                # Set default scheme to system default
+                Set-ItemProperty -Path $registryPath -Name '(Default)' -Value 'Windows Default (system scheme)' -Force
+
                 Start-Sleep 1
-
                 Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class SystemParamInfo { [DllImport(\"user32.dll\", CharSet = CharSet.Unicode)] public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni); }' -Language CSharp
-
                 [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
-
                 Write-Host 'Restored Windows default mouse cursors.' -ForegroundColor Green
             "
         ]
@@ -2015,7 +2045,7 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Modern Cursor Light",
         "Description": "Amazing modern light cursor concept by jepriCreations.",
-        "message": "light cursor...",
+        "EnableMessage": "Enabling Modern Cursor Light...",
         "InvokeScript": [
             "
                 $downloadUrl = \"https://github.com/vukilis/Windows11-Optimizer-Debloater/raw/dev/cursor.zip\" #github link
@@ -2073,30 +2103,47 @@ $tweaks = @'
             "
                 # Remove the cursor scheme
                 $registryPath = \"HKCU:\\Control Panel\\Cursors\"
+                $schemeRegPath = \"HKCU:\\Control Panel\\Cursors\\Schemes\"
                 $cursorTypes = @(\"AppStarting\", \"Arrow\", \"Crosshair\", \"Hand\", \"Help\", \"IBeam\", \"No\", \"NWPen\", \"SizeAll\", \"SizeNESW\", \"SizeNS\", \"SizeNWSE\", \"SizeWE\", \"UpArrow\", \"Wait\")
                 
                 Write-Host \"Removing cursor...\" -ForegroundColor Green
                 foreach ($cursorType in $cursorTypes) {
-                Remove-ItemProperty -Path $registryPath -Name $cursorType -ErrorAction SilentlyContinue
-                #Set-ItemProperty -Path $registryPath -Name $cursorType -Value $defaultCursors[$cursorType]
+                    Remove-ItemProperty -Path $registryPath -Name $cursorType -ErrorAction SilentlyContinue
                 }
 
+                Write-Host \"Set cursor to defalt...\" -ForegroundColor Green
+                Set-ItemProperty -Path $registryPath -Name \"AppStarting\" -Value \"%SystemRoot%\\cursors\\aero_working.ani\"
+                Set-ItemProperty -Path $registryPath -Name \"Arrow\" -Value \"%SystemRoot%\\cursors\\aero_arrow.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"Crosshair\" -Value \"%SystemRoot%\\cursors\\aero_cross.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"Hand\" -Value \"%SystemRoot%\\cursors\\aero_link.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"Help\" -Value \"%SystemRoot%\\cursors\\aero_helpsel.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"IBeam\" -Value \"%SystemRoot%\\cursors\\aero_iva.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"No\" -Value \"%SystemRoot%\\cursors\\aero_no.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"NWPen\" -Value \"%SystemRoot%\\cursors\\aero_pen.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"SizeAll\" -Value \"%SystemRoot%\\cursors\\aero_move.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"SizeNESW\" -Value \"%SystemRoot%\\cursors\\aero_nesw.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"SizeNS\" -Value \"%SystemRoot%\\cursors\\aero_ns.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"SizeNWSE\" -Value \"%SystemRoot%\\cursors\\aero_nwse.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"SizeWE\" -Value \"%SystemRoot%\\cursors\\aero_we.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"UpArrow\" -Value \"%SystemRoot%\\cursors\\aero_up.cur\"
+                Set-ItemProperty -Path $registryPath -Name \"Wait\" -Value \"%SystemRoot%\\cursors\\aero_busy.ani\"
+
+                # Set default scheme to system default
+                Set-ItemProperty -Path $registryPath -Name '(Default)' -Value 'Windows Default (system scheme)' -Force
+
                 Start-Sleep 1
-
                 Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class SystemParamInfo { [DllImport(\"user32.dll\", CharSet = CharSet.Unicode)] public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni); }' -Language CSharp
-
                 [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
-
                 Write-Host 'Restored Windows default mouse cursors.' -ForegroundColor Green
             "
         ]
     },
 
-    "ToggleUltimatePerformance": {
+    "UltimatePerformance": {
         "Type": "CheckBox",
         "Content": "Ultimate Performance Plan",
         "Description": "Add and Activate Ultimate Performance Profile",
-        "message": "Toggling Ultimate Performance power plan...",
+        "EnableMessage": "Enable Ultimate Performance power plan...",
         "DefaultState": "false",
         "InvokeScript": [
             "Invoke-UltimatePerformance -State Enable"
@@ -2110,9 +2157,9 @@ $tweaks = @'
         "Type": "CheckBox",
         "Content": "Restart Computer",
         "Description": "Restarting the computer is recommended after applying tweaks to ensure they take effect.",
-        "message": "Restarting the computer...",
+        "EnableMessage": "Restarting the computer...",
         "InvokeScript": [
-            "Restart-Computer"
+            "Restart-Computer -Force"
         ]
     },
 
@@ -2120,7 +2167,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Bing Search in Start Menu",
         "Description": "Disables Bing search results in the Start Menu.",
-        "message": "Bing Search in Start Menu...",
+        "EnableMessage": "Enable Bing Search in Start Menu...",
+        "DisableMessage": "Disable Bing Search in Start Menu...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
@@ -2168,7 +2216,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Dark Theme For Windows",
         "Description": "Enables dark mode for Windows, changing the system theme to dark.",
-        "message": "Dark Theme for Windows...",
+        "EnableMessage": "Enable Dark Theme for Windows...",
+        "DisableMessage": "Disable Dark Theme for Windows...",
         "registry": [
             {
                 "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
@@ -2204,7 +2253,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "NumLock on Startup",
         "Description": "Enables Num Lock to be on by default when starting Windows.",
-        "message": "Num Lock on Startup...",
+        "EnableMessage": "Enable Num Lock on Startup...",
+        "DisableMessage": "Disable Num Lock on Startup...",
         "registry": [
             {
                 "Path": "HKCU:\\Control Panel\\Keyboard",
@@ -2220,7 +2270,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Show File Extensions",
         "Description": "Enables file extensions to be visible in File Explorer.",
-        "message": "File Extensions visibility...",
+        "EnableMessage": "Enable Search Box in Taskbar...",
+        "DisableMessage": "Disable Search Box in Taskbar...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -2236,7 +2287,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Mouse Acceleration",
         "Description": "Disables mouse acceleration for a more consistent pointer movement.",
-        "message": "Mouse Acceleration...",
+        "EnableMessage": "Enable Mouse Acceleration...",
+        "DisableMessage": "Disable Mouse Acceleration...",
         "registry": [
             {
                 "Path": "HKCU:\\Control Panel\\Mouse",
@@ -2268,7 +2320,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Show Hidden Files",
         "Description": "Enables the visibility of hidden files and folders in File Explorer.",
-        "message": "visibility of hidden files...",
+        "EnableMessage": "Enable Show Hidden Files...",
+        "DisableMessage": "Disable Show Hidden Files...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -2284,7 +2337,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Search Button in Taskbar",
         "Description": "If Enebled Search Button will be on the taskbar.",
-        "message": "Search Box in Taskbar...",
+        "EnableMessage": "Enable Search Box in Taskbar...",
+        "DisableMessage": "Disable Search Box in Taskbar...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
@@ -2300,7 +2354,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Snap Assist Window",
         "Description": "If enabled you can align windows by dragging them. | Relogin Required",
-        "message": "Snap Assist Window...",
+        "EnableMessage": "Enable Snap Assist Window...",
+        "DisableMessage": "Disable Snap Assist Window...",
         "registry": [
             {
                 "Path": "HKCU:\\Control Panel\\Desktop",
@@ -2328,7 +2383,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Snap Assist Flyout",
         "Description": "If enabled then Snap preview is disabled when maximize button is hovered.",
-        "message": "Snap Assist Flyout...",
+        "EnableMessage": "Enable Snap Assist Flyout...",
+        "DisableMessage": "Disable Snap Assist Flyout...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -2356,7 +2412,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Snap Assist Bar",
         "Description": "If enabled then Snap Assist Bar is shown when dragging a window to the top of the screen.",
-        "message": "Snap Assist Bar...",
+        "EnableMessage": "Enable Snap Assist Bar...",
+        "DisableMessage": "Disable Snap Assist Bar...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -2385,7 +2442,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Snap Assist Suggestion",
         "Description": "If enabled then you will get suggestions to snap other applications in the left over spaces.",
-        "message": "Snap Assist Suggestion...",
+        "EnableMessage": "Enable Snap Assist Suggestion...",
+        "DisableMessage": "Disable Snap Assist Suggestion...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -2414,7 +2472,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Verbose Logon Messages",
         "Description": "Enables detailed logon messages during the startup process.",
-        "message": "Verbose Logon Messages...",
+        "EnableMessage": "Enable Verbose Logon Messages...",
+        "DisableMessage": "Disable Verbose Logon Messages...",
         "registry": [
             {
                 "Path": "HKLM:\\Software\\Policies\\Microsoft\\Windows\\System",
@@ -2430,7 +2489,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Sticky Keys",
         "Description": "Disables Sticky Keys feature in Windows.",
-        "message": "Sticky Keys...",
+        "EnableMessage": "Enable Sticky Keys...",
+        "DisableMessage": "Disable Sticky Keys...",
         "registry": [
             {
                 "Path": "HKCU:\\Control Panel\\Accessibility\\StickyKeys",
@@ -2446,7 +2506,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Enable End Task",
         "Description": "Enables option to end task when right clicking a program in the taskbar",
-        "message": "End Task option in Taskbar...",
+        "EnableMessage": "Enable End Task in Taskbar...",
+        "DisableMessage": "Disable End Task in Taskbar...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\TaskbarDeveloperSettings",
@@ -2474,7 +2535,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Center Taskbar Items",
         "Description": "Centers the taskbar items in the taskbar.",
-        "message": "Center Taskbar Items...",
+        "EnableMessage": "Enable Center Taskbar Items...",
+        "DisableMessage": "Disable Center Taskbar Items...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -2490,7 +2552,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Enabled Detailed BSoD",
         "Description": "If Enabled then you will see a detailed Blue Screen of Death (BSOD) with more information.",
-        "message": "Detailed BSoD messages...",
+        "EnableMessage": "Enable Detailed BSoD...",
+        "DisableMessage": "Disable Detailed BSoD...",
         "registry": [
         {
             "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\CrashControl",
@@ -2516,7 +2579,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Password Reveal Button",
         "Description": "Enables the password reveal button on login screens.",
-        "message": "Password Reveal Button...",
+        "EnableMessage": "Enable Password Reveal Button...",
+        "DisableMessage": "Disable Password Reveal Button...",
         "registry": [
             {
                 "Path": "HKLM:\\Software\\Policies\\Microsoft\\Windows\\CredUI",
@@ -2532,7 +2596,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Widgets Button in Taskbar",
         "Description": "If Enabled then Widgets Button in Taskbar will be shown.",
-        "message": "Password Reveal Button...",
+        "EnableMessage": "Enable Widgets Button in Taskbar...",
+        "DisableMessage": "Disable Widgets Button in Taskbar...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -2548,7 +2613,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Recommendations in Start Menu",
         "Description": "If disabled then you will not see recommendations in the Start Menu. | Enables 'iseducationenvironment' | Relogin Required. | WARNING: This will also disable Windows Spotlight on your Lock Screen as a side effect.",
-        "message": "Start Menu Recommendations...",
+        "EnableMessage": "Enable Recommendations in Start Menu...",
+        "DisableMessage": "Disable Recommendations in Start Menu...",
         "registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Microsoft\\PolicyManager\\current\\device\\Start",
@@ -2580,7 +2646,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Settings Home Page",
         "Description": "Removes the Home page in the Windows Settings app.",
-        "message": "Settings Home Page...",
+        "EnableMessage": "Enable Settings Home Page...",
+        "DisableMessage": "Disable Settings Home Page...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
@@ -2596,7 +2663,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Disable Multiplane Overlay",
         "Description": "Disable the Multiplane Overlay which can sometimes cause issues with Graphics Cards.",
-        "message": "Disable Multiplane Overlay...",
+        "EnableMessage": "Disable Multiplane Overlay...",
+        "DisableMessage": "Enable Multiplane Overlay...",
         "registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Dwm",
@@ -2604,7 +2672,7 @@ $tweaks = @'
                 "Value": "5",
                 "OriginalValue": "<RemoveEntry>",
                 "Type": "DWord",
-                "DefaultState": "true"
+                "DefaultState": "false"
             }
         ]
     },
@@ -2612,7 +2680,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "New Outlook",
         "Description": "If disabled it removes the toggle for new Outlook, disables the new Outlook migration and makes sure the Outlook Application actually uses the old Outlook.",
-        "message": "New Outlook...",
+        "EnableMessage": "Enable New Outlook...",
+        "DisableMessage": "Disable New Outlook...",
         "registry": [
             {
                 "Path": "HKCU:\\SOFTWARE\\Microsoft\\Office\\16.0\\Outlook\\Preferences",
@@ -2652,7 +2721,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Task View Button in Taskbar",
         "Description": "If Enabled then Task View Button in Taskbar will be shown.",
-        "message": "Task View Button in Taskbar...",
+        "EnableMessage": "Enable Task View Button in Taskbar...",
+        "DisableMessage": "Disable Task View Button in Taskbar...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -2668,7 +2738,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "S3 Sleep",
         "Description": "Toggles between Modern Standby and S3 sleep.",
-        "message": "S3 Sleep...",
+        "EnableMessage": "Enable S3 Sleep...",
+        "DisableMessage": "Disable S3 Sleep...",
         "registry": [
             {
                 "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power",
@@ -2684,7 +2755,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Cross-Device Resume",
         "Description": "This tweak controls the Resume function in Windows 11 24H2 and later, which allows you to resume an activity from a mobile device and vice-versa.",
-        "message": "Cross-Device Resume...",
+        "EnableMessage": "Enable Cross-Device Resume...",
+        "DisableMessage": "Disable Cross-Device Resume...",
         "registry": [
             {
                 "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\CrossDeviceResume\\Configuration",
@@ -2700,7 +2772,8 @@ $tweaks = @'
         "Type": "Toggle",
         "Content": "Disable Clipboard History",
         "Description": "The clipboard is used to copy data between applications. Windows can store the history of the last contents of the clipboard. To rule out potential security risks, I recommend disabling this feature.",
-        "message": "Disable Clipboard History...",
+        "EnableMessage": "Disable Clipboard History...",
+        "DisableMessage": "Enable Clipboard History...",
         "registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
@@ -2783,15 +2856,15 @@ $preset = @'
     Website        : https://vukilis.com
     GitHub         : https://github.com/vukilis
     Name:          : Windows11 Optimizer&Debloater
-    Version        : 3.2
+    Version        : 3.3
 #>
 
 Add-Type -AssemblyName PresentationFramework
 
 Start-Transcript $ENV:TEMP\win11deb.log -Append
-$xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
-$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-# $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+# $xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
+# $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
+$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
@@ -2825,7 +2898,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 3.2 - 16.08.2025"
+$wpf_AppVersion.Content = "Version: 3.3 - 20.08.2025"
 
 function Invoke-CloseButton {
     <#
@@ -3033,19 +3106,23 @@ function Invoke-ToggleButtons {
         default {
             $toggleName = $ToggleButton -replace '^wpf_', ''
             $toggleEntry = $null
-            $action = if ($isChecked) { "Enabling" } else { "Disabling" }
+            
 
             if ($sync.configs.tweaks.PSObject.Properties.Name -contains $toggleName) {
                 $toggleEntry = $sync.configs.tweaks.$toggleName
             }
+                
+            $EnableMessage = $toggleEntry.EnableMessage
+            $DisableMessage = $toggleEntry.DisableMessage
+            $action = if ($isChecked) { "$EnableMessage" } else { "$DisableMessage" }
 
             if (-not $toggleEntry) {
                 Write-Warning "No toggle matched for '$toggleName'"
                 return
             }
 
-            Write-Host "$action $($toggleEntry.message)" -ForegroundColor Green
-
+            Write-Host "$action" -ForegroundColor Green
+            
             foreach ($regEntry in $toggleEntry.registry) {
                 $value = if ($isChecked) { $regEntry.Value } else { $regEntry.OriginalValue }
                 try { Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $value } catch {}
@@ -3121,6 +3198,7 @@ function Invoke-Button {
         "wpf_UninstallDebloat" {Invoke-UninstallDebloat}
         "wpf_optimizationButton" {Invoke-optimizationButton}
         "wpf_optimizationUndoButton" {Invoke-OptimizationUndo}
+        "wpf_optimizationClearButton" {Invoke-OptimizationClear}
         "wpf_recommended" {Invoke-recommended}
         "wpf_gaming" {Invoke-gaming}
         "wpf_normal" {Invoke-normal}
@@ -3250,7 +3328,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.2  
+Windows11 Optimizer&Debloater           3.3  
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -3267,7 +3345,7 @@ Function Get-Author5 {
         This is for powershell v5.1
     #>
 
-    # Clear-Host
+    Clear-Host
     $colors = @("Red", "Cyan", "Magenta")
 
     function Get-RandomColor {
@@ -3286,7 +3364,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.2    
+Windows11 Optimizer&Debloater           3.3    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {
@@ -4904,7 +4982,9 @@ function Invoke-OptimizationButton {
         # Apply registry changes if available and checkbox is checked
         if ($apply) {
             if ($tweak.ScheduledTask) {
-                Write-Host "ScheduledTask: Disabling" $tweak.message -ForegroundColor Yellow
+                foreach ($msg in "DisableMessage","EnableMessage") {
+                    if ($tweak.$msg) { Write-Host "ScheduledTask:" $tweak.$msg -ForegroundColor Yellow }
+                }
                 foreach ($task in $tweak.ScheduledTask) {
                     try {
                         Set-ScheduledTask -Name $task.Name -State $task.State
@@ -4915,7 +4995,9 @@ function Invoke-OptimizationButton {
             }
 
             if ($tweak.Registry) {
-                Write-Host "Registry: Disabling" $tweak.message -ForegroundColor Green
+                foreach ($msg in "DisableMessage","EnableMessage") {
+                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
+                }
                 foreach ($regEntry in $tweak.Registry) {
                     try { 
                         Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.Value }
@@ -4924,13 +5006,17 @@ function Invoke-OptimizationButton {
                 }
             }
             if ($tweak.InvokeScript) {
-                Write-Host "InvokeScript: Disabling" $tweak.message -ForegroundColor Cyan
+                foreach ($msg in "DisableMessage","EnableMessage") {
+                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Cyan }
+                }
                 foreach ($script in $tweak.InvokeScript) {
                     Invoke-Scripts -Name $tweak.Content -Script $script
                 }
             }
             if ($tweak.service) {
-                Write-Host "Service: Disabling" $tweak.message -ForegroundColor Magenta
+                foreach ($msg in "DisableMessage","EnableMessage") {
+                    if ($tweak.$msg) { Write-Host "Service:" $tweak.$msg -ForegroundColor Magenta }
+                }
                 foreach ($service in $tweak.service) {
                     try {
                         Set-WinService -Name $service.Name -StartupType $service.StartupType
@@ -4944,6 +5030,30 @@ function Invoke-OptimizationButton {
     }
 
     Invoke-MessageBox -msg "tweak"
+}
+function Invoke-OptimizationClear {
+    Write-Host "Clearing all checkboxes in the optimization form..." -ForegroundColor Cyan
+    
+    $presets = @($wpf_fastPresetButton, $wpf_megaPresetButton)
+    $styles = @("ToggleSwitchStyleGreen", "ToggleSwitchStylePurple")
+
+    for ($i = 0; $i -lt $presets.Count; $i++) {
+        $presets[$i].IsEnabled = $true
+        $presets[$i].IsChecked = $false
+        $presets[$i].Style = $presets[$i].TryFindResource($styles[$i])
+    }
+
+    foreach ($key in $sync.configs.tweaks.PSObject.Properties.Name) {
+        $tweak = $sync.configs.tweaks.$key
+        $ctrl  = $psform.FindName($key)
+
+        if ($ctrl -is [System.Windows.Controls.CheckBox]) {
+            if ($ctrl.IsChecked) {
+                # Write-Host "Unchecking: $key" -ForegroundColor Yellow
+                $ctrl.IsChecked = $false
+            }
+        }
+    }
 }
 function Invoke-OptimizationUndo {
     <#
@@ -4977,7 +5087,7 @@ function Invoke-OptimizationUndo {
         # Apply registry changes if available and checkbox is checked
         if ($apply) {
             if ($tweak.ScheduledTask) {
-                Write-Host "ScheduledTask: Enabling" $tweak.message -ForegroundColor Yellow
+                Write-Host "ScheduledTask: Revert the $($tweak.Content) to the default settings!" $tweak.message -ForegroundColor Yellow
                 foreach ($task in $tweak.ScheduledTask) {
                     try {
                         Set-ScheduledTask -Name $task.Name -State $task.OriginalState
@@ -4988,7 +5098,7 @@ function Invoke-OptimizationUndo {
             }
 
             if ($tweak.Registry) {
-                Write-Host "Registry: Enabling" $tweak.message -ForegroundColor Green
+                Write-Host "Registry: Revert the $($tweak.Content) to the default settings!" -ForegroundColor Green
                 foreach ($regEntry in $tweak.Registry) {
                     try { 
                         Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.OriginalValue }
@@ -4997,13 +5107,14 @@ function Invoke-OptimizationUndo {
                 }
             }
             if ($tweak.UndoScript) {
-                Write-Host "UndoScript: Enabling" $tweak.message -ForegroundColor Cyan
+                # Write-Host "UndoScript:" $tweak.DisableMessage -ForegroundColor Cyan
+                Write-Host "UndoScript: Revert the $($tweak.Content) to the default settings!" -ForegroundColor Cyan
                 foreach ($script in $tweak.UndoScript) {
                     Invoke-Scripts -Name $tweak.Content -Script $script
                 }
             }
             if ($tweak.service) {
-                Write-Host "Service: Enabling" $tweak.message -ForegroundColor Magenta
+                Write-Host "Service: Revert the $($tweak.Content) to the default settings!" $tweak.message -ForegroundColor Magenta
                 foreach ($service in $tweak.service) {
                     try {
                         Set-WinService -Name $service.Name -StartupType $service.OriginalType
@@ -5222,7 +5333,7 @@ Function Invoke-UltimatePerformance {
                 Write-Output "The power plan has been set as active. Output:"
                 Write-Output $setActiveOutput
 
-                Write-Host "> Ultimate Performance plan installed and set as active."
+                Write-Host "Ultimate Performance plan installed and set as active."
             }
             "Disable" {
                 # Check if the Ultimate Performance plan is installed by GUID
@@ -5240,7 +5351,7 @@ Function Invoke-UltimatePerformance {
                     powercfg -delete $ultimatePlanGUID
 
                     Write-Host "Ultimate Performance plan has been uninstalled."
-                    Write-Host "> Balanced plan is now active."
+                    Write-Host "Balanced plan is now active."
                 } else {
                     Write-Host "Ultimate Performance plan is not installed."
                 }

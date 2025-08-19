@@ -1,6 +1,6 @@
-$xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
-$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-# $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+# $xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
+# $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
+$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
@@ -34,7 +34,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 3.2 - 16.08.2025"
+$wpf_AppVersion.Content = "Version: 3.3 - 20.08.2025"
 
 function Invoke-CloseButton {
     <#
@@ -242,19 +242,23 @@ function Invoke-ToggleButtons {
         default {
             $toggleName = $ToggleButton -replace '^wpf_', ''
             $toggleEntry = $null
-            $action = if ($isChecked) { "Enabling" } else { "Disabling" }
+            
 
             if ($sync.configs.tweaks.PSObject.Properties.Name -contains $toggleName) {
                 $toggleEntry = $sync.configs.tweaks.$toggleName
             }
+                
+            $EnableMessage = $toggleEntry.EnableMessage
+            $DisableMessage = $toggleEntry.DisableMessage
+            $action = if ($isChecked) { "$EnableMessage" } else { "$DisableMessage" }
 
             if (-not $toggleEntry) {
                 Write-Warning "No toggle matched for '$toggleName'"
                 return
             }
 
-            Write-Host "$action $($toggleEntry.message)" -ForegroundColor Green
-
+            Write-Host "$action" -ForegroundColor Green
+            
             foreach ($regEntry in $toggleEntry.registry) {
                 $value = if ($isChecked) { $regEntry.Value } else { $regEntry.OriginalValue }
                 try { Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $value } catch {}
@@ -330,6 +334,7 @@ function Invoke-Button {
         "wpf_UninstallDebloat" {Invoke-UninstallDebloat}
         "wpf_optimizationButton" {Invoke-optimizationButton}
         "wpf_optimizationUndoButton" {Invoke-OptimizationUndo}
+        "wpf_optimizationClearButton" {Invoke-OptimizationClear}
         "wpf_recommended" {Invoke-recommended}
         "wpf_gaming" {Invoke-gaming}
         "wpf_normal" {Invoke-normal}
@@ -459,7 +464,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.2  
+Windows11 Optimizer&Debloater           3.3  
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -476,7 +481,7 @@ Function Get-Author5 {
         This is for powershell v5.1
     #>
 
-    # Clear-Host
+    Clear-Host
     $colors = @("Red", "Cyan", "Magenta")
 
     function Get-RandomColor {
@@ -495,7 +500,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.2    
+Windows11 Optimizer&Debloater           3.3    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {

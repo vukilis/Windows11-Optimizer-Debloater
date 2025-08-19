@@ -51,7 +51,7 @@ Function Invoke-UltimatePerformance {
                 Write-Output "The power plan has been set as active. Output:"
                 Write-Output $setActiveOutput
 
-                Write-Host "> Ultimate Performance plan installed and set as active."
+                Write-Host "Ultimate Performance plan installed and set as active."
             }
             "Disable" {
                 # Check if the Ultimate Performance plan is installed by GUID
@@ -69,7 +69,7 @@ Function Invoke-UltimatePerformance {
                     powercfg -delete $ultimatePlanGUID
 
                     Write-Host "Ultimate Performance plan has been uninstalled."
-                    Write-Host "> Balanced plan is now active."
+                    Write-Host "Balanced plan is now active."
                 } else {
                     Write-Host "Ultimate Performance plan is not installed."
                 }

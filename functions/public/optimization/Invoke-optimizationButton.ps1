@@ -30,7 +30,9 @@ function Invoke-OptimizationButton {
         # Apply registry changes if available and checkbox is checked
         if ($apply) {
             if ($tweak.ScheduledTask) {
-                Write-Host "ScheduledTask: Disabling" $tweak.message -ForegroundColor Yellow
+                foreach ($msg in "DisableMessage","EnableMessage") {
+                    if ($tweak.$msg) { Write-Host "ScheduledTask:" $tweak.$msg -ForegroundColor Yellow }
+                }
                 foreach ($task in $tweak.ScheduledTask) {
                     try {
                         Set-ScheduledTask -Name $task.Name -State $task.State
@@ -41,7 +43,9 @@ function Invoke-OptimizationButton {
             }
 
             if ($tweak.Registry) {
-                Write-Host "Registry: Disabling" $tweak.message -ForegroundColor Green
+                foreach ($msg in "DisableMessage","EnableMessage") {
+                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
+                }
                 foreach ($regEntry in $tweak.Registry) {
                     try { 
                         Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.Value }
@@ -50,13 +54,17 @@ function Invoke-OptimizationButton {
                 }
             }
             if ($tweak.InvokeScript) {
-                Write-Host "InvokeScript: Disabling" $tweak.message -ForegroundColor Cyan
+                foreach ($msg in "DisableMessage","EnableMessage") {
+                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Cyan }
+                }
                 foreach ($script in $tweak.InvokeScript) {
                     Invoke-Scripts -Name $tweak.Content -Script $script
                 }
             }
             if ($tweak.service) {
-                Write-Host "Service: Disabling" $tweak.message -ForegroundColor Magenta
+                foreach ($msg in "DisableMessage","EnableMessage") {
+                    if ($tweak.$msg) { Write-Host "Service:" $tweak.$msg -ForegroundColor Magenta }
+                }
                 foreach ($service in $tweak.service) {
                     try {
                         Set-WinService -Name $service.Name -StartupType $service.StartupType

@@ -30,7 +30,7 @@ function Invoke-OptimizationUndo {
         # Apply registry changes if available and checkbox is checked
         if ($apply) {
             if ($tweak.ScheduledTask) {
-                Write-Host "ScheduledTask: Enabling" $tweak.message -ForegroundColor Yellow
+                Write-Host "ScheduledTask: Revert the $($tweak.Content) to the default settings!" $tweak.message -ForegroundColor Yellow
                 foreach ($task in $tweak.ScheduledTask) {
                     try {
                         Set-ScheduledTask -Name $task.Name -State $task.OriginalState
@@ -41,7 +41,7 @@ function Invoke-OptimizationUndo {
             }
 
             if ($tweak.Registry) {
-                Write-Host "Registry: Enabling" $tweak.message -ForegroundColor Green
+                Write-Host "Registry: Revert the $($tweak.Content) to the default settings!" -ForegroundColor Green
                 foreach ($regEntry in $tweak.Registry) {
                     try { 
                         Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.OriginalValue }
@@ -50,13 +50,14 @@ function Invoke-OptimizationUndo {
                 }
             }
             if ($tweak.UndoScript) {
-                Write-Host "UndoScript: Enabling" $tweak.message -ForegroundColor Cyan
+                # Write-Host "UndoScript:" $tweak.DisableMessage -ForegroundColor Cyan
+                Write-Host "UndoScript: Revert the $($tweak.Content) to the default settings!" -ForegroundColor Cyan
                 foreach ($script in $tweak.UndoScript) {
                     Invoke-Scripts -Name $tweak.Content -Script $script
                 }
             }
             if ($tweak.service) {
-                Write-Host "Service: Enabling" $tweak.message -ForegroundColor Magenta
+                Write-Host "Service: Revert the $($tweak.Content) to the default settings!" $tweak.message -ForegroundColor Magenta
                 foreach ($service in $tweak.service) {
                     try {
                         Set-WinService -Name $service.Name -StartupType $service.OriginalType
