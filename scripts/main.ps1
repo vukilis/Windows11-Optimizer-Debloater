@@ -34,7 +34,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 3.2 - 16.08.2025"
+$wpf_AppVersion.Content = "Version: 3.3 - 20.08.2025"
 
 function Invoke-CloseButton {
     <#
@@ -223,20 +223,11 @@ foreach ($box in $checkbox){
 }
 
 # Load all JSON configs automatically
-$configUrl = "https://api.github.com/repos/vukilis/Windows11-Optimizer-Debloater/contents/config"
-$sync = @{ configs = @{} }
-try {
-    $files = Invoke-RestMethod -Uri $configUrl -UseBasicParsing
-    foreach ($file in $files | Where-Object { $_.name -like "*.json" }) {
-        $rawUrl = $file.download_url
-        $json   = Invoke-RestMethod -Uri $rawUrl -UseBasicParsing
-        $baseName = [System.IO.Path]::GetFileNameWithoutExtension($file.name)
-        $sync.configs[$baseName] = $json
-        #Write-Host "Loaded remote config: $($file.name)" -ForegroundColor Green
+$sync = @{
+    configs = @{
+        tweaks = $tweaks
+        preset = $preset
     }
-}
-catch {
-    Write-Warning "Failed to fetch configs from GitHub API: $_"
 }
 
 function Invoke-ToggleButtons {
@@ -251,27 +242,67 @@ function Invoke-ToggleButtons {
         default {
             $toggleName = $ToggleButton -replace '^wpf_', ''
             $toggleEntry = $null
-            $action = if ($isChecked) { "Enabling" } else { "Disabling" }
+            
 
             if ($sync.configs.tweaks.PSObject.Properties.Name -contains $toggleName) {
                 $toggleEntry = $sync.configs.tweaks.$toggleName
             }
+                
+            $EnableMessage = $toggleEntry.EnableMessage
+            $DisableMessage = $toggleEntry.DisableMessage
+            $action = if ($isChecked) { "$EnableMessage" } else { "$DisableMessage" }
 
             if (-not $toggleEntry) {
                 Write-Warning "No toggle matched for '$toggleName'"
                 return
             }
 
-            Write-Host "$action $($toggleEntry.message)" -ForegroundColor Green
-
+            Write-Host "$action" -ForegroundColor Green
+            
             foreach ($regEntry in $toggleEntry.registry) {
                 $value = if ($isChecked) { $regEntry.Value } else { $regEntry.OriginalValue }
                 try { Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $value } catch {}
             }
 
-            foreach ($script in $toggleEntry.InvokeScript) {
-                try { Invoke-Expression $script } catch { Write-Warning "Failed to run InvokeScript for '$toggleName': $_" }
+            $scriptType = if ($isChecked) { "InvokeScript" } else { "UndoScript" }
+            if ($toggleEntry.PSObject.Properties.Name -contains $scriptType) {
+                foreach ($script in $toggleEntry.$scriptType) {
+                    try {
+                        Write-Host "Running $scriptType for '$toggleName'" -ForegroundColor Cyan
+                        # Invoke-Expression $script
+                        Invoke-Scripts -Name $toggleEntry.Content -Script $script
+                    } catch {
+                        Write-Warning "Failed to run $scriptType for '$toggleName': $_"
+                    }
+                }
             }
+
+            foreach ($svc in $toggleEntry.service) {
+                try {
+                    $service = Get-Service -Name $svc.Name -ErrorAction Stop
+                    $desiredType = if ($isChecked) { $svc.StartupType } else { $svc.OriginalType }
+
+                    Write-Host "Setting service $($svc.Name) startup type to $desiredType" -ForegroundColor Yellow
+                    Set-WinService -Name $svc.Name -StartupType $desiredType
+                }
+                catch {
+                    Write-Warning "Service $($svc.Name) not found or could not be modified: $_"
+                }
+            }
+
+            foreach ($fw in $toggleEntry.firewall) {
+                try {
+                    $desiredAction = if ($isChecked) { $fw.Action } else { 
+                        if ($fw.Action -eq "Disable") { "Enable" } else { "Disable" }
+                    }
+                    Write-Host "Setting firewall group '$($fw.Group)' on profile '$($fw.Profile)' to $desiredAction" -ForegroundColor Cyan
+                    Set-FirewallRule -Group $fw.Group -Profile $fw.Profile -Action $desiredAction
+                }
+                catch {
+                    Write-Warning "Failed to modify firewall rule group '$($fw.Group)': $_"
+                }
+            }
+
         }
     }
 }
@@ -302,6 +333,8 @@ function Invoke-Button {
         "wpf_UnselectDebloatAll" {Invoke-UnselectApplicationAll}
         "wpf_UninstallDebloat" {Invoke-UninstallDebloat}
         "wpf_optimizationButton" {Invoke-optimizationButton}
+        "wpf_optimizationUndoButton" {Invoke-OptimizationUndo}
+        "wpf_optimizationClearButton" {Invoke-OptimizationClear}
         "wpf_recommended" {Invoke-recommended}
         "wpf_gaming" {Invoke-gaming}
         "wpf_normal" {Invoke-normal}
@@ -431,7 +464,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.2  
+Windows11 Optimizer&Debloater           3.3  
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -467,7 +500,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.2    
+Windows11 Optimizer&Debloater           3.3    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {

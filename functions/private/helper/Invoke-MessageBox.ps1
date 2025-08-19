@@ -15,6 +15,7 @@ function Invoke-MessageBox {
         "uninstall" { "Uninstalls are finished" }
         "upgrade"   { "Upgrading are finished" }
         "tweak"   { "Tweaking are finished" }
+        "undotweak"   { "Undo tweaking are finished" }
         "debloat"   { "Debloating are finished" }
         "debloatError"   { "Please unselect all unchecked APPXs!" }
         "debloatInfo"   { "Please select an APPX!" }

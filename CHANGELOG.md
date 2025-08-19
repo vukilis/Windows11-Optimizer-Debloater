@@ -8,6 +8,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [3.3] - 2025-08-20
+
+### Added
+
+- New Tweaks: **Disable Explorer Auto Folder Discovery**,  **PowerShell 5 -> PowerShell 7**, **Disable Recall**, **Set Hibernation as default (laptops)**, **Adobe Network Block**, **Disable Background Apps**, **Disable Fullscreen Optimization**, **Remove Home from Explorer**, **Remove Gallery from Explorer**, **Recommendations in Start Menu**, **Settings Home Page**, **Disable Multiplane Overlay**, **New Outlook**, **Task View in Taskbar**, **S3 Sleep**, **Disable Background Apps**, **Cross-Device Resume**, **Disable Clipboard History**,
+- Support for undoing previously applied tweaks via the **UNDO TWEAKS** button.
+- Implemented the ability to read and adjust **Windows service** configurations from JSON, applying specified service names and startup types with error handling.
+- Implemented the ability to read and adjust **firewall settings** from JSON, applying specified rules and configurations with error handling.
+- New tweak **Ultimate Performance Plan** to the new **Performance Plans** section.
+- New **UNDO TWEAKS** button to revert the last applied tweak.
+- New **CLEAR TWEAKS** button to unselect all tweak checkboxes.
+
+
+### Changed
+
+- Replaced the **Dark Theme** toggle button with an icon.
+- Renamed **RUN OPTIMIZATION** button to **RUN TWEAKS**.
+- Updated the UI position of the **RUN TWEAKS**, **Fast Preset** and **Mega Preset** button for better layout and accessibility.
+- Improved the code for setting the toggle button status on startup by reading and applying values from the registry.
+- Enhanced terminal output for tweaks, providing clearer and more informative messages with color coding for better readability and debugging.
+
 ## [3.2] - 2025-08-16
 
 ### Added
