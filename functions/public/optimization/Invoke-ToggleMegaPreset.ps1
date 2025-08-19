@@ -3,24 +3,6 @@ function Invoke-ToggleMegaPreset {
         [switch]$IsChecked  # Optional: allows forcing check/uncheck
     )
 
-    $configUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/config"
-    $files   = @("preset.json")
-
-    $sync = @{ configs = @{} }
-
-    foreach ($file in $files) {
-        $url = "$configUrl/$file"
-        try {
-            $json = Invoke-RestMethod -Uri $url -UseBasicParsing
-            $baseName = [System.IO.Path]::GetFileNameWithoutExtension($file)
-            $sync.configs[$baseName] = $json
-            #Write-Host "Loaded remote config: $file" -ForegroundColor Cyan
-        }
-        catch {
-            Write-Warning "Failed to load JSON from $url : $_"
-        }
-    }
-
     $tweak = $sync.configs.preset.megaPresetButton
     # Write-Host "Found $($tweak.Count) checkboxes: $($tweak -join ', ')"
 

@@ -15,8 +15,8 @@ Write-output '
 ################################################################################################################
 ' | Out-File ./$scriptname -Append -Encoding ascii
 
-Get-Content .\scripts\start.ps1 | Out-File ./$scriptname -Append -Encoding ascii
-Get-Content .\scripts\main.ps1 | Out-File ./$scriptname -Append -Encoding ascii
+# Get-Content .\scripts\start.ps1 | Out-File ./$scriptname -Append -Encoding ascii
+# Get-Content .\scripts\main.ps1 | Out-File ./$scriptname -Append -Encoding ascii
 
 Write-output '
 ################################################################################################################
@@ -58,6 +58,48 @@ Get-ChildItem .\config\msAppxDebloat.json | ForEach-Object {
 
     Write-Output "`$appx = $convertedArrayString" | Out-File ./$scriptname -Append -Encoding ascii
 }
+
+# ========================================
+# Embed selected JSON files into variables
+# ========================================
+
+# Manually choose which JSON files you want
+$jsonFiles = @(
+    ".\config\tweaks.json",
+    ".\config\preset.json"
+    # add more here...
+)
+
+foreach ($file in $jsonFiles) {
+    if (-not (Test-Path $file)) {
+        Write-Warning "File not found: $file"
+        continue
+    }
+    $varName = [System.IO.Path]::GetFileNameWithoutExtension($file)
+    $jsonText = Get-Content $file -Raw
+    $jsonText = $jsonText -replace "@'", "`@'"
+
+    # Build PowerShell block
+    $psContent = @"
+# Embedded from $([System.IO.Path]::GetFileName($file))
+`$$varName = @'
+$jsonText
+'@ | ConvertFrom-Json
+
+"@
+    $psContent | Out-File ./$scriptName -Append -Encoding UTF8
+}
+
+Write-output '
+################################################################################################################
+###                                                                                                          ###
+###                                        INFO: MAIN FUNCTIONS                                            ###
+###                                                                                                          ###
+################################################################################################################
+' | Out-File ./$scriptname -Append -Encoding ascii
+
+Get-Content .\scripts\start.ps1 | Out-File ./$scriptname -Append -Encoding ascii
+Get-Content .\scripts\main.ps1 | Out-File ./$scriptname -Append -Encoding ascii
 
 Write-output '
 ################################################################################################################

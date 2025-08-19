@@ -12,7 +12,7 @@
         "Type": "CheckBox",
         "Content": "Disable Telemetry",
         "Description": "Disables Windows telemetry and data collection services.",
-        "message": "Disabling Telemetry...",
+        "message": "Telemetry...",
         "ScheduledTask": [
         {
             "Name": "Microsoft\\Windows\\Application Experience\\Microsoft Compatibility Appraiser",
@@ -422,6 +422,178 @@
             }
         ]
     },
+    "DblExplorerAutoDiscovery": {
+        "Type": "CheckBox",
+        "Content": "Disable Explorer Auto Folder Discovery",
+        "Description": "Windows Explorer automatically tries to guess the type of the folder based on its contents, slowing down the browsing experience.",
+        "message": "Explorer Automatic Folder Discovery...",
+        "InvokeScript": [
+            "
+            # Previously detected folders
+            $bags = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\"
+
+            # Folder types lookup table
+            $bagMRU = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\BagMRU\"
+
+
+            # Flush Explorer view database safely
+            if (Test-Path $bags) {
+                Remove-Item -Path $bags -Recurse -Force
+                Write-Host \"Removed $bags\"
+            } else {
+                Write-Host \"Registry path not found: $bags\"
+            }
+
+            if (Test-Path $bagMRU) {
+                Remove-Item -Path $bagMRU -Recurse -Force
+                Write-Host \"Removed $bagMRU\"
+            } else {
+                Write-Host \"Registry path not found: $bagMRU\"
+            }
+
+            # Every folder
+            $allFolders = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\\AllFolders\\Shell\"
+
+            if (!(Test-Path $allFolders)) {
+                New-Item -Path $allFolders -Force
+                Write-Host \"Created $allFolders\"
+            }
+
+            # Generic view
+            New-ItemProperty -Path $allFolders -Name \"FolderType\" -Value \"NotSpecified\" -PropertyType String -Force
+            Write-Host \"Set FolderType to NotSpecified\"
+
+            Write-Host Please sign out and back in, or restart your computer to apply the changes!
+            "
+        ],
+        "UndoScript": [
+            "
+            # Previously detected folders
+            $bags = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\"
+
+            # Folder types lookup table
+            $bagMRU = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\BagMRU\"
+
+            # Flush Explorer view database safely
+            if (Test-Path $bags) {
+                Remove-Item -Path $bags -Recurse -Force
+                Write-Host \"Removed $bags\"
+            } else {
+                Write-Host \"Registry path not found: $bags\"
+            }
+
+            if (Test-Path $bagMRU) {
+                Remove-Item -Path $bagMRU -Recurse -Force
+                Write-Host \"Removed $bagMRU\"
+            } else {
+                Write-Host \"Registry path not found: $bagMRU\"
+            }
+
+            Write-Host Please sign out and back in, or restart your computer to apply the changes!
+            "
+        ]
+    },
+    "DblPowershell7": {
+        "Type": "CheckBox",
+        "Content": "PowerShell 5 -> PowerShell 7",
+        "Description": "This will edit the config file of the Windows Terminal replacing PowerShell 5 with PowerShell 7 and installing PS7 if necessary",
+        "message": "PowerShell 7...",
+        "InvokeScript": [
+            "Invoke-TweakPS7 -action \"PS7\""
+        ],
+        "UndoScript": [
+            "Invoke-TweakPS7 -action \"PS5\""
+        ]
+    },
+    "DblRecallOff": {
+        "Type": "CheckBox",
+        "Content": "Disable Recall",
+        "Description": "Turn Recall off",
+        "message": "Recall...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+                "Name": "DisableAIDataAnalysis",
+                "Type": "DWord",
+                "Value": "1",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+                "Name": "AllowRecallEnablement",
+                "Type": "DWord",
+                "Value": "0",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\CI\\Policy",
+                "Name": "VerifiedAndReputablePolicyState",
+                "Type": "DWord",
+                "Value": "0",
+                "OriginalValue": "<RemoveEntry>"
+            }
+            ],
+        "InvokeScript": [
+            "
+            Write-Host \"Disable Recall\"
+            DISM /Online /Disable-Feature /FeatureName:Recall /Quiet /NoRestart
+            Write-Host \"Please restart your computer in order for the changes to be fully applied.\"
+            "
+        ],
+        "UndoScript": [
+            "
+            Write-Host \"Enable Recall\"
+            DISM /Online /Enable-Feature /FeatureName:Recall /Quiet /NoRestart
+            Write-Host \"Please restart your computer in order for the changes to be fully applied.\"
+            "
+        ]
+    },
+    "DblLaptopHibernation": {
+        "Type": "CheckBox",
+        "Content": "Set Hibernation as default (laptops)",
+        "Description": "Most modern laptops have connected standby enabled which drains the battery, this sets hibernation as default which will not drain the battery.",
+        "message": "Setting Hibernation as default...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power\\PowerSettings\\238C9FA8-0AAD-41ED-83F4-97BE242C8F20\\7bc4a2f9-d8fc-4469-b07b-33eb785aaca0",
+                "OriginalValue": "1",
+                "Name": "Attributes",
+                "Value": "2",
+                "Type": "DWord"
+            },
+            {
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power\\PowerSettings\\abfc2519-3608-4c2a-94ea-171b0ed546ab\\94ac6d29-73ce-41a6-809f-6363ba21b47e",
+                "OriginalValue": "0",
+                "Name": "Attributes ",
+                "Value": "2",
+                "Type": "DWord"
+            }
+            ],
+        "InvokeScript": [
+            "
+            Write-Host \"Turn on Hibernation\"
+            Start-Process -FilePath powercfg -ArgumentList \"/hibernate on\" -NoNewWindow -Wait
+
+            # Set hibernation as the default action
+            Start-Process -FilePath powercfg -ArgumentList \"/change standby-timeout-ac 60\" -NoNewWindow -Wait
+            Start-Process -FilePath powercfg -ArgumentList \"/change standby-timeout-dc 60\" -NoNewWindow -Wait
+            Start-Process -FilePath powercfg -ArgumentList \"/change monitor-timeout-ac 10\" -NoNewWindow -Wait
+            Start-Process -FilePath powercfg -ArgumentList \"/change monitor-timeout-dc 1\" -NoNewWindow -Wait
+            "
+        ],
+        "UndoScript": [
+            "
+            Write-Host \"Turn off Hibernation\"
+            Start-Process -FilePath powercfg -ArgumentList \"/hibernate off\" -NoNewWindow -Wait
+
+            # Set standby to detault values
+            Start-Process -FilePath powercfg -ArgumentList \"/change standby-timeout-ac 15\" -NoNewWindow -Wait
+            Start-Process -FilePath powercfg -ArgumentList \"/change standby-timeout-dc 15\" -NoNewWindow -Wait
+            Start-Process -FilePath powercfg -ArgumentList \"/change monitor-timeout-ac 15\" -NoNewWindow -Wait
+            Start-Process -FilePath powercfg -ArgumentList \"/change monitor-timeout-dc 15\" -NoNewWindow -Wait
+            "
+        ]
+    },
     "DblDebloatEdge": {
         "Type": "CheckBox",
         "Content": "Debloat Microsoft Edge",
@@ -659,16 +831,19 @@
         "Type": "CheckBox",
         "Content": "Disable Storage Sense",
         "Description": "Storage Sense deletes temp files automatically.",
-        "message": "Disabling Storage Sense...",
+        "message": "Storage Sense...",
         "InvokeScript": [
             "Set-RegistryValue -Path \"HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\StorageSense\\Parameters\\StoragePolicy\" -Name \"01\" -Value 0 -Type \"Dword\""
+        ],
+        "UndoScript": [
+            "Set-RegistryValue -Path \"HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\StorageSense\\Parameters\\StoragePolicy\" -Name \"01\" -Value 1 -Type \"Dword\""
         ]
     },
     "DblHiber" : {
         "Type": "CheckBox",
         "Content": "Disable Hibernation",
         "Description": "Hibernation is really meant for laptops as it saves what's in memory before turning the pc off. It really should never be used, but some people are lazy and rely on it. Don't be like Bob. Bob likes hibernation.",
-        "message": "Disabling Hibernation...",
+        "message": "Hibernation...",
         "registry": [
             {
                 "Path": "HKLM:\\System\\CurrentControlSet\\Control\\Session Manager\\Power",
@@ -687,6 +862,9 @@
         ],
         "InvokeScript": [
             "powercfg.exe /hibernate off"
+        ],
+        "UndoScript": [
+            "powercfg.exe /hibernate on"
         ]
     },
     "DblDVR" : {
@@ -732,21 +910,6 @@
             }
         ]
     },
-    "DblCoreIsolation" : {
-        "Type": "CheckBox",
-        "Content": "Disable Core Isolation",
-        "Description": "Core Isolation is a security feature that uses virtualization to protect critical processes from malware. Disabling it may reduce security but can improve performance on some systems.",
-        "message": "Disabling Core Isolation...",
-        "registry": [
-            {
-                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity",
-                "Name": "Enabled",
-                "Value": "0",
-                "OriginalValue": "1",
-                "Type": "DWord"
-            }
-        ]
-    },
     "DblAutoAdjustVolume" : {
         "Type": "CheckBox",
         "Content": "Disable Auto Adjust Volume",
@@ -766,19 +929,25 @@
         "Type": "CheckBox",
         "Content": "Disable Search Indexer",
         "Description": "Disables the Windows Search Indexer, which can improve performance but may slow down file searches.",
-        "message": "Disabling Search Indexer...",
-        "InvokeScript": [
-            "Get-Service -Name 'wsearch' -ErrorAction SilentlyContinue | Stop-Service -ErrorAction SilentlyContinue
-            Get-Service -Name 'wsearch' -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue"
+        "message": "Search Indexer...",
+        "service": [
+            {
+                "Name": "wsearch",
+                "StartupType": "Disabled",
+                "OriginalType": "Manual"
+            }
         ]
     },
     "DblPS7Telemetry" : {
         "Type": "CheckBox",
         "Content": "Disable PowerShell 7 Telemetry",
         "Description": "Disables telemetry in PowerShell 7, which can help protect your privacy.",
-        "message": "Disabling PowerShell 7 Telemetry...",
+        "message": "PowerShell 7 Telemetry...",
         "InvokeScript": [
             "[Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '1', 'Machine')"
+        ],
+        "UndoScript": [
+            "[Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '', 'Machine')"
         ]
     },
     "DblConsumerFeatures" : {
@@ -797,11 +966,117 @@
         ]
     },
 
+    "DblAdobeNetworkBlock": {
+        "Type": "CheckBox",
+        "Content": "Adobe Network Block",
+        "Description": "Reduce user interruptions by selectively blocking connections to Adobe's activation and telemetry servers. Credit: Ruddernation-Designs.",
+        "message": "Blocking Adobe Network Connections...",
+        "InvokeScript": [
+            "
+            # Define the URL of the remote HOSTS file and the local paths
+            $remoteHostsUrl = \"https://raw.githubusercontent.com/Ruddernation-Designs/Adobe-URL-Block-List/master/hosts\"
+            $localHostsPath = \"C:\\Windows\\System32\\drivers\\etc\\hosts\"
+            $tempHostsPath = \"C:\\Windows\\System32\\drivers\\etc\\temp_hosts\"
+
+            # Download the remote HOSTS file to a temporary location
+            try {
+                Invoke-WebRequest -Uri $remoteHostsUrl -OutFile $tempHostsPath
+                Write-Output \"Downloaded the remote HOSTS file to a temporary location.\"
+            } catch {
+                Write-Error \"Failed to download the HOSTS file. Error: $_\"
+            }
+
+            # Check if the AdobeNetBlock has already been started
+            try {
+                $localHostsContent = Get-Content $localHostsPath -ErrorAction Stop
+
+                # Check if AdobeNetBlock markers exist
+                $blockStartExists = $localHostsContent -like \"*#AdobeNetBlock-start*\"
+                if ($blockStartExists) {
+                    Write-Output \"AdobeNetBlock-start already exists. Skipping addition of new block.\"
+                } else {
+                    # Load the new block from the downloaded file
+                    $newBlockContent = Get-Content $tempHostsPath -ErrorAction Stop
+                    $newBlockContent = $newBlockContent | Where-Object { $_ -notmatch \"^\\s*#\" -and $_ -ne \"\" } # Exclude empty lines and comments
+                    $newBlockHeader = \"#AdobeNetBlock-start\"
+                    $newBlockFooter = \"#AdobeNetBlock-end\"
+
+                    # Combine the contents, ensuring new block is properly formatted
+                    $combinedContent = $localHostsContent + $newBlockHeader, $newBlockContent, $newBlockFooter | Out-String
+
+                    # Write the combined content back to the original HOSTS file
+                    $combinedContent | Set-Content $localHostsPath -Encoding ASCII
+                    Write-Output \"Successfully added the AdobeNetBlock.\"
+                }
+            } catch {
+                Write-Error \"Error during processing: $_\"
+            }
+
+            # Clean up temporary file
+            Remove-Item $tempHostsPath -ErrorAction Ignore
+
+            # Flush the DNS resolver cache
+            try {
+                Invoke-Expression \"ipconfig /flushdns\"
+                Write-Output \"DNS cache flushed successfully.\"
+            } catch {
+                Write-Error \"Failed to flush DNS cache. Error: $_\"
+            }
+            "
+        ],
+        "UndoScript": [
+            "
+            # Define the local path of the HOSTS file
+            $localHostsPath = \"C:\\Windows\\System32\\drivers\\etc\\hosts\"
+
+            # Load the content of the HOSTS file
+            try {
+                $hostsContent = Get-Content $localHostsPath -ErrorAction Stop
+            } catch {
+                Write-Error \"Failed to load the HOSTS file. Error: $_\"
+                return
+            }
+
+            # Initialize flags and buffer for new content
+            $recording = $true
+            $newContent = @()
+
+            # Iterate over each line of the HOSTS file
+            foreach ($line in $hostsContent) {
+                if ($line -match \"#AdobeNetBlock-start\") {
+                    $recording = $false
+                }
+                if ($recording) {
+                    $newContent += $line
+                }
+                if ($line -match \"#AdobeNetBlock-end\") {
+                    $recording = $true
+                }
+            }
+
+            # Write the filtered content back to the HOSTS file
+            try {
+                $newContent | Set-Content $localHostsPath -Encoding ASCII
+                Write-Output \"Successfully removed the AdobeNetBlock section from the HOSTS file.\"
+            } catch {
+                Write-Error \"Failed to write back to the HOSTS file. Error: $_\"
+            }
+
+            # Flush the DNS resolver cache
+            try {
+                Invoke-Expression \"ipconfig /flushdns\"
+                Write-Output \"DNS cache flushed successfully.\"
+            } catch {
+                Write-Error \"Failed to flush DNS cache. Error: $_\"
+            }
+            "
+        ]
+    },
     "DblIPv6": {
         "Type": "CheckBox",
         "Content": "Disable IPv6",
         "Description": "Disables IPv6 protocol on the system.",
-        "message": "Disabling IPv6...",
+        "message": "IPv6...",
         "registry": [
             {
                 "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
@@ -813,6 +1088,9 @@
         ],
         "InvokeScript": [
             "Disable-NetAdapterBinding -Name \"*\" -ComponentID ms_tcpip6"
+        ],
+        "UndoScript": [
+            "Enable-NetAdapterBinding -Name \"*\" -ComponentID ms_tcpip6"
         ]
     },
     "DblIPv46": {
@@ -834,7 +1112,7 @@
         "Type": "CheckBox",
         "Content": "Disable Teredo",
         "Description": "Teredo network tunneling is a ipv6 feature that can cause additional latency, but may cause problems with some games",
-        "message": "Disabling Teredo...",
+        "message": "Teredo...",
         "registry": [
             {
             "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
@@ -846,6 +1124,9 @@
         ],
         "InvokeScript": [
             "netsh interface teredo set state disabled"
+        ],
+        "UndoScript": [
+            "netsh interface teredo set state default"
         ]
     },
     "DblRightClickMenu": {
@@ -859,6 +1140,14 @@
                 Write-Host Restarting explorer.exe ...
                 $process = Get-Process -Name \"explorer\"
                 Stop-Process -InputObject $process
+            "
+        ],
+        "UndoScript": [
+            "
+                Remove-Item -Path \"HKCU:\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\" -Recurse -Confirm:$false -Force
+                # Restarting Explorer in the Undo Script might not be necessary, as the Registry change without restarting Explorer does work, but just to make sure.
+                Write-Host Restarting explorer.exe ...
+                Stop-Process -Name \"explorer\" -Force
             "
         ]
     },
@@ -883,72 +1172,78 @@
         "Description": "Disables MS Copilot AI built into Windows since 23H2.",
         "message": "Microsoft Copilot...",
         "registry": [
-        {
-            "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot",
-            "Name": "TurnOffWindowsCopilot",
-            "Type": "DWord",
-            "Value": "1",
-            "OriginalValue": "<RemoveEntry>"
-        },
-        {
-            "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot",
-            "Name": "TurnOffWindowsCopilot",
-            "Type": "DWord",
-            "Value": "1",
-            "OriginalValue": "<RemoveEntry>"
-        },
-        {
-            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-            "Name": "ShowCopilotButton",
-            "Type": "DWord",
-            "Value": "0",
-            "OriginalValue": "1"
-        },
-        {
-            "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Shell\\Copilot",
-            "Name": "IsCopilotAvailable",
-            "Type": "DWord",
-            "Value": "0",
-            "OriginalValue": "<RemoveEntry>"
-        },
-        {
-            "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Shell\\Copilot",
-            "Name": "CopilotDisabledReason",
-            "Type": "String",
-            "Value": "IsEnabledForGeographicRegionFailed",
-            "OriginalValue": "<RemoveEntry>"
-        },
-        {
-            "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsCopilot",
-            "Name": "AllowCopilotRuntime",
-            "Type": "DWord",
-            "Value": "0",
-            "OriginalValue": "<RemoveEntry>"
-        },
-        {
-            "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked",
-            "Name": "{CB3B0003-8088-4EDE-8769-8B354AB2FF8C}",
-            "Type": "String",
-            "Value": "",
-            "OriginalValue": "<RemoveEntry>"
-        },
-        {
-            "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Shell\\Copilot\\BingChat",
-            "Name": "IsUserEligible",
-            "Type": "DWord",
-            "Value": "0",
-            "OriginalValue": "<RemoveEntry>"
-        }
-    ],
-    "InvokeScript": [
-        "
-            Write-Host \"Remove Copilot\"
-            Get-Package | Where-Object Name -like '*copilot*'
-            Get-AppxPackage -AllUsers *Copilot* | Remove-AppxPackage -AllUsers
-            Get-AppxProvisionedPackage -Online | Where-Object PackageName -like '*Copilot*' | Remove-AppxProvisionedPackage -Online
-            dism /online /remove-package /package-name:Microsoft.Windows.Copilot
-        "
-    ]
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot",
+                "Name": "TurnOffWindowsCopilot",
+                "Type": "DWord",
+                "Value": "1",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot",
+                "Name": "TurnOffWindowsCopilot",
+                "Type": "DWord",
+                "Value": "1",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                "Name": "ShowCopilotButton",
+                "Type": "DWord",
+                "Value": "0",
+                "OriginalValue": "1"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Shell\\Copilot",
+                "Name": "IsCopilotAvailable",
+                "Type": "DWord",
+                "Value": "0",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Shell\\Copilot",
+                "Name": "CopilotDisabledReason",
+                "Type": "String",
+                "Value": "IsEnabledForGeographicRegionFailed",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsCopilot",
+                "Name": "AllowCopilotRuntime",
+                "Type": "DWord",
+                "Value": "0",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked",
+                "Name": "{CB3B0003-8088-4EDE-8769-8B354AB2FF8C}",
+                "Type": "String",
+                "Value": "",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Shell\\Copilot\\BingChat",
+                "Name": "IsUserEligible",
+                "Type": "DWord",
+                "Value": "0",
+                "OriginalValue": "<RemoveEntry>"
+            }
+        ],
+        "InvokeScript": [
+            "
+                Write-Host \"Remove Copilot\"
+                Get-Package | Where-Object Name -like '*copilot*'
+                Get-AppxPackage -AllUsers *Copilot* | Remove-AppxPackage -AllUsers
+                Get-AppxProvisionedPackage -Online | Where-Object PackageName -like '*Copilot*' | Remove-AppxProvisionedPackage -Online
+                dism /online /remove-package /package-name:Microsoft.Windows.Copilot
+            "
+        ],
+        "UndoScript": [
+            "
+                Write-Host \"Install Copilot\"
+                winget install --name \"Microsoft Copilot\" --source msstore --accept-package-agreements --accept-source-agreements --silent
+            "
+        ]
     },
     "DblRemoveCortana": {
         "Type": "CheckBox",
@@ -957,6 +1252,75 @@
         "message": "Removing Cortana...",
         "InvokeScript": [
             "Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage"
+        ],
+        "UndoScript": [
+            "Get-AppXPackage *Microsoft.549981C3F5F10* -AllUsers | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register \"$($_.InstallLocation)\\AppXManifest.xml\"}"
+        ]
+    },
+    "DblBackgroundApps": {
+        "Type": "CheckBox",
+        "Content": "Disable Background Apps",
+        "Description": "Disables all Microsoft Store apps from running in the background, which has to be done individually since Win11",
+        "message": "Disabling Background Apps...",
+        "registry": [
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications",
+                "Name": "GlobalUserDisabled",
+                "Value": "1",
+                "OriginalValue": "0",
+                "Type": "DWord"
+            }
+        ]
+    },
+    "DblRemoveHome": {
+        "Type": "CheckBox",
+        "Content": "Remove Home from Explorer",
+        "Description": "Removes the Home from Explorer and sets This PC as default",
+        "message": "Home from Explorer...",
+        "InvokeScript": [
+            "
+            REG DELETE \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}\" /f
+            REG ADD \"HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /f /v \"LaunchTo\" /t REG_DWORD /d \"1\"
+            "
+        ],
+        "UndoScript": [
+            "
+            REG ADD \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}\" /f /ve /t REG_SZ /d \"CLSID_MSGraphHomeFolder\"
+            REG DELETE \"HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /f /v \"LaunchTo\"
+            "
+        ]
+    },
+    "DblRemoveGallery": {
+        "Type": "CheckBox",
+        "Content": "Remove Gallery from Explorer",
+        "Description": "Removes the Gallery  from Explorer and sets This PC as default",
+        "message": "Gallery from Explorer...",
+        "InvokeScript": [
+            "
+            REG DELETE \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}\" /f
+            REG ADD \"HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /f /v \"LaunchTo\" /t REG_DWORD /d \"1\"
+            "
+        ],
+        "UndoScript": [
+            "
+            REG ADD \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}\" /f /ve /t REG_SZ /d \"{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}\"
+            REG DELETE \"HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /f /v \"LaunchTo\"
+            "
+        ]
+    },
+    "DblFullscreenOptimizations": {
+        "Type": "CheckBox",
+        "Content": "Disable Fullscreen Optimizations",
+        "Description": "Disables FSO in all applications. NOTE: This will disable Color Management in Exclusive Fullscreen",
+        "message": "Disabling Fullscreen Optimizations...",
+        "registry": [
+            {
+                "Path": "HKCU:\\System\\GameConfigStore",
+                "Name": "GameDVR_DXGIHonorFSEWindowsCompatible",
+                "Value": "1",
+                "OriginalValue": "0",
+                "Type": "DWord"
+            }
         ]
     },
     "DblOneDrive": {
@@ -1043,6 +1407,12 @@
                 } else {
                 Write-Host \"Something went Wrong during the Unistallation of OneDrive\" -ForegroundColor Red
                 }
+            "
+        ],
+        "UndoScript": [
+            "
+                Write-Host \"Install OneDrive\"
+                Start-Process -FilePath winget -ArgumentList \"install -e --accept-source-agreements --accept-package-agreements --silent Microsoft.OneDrive \" -NoNewWindow -Wait
             "
         ]
     },
@@ -1162,6 +1532,9 @@
         ],
         "InvokeScript": [
             "Set-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name \"UserPreferencesMask\" -Type Binary -Value ([byte[]](144,18,3,128,18,0,0,0))"
+        ],
+        "UndoScript": [
+            "Remove-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name \"UserPreferencesMask\""
         ]
     },
     "DblDisableUAC": {
@@ -1182,6 +1555,21 @@
                 "Name": "ConsentPromptBehaviorAdmin",
                 "Value": 0,
                 "OriginalValue": 1,
+                "Type": "DWord"
+            }
+        ]
+    },
+    "DblCoreIsolation" : {
+        "Type": "CheckBox",
+        "Content": "Disable Core Isolation",
+        "Description": "Core Isolation is a security feature that uses virtualization to protect critical processes from malware. Disabling it may reduce security but can improve performance on some systems.",
+        "message": "Disabling Core Isolation...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity",
+                "Name": "Enabled",
+                "Value": "0",
+                "OriginalValue": "1",
                 "Type": "DWord"
             }
         ]
@@ -1257,7 +1645,7 @@
         "Type": "CheckBox",
         "Content": "Disable Windows Sounds",
         "Description": "Disables all system sounds in Windows.",
-        "message": "Disabling Windows Sounds...",
+        "message": "Windows Sounds...",
         "registry": [
             {
                 "Path": "HKCU:\\AppEvents\\Schemes",
@@ -1272,6 +1660,23 @@
             # Disable all current sound events
             $schemePath = 'HKCU:\\AppEvents\\Schemes\\Apps\\.Default'
             Get-ChildItem -Path $schemePath -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.PSChildName -eq '.Current' } | ForEach-Object { Set-ItemProperty -Path $_.PSPath -Name '(Default)' -Value '' }
+
+            # Broadcast settings change so it applies immediately
+            Add-Type \"using System; using System.Runtime.InteropServices; public class RefreshSystem { [DllImport(\"user32.dll\", SetLastError=true, CharSet=CharSet.Auto)] public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult); }\"
+            $HWND_BROADCAST = [IntPtr]0xffff
+            $WM_SETTINGCHANGE = 0x1A
+            $SMTO_ABORTIFHUNG = 0x2
+            [UIntPtr]$result = [UIntPtr]::Zero
+            [RefreshSystem]::SendMessageTimeout($HWND_BROADCAST, $WM_SETTINGCHANGE, [UIntPtr]::Zero, 'AppEvents', $SMTO_ABORTIFHUNG, 5000, [ref]$result)
+            "
+        ],
+        "UndoScript": [
+            "
+            # Restore all current sound events to their default association
+            $appsPath = 'HKCU:\\AppEvents\\Schemes\\Apps\\.Default'
+            Get-ChildItem -Path $appsPath -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.PSChildName -eq '.Current' } | ForEach-Object {
+                Set-ItemProperty -Path $_.PSPath -Name '(Default)' -Value '.Default'
+            }
 
             # Broadcast settings change so it applies immediately
             Add-Type \"using System; using System.Runtime.InteropServices; public class RefreshSystem { [DllImport(\"user32.dll\", SetLastError=true, CharSet=CharSet.Auto)] public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult); }\"
@@ -1512,7 +1917,7 @@
         "Type": "CheckBox",
         "Content": "Modern Cursor Dark",
         "Description": "Amazing modern dark cursor concept by jepriCreations.",
-        "message": "Downloading dark cursor...",
+        "message": "dark cursor...",
         "InvokeScript": [
             "
                 $downloadUrl = \"https://github.com/vukilis/Windows11-Optimizer-Debloater/raw/dev/cursor.zip\" #github link
@@ -1565,13 +1970,34 @@
 
                 [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
             "
+        ],
+        "UndoScript": [
+            "
+                # Remove the cursor scheme
+                $registryPath = \"HKCU:\\Control Panel\\Cursors\"
+                $cursorTypes = @(\"AppStarting\", \"Arrow\", \"Crosshair\", \"Hand\", \"Help\", \"IBeam\", \"No\", \"NWPen\", \"SizeAll\", \"SizeNESW\", \"SizeNS\", \"SizeNWSE\", \"SizeWE\", \"UpArrow\", \"Wait\")
+                
+                Write-Host \"Removing cursor...\" -ForegroundColor Green
+                foreach ($cursorType in $cursorTypes) {
+                Remove-ItemProperty -Path $registryPath -Name $cursorType -ErrorAction SilentlyContinue
+                #Set-ItemProperty -Path $registryPath -Name $cursorType -Value $defaultCursors[$cursorType]
+                }
+
+                Start-Sleep 1
+
+                Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class SystemParamInfo { [DllImport(\"user32.dll\", CharSet = CharSet.Unicode)] public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni); }' -Language CSharp
+
+                [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
+
+                Write-Host 'Restored Windows default mouse cursors.' -ForegroundColor Green
+            "
         ]
     },
     "DblModernCursorLight": {
         "Type": "CheckBox",
         "Content": "Modern Cursor Light",
         "Description": "Amazing modern light cursor concept by jepriCreations.",
-        "message": "Downloading light cursor...",
+        "message": "light cursor...",
         "InvokeScript": [
             "
                 $downloadUrl = \"https://github.com/vukilis/Windows11-Optimizer-Debloater/raw/dev/cursor.zip\" #github link
@@ -1624,6 +2050,41 @@
 
                 [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
             "
+        ],
+        "UndoScript": [
+            "
+                # Remove the cursor scheme
+                $registryPath = \"HKCU:\\Control Panel\\Cursors\"
+                $cursorTypes = @(\"AppStarting\", \"Arrow\", \"Crosshair\", \"Hand\", \"Help\", \"IBeam\", \"No\", \"NWPen\", \"SizeAll\", \"SizeNESW\", \"SizeNS\", \"SizeNWSE\", \"SizeWE\", \"UpArrow\", \"Wait\")
+                
+                Write-Host \"Removing cursor...\" -ForegroundColor Green
+                foreach ($cursorType in $cursorTypes) {
+                Remove-ItemProperty -Path $registryPath -Name $cursorType -ErrorAction SilentlyContinue
+                #Set-ItemProperty -Path $registryPath -Name $cursorType -Value $defaultCursors[$cursorType]
+                }
+
+                Start-Sleep 1
+
+                Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class SystemParamInfo { [DllImport(\"user32.dll\", CharSet = CharSet.Unicode)] public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni); }' -Language CSharp
+
+                [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
+
+                Write-Host 'Restored Windows default mouse cursors.' -ForegroundColor Green
+            "
+        ]
+    },
+
+    "ToggleUltimatePerformance": {
+        "Type": "CheckBox",
+        "Content": "Ultimate Performance Plan",
+        "Description": "Add and Activate Ultimate Performance Profile",
+        "message": "Toggling Ultimate Performance power plan...",
+        "DefaultState": "false",
+        "InvokeScript": [
+            "Invoke-UltimatePerformance -State Enable"
+        ],
+        "UndoScript": [
+            "Invoke-UltimatePerformance -State Disable"
         ]
     },
 
@@ -1648,7 +2109,40 @@
                 "Name": "BingSearchEnabled",
                 "Value": 1,
                 "OriginalValue": 0,
-                "Type": "Dword"
+                "Type": "Dword",
+                "DefaultState": "true"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+                "Name": "CortanaConsent",
+                "Value": 1,
+                "OriginalValue": 0,
+                "Type": "Dword",
+                "DefaultState": "true"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\SearchSettings",
+                "Name": "IsDynamicSearchBoxEnabled",
+                "Value": 1,
+                "OriginalValue": 0,
+                "Type": "Dword",
+                "DefaultState": "true"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\SearchSettings",
+                "Name": "IsAADCloudSearchEnabled",
+                "Value": 1,
+                "OriginalValue": 0,
+                "Type": "Dword",
+                "DefaultState": "true"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\SearchSettings",
+                "Name": "IsMSACloudSearchEnabled",
+                "Value": 1,
+                "OriginalValue": 0,
+                "Type": "Dword",
+                "DefaultState": "true"
             }
         ]
     },
@@ -1663,17 +2157,25 @@
                 "Name": "AppsUseLightTheme",
                 "Value": "0",
                 "OriginalValue": "1",
-                "Type": "DWord"
+                "Type": "DWord",
+                "DefaultState": "true"
             },
             {
                 "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
                 "Name": "SystemUsesLightTheme",
                 "Value": "0",
                 "OriginalValue": "1",
-                "Type": "DWord"
+                "Type": "DWord",
+                "DefaultState": "true"
             }
         ],
         "InvokeScript": [
+            "
+            Write-Host \"Restarting Explorer to apply Tweak...\" -ForegroundColor Green
+            Invoke-ExplorerUpdate
+            "
+        ],
+        "UndoScript": [
             "
             Write-Host \"Restarting Explorer to apply Tweak...\" -ForegroundColor Green
             Invoke-ExplorerUpdate
@@ -1691,7 +2193,8 @@
                 "Name": "InitialKeyboardIndicators",
                 "Value": 2,
                 "OriginalValue": 0,
-                "Type": "Dword"
+                "Type": "Dword",
+                "DefaultState": "true"
             }
         ]
     },
@@ -1706,7 +2209,8 @@
                 "Name": "HideFileExt",
                 "Value": 0,
                 "OriginalValue": 1,
-                "Type": "Dword"
+                "Type": "Dword",
+                "DefaultState": "true"
             }
         ]
     },
@@ -1721,22 +2225,25 @@
                 "Name": "MouseSpeed",
                 "Value": 1,
                 "OriginalValue": 0,
-                "Type": "Dword"
+                "Type": "Dword",
+                "DefaultState": "true"
             },
-        {
-            "Path": "HKCU:\\Control Panel\\Mouse",
-            "Name": "MouseThreshold1",
-            "Value": "6",
-            "OriginalValue": "0",
-            "Type": "DWord"
-        },
-        {
-            "Path": "HKCU:\\Control Panel\\Mouse",
-            "Name": "MouseThreshold2",
-            "Value": "10",
-            "OriginalValue": "0",
-            "Type": "DWord"
-        }
+            {
+                "Path": "HKCU:\\Control Panel\\Mouse",
+                "Name": "MouseThreshold1",
+                "Value": 6,
+                "OriginalValue": 0,
+                "Type": "DWord",
+                "DefaultState": "true"
+            },
+            {
+                "Path": "HKCU:\\Control Panel\\Mouse",
+                "Name": "MouseThreshold2",
+                "Value": "10",
+                "OriginalValue": 0,
+                "Type": "DWord",
+                "DefaultState": "true"
+            }
         ]
     },
     "ToggleHiddenFiles": {
@@ -1750,7 +2257,8 @@
                 "Name": "Hidden",
                 "Value": 1,
                 "OriginalValue": 2,
-                "Type": "Dword"
+                "Type": "Dword",
+                "DefaultState": "true"
             }
         ]
     },
@@ -1765,7 +2273,8 @@
                 "Name": "SearchBoxTaskbarMode",
                 "Value": 1,
                 "OriginalValue": 0,
-                "Type": "Dword"
+                "Type": "Dword",
+                "DefaultState": "true"
             }
         ]
     },
@@ -1789,6 +2298,12 @@
             Write-Host \"Restarting Explorer to apply Tweak...\" -ForegroundColor Green
             Invoke-ExplorerUpdate
             "
+        ],
+        "UndoScript": [
+            "
+            Write-Host \"Restarting Explorer to apply Tweak...\" -ForegroundColor Green
+            Invoke-ExplorerUpdate
+            "
         ]
     },
     "ToggleSnapFlyout": {
@@ -1802,10 +2317,17 @@
                 "Name": "EnableSnapAssistFlyout",
                 "Value": 1,
                 "OriginalValue": 0,
-                "Type": "Dword"
+                "Type": "Dword",
+                "DefaultState": "true"
             }
         ],
         "InvokeScript": [
+            "
+            Write-Host \"Restarting Explorer to apply Tweak...\" -ForegroundColor Green
+            Invoke-ExplorerUpdate
+            "
+        ],
+        "UndoScript": [
             "
             Write-Host \"Restarting Explorer to apply Tweak...\" -ForegroundColor Green
             Invoke-ExplorerUpdate
@@ -1824,10 +2346,17 @@
                 "Value": "1",
                 "OriginalValue": "0",
                 "DefaultState": "true",
-                "Type": "DWord"
+                "Type": "DWord",
+                "DefaultState": "true"
             }
         ],
         "InvokeScript": [
+            "
+            Write-Host \"Restarting Explorer to apply Tweak...\" -ForegroundColor Green
+            Invoke-ExplorerUpdate
+            "
+        ],
+        "UndoScript": [
             "
             Write-Host \"Restarting Explorer to apply Tweak...\" -ForegroundColor Green
             Invoke-ExplorerUpdate
@@ -1846,10 +2375,17 @@
                 "Value": "1",
                 "OriginalValue": "0",
                 "DefaultState": "true",
-                "Type": "DWord"
+                "Type": "DWord",
+                "DefaultState": "true"
             }
         ],
         "InvokeScript": [
+            "
+            Write-Host \"Restarting Explorer to apply Tweak...\" -ForegroundColor Green
+            Invoke-ExplorerUpdate
+            "
+        ],
+        "UndoScript": [
             "
             Write-Host \"Restarting Explorer to apply Tweak...\" -ForegroundColor Green
             Invoke-ExplorerUpdate
@@ -1867,7 +2403,8 @@
                 "Name": "VerboseStatus",
                 "Value": 1,
                 "OriginalValue": 0,
-                "Type": "Dword"
+                "Type": "Dword",
+                "DefaultState": "true"
             }
         ]
     },
@@ -1882,7 +2419,8 @@
                 "Name": "Flags",
                 "Value": 510,
                 "OriginalValue": 58,
-                "Type": "Dword"
+                "Type": "Dword",
+                "DefaultState": "true"
             }
         ]
     },
@@ -1897,10 +2435,17 @@
                 "Name": "TaskbarEndTask",
                 "Value": 1,
                 "OriginalValue": 0,
-                "Type": "Dword"
+                "Type": "Dword",
+                "DefaultState": "true"
             }
         ],
         "InvokeScript": [
+            "
+            Write-Host \"Restarting Explorer to apply Tweak...\" -ForegroundColor Green
+            Invoke-ExplorerUpdate
+            "
+        ],
+        "UndoScript": [
             "
             Write-Host \"Restarting Explorer to apply Tweak...\" -ForegroundColor Green
             Invoke-ExplorerUpdate
@@ -1918,7 +2463,8 @@
                 "Name": "TaskbarAl",
                 "Value": 1,
                 "OriginalValue": 0,
-                "Type": "Dword"
+                "Type": "Dword",
+                "DefaultState": "true"
             }
         ]
     },
@@ -1934,7 +2480,8 @@
             "Value": "1",
             "OriginalValue": "0",
             "DefaultState": "false",
-            "Type": "DWord"
+            "Type": "DWord",
+                "DefaultState": "true"
         },
         {
             "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\CrashControl",
@@ -1942,7 +2489,8 @@
             "Value": "1",
             "OriginalValue": "0",
             "DefaultState": "false",
-            "Type": "DWord"
+            "Type": "DWord",
+                "DefaultState": "true"
         }
         ]
     },
@@ -1957,7 +2505,8 @@
                 "Name": "DisablePasswordReveal",
                 "Value": 0,
                 "OriginalValue": 1,
-                "Type": "Dword"
+                "Type": "Dword",
+                "DefaultState": "true"
             }
         ]
     },
@@ -1972,7 +2521,176 @@
                 "Name": "TaskbarDa",
                 "Value": "1",
                 "OriginalValue": "0",
-                "Type": "DWord"
+                "Type": "DWord",
+                "DefaultState": "true"
+            }
+        ]
+    },
+    "ToggleStartMenuRecommendations": {
+        "Type": "Toggle",
+        "Content": "Recommendations in Start Menu",
+        "Description": "If disabled then you will not see recommendations in the Start Menu. | Enables 'iseducationenvironment' | Relogin Required. | WARNING: This will also disable Windows Spotlight on your Lock Screen as a side effect.",
+        "message": "Start Menu Recommendations...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\PolicyManager\\current\\device\\Start",
+                "Name": "HideRecommendedSection",
+                "Value": "0",
+                "OriginalValue": "1",
+                "Type": "DWord",
+                "DefaultState": "true"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\PolicyManager\\current\\device\\Education",
+                "Name": "IsEducationEnvironment",
+                "Value": "0",
+                "OriginalValue": "1",
+                "Type": "DWord",
+                "DefaultState": "true"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer",
+                "Name": "HideRecommendedSection",
+                "Value": "0",
+                "OriginalValue": "1",
+                "Type": "DWord",
+                "DefaultState": "true"
+            }
+        ]
+    },
+    "ToggleHideSettingsHome": {
+        "Type": "Toggle",
+        "Content": "Settings Home Page",
+        "Description": "Removes the Home page in the Windows Settings app.",
+        "message": "Settings Home Page...",
+        "registry": [
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                "Name": "SettingsPageVisibility",
+                "Value": "show:home",
+                "OriginalValue": "hide:home",
+                "Type": "String",
+                "DefaultState": "true"
+            }
+        ]
+    },
+    "ToggleMultiplaneOverlay": {
+        "Type": "Toggle",
+        "Content": "Disable Multiplane Overlay",
+        "Description": "Disable the Multiplane Overlay which can sometimes cause issues with Graphics Cards.",
+        "message": "Disable Multiplane Overlay...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Dwm",
+                "Name": "OverlayTestMode",
+                "Value": "5",
+                "OriginalValue": "<RemoveEntry>",
+                "Type": "DWord",
+                "DefaultState": "true"
+            }
+        ]
+    },
+    "ToggleNewOutlook": {
+        "Type": "Toggle",
+        "Content": "New Outlook",
+        "Description": "If disabled it removes the toggle for new Outlook, disables the new Outlook migration and makes sure the Outlook Application actually uses the old Outlook.",
+        "message": "New Outlook...",
+        "registry": [
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Office\\16.0\\Outlook\\Preferences",
+                "Name": "UseNewOutlook",
+                "Value": "1",
+                "OriginalValue": "0",
+                "Type": "DWord",
+                "DefaultState": "true"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Office\\16.0\\Outlook\\Options\\General",
+                "Name": "HideNewOutlookToggle",
+                "Value": "0",
+                "OriginalValue": "1",
+                "Type": "DWord",
+                "DefaultState": "true"
+            },
+            {
+                "Path": "HKCU:\\Software\\Policies\\Microsoft\\Office\\16.0\\Outlook\\Options\\General",
+                "Name": "DoNewOutlookAutoMigration",
+                "Value": "0",
+                "OriginalValue": "0",
+                "Type": "DWord",
+                "DefaultState": "true"
+            },
+            {
+                "Path": "HKCU:\\Software\\Policies\\Microsoft\\Office\\16.0\\Outlook\\Preferences",
+                "Name": "NewOutlookMigrationUserSetting",
+                "Value": "0",
+                "OriginalValue": "<RemoveEntry>",
+                "Type": "DWord",
+                "DefaultState": "true"
+            }
+        ]
+    },
+    "ToggleTaskView": {
+        "Type": "Toggle",
+        "Content": "Task View Button in Taskbar",
+        "Description": "If Enabled then Task View Button in Taskbar will be shown.",
+        "message": "Task View Button in Taskbar...",
+        "registry": [
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                "Name": "ShowTaskViewButton",
+                "Value": "1",
+                "OriginalValue": "0",
+                "Type": "DWord",
+                "DefaultState": "true"
+            }
+        ]
+    },
+    "ToggleS3Sleep": {
+        "Type": "Toggle",
+        "Content": "S3 Sleep",
+        "Description": "Toggles between Modern Standby and S3 sleep.",
+        "message": "S3 Sleep...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power",
+                "Name": "PlatformAoAcOverride",
+                "Value": "0",
+                "OriginalValue": "<RemoveEntry>",
+                "Type": "DWord",
+                "DefaultState": "false"
+            }
+        ]
+    },
+    "ToggleCrossDeviceResume": {
+        "Type": "Toggle",
+        "Content": "Cross-Device Resume",
+        "Description": "This tweak controls the Resume function in Windows 11 24H2 and later, which allows you to resume an activity from a mobile device and vice-versa.",
+        "message": "Cross-Device Resume...",
+        "registry": [
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\CrossDeviceResume\\Configuration",
+                "Name": "IsResumeAllowed",
+                "Value": "1",
+                "OriginalValue": "0",
+                "Type": "DWord",
+                "DefaultState": "true"
+            }
+        ]
+    },
+    "ToggleClipboardHistory": {
+        "Type": "Toggle",
+        "Content": "Disable Clipboard History",
+        "Description": "The clipboard is used to copy data between applications. Windows can store the history of the last contents of the clipboard. To rule out potential security risks, I recommend disabling this feature.",
+        "message": "Disable Clipboard History...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+                "Name": "AllowClipboardHistory",
+                "Value": "0",
+                "OriginalValue": "<RemoveEntry>",
+                "Type": "DWord",
+                "DefaultState": "false"
             }
         ]
     }

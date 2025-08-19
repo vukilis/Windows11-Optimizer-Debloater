@@ -1,7 +1,7 @@
-function Invoke-OptimizationButton {
+function Invoke-OptimizationUndo {
     <#
     .SYNOPSIS
-        Applies all selected CheckBox tweaks dynamically and resets their state.
+        Undo all selected CheckBox tweaks dynamically and resets their state.
     #>
 
     # Loop through all tweaks
@@ -22,7 +22,7 @@ function Invoke-OptimizationButton {
                     $apply = [bool]$tweak.DefaultState
                 }
             }
-            "InvokeScript" {
+            "UndoScript" {
                 $apply = $true
             }
         }
@@ -30,38 +30,38 @@ function Invoke-OptimizationButton {
         # Apply registry changes if available and checkbox is checked
         if ($apply) {
             if ($tweak.ScheduledTask) {
-                Write-Host "ScheduledTask: Disabling" $tweak.message -ForegroundColor Yellow
+                Write-Host "ScheduledTask: Enabling" $tweak.message -ForegroundColor Yellow
                 foreach ($task in $tweak.ScheduledTask) {
                     try {
-                        Set-ScheduledTask -Name $task.Name -State $task.State
+                        Set-ScheduledTask -Name $task.Name -State $task.OriginalState
                     } catch {
-                        Write-Warning "Failed to set scheduled task '$($task.Name)' to $($task.State): $_"
+                        Write-Warning "Failed to set scheduled task '$($task.Name)' to $($task.OriginalState): $_"
                     }
                 }
             }
 
             if ($tweak.Registry) {
-                Write-Host "Registry: Disabling" $tweak.message -ForegroundColor Green
+                Write-Host "Registry: Enabling" $tweak.message -ForegroundColor Green
                 foreach ($regEntry in $tweak.Registry) {
                     try { 
-                        Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.Value }
+                        Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.OriginalValue }
                     catch { 
                         Write-Warning "Failed to apply registry tweak: $_" }
                 }
             }
-            if ($tweak.InvokeScript) {
-                Write-Host "InvokeScript: Disabling" $tweak.message -ForegroundColor Cyan
-                foreach ($script in $tweak.InvokeScript) {
+            if ($tweak.UndoScript) {
+                Write-Host "UndoScript: Enabling" $tweak.message -ForegroundColor Cyan
+                foreach ($script in $tweak.UndoScript) {
                     Invoke-Scripts -Name $tweak.Content -Script $script
                 }
             }
             if ($tweak.service) {
-                Write-Host "Service: Disabling" $tweak.message -ForegroundColor Magenta
+                Write-Host "Service: Enabling" $tweak.message -ForegroundColor Magenta
                 foreach ($service in $tweak.service) {
                     try {
-                        Set-WinService -Name $service.Name -StartupType $service.StartupType
+                        Set-WinService -Name $service.Name -StartupType $service.OriginalType
                     } catch {
-                        Write-Warning "Failed to set service '$($service.Name)' to $($service.StartupType): $_"
+                        Write-Warning "Failed to set service '$($service.Name)' to $($service.OriginalType): $_"
                     }
                 }
             }
@@ -69,5 +69,5 @@ function Invoke-OptimizationButton {
 
     }
 
-    Invoke-MessageBox -msg "tweak"
+    Invoke-MessageBox -msg "undotweak"
 }

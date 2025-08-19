@@ -55,6 +55,29 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="DarkTheme" TargetType="ToggleButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid>
+                            <Viewbox Width="22" Height="22">
+                                <Canvas Width="90" Height="90">
+                                    <Path x:Name="IconPath"
+                                            Data="M 87.823 60.7 c -0.463 -0.423 -1.142 -0.506 -1.695 -0.214 c -15.834 8.398 -35.266 2.812 -44.232 -12.718 c -8.966 -15.53 -4.09 -35.149 11.101 -44.665 c 0.531 -0.332 0.796 -0.963 0.661 -1.574 c -0.134 -0.612 -0.638 -1.074 -1.259 -1.153 c -9.843 -1.265 -19.59 0.692 -28.193 5.66 C 13.8 12.041 6.356 21.743 3.246 33.35 S 1.732 57.08 7.741 67.487 c 6.008 10.407 15.709 17.851 27.316 20.961 C 38.933 89.486 42.866 90 46.774 90 c 7.795 0 15.489 -2.044 22.42 -6.046 c 8.601 -4.966 15.171 -12.43 18.997 -21.586 C 88.433 61.79 88.285 61.123 87.823 60.7 z"
+                                            Fill="White"/>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="IconPath" Property="Fill" Value="#463e6bff"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="MacOsButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#FFD8D8D8"/>
             <Setter Property="Foreground" Value="Black"/>
@@ -876,6 +899,7 @@
                 <Label Name="AppVersion" Foreground="#a69f6c" FontSize="14" FontWeight="Bold" Margin="5,0" Content=""></Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" SnapsToDevicePixels="True" Grid.Column="1" Margin="0,0,0,0">
+                <ToggleButton Name="ToggleDarkMode" Style="{StaticResource DarkTheme}" Cursor="Hand" Margin="2.5,0"/>
                 <ToggleButton x:Name="AboutButton" Background="Purple" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" ToolTip="About" Style="{StaticResource AboutButtonStyle}" Tag="{StaticResource AboutIcon}"/>
                 <!-- Minimize Button -->
                 <Button Name="MinButton" Content="−" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" FontSize="16" FontWeight="Bold" ToolTip="Minimize">
@@ -2249,6 +2273,11 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
+                                <CheckBox Name="DblExplorerAutoDiscovery" Content="Disable Explorer Auto Folder Discovery" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
                                 <CheckBox Name="DblDebloatEdge" Content="Debloat Microsoft Edge" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -2265,6 +2294,26 @@
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
                                 <CheckBox Name="DblDiskCleanup" Content="Run Disk Cleanup" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Runs Disk Cleanup on Drive C: and removes old Windows Updates.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblPowershell7" Content="PowerShell 5 -> PowerShell 7" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Runs Disk Cleanup on Drive C: and removes old Windows Updates.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblPS7Telemetry" Content="Disable Powershell 7 Telemetry" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="This will create an Environment Variable called 'POWERSHELL_TELEMETRY_OPTOUT' with a value of '1' which will tell Powershell 7 to not send Telemetry Data.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblRecallOff" Content="Disable Recall" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="This will create an Environment Variable called 'POWERSHELL_TELEMETRY_OPTOUT' with a value of '1' which will tell Powershell 7 to not send Telemetry Data.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblLaptopHibernation" Content="Set Hibernation as default (laptops)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="This will create an Environment Variable called 'POWERSHELL_TELEMETRY_OPTOUT' with a value of '1' which will tell Powershell 7 to not send Telemetry Data.">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
@@ -2289,11 +2338,6 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
-                                <CheckBox Name="DblCoreIsolation" Content="Disable Core Isolation" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Core isolation [includes] security features available on your device that use virtualization-based security. If you are using VirtualBox, you must disable this feature to make VB to work!">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
                                 <CheckBox Name="DblAutoAdjustVolume" Content="Disable Auto Adjust Volume" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="Windows can automatically adjust the volume of different sounds when you are using your PC to place or receive telephone calls.">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -2304,21 +2348,21 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
-                                <CheckBox Name="DblPS7Telemetry" Content="Disable Powershell 7 Telemetry" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="This will create an Environment Variable called 'POWERSHELL_TELEMETRY_OPTOUT' with a value of '1' which will tell Powershell 7 to not send Telemetry Data.">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
                                 <Separator Background="#FFF4AB51" Width="250" Margin="10,10" Height="2"/>
                                 <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Margin="3">
                                     <Label Content="Advanced Tweaks" FontSize="18"  Foreground="#FFF4AB51" HorizontalAlignment="Center" Style="{StaticResource chfont}" FontWeight="Bold"/>
                                 </StackPanel>
-                                <CheckBox Name="DblIPv46" Content="Prefer IPv4 over IPv6" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center">
+                                <CheckBox Name="DblAdobeNetworkBlock" Content="Adobe Network Block" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
                                 <CheckBox Name="DblIPv6" Content="Disable IPv6" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblIPv46" Content="Prefer IPv4 over IPv6" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
@@ -2348,6 +2392,26 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
+                                <CheckBox Name="DblBackgroundApps" Content="Disable Background Apps" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Cortana, as a standalone app and in certain Microsoft products, has been retired in late 2023. While Cortana is still present in Windows 10 and older versions of Windows 11">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblFullscreenOptimizations" Content="Disable Fullscreen Optimizations" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Cortana, as a standalone app and in certain Microsoft products, has been retired in late 2023. While Cortana is still present in Windows 10 and older versions of Windows 11">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblRemoveHome" Content="Remove Home from Explorer" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Cortana, as a standalone app and in certain Microsoft products, has been retired in late 2023. While Cortana is still present in Windows 10 and older versions of Windows 11">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblRemoveGallery" Content="Remove Gallery from Explorer" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Cortana, as a standalone app and in certain Microsoft products, has been retired in late 2023. While Cortana is still present in Windows 10 and older versions of Windows 11">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
                                 <CheckBox Name="DblOneDrive" Content="Remove OneDrive ⚠️" Foreground="DarkRed" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi"  ToolTip="Copies OneDrive file to default home folders and uninstalls it. RECOMMENDED ON FRESH WINDOWS❗">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -2373,6 +2437,11 @@
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
                                 <CheckBox Name="DblDisableUAC" Content="Disable UAC" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Disables User Account Control. Only recommended for Expert Users.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblCoreIsolation" Content="Disable Core Isolation" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Core isolation [includes] security features available on your device that use virtualization-based security. If you are using VirtualBox, you must disable this feature to make VB to work!">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
@@ -2417,12 +2486,48 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
+                                <Separator Background="#FFF4AB51" Width="250" Margin="10,10" Height="2"/>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Margin="3">
+                                    <Label Content="Performance Plans" FontSize="18"  Foreground="#FFF4AB51" HorizontalAlignment="Center" Style="{StaticResource chfont}" FontWeight="Bold"/>
+                                </StackPanel>
+                                <CheckBox Name="ToggleUltimatePerformance" Content="Ultimate Performance Plan" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Core isolation [includes] security features available on your device that use virtualization-based security. If you are using VirtualBox, you must disable this feature to make VB to work!">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
                             </StackPanel>
                         </Border>
                         <Border Margin="10,5,5,5" Height="40" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
-                            <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Margin="3" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Label Content="⚠️ - I suggest to leave uncheck or check only on fresh windows" Foreground="DarkRed" FontSize="14" Style="{StaticResource chfont}" FontWeight="Bold"/>
-                            </StackPanel>
+                            <Grid Background="#1f1f21" Margin="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions> 
+                                <StackPanel Orientation="Horizontal" Background="#1f1f21" SnapsToDevicePixels="True" Margin="1" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1">
+                                    <Label Content="Fast Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,2.5,0,2">
+                                        <ToggleButton Name="FastPresetButton" Style="{StaticResource ToggleSwitchStyleGreen}" Cursor="Hand" Margin="2.5,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Background="#1f1f21" SnapsToDevicePixels="True" Margin="1" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
+                                    <StackPanel Background="#1f1f21" Orientation="Horizontal" Margin="2" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Button Name="optimizationButton" Style="{DynamicResource ButtonStyle}" Content="RUN TWEAKS" ForceCursor="true" Cursor="Hand" Height="25" Width="120" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold"/>
+                                    </StackPanel>
+                                    <StackPanel Background="#1f1f21" Orientation="Horizontal" Margin="2" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Button Name="optimizationUndoButton" Style="{DynamicResource ButtonStyle}" Content="UNDO TWEAKS" ForceCursor="true" Cursor="Hand" Height="25" Width="120" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Background="#1f1f21" SnapsToDevicePixels="True" Margin="1" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="1">
+                                    <Label Content="Mega Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#ca35de" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,2.5,0,2">
+                                        <ToggleButton Name="megaPresetButton" Style="{StaticResource ToggleSwitchStylePurple}" Cursor="Hand" Margin="2.5,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
                         </Border>
                         <Border Margin="10,5,5,10" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="1">
                             <Grid Background="#1f1f21" Margin="5">
@@ -2437,12 +2542,6 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" VerticalAlignment="Top">
-                                    <Label Content="Fast Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,0,0,5"/>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <ToggleButton Name="FastPresetButton" Style="{StaticResource ToggleSwitchStyleGreen}" Cursor="Hand" Margin="2.5,0"/>
-                                        <Label Content="On" Foreground="#2eb50d" FontWeight="UltraBold" FontSize="14" FontFamily="Gadugi"/>
-                                    </StackPanel>
                                     <Label Content="Bing Search In Start Menu" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5" />
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi" />
@@ -2498,19 +2597,7 @@
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                 </StackPanel>
-                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" VerticalAlignment="Top">
-                                    <Label Content="Mega Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#ca35de" Margin="0,0,0,5"/>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <ToggleButton Name="megaPresetButton" Style="{StaticResource ToggleSwitchStylePurple}" Cursor="Hand" Margin="2.5,0"/>
-                                        <Label Content="On" Foreground="#ca35de" FontWeight="UltraBold" FontSize="14" FontFamily="Gadugi"/>
-                                    </StackPanel>
-                                    <Label Content="Dark Theme" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                        <ToggleButton Name="ToggleDarkMode" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
-                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                    </StackPanel>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Top">
                                     <Label Content="Show File Extensions" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
@@ -2560,8 +2647,55 @@
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                 </StackPanel>
-                                <StackPanel Background="#1f1f21" Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <Button Name="optimizationButton" Style="{DynamicResource ButtonStyle}" Content="RUN OPTIMIZATION"  ForceCursor="true" Cursor="Hand" Padding="10" Height="40" Width="150" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold"/>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" VerticalAlignment="Top">
+                                    <Label Content="Recommendations in Start Menu" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="ToggleStartMenuRecommendations" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Settings Home Page" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="ToggleHideSettingsHome" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Disable Multiplane Overlay" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="ToggleMultiplaneOverlay" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="New Outlook" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="ToggleNewOutlook" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Task View Button in Taskbar" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="ToggleTaskView" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="S3 Sleep" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="ToggleS3Sleep" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Cross-Device Resume" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="ToggleCrossDeviceResume" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="Disable Clipboard History" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="ToggleClipboardHistory" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
                                 </StackPanel>
                             </Grid>
                         </Border>

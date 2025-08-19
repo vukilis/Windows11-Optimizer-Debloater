@@ -1,79 +1,46 @@
-# Load JSON from file
-$configUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/config"
-$files   = @("tweaks.json")
-
-$sync = @{ configs = @{} }
-
-foreach ($file in $files) {
-    $url = "$configUrl/$file"
-    try {
-        $json = Invoke-RestMethod -Uri $url -UseBasicParsing
-        $baseName = [System.IO.Path]::GetFileNameWithoutExtension($file)
-        $sync.configs[$baseName] = $json
-        Write-Host "Loaded remote config: $file" -ForegroundColor Cyan
-    }
-    catch {
-        Write-Warning "Failed to load JSON from $url : $_"
-    }
-}
-
-
 function Get-ToggleStatus {
-    Param([string]$ToggleSwitch)
+    <#
+    .SYNOPSIS
+        Initializes ToggleButtons based on registry or DefaultState.
+    .OUTPUTS
+        Boolean
+    #>
 
-    $ToggleSwitchReg = $sync.configs.tweaks.$ToggleSwitch.registry
+    # Loop all tweak entries
+    foreach ($key in $sync.configs.tweaks.PSObject.Properties.Name) {
+        $entry = $sync.configs.tweaks.$key
+        if ($entry.Type -ne "Toggle") { continue }
 
-    try {
-        if (($ToggleSwitchReg.path -imatch "hku") -and !(Get-PSDrive -Name HKU -ErrorAction SilentlyContinue)) {
-            $null = (New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS)
-        }
-    } catch {
-        Write-Error "An error occurred regarding the HKU Drive: $_"
-        return $false
-    }
+        $control = $psform.FindName($key)
+        if (-not $control -or $control -isnot [System.Windows.Controls.Primitives.ToggleButton]) { continue }
 
-    if ($ToggleSwitchReg) {
-        $count = 0
+        $isChecked = $null  # Start as null to distinguish "unset"
 
-        foreach ($regentry in $ToggleSwitchReg) {
-            try {
-                if (!(Test-Path $regentry.Path)) {
-                    New-Item -Path $regentry.Path -Force | Out-Null
-                }
+        if ($entry.registry -and $entry.registry.Count -gt 0) {
+            foreach ($regEntry in $entry.registry) {
+                try {
+                    if (-not (Test-Path $regEntry.Path)) { New-Item -Path $regEntry.Path -Force | Out-Null }
+                    $regValue = (Get-ItemProperty -Path $regEntry.Path -ErrorAction SilentlyContinue).$($regEntry.Name)
 
-                $regstate = (Get-ItemProperty -Path $regentry.Path -ErrorAction Stop).$($regentry.Name)
+                    if ($regValue -eq $regEntry.Value) { $isChecked = $true }
+                    elseif ($regValue -eq $regEntry.OriginalValue) { $isChecked = $false }
 
-                if ($regstate -eq $regentry.Value) {
-                    $count += 1
-                }
-                elseif (-not $regstate) {
-                    switch ($regentry.DefaultState) {
-                        "true"  { $count += 1 }
-                        "false" { }
-                        default { }
-                    }
-                }
-            } catch {
-                Write-Error "An unexpected error occurred: $_"
+                    # If $isChecked is set, stop checking further
+                    if ($isChecked -ne $null) { break }
+                } catch { }
             }
         }
 
-        return ($count -eq $ToggleSwitchReg.Count)
-    } else {
-        return $false
+        # If still null, fallback to DefaultState
+        if ($isChecked -eq $null -and $entry.registry -and $entry.registry[0].PSObject.Properties.Name -contains "DefaultState") {
+            $defaultState = $entry.registry[0].DefaultState
+            $isChecked = ($defaultState -eq $true -or $defaultState -eq "true")
+        }
+
+        # Ensure a boolean value
+        $control.IsChecked = [bool]$isChecked
+        # Write-Host "Set '$key' toggle to $($control.IsChecked)" -ForegroundColor Green
     }
 }
 
-# Get all WPF ToggleButtons
-$toggleButtons = Get-Variable | Where-Object {
-    $_.Name -like "wpf_*" -and
-    $_.Value -ne $null -and
-    $_.Value.GetType().Name -eq "ToggleButton"
-} | ForEach-Object { $_.Value }
-
-# Set each ToggleButton state at startup
-foreach ($btn in $toggleButtons) {
-    $toggleName = $btn.Name -replace '^wpf_', ''
-    $isChecked = Get-ToggleStatus -ToggleSwitch $toggleName
-    $btn.IsChecked = $isChecked
-}
+Get-ToggleStatus

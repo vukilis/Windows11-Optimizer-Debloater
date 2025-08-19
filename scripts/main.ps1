@@ -1,6 +1,6 @@
-# $xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
-# $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+$xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
+$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
+# $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
@@ -223,20 +223,11 @@ foreach ($box in $checkbox){
 }
 
 # Load all JSON configs automatically
-$configUrl = "https://api.github.com/repos/vukilis/Windows11-Optimizer-Debloater/contents/config"
-$sync = @{ configs = @{} }
-try {
-    $files = Invoke-RestMethod -Uri $configUrl -UseBasicParsing
-    foreach ($file in $files | Where-Object { $_.name -like "*.json" }) {
-        $rawUrl = $file.download_url
-        $json   = Invoke-RestMethod -Uri $rawUrl -UseBasicParsing
-        $baseName = [System.IO.Path]::GetFileNameWithoutExtension($file.name)
-        $sync.configs[$baseName] = $json
-        #Write-Host "Loaded remote config: $($file.name)" -ForegroundColor Green
+$sync = @{
+    configs = @{
+        tweaks = $tweaks
+        preset = $preset
     }
-}
-catch {
-    Write-Warning "Failed to fetch configs from GitHub API: $_"
 }
 
 function Invoke-ToggleButtons {
@@ -269,9 +260,45 @@ function Invoke-ToggleButtons {
                 try { Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $value } catch {}
             }
 
-            foreach ($script in $toggleEntry.InvokeScript) {
-                try { Invoke-Expression $script } catch { Write-Warning "Failed to run InvokeScript for '$toggleName': $_" }
+            $scriptType = if ($isChecked) { "InvokeScript" } else { "UndoScript" }
+            if ($toggleEntry.PSObject.Properties.Name -contains $scriptType) {
+                foreach ($script in $toggleEntry.$scriptType) {
+                    try {
+                        Write-Host "Running $scriptType for '$toggleName'" -ForegroundColor Cyan
+                        # Invoke-Expression $script
+                        Invoke-Scripts -Name $toggleEntry.Content -Script $script
+                    } catch {
+                        Write-Warning "Failed to run $scriptType for '$toggleName': $_"
+                    }
+                }
             }
+
+            foreach ($svc in $toggleEntry.service) {
+                try {
+                    $service = Get-Service -Name $svc.Name -ErrorAction Stop
+                    $desiredType = if ($isChecked) { $svc.StartupType } else { $svc.OriginalType }
+
+                    Write-Host "Setting service $($svc.Name) startup type to $desiredType" -ForegroundColor Yellow
+                    Set-WinService -Name $svc.Name -StartupType $desiredType
+                }
+                catch {
+                    Write-Warning "Service $($svc.Name) not found or could not be modified: $_"
+                }
+            }
+
+            foreach ($fw in $toggleEntry.firewall) {
+                try {
+                    $desiredAction = if ($isChecked) { $fw.Action } else { 
+                        if ($fw.Action -eq "Disable") { "Enable" } else { "Disable" }
+                    }
+                    Write-Host "Setting firewall group '$($fw.Group)' on profile '$($fw.Profile)' to $desiredAction" -ForegroundColor Cyan
+                    Set-FirewallRule -Group $fw.Group -Profile $fw.Profile -Action $desiredAction
+                }
+                catch {
+                    Write-Warning "Failed to modify firewall rule group '$($fw.Group)': $_"
+                }
+            }
+
         }
     }
 }
@@ -302,6 +329,7 @@ function Invoke-Button {
         "wpf_UnselectDebloatAll" {Invoke-UnselectApplicationAll}
         "wpf_UninstallDebloat" {Invoke-UninstallDebloat}
         "wpf_optimizationButton" {Invoke-optimizationButton}
+        "wpf_optimizationUndoButton" {Invoke-OptimizationUndo}
         "wpf_recommended" {Invoke-recommended}
         "wpf_gaming" {Invoke-gaming}
         "wpf_normal" {Invoke-normal}
@@ -448,7 +476,7 @@ Function Get-Author5 {
         This is for powershell v5.1
     #>
 
-    Clear-Host
+    # Clear-Host
     $colors = @("Red", "Cyan", "Magenta")
 
     function Get-RandomColor {
