@@ -1,0 +1,184 @@
+{
+    "PanelControl": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Control Panel",
+        "Description": "Open Windows Control Panel."
+    },
+    "PanelPnF": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Programs-Features",
+        "Description": "Open Programs and Features to uninstall or modify apps."
+    },
+    "PanelNetwork": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Network Connections",
+        "Description": "Manage network adapters and connections."
+    },
+    "PanelPower": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Power Plan",
+        "Description": "Open Power Options to manage power plans."
+    },
+    "PanelRegion": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Region",
+        "Description": "Open Region settings."
+    },
+    "PanelSound": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Sound Settings",
+        "Description": "Open Sound settings."
+    },
+    "PanelSystem": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "System Properties",
+        "Description": "Open System Properties window."
+    },
+    "PanelUser": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "User Accounts",
+        "Description": "Manage user accounts."
+    },
+    "PanelWindowsFirewall": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Windows Firewall",
+        "Description": "Open Windows Firewall settings."
+    },
+    "PanelTimedate": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Time and Date",
+        "Description": "Open Date & Time settings."
+    },
+    "PanelDeviceManager": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Device Manager",
+        "Description": "Open Device Manager."
+    },
+    "PanelExplorerOption": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "File Explorer Options",
+        "Description": "Open File Explorer Options."
+    },
+    "PanelRegedit": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Registry Editor",
+        "Description": "Open Windows Registry Editor (regedit)."
+    },
+    "PanelScheduler": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Task Scheduler",
+        "Description": "Open Task Scheduler."
+    },
+    "PanelResourceMonitor": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Resource Monitor",
+        "Description": "Open Resource Monitor."
+    },
+    "PanelSysConf": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "System Configuration",
+        "Description": "Open System Configuration (msconfig)."
+    },
+    "PanelEvent": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Event Viewer",
+        "Description": "Open Event Viewer."
+    },
+    "PanelSysInfo": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "System Info",
+        "Description": "Open System Information window."
+    },
+    "PanelDiskManagement": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Disk Management",
+        "Description": "Open Disk Management utility."
+    },
+    "PanelComputer": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Computer Management",
+        "Description": "Open Computer Management console."
+    },
+
+    "ShortcutApp": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Create Win11Deb Shortcut",
+        "Description": "Creates a desktop shortcut to launch Win11Deb as administrator."
+    },
+    "FixesNetwork": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Reset Network",
+        "Description": "Resets various network configurations."
+    },
+    "FixesSound": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Reset Sound",
+        "Description": "Resets sound service."
+    },
+    "RegistryBackup": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Create Registry Backup",
+        "Description": "Recommended to backup registry before tweaking."
+    },
+    "PanelAutologin": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Set Up Autologin",
+        "Description": "Set up automatic login for a specific user account."
+    },
+    "WingetConfig": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Set Winget Settings",
+        "Description": "Set progress bar to rainbow, default langauge to english, default install location for portable packages to [C:/Users/winget/Packages, C:/Program Files/winget/Packages], disable telemetry and log errors."
+
+    },
+    "FixesADB": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Set ADB Environment",
+        "Description": "Sets ADB environment variables for easier use of ADB commands."
+    },
+    "VsCodeMenu": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Add VSCode Context Menu",
+        "Description": "Adds 'Open with VS Code' to right-click menu for files and folders."
+    },
+    "VsCodeMenuRemove": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Remove VSCode Context Menu",
+        "Description": "Removes 'Open with VS Code' from right-click menu"
+    },
+    "ActivateWindows": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Run Microsoft Activation Scripts (MAS)",
+        "Description": "A Windows and Office activator using HWID / Ohook / KMS38 / Online KMS activation methods, with a focus on open-source code and fewer antivirus detections."
+    }
+}

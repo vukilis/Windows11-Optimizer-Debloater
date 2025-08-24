@@ -1,6 +1,6 @@
-# $xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
-# $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+$xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
+$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
+# $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
@@ -34,7 +34,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 3.3 - 20.08.2025"
+$wpf_AppVersion.Content = "Version: $ScriptVersion"
 
 function Invoke-CloseButton {
     <#
@@ -171,6 +171,9 @@ function Invoke-AboutButton {
     #>
     $AboutButton = $psform.FindName("AboutButton")
     $aboutGrid = $psform.FindName("AboutGrid")
+    $version = $psform.FindName("CurrentScriptVersion")
+    $version.Content = "Version: $ScriptVersion"
+
     
         if ($AboutButton.IsChecked) {
             $aboutGrid.Visibility = "Visible"
@@ -227,6 +230,8 @@ $sync = @{
     configs = @{
         tweaks = $tweaks
         preset = $preset
+        feature = $feature
+        configuration = $configuration
     }
 }
 
@@ -352,6 +357,7 @@ function Invoke-Button {
         "wpf_PanelUser" {Invoke-Configs -Panel $button}
         "wpf_PanelServices" {Invoke-Configs -Panel $button}
         "wpf_PanelWindowsFirewall" {Invoke-Configs -Panel $button}
+        "wpf_PanelTimedate" {Invoke-Configs -Panel $button}
         "wpf_PanelDeviceManager" {Invoke-Configs -Panel $button}
         "wpf_PanelExplorerOption" {Invoke-Configs -Panel $button}
         "wpf_PanelRegedit" {Invoke-Configs -Panel $button}
@@ -361,7 +367,8 @@ function Invoke-Button {
         "wpf_PanelEvent" {Invoke-Configs -Panel $button}
         "wpf_PanelSysInfo" {Invoke-Configs -Panel $button}
         "wpf_PanelDiskManagement" {Invoke-Configs -Panel $button}
-        "wpf_FeatureInstall" {Invoke-FeatureInstall}
+        "wpf_PanelComputer" {Invoke-Configs -Panel $button}
+        # "wpf_FeatureInstall" {Invoke-FeatureInstall}
         "wpf_PanelAutologin" {Invoke-PanelAutologin}
         "wpf_PanelRegion" {Invoke-Configs -Panel $button}
         "wpf_DblInstall" {Invoke-installButton}
@@ -379,6 +386,8 @@ function Invoke-Button {
         "wpf_FixesNetwork" {Invoke-FixesNetwork}
         "wpf_FixesSound" {Invoke-FixesSound}
         "wpf_RegistryBackup" {Invoke-RegistryBackup}
+        "wpf_VsCodeMenu" {Invoke-VsCodeMenu}
+        "wpf_VsCodeMenuRemove" {Invoke-VsCodeMenuRemove}
         "wpf_WingetConfig" {Set-WingetConfig}
         "wpf_FixesADB" {Invoke-FixADB}
         "wpf_ActivateWindows" {Invoke-ActivateWindows}
@@ -464,7 +473,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.3  
+Windows11 Optimizer&Debloater           $ScriptVersion  
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -500,7 +509,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.3    
+Windows11 Optimizer&Debloater           $ScriptVersion    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {

@@ -12,8 +12,8 @@
 ###                                                                                                          ###
 ################################################################################################################
 
-$programs = @('{"winget":"Docker.DockerDesktop","name":"Docker Desktop","id":"DblInstallDockerdesktop"}','{"winget":"Git.Git","name":"Git","id":"DblInstallGit"}','{"winget":"GitExtensionsTeam.GitExtensions","name":"Git Extensions","id":"DblInstallGitextensions"}','{"winget":"GitHub.GitHubDesktop","name":"GitHub Desktop","id":"DblInstallGithubdesktop"}','{"winget":"GodotEngine.GodotEngine","name":"Godot Engine","id":"DblInstallGodotEngine"}','{"winget":"GoLang.Go","name":"Go Programming Language","id":"DblInstallGolang"}','{"winget":"HeidiSQL.HeidiSQL","name":"HeidiSQL","id":"DblInstallHeidisql"}','{"winget":"Oracle.MySQL","name":"MySQL","id":"DblInstallMySQL"}','{"winget":"OpenJS.NodeJS","name":"Node.js","id":"DblInstallNodejs"}','{"winget":"OpenJS.NodeJS.LTS","name":"Node.js LTS","id":"DblInstallNodejslts"}','{"winget":"CoreyButler.NVMforWindows","name":"Node Version Manager (NVM)","id":"DblInstallNodemanager"}','{"winget":"EclipseAdoptium.Temurin.8.JRE","name":"Java 8","id":"DblInstallJava8"}','{"winget":"EclipseAdoptium.Temurin.11.JRE","name":"Java 11","id":"DblInstallJava11"}','{"winget":"EclipseAdoptium.Temurin.17.JRE","name":"Java 17","id":"DblInstallJava17"}','{"winget":"EclipseAdoptium.Temurin.21.JDK","name":"Java 21","id":"DblInstallJava21"}','{"winget":"JanDeDobbeleer.OhMyPosh","name":"Oh My Posh","id":"DblInstallOhmyposh"}','{"winget":"Python.Python.3.12","name":"Python 3","id":"DblInstallPython3"}','{"winget":"RedHat.Podman","name":"Podman","id":"DblInstallPodman"}','{"winget":"Postman.Postman","name":"Postman","id":"DblInstallPostman"}','{"winget":"RubyInstallerTeam.Ruby.3.2","name":"Ruby 3.2","id":"DblInstallRuby"}','{"winget":"Rustlang.Rust.MSVC","name":"Rust","id":"DblInstallRust"}','{"winget":"DBBrowserForSQLite.DBBrowserForSQLite","name":"SQLite","id":"DblInstallSQLite"}','{"winget":"Microsoft.SQLServer.2022.Developer","name":"SQL Server 2022 Developer","id":"DblInstallSQLServer2022"}','{"winget":"Unity.Unity.2022","name":"Unity 2022","id":"DblInstallUnity"}','{"winget":"Hashicorp.Vagrant","name":"Vagrant","id":"DblInstallVagrant"}','{"winget":"Microsoft.VisualStudio.2022.Community","name":"Visual Studio 2022","id":"DblInstallVisualstudio2022"}','{"winget":"Microsoft.VisualStudioCode","name":"Visual Studio Code","id":"DblInstallCode"}','{"winget":"Microsoft.DotNet.DesktopRuntime.3_1","name":".NET Core 3","id":"DblInstallDotnet3"}','{"winget":"Microsoft.DotNet.DesktopRuntime.5","name":".NET 5","id":"DblInstallDotnet5"}','{"winget":"Microsoft.DotNet.DesktopRuntime.6","name":".NET 6","id":"DblInstallDotnet6"}','{"winget":"Microsoft.DotNet.DesktopRuntime.7","name":".NET 7","id":"DblInstallDotnet7"}','{"winget":"Microsoft.DotNet.DesktopRuntime.8","name":".NET 8","id":"DblInstallDotnet8"}','{"winget":"Microsoft.Sysinternals.Autoruns","name":"Autoruns","id":"DblInstallAutoruns"}','{"winget":"MHNexus.HxD","name":"HxD Hex Editor","id":"DblInstallHxD"}','{"winget":"Microsoft.PowerShell","name":"PowerShell","id":"DblInstallPowershell"}','{"winget":"Microsoft.PowerToys","name":"PowerToys","id":"DblInstallPowertoys"}','{"winget":"Microsoft.Sysinternals.ProcessExplorer","name":"Process Explorer","id":"DblInstallProcessExplorer"}','{"winget":"Microsoft.VCRedist.2015+.x64","name":"Visual 2015 Redistributable (64-bit)","id":"DblInstallvc2015_64"}','{"winget":"Microsoft.VCRedist.2015+.x86","name":"Visual 2015 Redistributable (32-bit)","id":"DblInstallvc2015_32"}','{"winget":"Microsoft.WindowsTerminal","name":"Windows Terminal","id":"DblInstallTerminal"}','{"winget":"Brave.Brave","name":"Brave","id":"DblInstallBrave"}','{"winget":"Google.Chrome","name":"Google Chrome","id":"DblInstallChrome"}','{"winget":"eloston.ungoogled-chromium","name":"Chromium","id":"DblInstallChromium"}','{"winget":"Mozilla.Firefox","name":"Mozilla Firefox","id":"DblInstallFirefox"}','{"winget":"MullvadVPN.MullvadBrowser","name":"Mullvad","id":"DblInstallMullvad"}','{"winget":"Alex313031.Thorium","name":"Thorium","id":"DblInstallThorium"}','{"winget":"Alex313031.Thorium.AVX2","name":"Thorium AVX2","id":"DblInstallThoriumAVX"}','{"winget":"TorProject.TorBrowser","name":"Tor Browser","id":"DblInstallTor"}','{"winget":"Librewolf.Librewolf","name":"Librewolf","id":"DblInstallLibrewolf"}','{"winget":"Ablaze.Floorp","name":"Floorp","id":"DblInstallFloorp"}','{"winget":"eloston.ungoogled-chromium","name":"Ungoogled","id":"DblInstallUngoogled"}','{"winget":"VivaldiTechnologies.Vivaldi","name":"Vivaldi","id":"DblInstallVivaldi"}','{"winget":"Waterfox.Waterfox","name":"Waterfox","id":"DblInstallWaterfox"}','{"winget":"Discord.Discord","name":"Discord","id":"DblInstallDiscord"}','{"winget":"Element.Element","name":"Element (Matrix)","id":"DblInstallMatrix"}','{"winget":"Microsoft.Skype","name":"Skype","id":"DblInstallSkype"}','{"winget":"SlackTechnologies.Slack","name":"Slack","id":"DblInstallSlack"}','{"winget":"Microsoft.Teams","name":"Microsoft Teams","id":"DblInstallTeams"}','{"winget":"Telegram.TelegramDesktop","name":"Telegram","id":"DblInstallTelegram"}','{"winget":"Viber.Viber","name":"Viber","id":"DblInstallViber"}','{"winget":"Zoom.Zoom","name":"Zoom","id":"DblInstallZoom"}','{"winget":"BlueStack.BlueStacks","name":"Bluestacks","id":"DblInstallBluestacks"}','{"winget":"Cemu.Cemu","name":"Cemu","id":"DblInstallCemu"}','{"winget":"ElectronicArts.EADesktop","name":"EA Desktop App","id":"DblInstallEaapp"}','{"winget":"Emulationstation.Emulationstation","name":"Emulation Station","id":"DblInstallEmulationstation"}','{"winget":"EpicGames.EpicGamesLauncher","name":"Epic Games Store","id":"DblInstallEpicgames"}','{"winget":"Nvidia.GeforceNOW","name":"NVIDIA GeForce NOW","id":"DblInstallGeforcenow"}','{"winget":"GOG.Galaxy","name":"GOG Galaxy","id":"DblInstallGog"}','{"winget":"Playnite.Playnite","name":"Playnite","id":"DblInstallPlaynite"}','{"winget":"PrismLauncher.PrismLauncher","name":"Prism Launcher","id":"DblInstallPrism"}','{"winget":"SideQuestVR.SideQuest","name":"SideQuestVR","id":"DblInstallSideQuest"}','{"winget":"Valve.Steam","name":"Steam","id":"DblInstallSteam"}','{"winget":"LizardByte.Sunshine","name":"Sunshine Stream Server","id":"DblInstallSunshine"}','{"winget":"HeroicGamesLauncher.HeroicGamesLauncher","name":"Heroic Games Launcher","id":"DblInstallHeroic"}','{"winget":"ItchIo.Itch","name":"itch.io","id":"DblInstallItch"}','{"winget":"MedalB.V.Medal","name":"Medal","id":"DblInstallMedal"}','{"winget":"MoonlightGameStreamingProject.Moonlight","name":"Moonlight Stream Client","id":"DblInstallMoonlight"}','{"winget":null,"name":"Legendary Epic (Python)","id":"DblPythonEpicCLI"}','{"winget":"Ubisoft.Connect","name":"Ubisoft Connect","id":"DblInstallUbisoft"}','{"winget":"Wargaming.GameCenter","name":"Wargaming Game Center","id":"DblInstallWargaming"}','{"winget":"xemu-project.xemu","name":"XEMU","id":"DblInstallXemu"}','{"winget":"Audacity.Audacity","name":"Audacity","id":"DblInstallAudacity"}','{"winget":"9MVZQVXJBQ9V","name":"AV1 Video Extension","id":"DblInstallAV1"}','{"winget":"BlenderFoundation.Blender","name":"Blender","id":"DblInstallBlender"}','{"winget":"Figma.Figma","name":"Figma","id":"DblInstallFigma"}','{"winget":"Gyan.FFmpeg","name":"FFmpeg","id":"DblInstallFFmpeg"}','{"winget":"CiderCollective.Cider","name":"Cider","id":"DblInstallCider"}','{"winget":"Greenshot.Greenshot","name":"Greenshot","id":"DblInstallGreenshot"}','{"winget":"HandBrake.HandBrake","name":"Handbrake","id":"DblInstallHandbrake"}','{"winget":"DuongDieuPhap.ImageGlass","name":"ImageGlass","id":"DblInstallImageglass"}','{"winget":"XBMCFoundation.Kodi","name":"Kodi","id":"DblInstallKodi"}','{"winget":"CodecGuide.K-LiteCodecPack.Standard","name":"K-Lite Codec Pack","id":"DblInstallKlite"}','{"winget":"MediaArea.MediaInfo.GUI","name":"MediaInfo","id":"DblInstallMediaInfo"}','{"winget":"MoritzBunkus.MKVToolNix","name":"MKVToolNix","id":"DblInstallMKVToolNix"}','{"winget":"Plex.Plex","name":"Plex Client","id":"DblInstallPlex"}','{"winget":"Plex.PlexMediaServer","name":"Plex Server","id":"DblInstallPlexServer"}','{"winget":"OBSProject.OBSStudio","name":"OBS Studio","id":"DblInstallObs"}','{"winget":"9NCBCSZSJRSB","name":"Spotify","id":"DblInstallSpotify"}','{"winget":"ShareX.ShareX","name":"ShareX","id":"DblInstallSharex"}','{"winget":"VideoLAN.VLC","name":"VLC Media Player","id":"DblInstallVlc"}','{"winget":"9N4D0MSMP0PT","name":"VP9 Video Extensions","id":"DblInstallVP9"}','{"winget":"yt-dlp.yt-dlp","name":"yt-dlp","id":"DblInstallYtdlp"}','{"winget":"Anki.Anki","name":"Anki","id":"DblInstallAnki"}','{"winget":"Adobe.Acrobat.Reader.64-bit","name":"Adobe","id":"DblInstallAdobe"}','{"winget":"Joplin.Joplin","name":"Joplin","id":"DblInstallJoplin"}','{"winget":"TheDocumentFoundation.LibreOffice","name":"LibreOffice","id":"DblInstallLibreoffice"}','{"winget":"Neovim.Neovim","name":"Neovim","id":"DblInstallNeovim"}','{"winget":"Neovim.Neovim.Nightly","name":"Neovim Nightly","id":"DblInstallNeovimNightly"}','{"winget":"Notion.Notion","name":"Notion","id":"DblInstallNotion"}','{"winget":"Notepad++.Notepad++","name":"Notepad","id":"DblInstallNotepadplus"}','{"winget":"JackieLiu.NotepadsApp","name":"Notepads","id":"DblInstallNotepadsApp"}','{"winget":"Obsidian.Obsidian","name":"Obsidian","id":"DblInstallObsidian"}','{"winget":"ONLYOFFICE.DesktopEditors","name":"OnlyOffice","id":"DblInstallOnlyoffice"}','{"winget":"SublimeHQ.SublimeText.3","name":"Sublime Text 4","id":"DblInstallSublime4"}','{"winget":"SumatraPDF.SumatraPDF","name":"Sumatra","id":"DblInstallSumatra"}','{"winget":"Kingsoft.WPSOffice","name":"WPS Office","id":"DblInstallWPS"}','{"winget":"WinMerge.WinMerge","name":"WinMerge","id":"DblInstallWinmerge"}','{"winget":"AgileBits.1Password","name":"1Password","id":"DblInstall1Password"}','{"winget":"7zip.7zip","name":"7-zip","id":"DblInstall7zip"}','{"winget":"Google.PlatformTools","name":"Android Debug Bridge","id":"DblInstallADB"}','{"winget":"Alacritty.Alacritty","name":"Alacritty","id":"DblInstallAlacritty"}','{"winget":"Anydo.Anydo","name":"Anydo","id":"DblInstallAnydo"}','{"winget":"autohotkey","name":"AutoHotkey","id":"DblInstallAutohotkey"}','{"winget":"Bitwarden.Bitwarden","name":"Bitwarden","id":"DblInstallBitwarden"}','{"winget":"ChatterinoTeam.Chatterino","name":"Chatterino","id":"DblInstallChatterino"}','{"winget":"PopeenCom.ClassicVolumeMixer","name":"ClassicVolumeMixer","id":"DblInstallClasicMixer"}','{"winget":"CPUID.CPU-Z","name":"CPU-Z","id":"DblInstallCpuz"}','{"winget":"Cryptomator.Cryptomator","name":"Cryptomator","id":"DblInstallCryptomator"}','{"winget":"Wagnardsoft.DisplayDriverUninstaller","name":"Display Driver Uninstaller","id":"DblInstallDdu"}','{"winget":"JGraph.Draw","name":"Draw.io","id":"DblInstallDrawio"}','{"winget":"oidtools.Everything","name":"Everything","id":"DblInstallEsearch"}','{"winget":"Google.GoogleDrive ","name":"Google Drive","id":"DblInstallGoogleDrive"}','{"winget":"TechPowerUp.GPU-Z","name":"GPU-Z","id":"DblInstallGpuz"}','{"winget":"gerardog.gsudo","name":"gsudo","id":"DblInstallGsudo"}','{"winget":"9P1TBXR6QDCX","name":"HyperX NGENUITY","id":"DblInstallNGENUITY"}','{"winget":"REALiX.HWiNFO","name":"HWiNFO","id":"DblInstallHwinfo"}','{"winget":"AppWork.JDownloader","name":"JDownloader","id":"DblInstallJdownloader"}','{"winget":"KDE.KDEConnect","name":"KDE Connect","id":"DblInstallKDEConnect"}','{"winget":"KeePassXCTeam.KeePassXC","name":"KeePassXC","id":"DblInstallKeepass"}','{"winget":"Guru3D.Afterburner","name":"Afterburner","id":"DblInstallMsiafterburner"}','{"winget":"Mozilla.Thunderbird","name":"Thunderbird","id":"DblInstallThunderbird"}','{"winget":"M2Team.NanaZip","name":"NanaZip","id":"DblInstallNanazip"}','{"winget":"gsass1.NTop","name":"NTop","id":"DblInstallNTop"}','{"winget":"TechPowerUp.NVCleanstall","name":"NVCleanstall","id":"DblInstallNvclean"}','{"winget":"Oracle.VirtualBox","name":"VirtualBox","id":"DblInstallOVirtualBox"}','{"winget":"Ookla.Speedtest.Desktop","name":"Speedtest by Ookla","id":"DblInstallSpeedtest"}','{"winget":"CalcProgrammer1.OpenRGB","name":"OpenRGB","id":"DblInstallOpenrgb"}','{"winget":"Parsec.Parsec","name":"Parsec","id":"DblInstallParsec"}','{"winget":"Postbox.Postbox","name":"Postbox","id":"DblInstallPostbox"}','{"winget":"BitSum.ProcessLasso","name":"Process Lasso","id":"DblInstallProcesslasso"}','{"winget":"ProxymanLLC.Proxyman","name":"Proxyman","id":"DblInstallProxyman"}','{"winget":"qBittorrent.qBittorrent","name":"qBittorrent","id":"DblInstallQbittorrent"}','{"winget":"Rclone.Rclone","name":"Rclone","id":"DblInstallRclone"}','{"winget":"RevoUninstaller.RevoUninstaller","name":"Revo","id":"DblInstallRevo"}','{"winget":"Rufus.Rufus","name":"Rufus","id":"DblInstallRufus"}','{"winget":"9PF4KZ2VN4W9","name":"Ttaskbar","id":"DblInstallTtaskbar"}','{"winget":"SomePythonThings.WingetUIStore","name":"WingetUI","id":"DblInstallWingetUI"}','{"winget":"RARLab.WinRAR","name":"WinRAR","id":"DblInstallWinrar"}')
-$appx = @('{"id":"MicrosoftCorporationIIQuickAssist","name":"MicrosoftCorporationII.QuickAssist"}','{"id":"ClipchampClipchamp","name":"Clipchamp.Clipchamp"}','{"id":"MicrosoftOutlookForWindows","name":"Microsoft.OutlookForWindows"}','{"id":"MicrosoftPowerAutomateDesktop","name":"Microsoft.PowerAutomateDesktop"}','{"id":"MicrosoftTodos","name":"Microsoft.Todos"}','{"id":"MicrosoftAppConnector","name":"Microsoft.AppConnector"}','{"id":"MicrosoftBingFinance","name":"Microsoft.BingFinance"}','{"id":"MicrosoftBingNews","name":"Microsoft.BingNews"}','{"id":"MicrosoftBingSports","name":"Microsoft.BingSports"}','{"id":"MicrosoftBingTranslator","name":"Microsoft.BingTranslator"}','{"id":"MicrosoftBingWeather","name":"Microsoft.BingWeather"}','{"id":"MicrosoftBingFoodAndDrink","name":"Microsoft.BingFoodAndDrink"}','{"id":"MicrosoftBingHealthAndFitness","name":"Microsoft.BingHealthAndFitness"}','{"id":"MicrosoftBingTravel","name":"Microsoft.BingTravel"}','{"id":"MicrosoftMinecraftUWP","name":"Microsoft.MinecraftUWP"}','{"id":"MicrosoftGamingServices","name":"Microsoft.GamingServices"}','{"id":"MicrosoftGetHelp","name":"Microsoft.GetHelp"}','{"id":"MicrosoftGetstarted","name":"Microsoft.Getstarted"}','{"id":"MicrosoftMessaging","name":"Microsoft.Messaging"}','{"id":"MicrosoftMicrosoft3DViewer","name":"Microsoft.Microsoft3DViewer"}','{"id":"MicrosoftMicrosoftSolitaireCollection","name":"Microsoft.MicrosoftSolitaireCollection"}','{"id":"MicrosoftNetworkSpeedTest","name":"Microsoft.NetworkSpeedTest"}','{"id":"MicrosoftNews","name":"Microsoft.News"}','{"id":"MicrosoftOfficeLens","name":"Microsoft.Office.Lens"}','{"id":"MicrosoftOfficeSway","name":"Microsoft.Office.Sway"}','{"id":"MicrosoftOfficeOneNote","name":"Microsoft.Office.OneNote"}','{"id":"MicrosoftOneConnect","name":"Microsoft.OneConnect"}','{"id":"MicrosoftPeople","name":"Microsoft.People"}','{"id":"MicrosoftPrint3D","name":"Microsoft.Print3D"}','{"id":"MicrosoftSkypeApp","name":"Microsoft.SkypeApp"}','{"id":"MicrosoftWallet","name":"Microsoft.Wallet"}','{"id":"MicrosoftWhiteboard","name":"Microsoft.Whiteboard"}','{"id":"MicrosoftWindowsAlarms","name":"Microsoft.WindowsAlarms"}','{"id":"microsoftwindowscommunicationsapps","name":"microsoft.windowscommunicationsapps"}','{"id":"MicrosoftWindowsFeedbackHub","name":"Microsoft.WindowsFeedbackHub"}','{"id":"MicrosoftWindowsMaps","name":"Microsoft.WindowsMaps"}','{"id":"MicrosoftWindowsPhone","name":"Microsoft.WindowsPhone"}','{"id":"MicrosoftWindowsSoundRecorder","name":"Microsoft.WindowsSoundRecorder"}','{"id":"MicrosoftXboxApp","name":"Microsoft.XboxApp"}','{"id":"MicrosoftGamingApp","name":"Microsoft.GamingApp"}','{"id":"MicrosoftConnectivityStore","name":"Microsoft.ConnectivityStore"}','{"id":"MicrosoftCommsPhone","name":"Microsoft.CommsPhone"}','{"id":"MicrosoftScreenSketch","name":"Microsoft.ScreenSketch"}','{"id":"MicrosoftXboxTCUI","name":"Microsoft.Xbox.TCUI"}','{"id":"MicrosoftXboxGameOverlay","name":"Microsoft.XboxGameOverlay"}','{"id":"MicrosoftXboxGamingOverlay","name":"Microsoft.XboxGamingOverlay"}','{"id":"MicrosoftXboxGameCallableUI","name":"Microsoft.XboxGameCallableUI"}','{"id":"MicrosoftXboxSpeechToTextOverlay","name":"Microsoft.XboxSpeechToTextOverlay"}','{"id":"MicrosoftXboxIdentityProvider","name":"Microsoft.XboxIdentityProvider"}','{"id":"MicrosoftMixedRealityPortal","name":"Microsoft.MixedReality.Portal"}','{"id":"MicrosoftYourPhone","name":"Microsoft.YourPhone"}','{"id":"MicrosoftZuneMusic","name":"Microsoft.ZuneMusic"}','{"id":"MicrosoftZuneVideo","name":"Microsoft.ZuneVideo"}','{"id":"MicrosoftGetstarted","name":"Microsoft.Getstarted"}','{"id":"MicrosoftFamily","name":"Microsoft.Family"}','{"id":"MicrosoftMicrosoftOfficeHub","name":"Microsoft.MicrosoftOfficeHub"}','{"id":"MicrosoftMicrosoftStickyNotes","name":"Microsoft.MicrosoftStickyNotes"}','{"id":"EclipseManager","name":"*EclipseManager*"}','{"id":"ActiproSoftwareLLC","name":"*ActiproSoftwareLLC*"}','{"id":"AdobePhotoshopExpress","name":"*AdobeSystemsIncorporated.AdobePhotoshopExpress*"}','{"id":"DuolingoLearnLanguagesforFree","name":"*Duolingo-LearnLanguagesforFree*"}','{"id":"PandoraMediaInc","name":"*PandoraMediaInc*"}','{"id":"CandyCrush","name":"*CandyCrush*"}','{"id":"BubbleWitch3Saga","name":"*BubbleWitch3Saga*"}','{"id":"Wunderlist","name":"*Wunderlist*"}','{"id":"Flipboard","name":"*Flipboard*"}','{"id":"Twitter","name":"*Twitter*"}','{"id":"Facebook","name":"*Facebook*"}','{"id":"RoyalRevolt","name":"*Royal Revolt*"}','{"id":"Sway","name":"*Sway*"}','{"id":"SpeedTest","name":"*Speed Test*"}','{"id":"Dolby","name":"*Dolby*"}','{"id":"Viber","name":"*Viber*"}','{"id":"ACGMediaPlayer","name":"*ACGMediaPlayer*"}','{"id":"Netflix","name":"*Netflix*"}','{"id":"OneCalendar","name":"*OneCalendar*"}','{"id":"LinkedInforWindows","name":"*LinkedInforWindows*"}','{"id":"HiddenCityMysteryofShadows","name":"*HiddenCityMysteryofShadows*"}','{"id":"Hulu","name":"*Hulu*"}','{"id":"HiddenCity","name":"*HiddenCity*"}','{"id":"AdobePhotoshopExpress","name":"*AdobePhotoshopExpress*"}','{"id":"HotspotShieldFreeVPN","name":"*HotspotShieldFreeVPN*"}','{"id":"MicrosoftAdvertisingXaml","name":"*Microsoft.Advertising.Xaml*"}','{"id":"WindowsDevHome","name":"*Windows.DevHome*"}')
+$programs = @('{"name":"Docker Desktop","id":"DblInstallDockerdesktop","winget":"Docker.DockerDesktop"}','{"name":"Git","id":"DblInstallGit","winget":"Git.Git"}','{"name":"Git Extensions","id":"DblInstallGitextensions","winget":"GitExtensionsTeam.GitExtensions"}','{"name":"GitHub Desktop","id":"DblInstallGithubdesktop","winget":"GitHub.GitHubDesktop"}','{"name":"Godot Engine","id":"DblInstallGodotEngine","winget":"GodotEngine.GodotEngine"}','{"name":"Go Programming Language","id":"DblInstallGolang","winget":"GoLang.Go"}','{"name":"HeidiSQL","id":"DblInstallHeidisql","winget":"HeidiSQL.HeidiSQL"}','{"name":"MySQL","id":"DblInstallMySQL","winget":"Oracle.MySQL"}','{"name":"Node.js","id":"DblInstallNodejs","winget":"OpenJS.NodeJS"}','{"name":"Node.js LTS","id":"DblInstallNodejslts","winget":"OpenJS.NodeJS.LTS"}','{"name":"Node Version Manager (NVM)","id":"DblInstallNodemanager","winget":"CoreyButler.NVMforWindows"}','{"name":"Java 8","id":"DblInstallJava8","winget":"EclipseAdoptium.Temurin.8.JRE"}','{"name":"Java 11","id":"DblInstallJava11","winget":"EclipseAdoptium.Temurin.11.JRE"}','{"name":"Java 17","id":"DblInstallJava17","winget":"EclipseAdoptium.Temurin.17.JRE"}','{"name":"Java 21","id":"DblInstallJava21","winget":"EclipseAdoptium.Temurin.21.JDK"}','{"name":"Oh My Posh","id":"DblInstallOhmyposh","winget":"JanDeDobbeleer.OhMyPosh"}','{"name":"Python 3","id":"DblInstallPython3","winget":"Python.Python.3.12"}','{"name":"Podman","id":"DblInstallPodman","winget":"RedHat.Podman"}','{"name":"Postman","id":"DblInstallPostman","winget":"Postman.Postman"}','{"name":"Ruby 3.2","id":"DblInstallRuby","winget":"RubyInstallerTeam.Ruby.3.2"}','{"name":"Rust","id":"DblInstallRust","winget":"Rustlang.Rust.MSVC"}','{"name":"SQLite","id":"DblInstallSQLite","winget":"DBBrowserForSQLite.DBBrowserForSQLite"}','{"name":"SQL Server 2022 Developer","id":"DblInstallSQLServer2022","winget":"Microsoft.SQLServer.2022.Developer"}','{"name":"Unity 2022","id":"DblInstallUnity","winget":"Unity.Unity.2022"}','{"name":"Vagrant","id":"DblInstallVagrant","winget":"Hashicorp.Vagrant"}','{"name":"Visual Studio 2022","id":"DblInstallVisualstudio2022","winget":"Microsoft.VisualStudio.2022.Community"}','{"name":"Visual Studio Code","id":"DblInstallCode","winget":"Microsoft.VisualStudioCode"}','{"name":".NET Core 3","id":"DblInstallDotnet3","winget":"Microsoft.DotNet.DesktopRuntime.3_1"}','{"name":".NET 5","id":"DblInstallDotnet5","winget":"Microsoft.DotNet.DesktopRuntime.5"}','{"name":".NET 6","id":"DblInstallDotnet6","winget":"Microsoft.DotNet.DesktopRuntime.6"}','{"name":".NET 7","id":"DblInstallDotnet7","winget":"Microsoft.DotNet.DesktopRuntime.7"}','{"name":".NET 8","id":"DblInstallDotnet8","winget":"Microsoft.DotNet.DesktopRuntime.8"}','{"name":"Autoruns","id":"DblInstallAutoruns","winget":"Microsoft.Sysinternals.Autoruns"}','{"name":"HxD Hex Editor","id":"DblInstallHxD","winget":"MHNexus.HxD"}','{"name":"PowerShell","id":"DblInstallPowershell","winget":"Microsoft.PowerShell"}','{"name":"PowerToys","id":"DblInstallPowertoys","winget":"Microsoft.PowerToys"}','{"name":"Process Explorer","id":"DblInstallProcessExplorer","winget":"Microsoft.Sysinternals.ProcessExplorer"}','{"name":"Visual 2015 Redistributable (64-bit)","id":"DblInstallvc2015_64","winget":"Microsoft.VCRedist.2015+.x64"}','{"name":"Visual 2015 Redistributable (32-bit)","id":"DblInstallvc2015_32","winget":"Microsoft.VCRedist.2015+.x86"}','{"name":"Windows Terminal","id":"DblInstallTerminal","winget":"Microsoft.WindowsTerminal"}','{"name":"Brave","id":"DblInstallBrave","winget":"Brave.Brave"}','{"name":"Google Chrome","id":"DblInstallChrome","winget":"Google.Chrome"}','{"name":"Chromium","id":"DblInstallChromium","winget":"eloston.ungoogled-chromium"}','{"name":"Mozilla Firefox","id":"DblInstallFirefox","winget":"Mozilla.Firefox"}','{"name":"Mullvad","id":"DblInstallMullvad","winget":"MullvadVPN.MullvadBrowser"}','{"name":"Thorium","id":"DblInstallThorium","winget":"Alex313031.Thorium"}','{"name":"Thorium AVX2","id":"DblInstallThoriumAVX","winget":"Alex313031.Thorium.AVX2"}','{"name":"Tor Browser","id":"DblInstallTor","winget":"TorProject.TorBrowser"}','{"name":"Librewolf","id":"DblInstallLibrewolf","winget":"Librewolf.Librewolf"}','{"name":"Floorp","id":"DblInstallFloorp","winget":"Ablaze.Floorp"}','{"name":"Ungoogled","id":"DblInstallUngoogled","winget":"eloston.ungoogled-chromium"}','{"name":"Vivaldi","id":"DblInstallVivaldi","winget":"VivaldiTechnologies.Vivaldi"}','{"name":"Waterfox","id":"DblInstallWaterfox","winget":"Waterfox.Waterfox"}','{"name":"Discord","id":"DblInstallDiscord","winget":"Discord.Discord"}','{"name":"Element (Matrix)","id":"DblInstallMatrix","winget":"Element.Element"}','{"name":"Skype","id":"DblInstallSkype","winget":"Microsoft.Skype"}','{"name":"Slack","id":"DblInstallSlack","winget":"SlackTechnologies.Slack"}','{"name":"Microsoft Teams","id":"DblInstallTeams","winget":"Microsoft.Teams"}','{"name":"Telegram","id":"DblInstallTelegram","winget":"Telegram.TelegramDesktop"}','{"name":"Viber","id":"DblInstallViber","winget":"Viber.Viber"}','{"name":"Zoom","id":"DblInstallZoom","winget":"Zoom.Zoom"}','{"name":"Bluestacks","id":"DblInstallBluestacks","winget":"BlueStack.BlueStacks"}','{"name":"Cemu","id":"DblInstallCemu","winget":"Cemu.Cemu"}','{"name":"EA Desktop App","id":"DblInstallEaapp","winget":"ElectronicArts.EADesktop"}','{"name":"Emulation Station","id":"DblInstallEmulationstation","winget":"Emulationstation.Emulationstation"}','{"name":"Epic Games Store","id":"DblInstallEpicgames","winget":"EpicGames.EpicGamesLauncher"}','{"name":"NVIDIA GeForce NOW","id":"DblInstallGeforcenow","winget":"Nvidia.GeforceNOW"}','{"name":"GOG Galaxy","id":"DblInstallGog","winget":"GOG.Galaxy"}','{"name":"Playnite","id":"DblInstallPlaynite","winget":"Playnite.Playnite"}','{"name":"Prism Launcher","id":"DblInstallPrism","winget":"PrismLauncher.PrismLauncher"}','{"name":"SideQuestVR","id":"DblInstallSideQuest","winget":"SideQuestVR.SideQuest"}','{"name":"Steam","id":"DblInstallSteam","winget":"Valve.Steam"}','{"name":"Sunshine Stream Server","id":"DblInstallSunshine","winget":"LizardByte.Sunshine"}','{"name":"Heroic Games Launcher","id":"DblInstallHeroic","winget":"HeroicGamesLauncher.HeroicGamesLauncher"}','{"name":"itch.io","id":"DblInstallItch","winget":"ItchIo.Itch"}','{"name":"Medal","id":"DblInstallMedal","winget":"MedalB.V.Medal"}','{"name":"Moonlight Stream Client","id":"DblInstallMoonlight","winget":"MoonlightGameStreamingProject.Moonlight"}','{"name":"Legendary Epic (Python)","id":"DblPythonEpicCLI","winget":null}','{"name":"Ubisoft Connect","id":"DblInstallUbisoft","winget":"Ubisoft.Connect"}','{"name":"Wargaming Game Center","id":"DblInstallWargaming","winget":"Wargaming.GameCenter"}','{"name":"XEMU","id":"DblInstallXemu","winget":"xemu-project.xemu"}','{"name":"Audacity","id":"DblInstallAudacity","winget":"Audacity.Audacity"}','{"name":"AV1 Video Extension","id":"DblInstallAV1","winget":"9MVZQVXJBQ9V"}','{"name":"Blender","id":"DblInstallBlender","winget":"BlenderFoundation.Blender"}','{"name":"Figma","id":"DblInstallFigma","winget":"Figma.Figma"}','{"name":"FFmpeg","id":"DblInstallFFmpeg","winget":"Gyan.FFmpeg"}','{"name":"Cider","id":"DblInstallCider","winget":"CiderCollective.Cider"}','{"name":"Greenshot","id":"DblInstallGreenshot","winget":"Greenshot.Greenshot"}','{"name":"Handbrake","id":"DblInstallHandbrake","winget":"HandBrake.HandBrake"}','{"name":"ImageGlass","id":"DblInstallImageglass","winget":"DuongDieuPhap.ImageGlass"}','{"name":"Kodi","id":"DblInstallKodi","winget":"XBMCFoundation.Kodi"}','{"name":"K-Lite Codec Pack","id":"DblInstallKlite","winget":"CodecGuide.K-LiteCodecPack.Standard"}','{"name":"MediaInfo","id":"DblInstallMediaInfo","winget":"MediaArea.MediaInfo.GUI"}','{"name":"MKVToolNix","id":"DblInstallMKVToolNix","winget":"MoritzBunkus.MKVToolNix"}','{"name":"Plex Client","id":"DblInstallPlex","winget":"Plex.Plex"}','{"name":"Plex Server","id":"DblInstallPlexServer","winget":"Plex.PlexMediaServer"}','{"name":"OBS Studio","id":"DblInstallObs","winget":"OBSProject.OBSStudio"}','{"name":"Spotify","id":"DblInstallSpotify","winget":"9NCBCSZSJRSB"}','{"name":"ShareX","id":"DblInstallSharex","winget":"ShareX.ShareX"}','{"name":"VLC Media Player","id":"DblInstallVlc","winget":"VideoLAN.VLC"}','{"name":"VP9 Video Extensions","id":"DblInstallVP9","winget":"9N4D0MSMP0PT"}','{"name":"yt-dlp","id":"DblInstallYtdlp","winget":"yt-dlp.yt-dlp"}','{"name":"Anki","id":"DblInstallAnki","winget":"Anki.Anki"}','{"name":"Adobe","id":"DblInstallAdobe","winget":"Adobe.Acrobat.Reader.64-bit"}','{"name":"Joplin","id":"DblInstallJoplin","winget":"Joplin.Joplin"}','{"name":"LibreOffice","id":"DblInstallLibreoffice","winget":"TheDocumentFoundation.LibreOffice"}','{"name":"Neovim","id":"DblInstallNeovim","winget":"Neovim.Neovim"}','{"name":"Neovim Nightly","id":"DblInstallNeovimNightly","winget":"Neovim.Neovim.Nightly"}','{"name":"Notion","id":"DblInstallNotion","winget":"Notion.Notion"}','{"name":"Notepad","id":"DblInstallNotepadplus","winget":"Notepad++.Notepad++"}','{"name":"Notepads","id":"DblInstallNotepadsApp","winget":"JackieLiu.NotepadsApp"}','{"name":"Obsidian","id":"DblInstallObsidian","winget":"Obsidian.Obsidian"}','{"name":"OnlyOffice","id":"DblInstallOnlyoffice","winget":"ONLYOFFICE.DesktopEditors"}','{"name":"Sublime Text 4","id":"DblInstallSublime4","winget":"SublimeHQ.SublimeText.3"}','{"name":"Sumatra","id":"DblInstallSumatra","winget":"SumatraPDF.SumatraPDF"}','{"name":"WPS Office","id":"DblInstallWPS","winget":"Kingsoft.WPSOffice"}','{"name":"WinMerge","id":"DblInstallWinmerge","winget":"WinMerge.WinMerge"}','{"name":"1Password","id":"DblInstall1Password","winget":"AgileBits.1Password"}','{"name":"7-zip","id":"DblInstall7zip","winget":"7zip.7zip"}','{"name":"Android Debug Bridge","id":"DblInstallADB","winget":"Google.PlatformTools"}','{"name":"Alacritty","id":"DblInstallAlacritty","winget":"Alacritty.Alacritty"}','{"name":"Anydo","id":"DblInstallAnydo","winget":"Anydo.Anydo"}','{"name":"AutoHotkey","id":"DblInstallAutohotkey","winget":"autohotkey"}','{"name":"Bitwarden","id":"DblInstallBitwarden","winget":"Bitwarden.Bitwarden"}','{"name":"Chatterino","id":"DblInstallChatterino","winget":"ChatterinoTeam.Chatterino"}','{"name":"ClassicVolumeMixer","id":"DblInstallClasicMixer","winget":"PopeenCom.ClassicVolumeMixer"}','{"name":"CPU-Z","id":"DblInstallCpuz","winget":"CPUID.CPU-Z"}','{"name":"Cryptomator","id":"DblInstallCryptomator","winget":"Cryptomator.Cryptomator"}','{"name":"Display Driver Uninstaller","id":"DblInstallDdu","winget":"Wagnardsoft.DisplayDriverUninstaller"}','{"name":"Draw.io","id":"DblInstallDrawio","winget":"JGraph.Draw"}','{"name":"Everything","id":"DblInstallEsearch","winget":"oidtools.Everything"}','{"name":"Google Drive","id":"DblInstallGoogleDrive","winget":"Google.GoogleDrive "}','{"name":"GPU-Z","id":"DblInstallGpuz","winget":"TechPowerUp.GPU-Z"}','{"name":"gsudo","id":"DblInstallGsudo","winget":"gerardog.gsudo"}','{"name":"HyperX NGENUITY","id":"DblInstallNGENUITY","winget":"9P1TBXR6QDCX"}','{"name":"HWiNFO","id":"DblInstallHwinfo","winget":"REALiX.HWiNFO"}','{"name":"JDownloader","id":"DblInstallJdownloader","winget":"AppWork.JDownloader"}','{"name":"KDE Connect","id":"DblInstallKDEConnect","winget":"KDE.KDEConnect"}','{"name":"KeePassXC","id":"DblInstallKeepass","winget":"KeePassXCTeam.KeePassXC"}','{"name":"Afterburner","id":"DblInstallMsiafterburner","winget":"Guru3D.Afterburner"}','{"name":"Thunderbird","id":"DblInstallThunderbird","winget":"Mozilla.Thunderbird"}','{"name":"NanaZip","id":"DblInstallNanazip","winget":"M2Team.NanaZip"}','{"name":"NTop","id":"DblInstallNTop","winget":"gsass1.NTop"}','{"name":"NVCleanstall","id":"DblInstallNvclean","winget":"TechPowerUp.NVCleanstall"}','{"name":"VirtualBox","id":"DblInstallOVirtualBox","winget":"Oracle.VirtualBox"}','{"name":"Speedtest by Ookla","id":"DblInstallSpeedtest","winget":"Ookla.Speedtest.Desktop"}','{"name":"OpenRGB","id":"DblInstallOpenrgb","winget":"CalcProgrammer1.OpenRGB"}','{"name":"Parsec","id":"DblInstallParsec","winget":"Parsec.Parsec"}','{"name":"Postbox","id":"DblInstallPostbox","winget":"Postbox.Postbox"}','{"name":"Process Lasso","id":"DblInstallProcesslasso","winget":"BitSum.ProcessLasso"}','{"name":"Proxyman","id":"DblInstallProxyman","winget":"ProxymanLLC.Proxyman"}','{"name":"qBittorrent","id":"DblInstallQbittorrent","winget":"qBittorrent.qBittorrent"}','{"name":"Rclone","id":"DblInstallRclone","winget":"Rclone.Rclone"}','{"name":"Revo","id":"DblInstallRevo","winget":"RevoUninstaller.RevoUninstaller"}','{"name":"Rufus","id":"DblInstallRufus","winget":"Rufus.Rufus"}','{"name":"Ttaskbar","id":"DblInstallTtaskbar","winget":"9PF4KZ2VN4W9"}','{"name":"WingetUI","id":"DblInstallWingetUI","winget":"SomePythonThings.WingetUIStore"}','{"name":"WinRAR","id":"DblInstallWinrar","winget":"RARLab.WinRAR"}')
+$appx = @('{"name":"MicrosoftCorporationII.QuickAssist","id":"MicrosoftCorporationIIQuickAssist"}','{"name":"Clipchamp.Clipchamp","id":"ClipchampClipchamp"}','{"name":"Microsoft.OutlookForWindows","id":"MicrosoftOutlookForWindows"}','{"name":"Microsoft.PowerAutomateDesktop","id":"MicrosoftPowerAutomateDesktop"}','{"name":"Microsoft.Todos","id":"MicrosoftTodos"}','{"name":"Microsoft.AppConnector","id":"MicrosoftAppConnector"}','{"name":"Microsoft.BingFinance","id":"MicrosoftBingFinance"}','{"name":"Microsoft.BingNews","id":"MicrosoftBingNews"}','{"name":"Microsoft.BingSports","id":"MicrosoftBingSports"}','{"name":"Microsoft.BingTranslator","id":"MicrosoftBingTranslator"}','{"name":"Microsoft.BingWeather","id":"MicrosoftBingWeather"}','{"name":"Microsoft.BingFoodAndDrink","id":"MicrosoftBingFoodAndDrink"}','{"name":"Microsoft.BingHealthAndFitness","id":"MicrosoftBingHealthAndFitness"}','{"name":"Microsoft.BingTravel","id":"MicrosoftBingTravel"}','{"name":"Microsoft.MinecraftUWP","id":"MicrosoftMinecraftUWP"}','{"name":"Microsoft.GamingServices","id":"MicrosoftGamingServices"}','{"name":"Microsoft.GetHelp","id":"MicrosoftGetHelp"}','{"name":"Microsoft.Getstarted","id":"MicrosoftGetstarted"}','{"name":"Microsoft.Messaging","id":"MicrosoftMessaging"}','{"name":"Microsoft.Microsoft3DViewer","id":"MicrosoftMicrosoft3DViewer"}','{"name":"Microsoft.MicrosoftSolitaireCollection","id":"MicrosoftMicrosoftSolitaireCollection"}','{"name":"Microsoft.NetworkSpeedTest","id":"MicrosoftNetworkSpeedTest"}','{"name":"Microsoft.News","id":"MicrosoftNews"}','{"name":"Microsoft.Office.Lens","id":"MicrosoftOfficeLens"}','{"name":"Microsoft.Office.Sway","id":"MicrosoftOfficeSway"}','{"name":"Microsoft.Office.OneNote","id":"MicrosoftOfficeOneNote"}','{"name":"Microsoft.OneConnect","id":"MicrosoftOneConnect"}','{"name":"Microsoft.People","id":"MicrosoftPeople"}','{"name":"Microsoft.Print3D","id":"MicrosoftPrint3D"}','{"name":"Microsoft.SkypeApp","id":"MicrosoftSkypeApp"}','{"name":"Microsoft.Wallet","id":"MicrosoftWallet"}','{"name":"Microsoft.Whiteboard","id":"MicrosoftWhiteboard"}','{"name":"Microsoft.WindowsAlarms","id":"MicrosoftWindowsAlarms"}','{"name":"microsoft.windowscommunicationsapps","id":"microsoftwindowscommunicationsapps"}','{"name":"Microsoft.WindowsFeedbackHub","id":"MicrosoftWindowsFeedbackHub"}','{"name":"Microsoft.WindowsMaps","id":"MicrosoftWindowsMaps"}','{"name":"Microsoft.WindowsPhone","id":"MicrosoftWindowsPhone"}','{"name":"Microsoft.WindowsSoundRecorder","id":"MicrosoftWindowsSoundRecorder"}','{"name":"Microsoft.XboxApp","id":"MicrosoftXboxApp"}','{"name":"Microsoft.GamingApp","id":"MicrosoftGamingApp"}','{"name":"Microsoft.ConnectivityStore","id":"MicrosoftConnectivityStore"}','{"name":"Microsoft.CommsPhone","id":"MicrosoftCommsPhone"}','{"name":"Microsoft.ScreenSketch","id":"MicrosoftScreenSketch"}','{"name":"Microsoft.Xbox.TCUI","id":"MicrosoftXboxTCUI"}','{"name":"Microsoft.XboxGameOverlay","id":"MicrosoftXboxGameOverlay"}','{"name":"Microsoft.XboxGamingOverlay","id":"MicrosoftXboxGamingOverlay"}','{"name":"Microsoft.XboxGameCallableUI","id":"MicrosoftXboxGameCallableUI"}','{"name":"Microsoft.XboxSpeechToTextOverlay","id":"MicrosoftXboxSpeechToTextOverlay"}','{"name":"Microsoft.XboxIdentityProvider","id":"MicrosoftXboxIdentityProvider"}','{"name":"Microsoft.MixedReality.Portal","id":"MicrosoftMixedRealityPortal"}','{"name":"Microsoft.YourPhone","id":"MicrosoftYourPhone"}','{"name":"Microsoft.ZuneMusic","id":"MicrosoftZuneMusic"}','{"name":"Microsoft.ZuneVideo","id":"MicrosoftZuneVideo"}','{"name":"Microsoft.Getstarted","id":"MicrosoftGetstarted"}','{"name":"Microsoft.Family","id":"MicrosoftFamily"}','{"name":"Microsoft.MicrosoftOfficeHub","id":"MicrosoftMicrosoftOfficeHub"}','{"name":"Microsoft.MicrosoftStickyNotes","id":"MicrosoftMicrosoftStickyNotes"}','{"name":"*EclipseManager*","id":"EclipseManager"}','{"name":"*ActiproSoftwareLLC*","id":"ActiproSoftwareLLC"}','{"name":"*AdobeSystemsIncorporated.AdobePhotoshopExpress*","id":"AdobePhotoshopExpress"}','{"name":"*Duolingo-LearnLanguagesforFree*","id":"DuolingoLearnLanguagesforFree"}','{"name":"*PandoraMediaInc*","id":"PandoraMediaInc"}','{"name":"*CandyCrush*","id":"CandyCrush"}','{"name":"*BubbleWitch3Saga*","id":"BubbleWitch3Saga"}','{"name":"*Wunderlist*","id":"Wunderlist"}','{"name":"*Flipboard*","id":"Flipboard"}','{"name":"*Twitter*","id":"Twitter"}','{"name":"*Facebook*","id":"Facebook"}','{"name":"*Royal Revolt*","id":"RoyalRevolt"}','{"name":"*Sway*","id":"Sway"}','{"name":"*Speed Test*","id":"SpeedTest"}','{"name":"*Dolby*","id":"Dolby"}','{"name":"*Viber*","id":"Viber"}','{"name":"*ACGMediaPlayer*","id":"ACGMediaPlayer"}','{"name":"*Netflix*","id":"Netflix"}','{"name":"*OneCalendar*","id":"OneCalendar"}','{"name":"*LinkedInforWindows*","id":"LinkedInforWindows"}','{"name":"*HiddenCityMysteryofShadows*","id":"HiddenCityMysteryofShadows"}','{"name":"*Hulu*","id":"Hulu"}','{"name":"*HiddenCity*","id":"HiddenCity"}','{"name":"*AdobePhotoshopExpress*","id":"AdobePhotoshopExpress"}','{"name":"*HotspotShieldFreeVPN*","id":"HotspotShieldFreeVPN"}','{"name":"*Microsoft.Advertising.Xaml*","id":"MicrosoftAdvertisingXaml"}','{"name":"*Windows.DevHome*","id":"WindowsDevHome"}')
 # Embedded from tweaks.json
 $tweaks = @'
 {
@@ -1343,7 +1343,7 @@ $tweaks = @'
     },
     "DblOneDrive": {
         "Type": "CheckBox",
-        "Content": "Remove OneDrive âš ï¸",
+        "Content": "Remove OneDrive ⚠️",
         "Description": "Moves OneDrive files to Default Home Folders and Uninstalls it. Recomended on fresh installs!",
         "DisableMessage": "Removing OneDrive...",
         "InvokeScript": [
@@ -2794,53 +2794,411 @@ $preset = @'
 {
     "megaPresetButton": [
         "DblTelemetry",
+        "DblConsumerFeatures",
         "DblWifi",
         "DblAH",
+        "DblExplorerAutoDiscovery",
+        "DblDebloatEdge",
         "DblDeleteTempFiles",
         "DblRecycleBin",
         "DblDiskCleanup",
+        "DblPS7Telemetry",
+        "DblRecallOff",
         "DblLocTrack",
         "DblStorage",
         "DblHiber",
         "DblDVR",
-        "DblCoreIsolation",
-        "DblDisableTeredo",
+        "DblSearchIndexer",
         "DblAutoAdjustVolume",
-        "DblPower",
         "DblDisplay",
-        "DblRemoveCortana",
-        "DblRemoveWidgets",
-        "DblDisableNotifications",
-        "DblRightClickMenu",
         "DblDisableUAC",
+        "DblCoreIsolation",
+        "DblDisableNotifications",
         "DblClassicAltTab",
-        "DblWindowsSound",
-        "DblPersonalize",
         "DblModernCursorLight"
     ],
     "fastPresetButton": [
         "DblTelemetry", 
+        "DblConsumerFeatures",
         "DblWifi", 
         "DblAH", 
+        "DblExplorerAutoDiscovery",
         "DblDeleteTempFiles", 
         "DblRecycleBin", 
         "DblLocTrack", 
-        "DblStorage", 
-        "DblHiber", 
-        "DblDVR",             
-        "DblDisableTeredo", 
-        "DblAutoAdjustVolume", 
-        "DblPower", 
-        "DblDisplay", 
+        "DblStorage",
+        "DblDVR",
+        "DblAutoAdjustVolume",
         "DblDisableUAC", 
         "DblClassicAltTab", 
-        "DblRightClickMenu", 
-        "DblPersonalize", 
         "DblModernCursorLight"
     ]
 }
 
 
+'@ | ConvertFrom-Json
+
+# Embedded from feature.json
+$feature = @'
+{
+    "FeaturesDotnet": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "All .Net Framework (2,3,4)",
+        "Description": ".NET and .NET Framework is a developer platform made up of tools, programming languages, and libraries for building many different types of applications.",
+        "EnableMessage": "Enabling .Net Framework features, this may take a while...",
+        "feature": [
+            "NetFx4-AdvSrvs",
+            "NetFx3"
+        ]
+    },
+    "FeaturesHyperv": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "HyperV Virtualization",
+        "Description": "Hyper-V is a hardware virtualization product developed by Microsoft that allows users to create and manage virtual machines.",
+        "EnableMessage": "Enabling Hyper-V features, this may take a while...",
+        "feature": [
+            "HypervisorPlatform",
+            "Microsoft-Hyper-V-All",
+            "Microsoft-Hyper-V",
+            "Microsoft-Hyper-V-Tools-All",
+            "Microsoft-Hyper-V-Management-PowerShell",
+            "Microsoft-Hyper-V-Hypervisor",
+            "Microsoft-Hyper-V-Services",
+            "Microsoft-Hyper-V-Management-Clients"
+        ],
+        "InvokeScript": [
+            "Start-Process -FilePath cmd.exe -ArgumentList '/c bcdedit /set hypervisorschedulertype classic' -Wait"
+        ]
+    },
+    "FeaturesLegacymedia": {
+        "Type": "CheckBox",
+        "Content": "Legacy Media (WMP, DirectPlay)",
+        "Category": "congif_p03",
+        "Description": "Enables legacy programs from previous versions of windows",
+        "EnableMessage": "Enabling Legacy Media features, this may take a while...",
+        "feature": [
+            "WindowsMediaPlayer",
+            "MediaPlayback",
+            "DirectPlay",
+            "LegacyComponents"
+        ]
+    },
+    "FeatureWsl": {
+        "Content": "Windows Subsystem for Linux",
+        "Category": "congif_p03",
+        "Description": "Windows Subsystem for Linux is an optional feature of Windows that allows Linux programs to run natively on Windows without the need for a separate virtual machine or dual booting.",
+        "EnableMessage": "Enabling WSL features, this may take a while...",
+        "feature": [
+            "VirtualMachinePlatform",
+            "Microsoft-Windows-Subsystem-Linux"
+        ]
+    },
+    "FeatureSandbox": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Windows Sandbox",
+        "Description": "Windows Sandbox is a lightweight virtual machine that provides a temporary desktop environment to safely run applications and programs in isolation.",
+        "EnableMessage": "Enabling Windows Sandbox features, this may take a while...",
+        "feature": [
+            "Containers-DisposableClientVM"
+        ]
+    },
+    "FeatureNfs": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "NFS - Network File System",
+        "Description": "Network File System (NFS) is a mechanism for storing files on a network.",
+        "EnableMessage": "Enabling NFS features, this may take a while...",
+        "feature": [
+            "ServicesForNFS-ClientOnly",
+            "ClientForNFS-Infrastructure",
+            "NFS-Administration"
+        ],
+        "InvokeScript": [
+            "nfsadmin client stop",
+            "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\ClientForNFS\\CurrentVersion\\Default' -Name 'AnonymousUID' -Type DWord -Value 0",
+            "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\ClientForNFS\\CurrentVersion\\Default' -Name 'AnonymousGID' -Type DWord -Value 0",
+            "nfsadmin client start",
+            "nfsadmin client localhost config fileaccess=755 SecFlavors=+sys -krb5 -krb5i"
+        ]
+    },
+    "FeatureEnableSearchSuggestions": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Enable Search Box Web Suggestions",
+        "Description": "Enables web suggestions when searching using Windows Search.",
+        "EnableMessage": "Enabling Search Box Web Suggestions...",
+        "InvokeScript": [
+            "
+            If (!(Test-Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer')) {
+                    New-Item -Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer' -Force | Out-Null
+            }
+            New-ItemProperty -Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer' -Name 'DisableSearchBoxSuggestions' -Type DWord -Value 0 -Force
+            Stop-Process -name explorer -force
+            "
+        ]
+    },
+    "FeatureDisableSearchSuggestions": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Disable Search Box Web Suggestions",
+        "Description": "Disables web suggestions when searching using Windows Search.",
+        "DisableMessage": "Disabling Search Box Web Suggestions...",
+        "InvokeScript": [
+            "
+            If (!(Test-Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer')) {
+                    New-Item -Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer' -Force | Out-Null
+            }
+            New-ItemProperty -Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer' -Name 'DisableSearchBoxSuggestions' -Type DWord -Value 1 -Force
+            Stop-Process -name explorer -force
+            "
+        ]
+    },
+    "FeatureRegBackup": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Enable Daily Registry Backup 12:30am",
+        "Description": "Enables daily registry backup, previously disabled by Microsoft in Windows 10 1803.",
+        "EnableMessage": "Enabling Daily Registry Backup Task...",
+        "InvokeScript": [
+            "
+            New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager' -Name 'EnablePeriodicBackup' -Type DWord -Value 1 -Force
+            New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager' -Name 'BackupCount' -Type DWord -Value 2 -Force
+            $action = New-ScheduledTaskAction -Execute 'schtasks' -Argument '/run /i /tn \"\\Microsoft\\Windows\\Registry\\RegIdleBackup\"'
+            $trigger = New-ScheduledTaskTrigger -Daily -At 00:30
+            Register-ScheduledTask -Action $action -Trigger $trigger -TaskName 'AutoRegBackup' -Description 'Create System Registry Backups' -User 'System'
+            "
+        ]
+    },
+    "FeatureEnableLegacyRecovery": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Enable Legacy F8 Boot Recovery",
+        "Description": "Enables Advanced Boot Options screen that lets you start Windows in advanced troubleshooting modes.",
+        "EnableMessage": "Enabling Legacy F8 Boot Recovery...",
+        "InvokeScript": [
+            "
+            If (!(Test-Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood')) {
+                    New-Item -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood' -Force | Out-Null
+            }
+            New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood' -Name 'Enabled' -Type DWord -Value 1 -Force
+            Start-Process -FilePath cmd.exe -ArgumentList '/c bcdedit /Set {Current} BootMenuPolicy Legacy' -Wait
+            "
+        ]
+    },
+    "FeatureDisableLegacyRecovery": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Disable Legacy F8 Boot Recovery",
+        "Description": "Disables Advanced Boot Options screen that lets you start Windows in advanced troubleshooting modes.",
+        "DisableMessage": "Disabling Legacy F8 Boot Recovery...",
+        "InvokeScript": [
+            "
+            If (!(Test-Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood')) {
+                    New-Item -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood' -Force | Out-Null
+            }
+            New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood' -Name 'Enabled' -Type DWord -Value 0 -Force
+            Start-Process -FilePath cmd.exe -ArgumentList '/c bcdedit /Set {Current} BootMenuPolicy Standard' -Wait
+            "
+        ]
+    },
+    "FeatureInstall": {
+        "Type": "Button",
+        "Category": "congif_p03",
+        "Content": "Install Features",
+        "Description": "Installs selected Windows Features. A reboot is required after installation."
+    }
+}
+'@ | ConvertFrom-Json
+
+# Embedded from configuration.json
+$configuration = @'
+{
+    "PanelControl": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Control Panel",
+        "Description": "Open Windows Control Panel."
+    },
+    "PanelPnF": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Programs-Features",
+        "Description": "Open Programs and Features to uninstall or modify apps."
+    },
+    "PanelNetwork": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Network Connections",
+        "Description": "Manage network adapters and connections."
+    },
+    "PanelPower": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Power Plan",
+        "Description": "Open Power Options to manage power plans."
+    },
+    "PanelRegion": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Region",
+        "Description": "Open Region settings."
+    },
+    "PanelSound": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Sound Settings",
+        "Description": "Open Sound settings."
+    },
+    "PanelSystem": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "System Properties",
+        "Description": "Open System Properties window."
+    },
+    "PanelUser": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "User Accounts",
+        "Description": "Manage user accounts."
+    },
+    "PanelWindowsFirewall": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Windows Firewall",
+        "Description": "Open Windows Firewall settings."
+    },
+    "PanelTimedate": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Time and Date",
+        "Description": "Open Date & Time settings."
+    },
+    "PanelDeviceManager": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Device Manager",
+        "Description": "Open Device Manager."
+    },
+    "PanelExplorerOption": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "File Explorer Options",
+        "Description": "Open File Explorer Options."
+    },
+    "PanelRegedit": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Registry Editor",
+        "Description": "Open Windows Registry Editor (regedit)."
+    },
+    "PanelScheduler": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Task Scheduler",
+        "Description": "Open Task Scheduler."
+    },
+    "PanelResourceMonitor": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Resource Monitor",
+        "Description": "Open Resource Monitor."
+    },
+    "PanelSysConf": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "System Configuration",
+        "Description": "Open System Configuration (msconfig)."
+    },
+    "PanelEvent": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Event Viewer",
+        "Description": "Open Event Viewer."
+    },
+    "PanelSysInfo": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "System Info",
+        "Description": "Open System Information window."
+    },
+    "PanelDiskManagement": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Disk Management",
+        "Description": "Open Disk Management utility."
+    },
+    "PanelComputer": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Computer Management",
+        "Description": "Open Computer Management console."
+    },
+
+    "ShortcutApp": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Create Win11Deb Shortcut",
+        "Description": "Creates a desktop shortcut to launch Win11Deb as administrator."
+    },
+    "FixesNetwork": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Reset Network",
+        "Description": "Resets various network configurations."
+    },
+    "FixesSound": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Reset Sound",
+        "Description": "Resets sound service."
+    },
+    "RegistryBackup": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Create Registry Backup",
+        "Description": "Recommended to backup registry before tweaking."
+    },
+    "PanelAutologin": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Set Up Autologin",
+        "Description": "Set up automatic login for a specific user account."
+    },
+    "WingetConfig": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Set Winget Settings",
+        "Description": "Set progress bar to rainbow, default langauge to english, default install location for portable packages to [C:/Users/winget/Packages, C:/Program Files/winget/Packages], disable telemetry and log errors."
+
+    },
+    "FixesADB": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Set ADB Environment",
+        "Description": "Sets ADB environment variables for easier use of ADB commands."
+    },
+    "VsCodeMenu": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Add VSCode Context Menu",
+        "Description": "Adds 'Open with VS Code' to right-click menu for files and folders."
+    },
+    "VsCodeMenuRemove": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Remove VSCode Context Menu",
+        "Description": "Removes 'Open with VS Code' from right-click menu"
+    },
+    "ActivateWindows": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Run Microsoft Activation Scripts (MAS)",
+        "Description": "A Windows and Office activator using HWID / Ohook / KMS38 / Online KMS activation methods, with a focus on open-source code and fewer antivirus detections."
+    }
+}
 '@ | ConvertFrom-Json
 
 
@@ -2856,15 +3214,17 @@ $preset = @'
     Website        : https://vukilis.com
     GitHub         : https://github.com/vukilis
     Name:          : Windows11 Optimizer&Debloater
-    Version        : 3.3
+    Version        : 3.4
 #>
 
 Add-Type -AssemblyName PresentationFramework
 
 Start-Transcript $ENV:TEMP\win11deb.log -Append
-# $xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
-# $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+
+$ScriptVersion = "3.5 - 24.08.2025"
+$xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
+$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
+# $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
@@ -2885,7 +3245,7 @@ catch [System.Management.Automation.MethodInvocationException] {
     }
 }
 catch {
-    ### If it broke some other way <img draggable="false" role="img" class="emoji" alt="????" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f600.svg">
+    ### If it broke some other way <img draggable="false" role="img" class="emoji" alt="??" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f600.svg">
     Write-Host "Unable to load Windows.Markup.XamlReader. Double-check syntax and ensure .net is installed."
 }
 
@@ -2898,7 +3258,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 3.3 - 20.08.2025"
+$wpf_AppVersion.Content = "Version: $ScriptVersion"
 
 function Invoke-CloseButton {
     <#
@@ -3035,6 +3395,9 @@ function Invoke-AboutButton {
     #>
     $AboutButton = $psform.FindName("AboutButton")
     $aboutGrid = $psform.FindName("AboutGrid")
+    $version = $psform.FindName("CurrentScriptVersion")
+    $version.Content = "Version: $ScriptVersion"
+
     
         if ($AboutButton.IsChecked) {
             $aboutGrid.Visibility = "Visible"
@@ -3091,6 +3454,8 @@ $sync = @{
     configs = @{
         tweaks = $tweaks
         preset = $preset
+        feature = $feature
+        configuration = $configuration
     }
 }
 
@@ -3216,6 +3581,7 @@ function Invoke-Button {
         "wpf_PanelUser" {Invoke-Configs -Panel $button}
         "wpf_PanelServices" {Invoke-Configs -Panel $button}
         "wpf_PanelWindowsFirewall" {Invoke-Configs -Panel $button}
+        "wpf_PanelTimedate" {Invoke-Configs -Panel $button}
         "wpf_PanelDeviceManager" {Invoke-Configs -Panel $button}
         "wpf_PanelExplorerOption" {Invoke-Configs -Panel $button}
         "wpf_PanelRegedit" {Invoke-Configs -Panel $button}
@@ -3225,7 +3591,8 @@ function Invoke-Button {
         "wpf_PanelEvent" {Invoke-Configs -Panel $button}
         "wpf_PanelSysInfo" {Invoke-Configs -Panel $button}
         "wpf_PanelDiskManagement" {Invoke-Configs -Panel $button}
-        "wpf_FeatureInstall" {Invoke-FeatureInstall}
+        "wpf_PanelComputer" {Invoke-Configs -Panel $button}
+        # "wpf_FeatureInstall" {Invoke-FeatureInstall}
         "wpf_PanelAutologin" {Invoke-PanelAutologin}
         "wpf_PanelRegion" {Invoke-Configs -Panel $button}
         "wpf_DblInstall" {Invoke-installButton}
@@ -3243,6 +3610,8 @@ function Invoke-Button {
         "wpf_FixesNetwork" {Invoke-FixesNetwork}
         "wpf_FixesSound" {Invoke-FixesSound}
         "wpf_RegistryBackup" {Invoke-RegistryBackup}
+        "wpf_VsCodeMenu" {Invoke-VsCodeMenu}
+        "wpf_VsCodeMenuRemove" {Invoke-VsCodeMenuRemove}
         "wpf_WingetConfig" {Set-WingetConfig}
         "wpf_FixesADB" {Invoke-FixADB}
         "wpf_ActivateWindows" {Invoke-ActivateWindows}
@@ -3328,7 +3697,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.3  
+Windows11 Optimizer&Debloater           $ScriptVersion  
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -3345,7 +3714,7 @@ Function Get-Author5 {
         This is for powershell v5.1
     #>
 
-    Clear-Host
+    # Clear-Host
     $colors = @("Red", "Cyan", "Magenta")
 
     function Get-RandomColor {
@@ -3364,7 +3733,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.3    
+Windows11 Optimizer&Debloater           $ScriptVersion    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {
@@ -3678,6 +4047,18 @@ foreach ($ttKey in $sync.configs.tweaks.PSObject.Properties.Name) {
     $control = $psform.FindName($ttKey)
     if ($null -ne $control -and $sync.configs.tweaks.$ttKey.PSObject.Properties.Name -contains "Description") {
         $description = $sync.configs.tweaks.$ttKey.Description
+        $control.ToolTip = $description
+        # Write-Host "Assigned ToolTip to '$ttKey': $description" -ForegroundColor Green
+    }
+    else {
+        Write-Host "No matching control or description found for '$ttKey'." -ForegroundColor Yellow
+    }
+}
+
+foreach ($ttKey in $sync.configs.configuration.PSObject.Properties.Name) {
+    $control = $psform.FindName($ttKey)
+    if ($null -ne $control -and $sync.configs.configuration.$ttKey.PSObject.Properties.Name -contains "Description") {
+        $description = $sync.configs.configuration.$ttKey.Description
         $control.ToolTip = $description
         # Write-Host "Assigned ToolTip to '$ttKey': $description" -ForegroundColor Green
     }
@@ -5882,6 +6263,64 @@ function Invoke-UpdatesSecurity{
 ###                                                                                                          ###
 ################################################################################################################
 
+$global:FeatureControls = @{}
+
+foreach ($featureName in $sync.configs.feature.PSObject.Properties.Name) {
+    $feature = $sync.configs.feature.$featureName
+
+    if (-not $feature.Category) { continue }
+
+    $parentPanel = $psform.FindName($feature.Category)
+    if (-not $parentPanel) {
+        # Write-Warning "Category '$($feature.Category)' not found in XAML"
+        continue
+    }
+
+    switch ($feature.Type) {
+        "CheckBox" {
+            $cb = New-Object System.Windows.Controls.CheckBox
+            $cb.Name = $featureName
+            $cb.Content = $feature.Content
+            $cb.ToolTip = $feature.Description
+            $cb.Margin = "8,5,0,0"
+            $cb.FontSize = 11
+            $cb.FontFamily = "Gadugi"
+            $cb.Foreground = "#a69f6c"
+            $cb.Cursor = "Hand"
+            
+            $transform = New-Object Windows.Media.ScaleTransform 1.5, 1.5
+            $cb.LayoutTransform = $transform
+
+            $global:FeatureControls[$featureName] = $cb
+
+            $parentPanel.Children.Add($cb) | Out-Null
+        }
+        "Button" {
+            $btn = New-Object System.Windows.Controls.Button
+            $btn.Name = $featureName
+            $btn.Content = $feature.Content
+            $btn.ToolTip = $feature.Description
+            $btn.Margin = "0,10,0,0"
+            $btn.Padding = "10"
+            $btn.Height = 30
+            $btn.Width = 190
+            $btn.Cursor = "Hand"
+            $btn.FontSize = 16
+            $btn.FontFamily = "Helvetica"
+            
+            $style = $psform.FindResource("ButtonStyle")
+            if ($style) {
+                $btn.Style = $style
+            }
+
+            $btn.Add_Click({
+                Invoke-FeatureInstall
+            })
+
+            $parentPanel.Children.Add($btn) | Out-Null
+        }
+    }   
+}
 function Invoke-FixADB {
     <#
 
@@ -5970,86 +6409,105 @@ function Invoke-ActivateWindows {
         .DESCRIPTION
         Run Microsoft Activation Scripts (MAS) script 
     #>
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command irm https://massgrave.dev/get | iex" -Verb RunAs
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command irm https://get.activated.win | iex" -Verb RunAs
 }
 
 function Invoke-Configs {
     <#
     .DESCRIPTION
     Simple Switch for lagacy windows
-#>
-param($Panel)
+    #>
+    param($Panel)
 
-switch ($Panel){
-    "wpf_PanelControl"              {cmd /c control}
-    "wpf_PanelPnF"                  {cmd /c appwiz.cpl}
-    "wpf_PanelNetwork"              {cmd /c ncpa.cpl}
-    "wpf_PanelPower"                {cmd /c powercfg.cpl}
-    "wpf_PanelSound"                {cmd /c mmsys.cpl}
-    "wpf_PanelSystem"               {cmd /c sysdm.cpl}
-    "wpf_PanelUser"                 {cmd /c "control userpasswords2"}
-    "wpf_PanelServices"             {cmd /c services.msc}
-    "wpf_PanelWindowsFirewall"      {cmd /c firewall.cpl}
-    "wpf_PanelDeviceManager"        {cmd /c devmgmt.msc}
-    "wpf_PanelExplorerOption"       {cmd /c control folders}
-    "wpf_PanelRegedit"              {cmd /c regedit}
-    "wpf_PanelScheduler"            {cmd /c taskschd.msc}
-    "wpf_PanelResourceMonitor"      {cmd /c resmon}
-    "wpf_PanelSysConf"              {cmd /c msconfig}
-    "wpf_PanelEvent"                {cmd /c taskschd.msc}
-    "wpf_PanelSysInfo"              {cmd /c msinfo32}
-    "wpf_PanelDiskManagement"       {cmd /c diskmgmt.msc}
-    "wpf_PanelRegion"               {cmd /c intl.cpl}
-}
+    switch ($Panel){
+        "wpf_PanelControl"              {cmd /c control}
+        "wpf_PanelPnF"                  {cmd /c appwiz.cpl}
+        "wpf_PanelNetwork"              {cmd /c ncpa.cpl}
+        "wpf_PanelPower"                {cmd /c powercfg.cpl}
+        "wpf_PanelSound"                {cmd /c mmsys.cpl}
+        "wpf_PanelSystem"               {cmd /c sysdm.cpl}
+        "wpf_PanelUser"                 {cmd /c "control userpasswords2"}
+        "wpf_PanelServices"             {cmd /c services.msc}
+        "wpf_PanelWindowsFirewall"      {cmd /c firewall.cpl}
+        "wpf_PanelDeviceManager"        {cmd /c devmgmt.msc}
+        "wpf_PanelExplorerOption"       {cmd /c control folders}
+        "wpf_PanelRegedit"              {cmd /c regedit}
+        "wpf_PanelScheduler"            {cmd /c taskschd.msc}
+        "wpf_PanelResourceMonitor"      {cmd /c resmon}
+        "wpf_PanelSysConf"              {cmd /c msconfig}
+        "wpf_PanelEvent"                {cmd /c taskschd.msc}
+        "wpf_PanelSysInfo"              {cmd /c msinfo32}
+        "wpf_PanelDiskManagement"       {cmd /c diskmgmt.msc}
+        "wpf_PanelRegion"               {cmd /c intl.cpl}
+        "wpf_PanelComputer"             {cmd /c compmgmt.msc}
+        "wpf_PanelTimedate"             {cmd /c timedate.cpl}
+    }
 }
 function Invoke-FeatureInstall {
     <#
-    .DESCRIPTION
-    GUI Function to install Windows Features
+    .SYNOPSIS
+        Applies all selected CheckBox feature dynamically and resets their state.
     #>
-    If ( $wpf_FeaturesDotnet.IsChecked -eq $true ) {
-        Enable-WindowsOptionalFeature -Online -FeatureName "NetFx4-AdvSrvs" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "NetFx3" -All -NoRestart
-    }
-    If ( $wpf_FeaturesHyperv.IsChecked -eq $true ) {
-        Enable-WindowsOptionalFeature -Online -FeatureName "HypervisorPlatform" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-All" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Tools-All" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Management-PowerShell" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Hypervisor" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Services" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Management-Clients" -All -NoRestart
-        cmd /c bcdedit /set hypervisorschedulertype classic
-        Write-Host "HyperV is now installed and configured. Please Reboot before using."
-    }
-    If ( $wpf_FeaturesLegacymedia.IsChecked -eq $true ) {
-        Enable-WindowsOptionalFeature -Online -FeatureName "WindowsMediaPlayer" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "MediaPlayback" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "DirectPlay" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "LegacyComponents" -All -NoRestart
-    }
-    If ( $wpf_FeatureWsl.IsChecked -eq $true ) {
-        Enable-WindowsOptionalFeature -Online -FeatureName "VirtualMachinePlatform" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux" -All -NoRestart
-        Write-Host "WSL is now installed and configured. Please Reboot before using."
-    }
-    If ( $wpf_FeatureNfs.IsChecked -eq $true ) {
-        Enable-WindowsOptionalFeature -Online -FeatureName "ServicesForNFS-ClientOnly" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "ClientForNFS-Infrastructure" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "NFS-Administration" -All -NoRestart
-        nfsadmin client stop
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\ClientForNFS\CurrentVersion\Default" -Name "AnonymousUID" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\ClientForNFS\CurrentVersion\Default" -Name "AnonymousGID" -Type DWord -Value 0
-        nfsadmin client start
-        nfsadmin client localhost config fileaccess=755 SecFlavors=+sys -krb5 -krb5i
-        Write-Host "NFS is now setup for user based NFS mounts"
-    }
 
-    Write-Host "================================="
-    Write-Host "---  Features are Installed   ---"
-    Write-Host "================================="
+    # Loop through all features
+    foreach ($featureName in $sync.configs.feature.PSObject.Properties.Name) {
+        $tweak = $sync.configs.feature.$featureName
+        $apply = $false
 
+        switch ($tweak.Type) {
+            "CheckBox" {
+                if ($global:FeatureControls.ContainsKey($featureName)) {
+                    $apply = [bool]$global:FeatureControls[$featureName].IsChecked
+                } elseif ($tweak.DefaultState) {
+                    $apply = [bool]$tweak.DefaultState
+                }
+            }
+        }
+
+        if ($apply) {
+            if ($tweak.Registry) {
+                Write-Host "Applying feature: $($tweak.Content)" -ForegroundColor Green
+                foreach ($msg in "DisableMessage","EnableMessage") {
+                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
+                }
+                foreach ($regEntry in $tweak.Registry) {
+                    try { 
+                        Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.Value 
+                    }
+                    catch { 
+                        Write-Warning "Failed to apply registry tweak: $_" 
+                    }
+                }
+            }
+
+            if ($tweak.InvokeScript) {
+                foreach ($msg in "DisableMessage","EnableMessage") {
+                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Cyan }
+                }
+                foreach ($script in $tweak.InvokeScript) {
+                    Invoke-Scripts -Name $tweak.Content -Script $script
+                    Write-Host "Please Reboot before using." -ForegroundColor Red
+                }
+            }
+
+            if ($tweak.feature) {
+                foreach ($msg in "DisableMessage","EnableMessage") {
+                    Write-Host "Applying feature: $($tweak.Content)" -ForegroundColor Green
+                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
+                }
+                foreach ($ft in $tweak.feature) {
+                    try {
+                        Enable-WindowsOptionalFeature -Online -FeatureName $ft -All -NoRestart
+                        Write-Host "Please Reboot before using." -ForegroundColor Red
+                    } catch {
+                        Write-Warning "Unable to Install $ft due to unhandled exception"
+                        Write-Warning $_.Exception.StackTrace
+                    }
+                }
+            }
+        }
+    }
+    
     Invoke-MessageBox -msg "feature"
 }
 function Invoke-FixesNetwork {
@@ -6100,6 +6558,7 @@ function Invoke-PanelAutologin {
     #>
     curl.exe -ss "https://live.sysinternals.com/Autologon.exe" -o $env:temp\autologin.exe # Official Microsoft recommendation https://learn.microsoft.com/en-us/sysinternals/downloads/autologon
     cmd /c $env:temp\autologin.exe
+    Write-Host "Autologin enabled" -ForegroundColor Green
 }
 function Invoke-RegistryBackup {
     <#
@@ -6220,6 +6679,73 @@ Shortcut for $ShortcutToAdd has been saved to $($FileBrowser.FileName)
 ======================================
 " -ch DarkRed
     }
+}
+function Invoke-VsCodeMenu {
+    <#
+    .SYNOPSIS
+        Adds "Open with Code" to right-click menu (files + folders + background).
+        Uses $env:LOCALAPPDATA dynamically.
+    #>
+
+    $codePath = Join-Path $env:LOCALAPPDATA "Programs\Microsoft VS Code\Code.exe"
+
+    if (-not (Test-Path $codePath)) {
+        Write-Warning "? VS Code not found at: $codePath"
+        return
+    }
+
+    # Convert to .reg-safe format (double backslashes)
+    $codePathReg = $codePath -replace '\\', '\\\\'
+
+    $regContent = @"
+Windows Registry Editor Version 5.00
+
+; Add "Open with Code" for folder background
+[HKEY_CLASSES_ROOT\Directory\Background\shell\VSCode]
+@="Open with Code"
+"Icon"="\"$codePathReg\""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\VSCode\command]
+@="\"$codePathReg\" \"%V\""
+
+; Add "Open with Code" for files
+[HKEY_CLASSES_ROOT\*\shell\VSCode]
+@="Open with Code"
+"Icon"="\"$codePathReg\""
+
+[HKEY_CLASSES_ROOT\*\shell\VSCode\command]
+@="\"$codePathReg\" \"%1\""
+"@
+
+    $tempFile = [IO.Path]::GetTempFileName() + ".reg"
+    Set-Content -Path $tempFile -Value $regContent -Encoding ASCII
+
+    # Import registry file (requires admin for HKCR)
+    Start-Process reg.exe -ArgumentList "import `"$tempFile`"" -Verb RunAs -Wait
+
+    Remove-Item $tempFile -Force
+    Write-Host "VS Code context menu added!" -ForegroundColor Green
+}
+function Invoke-VsCodeMenuRemove {
+    <#
+    .SYNOPSIS
+        Removes "Open with Code" from right-click context menu
+        (files + folders + folder background).
+    .NOTES
+        Requires admin because it touches HKCR.
+    #>
+
+    $keys = @(
+        "HKCR\*\shell\VSCode",
+        "HKCR\Directory\shell\VSCode",
+        "HKCR\Directory\Background\shell\VSCode"
+    )
+
+    foreach ($key in $keys) {
+        Start-Process reg.exe -ArgumentList "delete `"$key`" /f" -Verb RunAs -Wait
+    }
+
+    Write-Host "? VS Code context menu removed!" -ForegroundColor Green
 }
 
 ################################################################################################################

@@ -1,0 +1,171 @@
+{
+    "FeaturesDotnet": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "All .Net Framework (2,3,4)",
+        "Description": ".NET and .NET Framework is a developer platform made up of tools, programming languages, and libraries for building many different types of applications.",
+        "EnableMessage": "Enabling .Net Framework features, this may take a while...",
+        "feature": [
+            "NetFx4-AdvSrvs",
+            "NetFx3"
+        ]
+    },
+    "FeaturesHyperv": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "HyperV Virtualization",
+        "Description": "Hyper-V is a hardware virtualization product developed by Microsoft that allows users to create and manage virtual machines.",
+        "EnableMessage": "Enabling Hyper-V features, this may take a while...",
+        "feature": [
+            "HypervisorPlatform",
+            "Microsoft-Hyper-V-All",
+            "Microsoft-Hyper-V",
+            "Microsoft-Hyper-V-Tools-All",
+            "Microsoft-Hyper-V-Management-PowerShell",
+            "Microsoft-Hyper-V-Hypervisor",
+            "Microsoft-Hyper-V-Services",
+            "Microsoft-Hyper-V-Management-Clients"
+        ],
+        "InvokeScript": [
+            "Start-Process -FilePath cmd.exe -ArgumentList '/c bcdedit /set hypervisorschedulertype classic' -Wait"
+        ]
+    },
+    "FeaturesLegacymedia": {
+        "Type": "CheckBox",
+        "Content": "Legacy Media (WMP, DirectPlay)",
+        "Category": "congif_p03",
+        "Description": "Enables legacy programs from previous versions of windows",
+        "EnableMessage": "Enabling Legacy Media features, this may take a while...",
+        "feature": [
+            "WindowsMediaPlayer",
+            "MediaPlayback",
+            "DirectPlay",
+            "LegacyComponents"
+        ]
+    },
+    "FeatureWsl": {
+        "Content": "Windows Subsystem for Linux",
+        "Category": "congif_p03",
+        "Description": "Windows Subsystem for Linux is an optional feature of Windows that allows Linux programs to run natively on Windows without the need for a separate virtual machine or dual booting.",
+        "EnableMessage": "Enabling WSL features, this may take a while...",
+        "feature": [
+            "VirtualMachinePlatform",
+            "Microsoft-Windows-Subsystem-Linux"
+        ]
+    },
+    "FeatureSandbox": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Windows Sandbox",
+        "Description": "Windows Sandbox is a lightweight virtual machine that provides a temporary desktop environment to safely run applications and programs in isolation.",
+        "EnableMessage": "Enabling Windows Sandbox features, this may take a while...",
+        "feature": [
+            "Containers-DisposableClientVM"
+        ]
+    },
+    "FeatureNfs": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "NFS - Network File System",
+        "Description": "Network File System (NFS) is a mechanism for storing files on a network.",
+        "EnableMessage": "Enabling NFS features, this may take a while...",
+        "feature": [
+            "ServicesForNFS-ClientOnly",
+            "ClientForNFS-Infrastructure",
+            "NFS-Administration"
+        ],
+        "InvokeScript": [
+            "nfsadmin client stop",
+            "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\ClientForNFS\\CurrentVersion\\Default' -Name 'AnonymousUID' -Type DWord -Value 0",
+            "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\ClientForNFS\\CurrentVersion\\Default' -Name 'AnonymousGID' -Type DWord -Value 0",
+            "nfsadmin client start",
+            "nfsadmin client localhost config fileaccess=755 SecFlavors=+sys -krb5 -krb5i"
+        ]
+    },
+    "FeatureEnableSearchSuggestions": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Enable Search Box Web Suggestions",
+        "Description": "Enables web suggestions when searching using Windows Search.",
+        "EnableMessage": "Enabling Search Box Web Suggestions...",
+        "InvokeScript": [
+            "
+            If (!(Test-Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer')) {
+                    New-Item -Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer' -Force | Out-Null
+            }
+            New-ItemProperty -Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer' -Name 'DisableSearchBoxSuggestions' -Type DWord -Value 0 -Force
+            Stop-Process -name explorer -force
+            "
+        ]
+    },
+    "FeatureDisableSearchSuggestions": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Disable Search Box Web Suggestions",
+        "Description": "Disables web suggestions when searching using Windows Search.",
+        "DisableMessage": "Disabling Search Box Web Suggestions...",
+        "InvokeScript": [
+            "
+            If (!(Test-Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer')) {
+                    New-Item -Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer' -Force | Out-Null
+            }
+            New-ItemProperty -Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer' -Name 'DisableSearchBoxSuggestions' -Type DWord -Value 1 -Force
+            Stop-Process -name explorer -force
+            "
+        ]
+    },
+    "FeatureRegBackup": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Enable Daily Registry Backup 12:30am",
+        "Description": "Enables daily registry backup, previously disabled by Microsoft in Windows 10 1803.",
+        "EnableMessage": "Enabling Daily Registry Backup Task...",
+        "InvokeScript": [
+            "
+            New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager' -Name 'EnablePeriodicBackup' -Type DWord -Value 1 -Force
+            New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager' -Name 'BackupCount' -Type DWord -Value 2 -Force
+            $action = New-ScheduledTaskAction -Execute 'schtasks' -Argument '/run /i /tn \"\\Microsoft\\Windows\\Registry\\RegIdleBackup\"'
+            $trigger = New-ScheduledTaskTrigger -Daily -At 00:30
+            Register-ScheduledTask -Action $action -Trigger $trigger -TaskName 'AutoRegBackup' -Description 'Create System Registry Backups' -User 'System'
+            "
+        ]
+    },
+    "FeatureEnableLegacyRecovery": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Enable Legacy F8 Boot Recovery",
+        "Description": "Enables Advanced Boot Options screen that lets you start Windows in advanced troubleshooting modes.",
+        "EnableMessage": "Enabling Legacy F8 Boot Recovery...",
+        "InvokeScript": [
+            "
+            If (!(Test-Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood')) {
+                    New-Item -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood' -Force | Out-Null
+            }
+            New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood' -Name 'Enabled' -Type DWord -Value 1 -Force
+            Start-Process -FilePath cmd.exe -ArgumentList '/c bcdedit /Set {Current} BootMenuPolicy Legacy' -Wait
+            "
+        ]
+    },
+    "FeatureDisableLegacyRecovery": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Disable Legacy F8 Boot Recovery",
+        "Description": "Disables Advanced Boot Options screen that lets you start Windows in advanced troubleshooting modes.",
+        "DisableMessage": "Disabling Legacy F8 Boot Recovery...",
+        "InvokeScript": [
+            "
+            If (!(Test-Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood')) {
+                    New-Item -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood' -Force | Out-Null
+            }
+            New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood' -Name 'Enabled' -Type DWord -Value 0 -Force
+            Start-Process -FilePath cmd.exe -ArgumentList '/c bcdedit /Set {Current} BootMenuPolicy Standard' -Wait
+            "
+        ]
+    },
+    "FeatureInstall": {
+        "Type": "Button",
+        "Category": "congif_p03",
+        "Content": "Install Features",
+        "Description": "Installs selected Windows Features. A reboot is required after installation."
+    }
+}
