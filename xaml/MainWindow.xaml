@@ -10,7 +10,7 @@
         Title="Windows11-OptimizerDebloater" 
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        Height="583" 
+        Height="586" 
         Width="1366">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" CornerRadius="10"/>
@@ -1121,8 +1121,8 @@
                         Tag="{StaticResource ResetIcon}"/>
             </StackPanel>
         </DockPanel>
-        <Grid Background="Transparent" Panel.ZIndex="1" Grid.Row="2" ShowGridLines="False" Name="AboutGrid" Width="Auto" Height="350" HorizontalAlignment="Center" Visibility="Collapsed" SnapsToDevicePixels="True">
-            <Border CornerRadius="7" Background="#1f1f21" Height="350" BorderBrush="Purple" BorderThickness="1,1,1,1" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Background="Transparent" Panel.ZIndex="1" Grid.Row="2" ShowGridLines="False" Name="AboutGrid" Width="Auto" Height="360" HorizontalAlignment="Center" Visibility="Collapsed" SnapsToDevicePixels="True">
+            <Border CornerRadius="7" Background="#1f1f21" Height="360" BorderBrush="Purple" BorderThickness="1,1,1,1" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -1135,8 +1135,8 @@
                     <WrapPanel Margin="5,5" Orientation="Vertical" HorizontalAlignment="Center" Width="auto" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                         <StackPanel Width="auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                             <Image Height="50" Width="100" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
-                            <Label Foreground="#FFF4AB51" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,5,5,0" Content="Windows11 Optimizer&amp;Debloater"></Label>
-                            <Label Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0" Content="Version: 3.3 - 20.08.2025"></Label>
+                            <Label Content="Windows11 Optimizer&amp;Debloater" Foreground="#FFF4AB51" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,5,5,0"></Label>
+                            <Label Name="CurrentScriptVersion" Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0"></Label>
                         </StackPanel>
                     </WrapPanel>
                     <WrapPanel Orientation="Vertical" HorizontalAlignment="Left" Width="auto" Margin="5,5" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
@@ -2833,7 +2833,8 @@
                                         <Button Name="PanelSound" Cursor="Hand" FontSize="14" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Content="Sound Settings" Height="30" Width="150" Margin="10,5" Padding="10"/>
                                         <Button Name="PanelSystem" Cursor="Hand" FontSize="14" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Content="System Properties" Height="30" Width="150" Margin="10,5" Padding="10"/>
                                         <Button Name="PanelUser" Cursor="Hand" FontSize="14" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Content="User Accounts" Height="30" Width="150" Margin="10,5" Padding="10"/>
-                                        <Button Name="PanelWindowsFirewall" Cursor="Hand" FontSize="14" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Content="Windows Firewall" Height="30" Width="150" Margin="0,5,0,0" Padding="10"/>
+                                        <Button Name="PanelWindowsFirewall" Cursor="Hand" FontSize="14" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Content="Windows Firewall" Height="30" Width="150" Margin="10,5" Padding="10"/>
+                                        <Button Name="PanelTimedate" Cursor="Hand" FontSize="14" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Content="Time and Date" Height="30" Width="150" Margin="0,5,0,0" Padding="10"/>
                                     </StackPanel>
                                     <StackPanel SnapsToDevicePixels="True" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="top">
                                         <Button Name="PanelDeviceManager" Cursor="Hand" FontSize="14" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Content="Device Manager" Height="30" Width="150" Margin="10,10,10,5" Padding="10"/>
@@ -2844,7 +2845,8 @@
                                         <Button Name="PanelSysConf" Cursor="Hand" FontSize="13" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Content="System Configuration" Height="30" Width="150" Margin="10,5" Padding="10"/>
                                         <Button Name="PanelEvent" Cursor="Hand" FontSize="14" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Content="Event Viewer" Height="30" Width="150" Margin="10,5" Padding="10"/>
                                         <Button Name="PanelSysInfo" Cursor="Hand" FontSize="14" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Content="System Info" Height="30" Width="150" Margin="10,5" Padding="10"/>
-                                        <Button Name="PanelDiskManagement" Cursor="Hand" FontSize="14" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Content="Disk Management" Height="30" Width="150" Margin="0,5,0,0" Padding="10"/>
+                                        <Button Name="PanelDiskManagement" Cursor="Hand" FontSize="14" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Content="Disk Management" Height="30" Width="150" Margin="10,5" Padding="10"/>
+                                        <Button Name="PanelComputer" Cursor="Hand" FontSize="12" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Content="Computer Management" Height="30" Width="150" Margin="0,5,0,0" Padding="10"/>
                                     </StackPanel>
                                 </Grid>
                             </WrapPanel>
@@ -2862,7 +2864,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <WrapPanel Margin="30,20,30,20" Orientation="Vertical" HorizontalAlignment="Center">
+                                <WrapPanel Margin="30,20" Orientation="Vertical" HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
                                         <Label Content="Shortcuts:" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left" Foreground="#FFDEE39B"/>
                                     </StackPanel>
@@ -2877,20 +2879,25 @@
                                         <Button Name="FixesSound" Content="Reset Sound" Cursor="Hand" Margin="5,0" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220"/>
                                     </StackPanel>
                                     <StackPanel Margin="0,5" Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
-                                        <Button Name="RegistryBackup" Content="Create Registry Backup" Cursor="Hand" Margin="5,0" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220" ToolTip="Recommended to backup registry before tweaking."/>
+                                        <Button Name="RegistryBackup" Content="Create Registry Backup" Cursor="Hand" Margin="5,0" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220"/>
+                                        <Button Name="PanelAutologin" Content="Set Up Autologin" Cursor="Hand" Margin="5,0" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
                                         <Label Content="Apps:" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left" Foreground="#FFDEE39B"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
-                                        <Button Name="WingetConfig" Content="Set Winget Settings" Cursor="Hand" Margin="5,0" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220" ToolTip="Set progress bar to rainbow, default langauge to english, default install location for portable packages to [C:/Users/winget/Packages, C:/Program Files/winget/Packages], disable telemetry and log errors."/>
+                                        <Button Name="WingetConfig" Content="Set Winget Settings" Cursor="Hand" Margin="5,0" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220"/>
                                         <Button Name="FixesADB" Content="Set ADB Environment" Cursor="Hand" Margin="5,5" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
+                                        <Button Name="VsCodeMenu" Content="Add VSCode Context Menu" Cursor="Hand" Margin="5,0" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220"/>
+                                        <Button Name="VsCodeMenuRemove" Content="Remove VSCode Context Menu" Cursor="Hand" Margin="5,0" HorizontalAlignment="Left" FontSize="14" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
                                         <Label Content="Activate Windows:" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left" Foreground="#FFDEE39B"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
-                                        <Button Name="ActivateWindows" Content="Run Microsoft Activation Scripts (MAS)" Cursor="Hand" Margin="5,5" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="450" ToolTip="A Windows and Office activator using HWID / Ohook / KMS38 / Online KMS activation methods, with a focus on open-source code and fewer antivirus detections."/>
+                                        <Button Name="ActivateWindows" Content="Run Microsoft Activation Scripts (MAS)" Cursor="Hand" Margin="5,5" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="450"/>
                                     </StackPanel>
                                 </WrapPanel>
                             </Grid>
@@ -2908,39 +2915,8 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <StackPanel Margin="30,30" SnapsToDevicePixels="True" HorizontalAlignment="Center">
-                                    <CheckBox Name="FeaturesDotnet" Width="auto" Content="All .Net Framework (2,3,4)" Cursor="Hand" HorizontalAlignment="Left" Margin="8,5" FontSize="11" FontFamily="Gadugi" Foreground="#a69f6c">
-                                        <CheckBox.LayoutTransform>
-                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                        </CheckBox.LayoutTransform>
-                                    </CheckBox>
-                                    <CheckBox Name="FeaturesHyperv" Width="auto" Content="HyperV Virtualization" Cursor="Hand" Margin="8,5" HorizontalAlignment="Left" FontSize="11" FontFamily="Gadugi" Foreground="#a69f6c">
-                                        <CheckBox.LayoutTransform>
-                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                        </CheckBox.LayoutTransform>
-                                    </CheckBox>
-                                    <CheckBox Name="FeaturesLegacymedia" Width="auto" Content="Legacy Media (WMP, DirectPlay)" Cursor="Hand" HorizontalAlignment="Left" Margin="8,5" FontSize="11" FontFamily="Gadugi" Foreground="#a69f6c">
-                                        <CheckBox.LayoutTransform>
-                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                        </CheckBox.LayoutTransform>
-                                    </CheckBox>
-                                    <CheckBox Name="FeatureNfs" Width="auto" Content="NFS - Network File System" Cursor="Hand" HorizontalAlignment="Left" Margin="8,5" FontSize="11" FontFamily="Gadugi" Foreground="#a69f6c">
-                                        <CheckBox.LayoutTransform>
-                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                        </CheckBox.LayoutTransform>
-                                    </CheckBox>
-                                    <CheckBox Name="FeatureWsl" Width="auto" Content="Windows Subsystem for Linux" Cursor="Hand" HorizontalAlignment="Left" Margin="8,5" FontSize="11" FontFamily="Gadugi" Foreground="#a69f6c">
-                                        <CheckBox.LayoutTransform>
-                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                        </CheckBox.LayoutTransform>
-                                    </CheckBox>
-                                    <CheckBox Name="FeatureSandbox" Width="auto" Content="Windows Sandbox" Cursor="Hand" HorizontalAlignment="Left" Margin="8,5" FontSize="11" FontFamily="Gadugi" Foreground="#a69f6c">
-                                        <CheckBox.LayoutTransform>
-                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                                        </CheckBox.LayoutTransform>
-                                    </CheckBox>
-                                    <Button Name="FeatureInstall" Content="Install Features" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="40" Width="190" Margin="0,10,0,10" Padding="10" HorizontalAlignment="Center"/>
-                                    <Button Name="PanelAutologin" Content="Set Up Autologin" Cursor="Hand" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="40" Width="190" Margin="0,10,0,10" Padding="10" HorizontalAlignment="Center"/>
+                                <StackPanel Name="congif_p03" Margin="30,20" SnapsToDevicePixels="True" HorizontalAlignment="Center">
+                                    
                                 </StackPanel>
                             </Grid>
                         </Border>

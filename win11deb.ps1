@@ -2794,53 +2794,411 @@ $preset = @'
 {
     "megaPresetButton": [
         "DblTelemetry",
+        "DblConsumerFeatures",
         "DblWifi",
         "DblAH",
+        "DblExplorerAutoDiscovery",
+        "DblDebloatEdge",
         "DblDeleteTempFiles",
         "DblRecycleBin",
         "DblDiskCleanup",
+        "DblPS7Telemetry",
+        "DblRecallOff",
         "DblLocTrack",
         "DblStorage",
         "DblHiber",
         "DblDVR",
-        "DblCoreIsolation",
-        "DblDisableTeredo",
+        "DblSearchIndexer",
         "DblAutoAdjustVolume",
-        "DblPower",
         "DblDisplay",
-        "DblRemoveCortana",
-        "DblRemoveWidgets",
-        "DblDisableNotifications",
-        "DblRightClickMenu",
         "DblDisableUAC",
+        "DblCoreIsolation",
+        "DblDisableNotifications",
         "DblClassicAltTab",
-        "DblWindowsSound",
-        "DblPersonalize",
         "DblModernCursorLight"
     ],
     "fastPresetButton": [
         "DblTelemetry", 
+        "DblConsumerFeatures",
         "DblWifi", 
         "DblAH", 
+        "DblExplorerAutoDiscovery",
         "DblDeleteTempFiles", 
         "DblRecycleBin", 
         "DblLocTrack", 
-        "DblStorage", 
-        "DblHiber", 
-        "DblDVR",             
-        "DblDisableTeredo", 
-        "DblAutoAdjustVolume", 
-        "DblPower", 
-        "DblDisplay", 
+        "DblStorage",
+        "DblDVR",
+        "DblAutoAdjustVolume",
         "DblDisableUAC", 
         "DblClassicAltTab", 
-        "DblRightClickMenu", 
-        "DblPersonalize", 
         "DblModernCursorLight"
     ]
 }
 
 
+'@ | ConvertFrom-Json
+
+# Embedded from feature.json
+$feature = @'
+{
+    "FeaturesDotnet": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "All .Net Framework (2,3,4)",
+        "Description": ".NET and .NET Framework is a developer platform made up of tools, programming languages, and libraries for building many different types of applications.",
+        "EnableMessage": "Enabling .Net Framework features, this may take a while...",
+        "feature": [
+            "NetFx4-AdvSrvs",
+            "NetFx3"
+        ]
+    },
+    "FeaturesHyperv": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "HyperV Virtualization",
+        "Description": "Hyper-V is a hardware virtualization product developed by Microsoft that allows users to create and manage virtual machines.",
+        "EnableMessage": "Enabling Hyper-V features, this may take a while...",
+        "feature": [
+            "HypervisorPlatform",
+            "Microsoft-Hyper-V-All",
+            "Microsoft-Hyper-V",
+            "Microsoft-Hyper-V-Tools-All",
+            "Microsoft-Hyper-V-Management-PowerShell",
+            "Microsoft-Hyper-V-Hypervisor",
+            "Microsoft-Hyper-V-Services",
+            "Microsoft-Hyper-V-Management-Clients"
+        ],
+        "InvokeScript": [
+            "Start-Process -FilePath cmd.exe -ArgumentList '/c bcdedit /set hypervisorschedulertype classic' -Wait"
+        ]
+    },
+    "FeaturesLegacymedia": {
+        "Type": "CheckBox",
+        "Content": "Legacy Media (WMP, DirectPlay)",
+        "Category": "congif_p03",
+        "Description": "Enables legacy programs from previous versions of windows",
+        "EnableMessage": "Enabling Legacy Media features, this may take a while...",
+        "feature": [
+            "WindowsMediaPlayer",
+            "MediaPlayback",
+            "DirectPlay",
+            "LegacyComponents"
+        ]
+    },
+    "FeatureWsl": {
+        "Content": "Windows Subsystem for Linux",
+        "Category": "congif_p03",
+        "Description": "Windows Subsystem for Linux is an optional feature of Windows that allows Linux programs to run natively on Windows without the need for a separate virtual machine or dual booting.",
+        "EnableMessage": "Enabling WSL features, this may take a while...",
+        "feature": [
+            "VirtualMachinePlatform",
+            "Microsoft-Windows-Subsystem-Linux"
+        ]
+    },
+    "FeatureSandbox": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Windows Sandbox",
+        "Description": "Windows Sandbox is a lightweight virtual machine that provides a temporary desktop environment to safely run applications and programs in isolation.",
+        "EnableMessage": "Enabling Windows Sandbox features, this may take a while...",
+        "feature": [
+            "Containers-DisposableClientVM"
+        ]
+    },
+    "FeatureNfs": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "NFS - Network File System",
+        "Description": "Network File System (NFS) is a mechanism for storing files on a network.",
+        "EnableMessage": "Enabling NFS features, this may take a while...",
+        "feature": [
+            "ServicesForNFS-ClientOnly",
+            "ClientForNFS-Infrastructure",
+            "NFS-Administration"
+        ],
+        "InvokeScript": [
+            "nfsadmin client stop",
+            "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\ClientForNFS\\CurrentVersion\\Default' -Name 'AnonymousUID' -Type DWord -Value 0",
+            "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\ClientForNFS\\CurrentVersion\\Default' -Name 'AnonymousGID' -Type DWord -Value 0",
+            "nfsadmin client start",
+            "nfsadmin client localhost config fileaccess=755 SecFlavors=+sys -krb5 -krb5i"
+        ]
+    },
+    "FeatureEnableSearchSuggestions": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Enable Search Box Web Suggestions",
+        "Description": "Enables web suggestions when searching using Windows Search.",
+        "EnableMessage": "Enabling Search Box Web Suggestions...",
+        "InvokeScript": [
+            "
+            If (!(Test-Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer')) {
+                    New-Item -Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer' -Force | Out-Null
+            }
+            New-ItemProperty -Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer' -Name 'DisableSearchBoxSuggestions' -Type DWord -Value 0 -Force
+            Stop-Process -name explorer -force
+            "
+        ]
+    },
+    "FeatureDisableSearchSuggestions": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Disable Search Box Web Suggestions",
+        "Description": "Disables web suggestions when searching using Windows Search.",
+        "DisableMessage": "Disabling Search Box Web Suggestions...",
+        "InvokeScript": [
+            "
+            If (!(Test-Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer')) {
+                    New-Item -Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer' -Force | Out-Null
+            }
+            New-ItemProperty -Path 'HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer' -Name 'DisableSearchBoxSuggestions' -Type DWord -Value 1 -Force
+            Stop-Process -name explorer -force
+            "
+        ]
+    },
+    "FeatureRegBackup": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Enable Daily Registry Backup 12:30am",
+        "Description": "Enables daily registry backup, previously disabled by Microsoft in Windows 10 1803.",
+        "EnableMessage": "Enabling Daily Registry Backup Task...",
+        "InvokeScript": [
+            "
+            New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager' -Name 'EnablePeriodicBackup' -Type DWord -Value 1 -Force
+            New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager' -Name 'BackupCount' -Type DWord -Value 2 -Force
+            $action = New-ScheduledTaskAction -Execute 'schtasks' -Argument '/run /i /tn \"\\Microsoft\\Windows\\Registry\\RegIdleBackup\"'
+            $trigger = New-ScheduledTaskTrigger -Daily -At 00:30
+            Register-ScheduledTask -Action $action -Trigger $trigger -TaskName 'AutoRegBackup' -Description 'Create System Registry Backups' -User 'System'
+            "
+        ]
+    },
+    "FeatureEnableLegacyRecovery": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Enable Legacy F8 Boot Recovery",
+        "Description": "Enables Advanced Boot Options screen that lets you start Windows in advanced troubleshooting modes.",
+        "EnableMessage": "Enabling Legacy F8 Boot Recovery...",
+        "InvokeScript": [
+            "
+            If (!(Test-Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood')) {
+                    New-Item -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood' -Force | Out-Null
+            }
+            New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood' -Name 'Enabled' -Type DWord -Value 1 -Force
+            Start-Process -FilePath cmd.exe -ArgumentList '/c bcdedit /Set {Current} BootMenuPolicy Legacy' -Wait
+            "
+        ]
+    },
+    "FeatureDisableLegacyRecovery": {
+        "Type": "CheckBox",
+        "Category": "congif_p03",
+        "Content": "Disable Legacy F8 Boot Recovery",
+        "Description": "Disables Advanced Boot Options screen that lets you start Windows in advanced troubleshooting modes.",
+        "DisableMessage": "Disabling Legacy F8 Boot Recovery...",
+        "InvokeScript": [
+            "
+            If (!(Test-Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood')) {
+                    New-Item -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood' -Force | Out-Null
+            }
+            New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager\\LastKnownGood' -Name 'Enabled' -Type DWord -Value 0 -Force
+            Start-Process -FilePath cmd.exe -ArgumentList '/c bcdedit /Set {Current} BootMenuPolicy Standard' -Wait
+            "
+        ]
+    },
+    "FeatureInstall": {
+        "Type": "Button",
+        "Category": "congif_p03",
+        "Content": "Install Features",
+        "Description": "Installs selected Windows Features. A reboot is required after installation."
+    }
+}
+'@ | ConvertFrom-Json
+
+# Embedded from configuration.json
+$configuration = @'
+{
+    "PanelControl": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Control Panel",
+        "Description": "Open Windows Control Panel."
+    },
+    "PanelPnF": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Programs-Features",
+        "Description": "Open Programs and Features to uninstall or modify apps."
+    },
+    "PanelNetwork": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Network Connections",
+        "Description": "Manage network adapters and connections."
+    },
+    "PanelPower": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Power Plan",
+        "Description": "Open Power Options to manage power plans."
+    },
+    "PanelRegion": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Region",
+        "Description": "Open Region settings."
+    },
+    "PanelSound": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Sound Settings",
+        "Description": "Open Sound settings."
+    },
+    "PanelSystem": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "System Properties",
+        "Description": "Open System Properties window."
+    },
+    "PanelUser": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "User Accounts",
+        "Description": "Manage user accounts."
+    },
+    "PanelWindowsFirewall": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Windows Firewall",
+        "Description": "Open Windows Firewall settings."
+    },
+    "PanelTimedate": {
+        "Type": "Button",
+        "Category": "config_p011",
+        "Content": "Time and Date",
+        "Description": "Open Date & Time settings."
+    },
+    "PanelDeviceManager": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Device Manager",
+        "Description": "Open Device Manager."
+    },
+    "PanelExplorerOption": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "File Explorer Options",
+        "Description": "Open File Explorer Options."
+    },
+    "PanelRegedit": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Registry Editor",
+        "Description": "Open Windows Registry Editor (regedit)."
+    },
+    "PanelScheduler": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Task Scheduler",
+        "Description": "Open Task Scheduler."
+    },
+    "PanelResourceMonitor": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Resource Monitor",
+        "Description": "Open Resource Monitor."
+    },
+    "PanelSysConf": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "System Configuration",
+        "Description": "Open System Configuration (msconfig)."
+    },
+    "PanelEvent": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Event Viewer",
+        "Description": "Open Event Viewer."
+    },
+    "PanelSysInfo": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "System Info",
+        "Description": "Open System Information window."
+    },
+    "PanelDiskManagement": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Disk Management",
+        "Description": "Open Disk Management utility."
+    },
+    "PanelComputer": {
+        "Type": "Button",
+        "Category": "config_p012",
+        "Content": "Computer Management",
+        "Description": "Open Computer Management console."
+    },
+
+    "ShortcutApp": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Create Win11Deb Shortcut",
+        "Description": "Creates a desktop shortcut to launch Win11Deb as administrator."
+    },
+    "FixesNetwork": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Reset Network",
+        "Description": "Resets various network configurations."
+    },
+    "FixesSound": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Reset Sound",
+        "Description": "Resets sound service."
+    },
+    "RegistryBackup": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Create Registry Backup",
+        "Description": "Recommended to backup registry before tweaking."
+    },
+    "PanelAutologin": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Set Up Autologin",
+        "Description": "Set up automatic login for a specific user account."
+    },
+    "WingetConfig": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Set Winget Settings",
+        "Description": "Set progress bar to rainbow, default langauge to english, default install location for portable packages to [C:/Users/winget/Packages, C:/Program Files/winget/Packages], disable telemetry and log errors."
+
+    },
+    "FixesADB": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Set ADB Environment",
+        "Description": "Sets ADB environment variables for easier use of ADB commands."
+    },
+    "VsCodeMenu": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Add VSCode Context Menu",
+        "Description": "Adds 'Open with VS Code' to right-click menu for files and folders."
+    },
+    "VsCodeMenuRemove": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Remove VSCode Context Menu",
+        "Description": "Removes 'Open with VS Code' from right-click menu"
+    },
+    "ActivateWindows": {
+        "Type": "Button",
+        "Category": "config_p02",
+        "Content": "Run Microsoft Activation Scripts (MAS)",
+        "Description": "A Windows and Office activator using HWID / Ohook / KMS38 / Online KMS activation methods, with a focus on open-source code and fewer antivirus detections."
+    }
+}
 '@ | ConvertFrom-Json
 
 
@@ -2856,15 +3214,17 @@ $preset = @'
     Website        : https://vukilis.com
     GitHub         : https://github.com/vukilis
     Name:          : Windows11 Optimizer&Debloater
-    Version        : 3.3
+    Version        : 3.4
 #>
 
 Add-Type -AssemblyName PresentationFramework
 
 Start-Transcript $ENV:TEMP\win11deb.log -Append
-# $xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
-# $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+
+$ScriptVersion = "3.4 - 24.08.2025"
+$xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
+$inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
+# $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
@@ -2898,7 +3258,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
     }
 }
 
-$wpf_AppVersion.Content = "Version: 3.3 - 20.08.2025"
+$wpf_AppVersion.Content = "Version: $ScriptVersion"
 
 function Invoke-CloseButton {
     <#
@@ -3035,6 +3395,9 @@ function Invoke-AboutButton {
     #>
     $AboutButton = $psform.FindName("AboutButton")
     $aboutGrid = $psform.FindName("AboutGrid")
+    $version = $psform.FindName("CurrentScriptVersion")
+    $version.Content = "Version: $ScriptVersion"
+
     
         if ($AboutButton.IsChecked) {
             $aboutGrid.Visibility = "Visible"
@@ -3091,6 +3454,8 @@ $sync = @{
     configs = @{
         tweaks = $tweaks
         preset = $preset
+        feature = $feature
+        configuration = $configuration
     }
 }
 
@@ -3216,6 +3581,7 @@ function Invoke-Button {
         "wpf_PanelUser" {Invoke-Configs -Panel $button}
         "wpf_PanelServices" {Invoke-Configs -Panel $button}
         "wpf_PanelWindowsFirewall" {Invoke-Configs -Panel $button}
+        "wpf_PanelTimedate" {Invoke-Configs -Panel $button}
         "wpf_PanelDeviceManager" {Invoke-Configs -Panel $button}
         "wpf_PanelExplorerOption" {Invoke-Configs -Panel $button}
         "wpf_PanelRegedit" {Invoke-Configs -Panel $button}
@@ -3225,7 +3591,8 @@ function Invoke-Button {
         "wpf_PanelEvent" {Invoke-Configs -Panel $button}
         "wpf_PanelSysInfo" {Invoke-Configs -Panel $button}
         "wpf_PanelDiskManagement" {Invoke-Configs -Panel $button}
-        "wpf_FeatureInstall" {Invoke-FeatureInstall}
+        "wpf_PanelComputer" {Invoke-Configs -Panel $button}
+        # "wpf_FeatureInstall" {Invoke-FeatureInstall}
         "wpf_PanelAutologin" {Invoke-PanelAutologin}
         "wpf_PanelRegion" {Invoke-Configs -Panel $button}
         "wpf_DblInstall" {Invoke-installButton}
@@ -3243,6 +3610,8 @@ function Invoke-Button {
         "wpf_FixesNetwork" {Invoke-FixesNetwork}
         "wpf_FixesSound" {Invoke-FixesSound}
         "wpf_RegistryBackup" {Invoke-RegistryBackup}
+        "wpf_VsCodeMenu" {Invoke-VsCodeMenu}
+        "wpf_VsCodeMenuRemove" {Invoke-VsCodeMenuRemove}
         "wpf_WingetConfig" {Set-WingetConfig}
         "wpf_FixesADB" {Invoke-FixADB}
         "wpf_ActivateWindows" {Invoke-ActivateWindows}
@@ -3328,7 +3697,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.3  
+Windows11 Optimizer&Debloater           $ScriptVersion  
 "@
     $coloredText = $text.ToCharArray() | ForEach-Object {
         $randomColor = Get-RandomColor
@@ -3364,7 +3733,7 @@ GitHub:                                 Website:
 https://github.com/vukilis              https://vukilis.com
 
 Name:                                   Version:
-Windows11 Optimizer&Debloater           3.3    
+Windows11 Optimizer&Debloater           $ScriptVersion    
 "@
 
     $coloredText = $text.ToCharArray() | ForEach-Object {
@@ -3678,6 +4047,18 @@ foreach ($ttKey in $sync.configs.tweaks.PSObject.Properties.Name) {
     $control = $psform.FindName($ttKey)
     if ($null -ne $control -and $sync.configs.tweaks.$ttKey.PSObject.Properties.Name -contains "Description") {
         $description = $sync.configs.tweaks.$ttKey.Description
+        $control.ToolTip = $description
+        # Write-Host "Assigned ToolTip to '$ttKey': $description" -ForegroundColor Green
+    }
+    else {
+        Write-Host "No matching control or description found for '$ttKey'." -ForegroundColor Yellow
+    }
+}
+
+foreach ($ttKey in $sync.configs.configuration.PSObject.Properties.Name) {
+    $control = $psform.FindName($ttKey)
+    if ($null -ne $control -and $sync.configs.configuration.$ttKey.PSObject.Properties.Name -contains "Description") {
+        $description = $sync.configs.configuration.$ttKey.Description
         $control.ToolTip = $description
         # Write-Host "Assigned ToolTip to '$ttKey': $description" -ForegroundColor Green
     }
@@ -5882,6 +6263,64 @@ function Invoke-UpdatesSecurity{
 ###                                                                                                          ###
 ################################################################################################################
 
+$global:FeatureControls = @{}
+
+foreach ($featureName in $sync.configs.feature.PSObject.Properties.Name) {
+    $feature = $sync.configs.feature.$featureName
+
+    if (-not $feature.Category) { continue }
+
+    $parentPanel = $psform.FindName($feature.Category)
+    if (-not $parentPanel) {
+        # Write-Warning "Category '$($feature.Category)' not found in XAML"
+        continue
+    }
+
+    switch ($feature.Type) {
+        "CheckBox" {
+            $cb = New-Object System.Windows.Controls.CheckBox
+            $cb.Name = $featureName
+            $cb.Content = $feature.Content
+            $cb.ToolTip = $feature.Description
+            $cb.Margin = "8,5,0,0"
+            $cb.FontSize = 11
+            $cb.FontFamily = "Gadugi"
+            $cb.Foreground = "#a69f6c"
+            $cb.Cursor = "Hand"
+            
+            $transform = New-Object Windows.Media.ScaleTransform 1.5, 1.5
+            $cb.LayoutTransform = $transform
+
+            $global:FeatureControls[$featureName] = $cb
+
+            $parentPanel.Children.Add($cb) | Out-Null
+        }
+        "Button" {
+            $btn = New-Object System.Windows.Controls.Button
+            $btn.Name = $featureName
+            $btn.Content = $feature.Content
+            $btn.ToolTip = $feature.Description
+            $btn.Margin = "0,10,0,0"
+            $btn.Padding = "10"
+            $btn.Height = 30
+            $btn.Width = 190
+            $btn.Cursor = "Hand"
+            $btn.FontSize = 16
+            $btn.FontFamily = "Helvetica"
+            
+            $style = $psform.FindResource("ButtonStyle")
+            if ($style) {
+                $btn.Style = $style
+            }
+
+            $btn.Add_Click({
+                Invoke-FeatureInstall
+            })
+
+            $parentPanel.Children.Add($btn) | Out-Null
+        }
+    }   
+}
 function Invoke-FixADB {
     <#
 
@@ -5970,86 +6409,105 @@ function Invoke-ActivateWindows {
         .DESCRIPTION
         Run Microsoft Activation Scripts (MAS) script 
     #>
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command irm https://massgrave.dev/get | iex" -Verb RunAs
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command irm https://get.activated.win | iex" -Verb RunAs
 }
 
 function Invoke-Configs {
     <#
     .DESCRIPTION
     Simple Switch for lagacy windows
-#>
-param($Panel)
+    #>
+    param($Panel)
 
-switch ($Panel){
-    "wpf_PanelControl"              {cmd /c control}
-    "wpf_PanelPnF"                  {cmd /c appwiz.cpl}
-    "wpf_PanelNetwork"              {cmd /c ncpa.cpl}
-    "wpf_PanelPower"                {cmd /c powercfg.cpl}
-    "wpf_PanelSound"                {cmd /c mmsys.cpl}
-    "wpf_PanelSystem"               {cmd /c sysdm.cpl}
-    "wpf_PanelUser"                 {cmd /c "control userpasswords2"}
-    "wpf_PanelServices"             {cmd /c services.msc}
-    "wpf_PanelWindowsFirewall"      {cmd /c firewall.cpl}
-    "wpf_PanelDeviceManager"        {cmd /c devmgmt.msc}
-    "wpf_PanelExplorerOption"       {cmd /c control folders}
-    "wpf_PanelRegedit"              {cmd /c regedit}
-    "wpf_PanelScheduler"            {cmd /c taskschd.msc}
-    "wpf_PanelResourceMonitor"      {cmd /c resmon}
-    "wpf_PanelSysConf"              {cmd /c msconfig}
-    "wpf_PanelEvent"                {cmd /c taskschd.msc}
-    "wpf_PanelSysInfo"              {cmd /c msinfo32}
-    "wpf_PanelDiskManagement"       {cmd /c diskmgmt.msc}
-    "wpf_PanelRegion"               {cmd /c intl.cpl}
-}
+    switch ($Panel){
+        "wpf_PanelControl"              {cmd /c control}
+        "wpf_PanelPnF"                  {cmd /c appwiz.cpl}
+        "wpf_PanelNetwork"              {cmd /c ncpa.cpl}
+        "wpf_PanelPower"                {cmd /c powercfg.cpl}
+        "wpf_PanelSound"                {cmd /c mmsys.cpl}
+        "wpf_PanelSystem"               {cmd /c sysdm.cpl}
+        "wpf_PanelUser"                 {cmd /c "control userpasswords2"}
+        "wpf_PanelServices"             {cmd /c services.msc}
+        "wpf_PanelWindowsFirewall"      {cmd /c firewall.cpl}
+        "wpf_PanelDeviceManager"        {cmd /c devmgmt.msc}
+        "wpf_PanelExplorerOption"       {cmd /c control folders}
+        "wpf_PanelRegedit"              {cmd /c regedit}
+        "wpf_PanelScheduler"            {cmd /c taskschd.msc}
+        "wpf_PanelResourceMonitor"      {cmd /c resmon}
+        "wpf_PanelSysConf"              {cmd /c msconfig}
+        "wpf_PanelEvent"                {cmd /c taskschd.msc}
+        "wpf_PanelSysInfo"              {cmd /c msinfo32}
+        "wpf_PanelDiskManagement"       {cmd /c diskmgmt.msc}
+        "wpf_PanelRegion"               {cmd /c intl.cpl}
+        "wpf_PanelComputer"             {cmd /c compmgmt.msc}
+        "wpf_PanelTimedate"             {cmd /c timedate.cpl}
+    }
 }
 function Invoke-FeatureInstall {
     <#
-    .DESCRIPTION
-    GUI Function to install Windows Features
+    .SYNOPSIS
+        Applies all selected CheckBox feature dynamically and resets their state.
     #>
-    If ( $wpf_FeaturesDotnet.IsChecked -eq $true ) {
-        Enable-WindowsOptionalFeature -Online -FeatureName "NetFx4-AdvSrvs" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "NetFx3" -All -NoRestart
-    }
-    If ( $wpf_FeaturesHyperv.IsChecked -eq $true ) {
-        Enable-WindowsOptionalFeature -Online -FeatureName "HypervisorPlatform" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-All" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Tools-All" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Management-PowerShell" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Hypervisor" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Services" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Management-Clients" -All -NoRestart
-        cmd /c bcdedit /set hypervisorschedulertype classic
-        Write-Host "HyperV is now installed and configured. Please Reboot before using."
-    }
-    If ( $wpf_FeaturesLegacymedia.IsChecked -eq $true ) {
-        Enable-WindowsOptionalFeature -Online -FeatureName "WindowsMediaPlayer" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "MediaPlayback" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "DirectPlay" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "LegacyComponents" -All -NoRestart
-    }
-    If ( $wpf_FeatureWsl.IsChecked -eq $true ) {
-        Enable-WindowsOptionalFeature -Online -FeatureName "VirtualMachinePlatform" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux" -All -NoRestart
-        Write-Host "WSL is now installed and configured. Please Reboot before using."
-    }
-    If ( $wpf_FeatureNfs.IsChecked -eq $true ) {
-        Enable-WindowsOptionalFeature -Online -FeatureName "ServicesForNFS-ClientOnly" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "ClientForNFS-Infrastructure" -All -NoRestart
-        Enable-WindowsOptionalFeature -Online -FeatureName "NFS-Administration" -All -NoRestart
-        nfsadmin client stop
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\ClientForNFS\CurrentVersion\Default" -Name "AnonymousUID" -Type DWord -Value 0
-        Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\ClientForNFS\CurrentVersion\Default" -Name "AnonymousGID" -Type DWord -Value 0
-        nfsadmin client start
-        nfsadmin client localhost config fileaccess=755 SecFlavors=+sys -krb5 -krb5i
-        Write-Host "NFS is now setup for user based NFS mounts"
-    }
 
-    Write-Host "================================="
-    Write-Host "---  Features are Installed   ---"
-    Write-Host "================================="
+    # Loop through all features
+    foreach ($featureName in $sync.configs.feature.PSObject.Properties.Name) {
+        $tweak = $sync.configs.feature.$featureName
+        $apply = $false
 
+        switch ($tweak.Type) {
+            "CheckBox" {
+                if ($global:FeatureControls.ContainsKey($featureName)) {
+                    $apply = [bool]$global:FeatureControls[$featureName].IsChecked
+                } elseif ($tweak.DefaultState) {
+                    $apply = [bool]$tweak.DefaultState
+                }
+            }
+        }
+
+        if ($apply) {
+            if ($tweak.Registry) {
+                Write-Host "Applying feature: $($tweak.Content)" -ForegroundColor Green
+                foreach ($msg in "DisableMessage","EnableMessage") {
+                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
+                }
+                foreach ($regEntry in $tweak.Registry) {
+                    try { 
+                        Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.Value 
+                    }
+                    catch { 
+                        Write-Warning "Failed to apply registry tweak: $_" 
+                    }
+                }
+            }
+
+            if ($tweak.InvokeScript) {
+                foreach ($msg in "DisableMessage","EnableMessage") {
+                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Cyan }
+                }
+                foreach ($script in $tweak.InvokeScript) {
+                    Invoke-Scripts -Name $tweak.Content -Script $script
+                    Write-Host "Please Reboot before using." -ForegroundColor Red
+                }
+            }
+
+            if ($tweak.feature) {
+                foreach ($msg in "DisableMessage","EnableMessage") {
+                    Write-Host "Applying feature: $($tweak.Content)" -ForegroundColor Green
+                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
+                }
+                foreach ($ft in $tweak.feature) {
+                    try {
+                        Enable-WindowsOptionalFeature -Online -FeatureName $ft -All -NoRestart
+                        Write-Host "Please Reboot before using." -ForegroundColor Red
+                    } catch {
+                        Write-Warning "Unable to Install $ft due to unhandled exception"
+                        Write-Warning $_.Exception.StackTrace
+                    }
+                }
+            }
+        }
+    }
+    
     Invoke-MessageBox -msg "feature"
 }
 function Invoke-FixesNetwork {
@@ -6100,6 +6558,7 @@ function Invoke-PanelAutologin {
     #>
     curl.exe -ss "https://live.sysinternals.com/Autologon.exe" -o $env:temp\autologin.exe # Official Microsoft recommendation https://learn.microsoft.com/en-us/sysinternals/downloads/autologon
     cmd /c $env:temp\autologin.exe
+    Write-Host "Autologin enabled" -ForegroundColor Green
 }
 function Invoke-RegistryBackup {
     <#
@@ -6220,6 +6679,73 @@ Shortcut for $ShortcutToAdd has been saved to $($FileBrowser.FileName)
 ======================================
 " -ch DarkRed
     }
+}
+function Invoke-VsCodeMenu {
+    <#
+    .SYNOPSIS
+        Adds "Open with Code" to right-click menu (files + folders + background).
+        Uses $env:LOCALAPPDATA dynamically.
+    #>
+
+    $codePath = Join-Path $env:LOCALAPPDATA "Programs\Microsoft VS Code\Code.exe"
+
+    if (-not (Test-Path $codePath)) {
+        Write-Warning "??? VS Code not found at: $codePath"
+        return
+    }
+
+    # Convert to .reg-safe format (double backslashes)
+    $codePathReg = $codePath -replace '\\', '\\\\'
+
+    $regContent = @"
+Windows Registry Editor Version 5.00
+
+; Add "Open with Code" for folder background
+[HKEY_CLASSES_ROOT\Directory\Background\shell\VSCode]
+@="Open with Code"
+"Icon"="\"$codePathReg\""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\VSCode\command]
+@="\"$codePathReg\" \"%V\""
+
+; Add "Open with Code" for files
+[HKEY_CLASSES_ROOT\*\shell\VSCode]
+@="Open with Code"
+"Icon"="\"$codePathReg\""
+
+[HKEY_CLASSES_ROOT\*\shell\VSCode\command]
+@="\"$codePathReg\" \"%1\""
+"@
+
+    $tempFile = [IO.Path]::GetTempFileName() + ".reg"
+    Set-Content -Path $tempFile -Value $regContent -Encoding ASCII
+
+    # Import registry file (requires admin for HKCR)
+    Start-Process reg.exe -ArgumentList "import `"$tempFile`"" -Verb RunAs -Wait
+
+    Remove-Item $tempFile -Force
+    Write-Host "VS Code context menu added!" -ForegroundColor Green
+}
+function Invoke-VsCodeMenuRemove {
+    <#
+    .SYNOPSIS
+        Removes "Open with Code" from right-click context menu
+        (files + folders + folder background).
+    .NOTES
+        Requires admin because it touches HKCR.
+    #>
+
+    $keys = @(
+        "HKCR\*\shell\VSCode",
+        "HKCR\Directory\shell\VSCode",
+        "HKCR\Directory\Background\shell\VSCode"
+    )
+
+    foreach ($key in $keys) {
+        Start-Process reg.exe -ArgumentList "delete `"$key`" /f" -Verb RunAs -Wait
+    }
+
+    Write-Host "??? VS Code context menu removed!" -ForegroundColor Green
 }
 
 ################################################################################################################

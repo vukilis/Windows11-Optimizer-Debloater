@@ -4,9 +4,11 @@
     Website        : https://vukilis.com
     GitHub         : https://github.com/vukilis
     Name:          : Windows11 Optimizer&Debloater
-    Version        : 3.3
+    Version        : 3.4
 #>
 
 Add-Type -AssemblyName PresentationFramework
 
 Start-Transcript $ENV:TEMP\win11deb.log -Append
+
+$ScriptVersion = "3.4 - 24.08.2025"

@@ -8,6 +8,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [3.4] - 2025-08-24
+
+### Added
+
+- New Control Panel shortcuts for **Time and Date** and **Computer Management**.
+- New **Add VSCode Context Menu** and **Remove VSCode Context Menu** button to add and remove **Open with Code** from your Windows right-click context menu.
+- New options to enable/disable **Search Box Web Suggestions**, schedule **Daily Registry Backup at 12:30 AM**, and enable/disable **Legacy F8 Boot Recovery**.
+- Introduced `features.json` to dynamically generate feature content. 
+- Introduced `configuration.json` to dynamically generate feature content (currently shows descriptions for each button only).
+
+### Changed
+
+- Adjusted **Fast Preset** and **Mega Preset**.
+- Updated command used to run **Microsoft Activation Scripts (MAS)**.
+- Implemented more reliable script version handling
+
 ## [3.3] - 2025-08-20
 
 ### Added

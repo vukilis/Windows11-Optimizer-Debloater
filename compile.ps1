@@ -66,7 +66,9 @@ Get-ChildItem .\config\msAppxDebloat.json | ForEach-Object {
 # Manually choose which JSON files you want
 $jsonFiles = @(
     ".\config\tweaks.json",
-    ".\config\preset.json"
+    ".\config\preset.json",
+    ".\config\feature.json"
+    ".\config\configuration.json"
     # add more here...
 )
 
