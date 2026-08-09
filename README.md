@@ -10,7 +10,7 @@
 This Utility show basic system information, install programs, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates.
 
 
-![Screenshot of the application in the tray menu and the Discord status](https://vukilis.com/images/2024/Windows_11_Optimizer_Debloater/Windows_11_Optimizer_Debloater.png)
+![Screenshot of the application in the tray menu and the Discord status](https://vukilis.com/_astro/install.BSlQ-p71_Z1JaM6j.webp)
 
 ## Usage:
 
