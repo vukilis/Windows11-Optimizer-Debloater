@@ -20,14 +20,27 @@ function Get-ToggleStatus {
             foreach ($regEntry in $entry.registry) {
                 try {
                     if (-not (Test-Path $regEntry.Path)) { New-Item -Path $regEntry.Path -Force | Out-Null }
-                    $regValue = (Get-ItemProperty -Path $regEntry.Path -ErrorAction SilentlyContinue).$($regEntry.Name)
+                    $regItem = Get-ItemProperty -Path $regEntry.Path -ErrorAction SilentlyContinue
+                    $regValue = $null
+
+                    if ($null -ne $regItem) {
+                        $prop = $regItem.PSObject.Properties[$regEntry.Name]
+                        if ($prop) {
+                            $regValue = $prop.Value
+                        }
+                    }
 
                     if ($regValue -eq $regEntry.Value) { $isChecked = $true }
                     elseif ($regValue -eq $regEntry.OriginalValue) { $isChecked = $false }
 
                     # If $isChecked is set, stop checking further
                     if ($isChecked -ne $null) { break }
-                } catch { }
+                } catch {
+                    $errorMessage = $_.Exception.Message
+                    if ($errorMessage -notmatch "property.*cannot be found.*this object") {
+                        Write-Warning "Failed to read registry value at $($regEntry.Path)\$($regEntry.Name): $_"
+                    }
+                }
             }
         }
 
@@ -39,7 +52,6 @@ function Get-ToggleStatus {
 
         # Ensure a boolean value
         $control.IsChecked = [bool]$isChecked
-        # Write-Host "Set '$key' toggle to $($control.IsChecked)" -ForegroundColor Green
     }
 }
 

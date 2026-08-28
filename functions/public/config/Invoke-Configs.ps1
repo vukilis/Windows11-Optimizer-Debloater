@@ -30,3 +30,4 @@ function Invoke-Configs {
         "wpf_PanelTimedate"             {cmd /c timedate.cpl}
     }
 }
+

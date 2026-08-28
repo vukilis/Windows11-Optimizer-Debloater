@@ -53,3 +53,5 @@ function Set-FirewallRule {
         Write-Warning "Failed to update firewall group '$Group' on profile '$Profile': $_"
     }
 }
+
+

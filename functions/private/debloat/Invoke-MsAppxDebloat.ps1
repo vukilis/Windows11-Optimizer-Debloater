@@ -8,15 +8,13 @@ function Invoke-MsAppxDebloat {
         $app = $app | ConvertFrom-Json
         $id = $app.id
         $name = $app.name
-        $GetDebloatCheckBox = $app.IsChecked
-        $isChecked = $GetDebloatCheckBox
 
         $result += [PSCustomObject]@{
             Id = $id
             Name = $name
-            IsChecked = $isChecked
         }
     }
 
     return $result
 }
+

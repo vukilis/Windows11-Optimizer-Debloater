@@ -14,3 +14,4 @@ function Invoke-ExplorerUpdate {
         Start-Process "explorer.exe"
     }
 }
+

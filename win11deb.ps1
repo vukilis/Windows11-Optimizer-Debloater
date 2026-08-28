@@ -6,14 +6,22 @@
 ################################################################################################################
 
 
+param (
+    [switch]$SmokeTest
+)
+
+#requires -Version 7.0
+Set-StrictMode -Version Latest
+
+
 ################################################################################################################
 ###                                                                                                          ###
 ###                                         INFO: JSON CONFIGS                                               ###
 ###                                                                                                          ###
 ################################################################################################################
 
-$programs = @('{"winget":"Docker.DockerDesktop","name":"Docker Desktop","id":"DblInstallDockerdesktop"}','{"winget":"Git.Git","name":"Git","id":"DblInstallGit"}','{"winget":"GitExtensionsTeam.GitExtensions","name":"Git Extensions","id":"DblInstallGitextensions"}','{"winget":"GitHub.GitHubDesktop","name":"GitHub Desktop","id":"DblInstallGithubdesktop"}','{"winget":"GodotEngine.GodotEngine","name":"Godot Engine","id":"DblInstallGodotEngine"}','{"winget":"GoLang.Go","name":"Go Programming Language","id":"DblInstallGolang"}','{"winget":"HeidiSQL.HeidiSQL","name":"HeidiSQL","id":"DblInstallHeidisql"}','{"winget":"Oracle.MySQL","name":"MySQL","id":"DblInstallMySQL"}','{"winget":"OpenJS.NodeJS","name":"Node.js","id":"DblInstallNodejs"}','{"winget":"OpenJS.NodeJS.LTS","name":"Node.js LTS","id":"DblInstallNodejslts"}','{"winget":"CoreyButler.NVMforWindows","name":"Node Version Manager (NVM)","id":"DblInstallNodemanager"}','{"winget":"EclipseAdoptium.Temurin.8.JRE","name":"Java 8","id":"DblInstallJava8"}','{"winget":"EclipseAdoptium.Temurin.11.JRE","name":"Java 11","id":"DblInstallJava11"}','{"winget":"EclipseAdoptium.Temurin.17.JRE","name":"Java 17","id":"DblInstallJava17"}','{"winget":"EclipseAdoptium.Temurin.21.JDK","name":"Java 21","id":"DblInstallJava21"}','{"winget":"JanDeDobbeleer.OhMyPosh","name":"Oh My Posh","id":"DblInstallOhmyposh"}','{"winget":"Python.Python.3.12","name":"Python 3","id":"DblInstallPython3"}','{"winget":"RedHat.Podman","name":"Podman","id":"DblInstallPodman"}','{"winget":"Postman.Postman","name":"Postman","id":"DblInstallPostman"}','{"winget":"RubyInstallerTeam.Ruby.3.2","name":"Ruby 3.2","id":"DblInstallRuby"}','{"winget":"Rustlang.Rust.MSVC","name":"Rust","id":"DblInstallRust"}','{"winget":"DBBrowserForSQLite.DBBrowserForSQLite","name":"SQLite","id":"DblInstallSQLite"}','{"winget":"Microsoft.SQLServer.2022.Developer","name":"SQL Server 2022 Developer","id":"DblInstallSQLServer2022"}','{"winget":"Unity.Unity.2022","name":"Unity 2022","id":"DblInstallUnity"}','{"winget":"Hashicorp.Vagrant","name":"Vagrant","id":"DblInstallVagrant"}','{"winget":"Microsoft.VisualStudio.2022.Community","name":"Visual Studio 2022","id":"DblInstallVisualstudio2022"}','{"winget":"Microsoft.VisualStudioCode","name":"Visual Studio Code","id":"DblInstallCode"}','{"winget":"Microsoft.DotNet.DesktopRuntime.3_1","name":".NET Core 3","id":"DblInstallDotnet3"}','{"winget":"Microsoft.DotNet.DesktopRuntime.5","name":".NET 5","id":"DblInstallDotnet5"}','{"winget":"Microsoft.DotNet.DesktopRuntime.6","name":".NET 6","id":"DblInstallDotnet6"}','{"winget":"Microsoft.DotNet.DesktopRuntime.7","name":".NET 7","id":"DblInstallDotnet7"}','{"winget":"Microsoft.DotNet.DesktopRuntime.8","name":".NET 8","id":"DblInstallDotnet8"}','{"winget":"Microsoft.Sysinternals.Autoruns","name":"Autoruns","id":"DblInstallAutoruns"}','{"winget":"MHNexus.HxD","name":"HxD Hex Editor","id":"DblInstallHxD"}','{"winget":"Microsoft.PowerShell","name":"PowerShell","id":"DblInstallPowershell"}','{"winget":"Microsoft.PowerToys","name":"PowerToys","id":"DblInstallPowertoys"}','{"winget":"Microsoft.Sysinternals.ProcessExplorer","name":"Process Explorer","id":"DblInstallProcessExplorer"}','{"winget":"Microsoft.VCRedist.2015+.x64","name":"Visual 2015 Redistributable (64-bit)","id":"DblInstallvc2015_64"}','{"winget":"Microsoft.VCRedist.2015+.x86","name":"Visual 2015 Redistributable (32-bit)","id":"DblInstallvc2015_32"}','{"winget":"Microsoft.WindowsTerminal","name":"Windows Terminal","id":"DblInstallTerminal"}','{"winget":"Brave.Brave","name":"Brave","id":"DblInstallBrave"}','{"winget":"Google.Chrome","name":"Google Chrome","id":"DblInstallChrome"}','{"winget":"eloston.ungoogled-chromium","name":"Chromium","id":"DblInstallChromium"}','{"winget":"Mozilla.Firefox","name":"Mozilla Firefox","id":"DblInstallFirefox"}','{"winget":"MullvadVPN.MullvadBrowser","name":"Mullvad","id":"DblInstallMullvad"}','{"winget":"Alex313031.Thorium","name":"Thorium","id":"DblInstallThorium"}','{"winget":"Alex313031.Thorium.AVX2","name":"Thorium AVX2","id":"DblInstallThoriumAVX"}','{"winget":"TorProject.TorBrowser","name":"Tor Browser","id":"DblInstallTor"}','{"winget":"Librewolf.Librewolf","name":"Librewolf","id":"DblInstallLibrewolf"}','{"winget":"Ablaze.Floorp","name":"Floorp","id":"DblInstallFloorp"}','{"winget":"eloston.ungoogled-chromium","name":"Ungoogled","id":"DblInstallUngoogled"}','{"winget":"VivaldiTechnologies.Vivaldi","name":"Vivaldi","id":"DblInstallVivaldi"}','{"winget":"Waterfox.Waterfox","name":"Waterfox","id":"DblInstallWaterfox"}','{"winget":"Discord.Discord","name":"Discord","id":"DblInstallDiscord"}','{"winget":"Element.Element","name":"Element (Matrix)","id":"DblInstallMatrix"}','{"winget":"Microsoft.Skype","name":"Skype","id":"DblInstallSkype"}','{"winget":"SlackTechnologies.Slack","name":"Slack","id":"DblInstallSlack"}','{"winget":"Microsoft.Teams","name":"Microsoft Teams","id":"DblInstallTeams"}','{"winget":"Telegram.TelegramDesktop","name":"Telegram","id":"DblInstallTelegram"}','{"winget":"Viber.Viber","name":"Viber","id":"DblInstallViber"}','{"winget":"Zoom.Zoom","name":"Zoom","id":"DblInstallZoom"}','{"winget":"BlueStack.BlueStacks","name":"Bluestacks","id":"DblInstallBluestacks"}','{"winget":"Cemu.Cemu","name":"Cemu","id":"DblInstallCemu"}','{"winget":"ElectronicArts.EADesktop","name":"EA Desktop App","id":"DblInstallEaapp"}','{"winget":"Emulationstation.Emulationstation","name":"Emulation Station","id":"DblInstallEmulationstation"}','{"winget":"EpicGames.EpicGamesLauncher","name":"Epic Games Store","id":"DblInstallEpicgames"}','{"winget":"Nvidia.GeforceNOW","name":"NVIDIA GeForce NOW","id":"DblInstallGeforcenow"}','{"winget":"GOG.Galaxy","name":"GOG Galaxy","id":"DblInstallGog"}','{"winget":"Playnite.Playnite","name":"Playnite","id":"DblInstallPlaynite"}','{"winget":"PrismLauncher.PrismLauncher","name":"Prism Launcher","id":"DblInstallPrism"}','{"winget":"SideQuestVR.SideQuest","name":"SideQuestVR","id":"DblInstallSideQuest"}','{"winget":"Valve.Steam","name":"Steam","id":"DblInstallSteam"}','{"winget":"LizardByte.Sunshine","name":"Sunshine Stream Server","id":"DblInstallSunshine"}','{"winget":"HeroicGamesLauncher.HeroicGamesLauncher","name":"Heroic Games Launcher","id":"DblInstallHeroic"}','{"winget":"ItchIo.Itch","name":"itch.io","id":"DblInstallItch"}','{"winget":"MedalB.V.Medal","name":"Medal","id":"DblInstallMedal"}','{"winget":"MoonlightGameStreamingProject.Moonlight","name":"Moonlight Stream Client","id":"DblInstallMoonlight"}','{"winget":null,"name":"Legendary Epic (Python)","id":"DblPythonEpicCLI"}','{"winget":"Ubisoft.Connect","name":"Ubisoft Connect","id":"DblInstallUbisoft"}','{"winget":"Wargaming.GameCenter","name":"Wargaming Game Center","id":"DblInstallWargaming"}','{"winget":"xemu-project.xemu","name":"XEMU","id":"DblInstallXemu"}','{"winget":"Audacity.Audacity","name":"Audacity","id":"DblInstallAudacity"}','{"winget":"9MVZQVXJBQ9V","name":"AV1 Video Extension","id":"DblInstallAV1"}','{"winget":"BlenderFoundation.Blender","name":"Blender","id":"DblInstallBlender"}','{"winget":"Figma.Figma","name":"Figma","id":"DblInstallFigma"}','{"winget":"Gyan.FFmpeg","name":"FFmpeg","id":"DblInstallFFmpeg"}','{"winget":"CiderCollective.Cider","name":"Cider","id":"DblInstallCider"}','{"winget":"Greenshot.Greenshot","name":"Greenshot","id":"DblInstallGreenshot"}','{"winget":"HandBrake.HandBrake","name":"Handbrake","id":"DblInstallHandbrake"}','{"winget":"DuongDieuPhap.ImageGlass","name":"ImageGlass","id":"DblInstallImageglass"}','{"winget":"XBMCFoundation.Kodi","name":"Kodi","id":"DblInstallKodi"}','{"winget":"CodecGuide.K-LiteCodecPack.Standard","name":"K-Lite Codec Pack","id":"DblInstallKlite"}','{"winget":"MediaArea.MediaInfo.GUI","name":"MediaInfo","id":"DblInstallMediaInfo"}','{"winget":"MoritzBunkus.MKVToolNix","name":"MKVToolNix","id":"DblInstallMKVToolNix"}','{"winget":"Plex.Plex","name":"Plex Client","id":"DblInstallPlex"}','{"winget":"Plex.PlexMediaServer","name":"Plex Server","id":"DblInstallPlexServer"}','{"winget":"OBSProject.OBSStudio","name":"OBS Studio","id":"DblInstallObs"}','{"winget":"9NCBCSZSJRSB","name":"Spotify","id":"DblInstallSpotify"}','{"winget":"ShareX.ShareX","name":"ShareX","id":"DblInstallSharex"}','{"winget":"VideoLAN.VLC","name":"VLC Media Player","id":"DblInstallVlc"}','{"winget":"9N4D0MSMP0PT","name":"VP9 Video Extensions","id":"DblInstallVP9"}','{"winget":"yt-dlp.yt-dlp","name":"yt-dlp","id":"DblInstallYtdlp"}','{"winget":"Anki.Anki","name":"Anki","id":"DblInstallAnki"}','{"winget":"Adobe.Acrobat.Reader.64-bit","name":"Adobe","id":"DblInstallAdobe"}','{"winget":"Joplin.Joplin","name":"Joplin","id":"DblInstallJoplin"}','{"winget":"TheDocumentFoundation.LibreOffice","name":"LibreOffice","id":"DblInstallLibreoffice"}','{"winget":"Neovim.Neovim","name":"Neovim","id":"DblInstallNeovim"}','{"winget":"Neovim.Neovim.Nightly","name":"Neovim Nightly","id":"DblInstallNeovimNightly"}','{"winget":"Notion.Notion","name":"Notion","id":"DblInstallNotion"}','{"winget":"Notepad++.Notepad++","name":"Notepad","id":"DblInstallNotepadplus"}','{"winget":"JackieLiu.NotepadsApp","name":"Notepads","id":"DblInstallNotepadsApp"}','{"winget":"Obsidian.Obsidian","name":"Obsidian","id":"DblInstallObsidian"}','{"winget":"ONLYOFFICE.DesktopEditors","name":"OnlyOffice","id":"DblInstallOnlyoffice"}','{"winget":"SublimeHQ.SublimeText.3","name":"Sublime Text 4","id":"DblInstallSublime4"}','{"winget":"SumatraPDF.SumatraPDF","name":"Sumatra","id":"DblInstallSumatra"}','{"winget":"Kingsoft.WPSOffice","name":"WPS Office","id":"DblInstallWPS"}','{"winget":"WinMerge.WinMerge","name":"WinMerge","id":"DblInstallWinmerge"}','{"winget":"AgileBits.1Password","name":"1Password","id":"DblInstall1Password"}','{"winget":"7zip.7zip","name":"7-zip","id":"DblInstall7zip"}','{"winget":"Google.PlatformTools","name":"Android Debug Bridge","id":"DblInstallADB"}','{"winget":"Alacritty.Alacritty","name":"Alacritty","id":"DblInstallAlacritty"}','{"winget":"Anydo.Anydo","name":"Anydo","id":"DblInstallAnydo"}','{"winget":"autohotkey","name":"AutoHotkey","id":"DblInstallAutohotkey"}','{"winget":"Bitwarden.Bitwarden","name":"Bitwarden","id":"DblInstallBitwarden"}','{"winget":"ChatterinoTeam.Chatterino","name":"Chatterino","id":"DblInstallChatterino"}','{"winget":"PopeenCom.ClassicVolumeMixer","name":"ClassicVolumeMixer","id":"DblInstallClasicMixer"}','{"winget":"CPUID.CPU-Z","name":"CPU-Z","id":"DblInstallCpuz"}','{"winget":"Cryptomator.Cryptomator","name":"Cryptomator","id":"DblInstallCryptomator"}','{"winget":"Wagnardsoft.DisplayDriverUninstaller","name":"Display Driver Uninstaller","id":"DblInstallDdu"}','{"winget":"JGraph.Draw","name":"Draw.io","id":"DblInstallDrawio"}','{"winget":"oidtools.Everything","name":"Everything","id":"DblInstallEsearch"}','{"winget":"Google.GoogleDrive ","name":"Google Drive","id":"DblInstallGoogleDrive"}','{"winget":"TechPowerUp.GPU-Z","name":"GPU-Z","id":"DblInstallGpuz"}','{"winget":"gerardog.gsudo","name":"gsudo","id":"DblInstallGsudo"}','{"winget":"9P1TBXR6QDCX","name":"HyperX NGENUITY","id":"DblInstallNGENUITY"}','{"winget":"REALiX.HWiNFO","name":"HWiNFO","id":"DblInstallHwinfo"}','{"winget":"AppWork.JDownloader","name":"JDownloader","id":"DblInstallJdownloader"}','{"winget":"KDE.KDEConnect","name":"KDE Connect","id":"DblInstallKDEConnect"}','{"winget":"KeePassXCTeam.KeePassXC","name":"KeePassXC","id":"DblInstallKeepass"}','{"winget":"Guru3D.Afterburner","name":"Afterburner","id":"DblInstallMsiafterburner"}','{"winget":"Mozilla.Thunderbird","name":"Thunderbird","id":"DblInstallThunderbird"}','{"winget":"M2Team.NanaZip","name":"NanaZip","id":"DblInstallNanazip"}','{"winget":"gsass1.NTop","name":"NTop","id":"DblInstallNTop"}','{"winget":"TechPowerUp.NVCleanstall","name":"NVCleanstall","id":"DblInstallNvclean"}','{"winget":"Oracle.VirtualBox","name":"VirtualBox","id":"DblInstallOVirtualBox"}','{"winget":"Ookla.Speedtest.Desktop","name":"Speedtest by Ookla","id":"DblInstallSpeedtest"}','{"winget":"CalcProgrammer1.OpenRGB","name":"OpenRGB","id":"DblInstallOpenrgb"}','{"winget":"Parsec.Parsec","name":"Parsec","id":"DblInstallParsec"}','{"winget":"Postbox.Postbox","name":"Postbox","id":"DblInstallPostbox"}','{"winget":"BitSum.ProcessLasso","name":"Process Lasso","id":"DblInstallProcesslasso"}','{"winget":"ProxymanLLC.Proxyman","name":"Proxyman","id":"DblInstallProxyman"}','{"winget":"qBittorrent.qBittorrent","name":"qBittorrent","id":"DblInstallQbittorrent"}','{"winget":"Rclone.Rclone","name":"Rclone","id":"DblInstallRclone"}','{"winget":"RevoUninstaller.RevoUninstaller","name":"Revo","id":"DblInstallRevo"}','{"winget":"Rufus.Rufus","name":"Rufus","id":"DblInstallRufus"}','{"winget":"9PF4KZ2VN4W9","name":"Ttaskbar","id":"DblInstallTtaskbar"}','{"winget":"SomePythonThings.WingetUIStore","name":"WingetUI","id":"DblInstallWingetUI"}','{"winget":"RARLab.WinRAR","name":"WinRAR","id":"DblInstallWinrar"}')
-$appx = @('{"id":"MicrosoftCorporationIIQuickAssist","name":"MicrosoftCorporationII.QuickAssist"}','{"id":"ClipchampClipchamp","name":"Clipchamp.Clipchamp"}','{"id":"MicrosoftOutlookForWindows","name":"Microsoft.OutlookForWindows"}','{"id":"MicrosoftPowerAutomateDesktop","name":"Microsoft.PowerAutomateDesktop"}','{"id":"MicrosoftTodos","name":"Microsoft.Todos"}','{"id":"MicrosoftAppConnector","name":"Microsoft.AppConnector"}','{"id":"MicrosoftBingFinance","name":"Microsoft.BingFinance"}','{"id":"MicrosoftBingNews","name":"Microsoft.BingNews"}','{"id":"MicrosoftBingSports","name":"Microsoft.BingSports"}','{"id":"MicrosoftBingTranslator","name":"Microsoft.BingTranslator"}','{"id":"MicrosoftBingWeather","name":"Microsoft.BingWeather"}','{"id":"MicrosoftBingFoodAndDrink","name":"Microsoft.BingFoodAndDrink"}','{"id":"MicrosoftBingHealthAndFitness","name":"Microsoft.BingHealthAndFitness"}','{"id":"MicrosoftBingTravel","name":"Microsoft.BingTravel"}','{"id":"MicrosoftMinecraftUWP","name":"Microsoft.MinecraftUWP"}','{"id":"MicrosoftGamingServices","name":"Microsoft.GamingServices"}','{"id":"MicrosoftGetHelp","name":"Microsoft.GetHelp"}','{"id":"MicrosoftGetstarted","name":"Microsoft.Getstarted"}','{"id":"MicrosoftMessaging","name":"Microsoft.Messaging"}','{"id":"MicrosoftMicrosoft3DViewer","name":"Microsoft.Microsoft3DViewer"}','{"id":"MicrosoftMicrosoftSolitaireCollection","name":"Microsoft.MicrosoftSolitaireCollection"}','{"id":"MicrosoftNetworkSpeedTest","name":"Microsoft.NetworkSpeedTest"}','{"id":"MicrosoftNews","name":"Microsoft.News"}','{"id":"MicrosoftOfficeLens","name":"Microsoft.Office.Lens"}','{"id":"MicrosoftOfficeSway","name":"Microsoft.Office.Sway"}','{"id":"MicrosoftOfficeOneNote","name":"Microsoft.Office.OneNote"}','{"id":"MicrosoftOneConnect","name":"Microsoft.OneConnect"}','{"id":"MicrosoftPeople","name":"Microsoft.People"}','{"id":"MicrosoftPrint3D","name":"Microsoft.Print3D"}','{"id":"MicrosoftSkypeApp","name":"Microsoft.SkypeApp"}','{"id":"MicrosoftWallet","name":"Microsoft.Wallet"}','{"id":"MicrosoftWhiteboard","name":"Microsoft.Whiteboard"}','{"id":"MicrosoftWindowsAlarms","name":"Microsoft.WindowsAlarms"}','{"id":"microsoftwindowscommunicationsapps","name":"microsoft.windowscommunicationsapps"}','{"id":"MicrosoftWindowsFeedbackHub","name":"Microsoft.WindowsFeedbackHub"}','{"id":"MicrosoftWindowsMaps","name":"Microsoft.WindowsMaps"}','{"id":"MicrosoftWindowsPhone","name":"Microsoft.WindowsPhone"}','{"id":"MicrosoftWindowsSoundRecorder","name":"Microsoft.WindowsSoundRecorder"}','{"id":"MicrosoftXboxApp","name":"Microsoft.XboxApp"}','{"id":"MicrosoftGamingApp","name":"Microsoft.GamingApp"}','{"id":"MicrosoftConnectivityStore","name":"Microsoft.ConnectivityStore"}','{"id":"MicrosoftCommsPhone","name":"Microsoft.CommsPhone"}','{"id":"MicrosoftScreenSketch","name":"Microsoft.ScreenSketch"}','{"id":"MicrosoftXboxTCUI","name":"Microsoft.Xbox.TCUI"}','{"id":"MicrosoftXboxGameOverlay","name":"Microsoft.XboxGameOverlay"}','{"id":"MicrosoftXboxGamingOverlay","name":"Microsoft.XboxGamingOverlay"}','{"id":"MicrosoftXboxGameCallableUI","name":"Microsoft.XboxGameCallableUI"}','{"id":"MicrosoftXboxSpeechToTextOverlay","name":"Microsoft.XboxSpeechToTextOverlay"}','{"id":"MicrosoftXboxIdentityProvider","name":"Microsoft.XboxIdentityProvider"}','{"id":"MicrosoftMixedRealityPortal","name":"Microsoft.MixedReality.Portal"}','{"id":"MicrosoftYourPhone","name":"Microsoft.YourPhone"}','{"id":"MicrosoftZuneMusic","name":"Microsoft.ZuneMusic"}','{"id":"MicrosoftZuneVideo","name":"Microsoft.ZuneVideo"}','{"id":"MicrosoftGetstarted","name":"Microsoft.Getstarted"}','{"id":"MicrosoftFamily","name":"Microsoft.Family"}','{"id":"MicrosoftMicrosoftOfficeHub","name":"Microsoft.MicrosoftOfficeHub"}','{"id":"MicrosoftMicrosoftStickyNotes","name":"Microsoft.MicrosoftStickyNotes"}','{"id":"EclipseManager","name":"*EclipseManager*"}','{"id":"ActiproSoftwareLLC","name":"*ActiproSoftwareLLC*"}','{"id":"AdobePhotoshopExpress","name":"*AdobeSystemsIncorporated.AdobePhotoshopExpress*"}','{"id":"DuolingoLearnLanguagesforFree","name":"*Duolingo-LearnLanguagesforFree*"}','{"id":"PandoraMediaInc","name":"*PandoraMediaInc*"}','{"id":"CandyCrush","name":"*CandyCrush*"}','{"id":"BubbleWitch3Saga","name":"*BubbleWitch3Saga*"}','{"id":"Wunderlist","name":"*Wunderlist*"}','{"id":"Flipboard","name":"*Flipboard*"}','{"id":"Twitter","name":"*Twitter*"}','{"id":"Facebook","name":"*Facebook*"}','{"id":"RoyalRevolt","name":"*Royal Revolt*"}','{"id":"Sway","name":"*Sway*"}','{"id":"SpeedTest","name":"*Speed Test*"}','{"id":"Dolby","name":"*Dolby*"}','{"id":"Viber","name":"*Viber*"}','{"id":"ACGMediaPlayer","name":"*ACGMediaPlayer*"}','{"id":"Netflix","name":"*Netflix*"}','{"id":"OneCalendar","name":"*OneCalendar*"}','{"id":"LinkedInforWindows","name":"*LinkedInforWindows*"}','{"id":"HiddenCityMysteryofShadows","name":"*HiddenCityMysteryofShadows*"}','{"id":"Hulu","name":"*Hulu*"}','{"id":"HiddenCity","name":"*HiddenCity*"}','{"id":"AdobePhotoshopExpress","name":"*AdobePhotoshopExpress*"}','{"id":"HotspotShieldFreeVPN","name":"*HotspotShieldFreeVPN*"}','{"id":"MicrosoftAdvertisingXaml","name":"*Microsoft.Advertising.Xaml*"}','{"id":"WindowsDevHome","name":"*Windows.DevHome*"}')
+$programs = @('{"winget":"Docker.DockerDesktop","id":"DblInstallDockerdesktop","name":"Docker Desktop"}','{"winget":"Git.Git","id":"DblInstallGit","name":"Git"}','{"winget":"GitExtensionsTeam.GitExtensions","id":"DblInstallGitextensions","name":"Git Extensions"}','{"winget":"GitHub.GitHubDesktop","id":"DblInstallGithubdesktop","name":"GitHub Desktop"}','{"winget":"GodotEngine.GodotEngine","id":"DblInstallGodotEngine","name":"Godot Engine"}','{"winget":"GoLang.Go","id":"DblInstallGolang","name":"Go Programming Language"}','{"winget":"HeidiSQL.HeidiSQL","id":"DblInstallHeidisql","name":"HeidiSQL"}','{"winget":"Oracle.MySQL","id":"DblInstallMySQL","name":"MySQL"}','{"winget":"OpenJS.NodeJS","id":"DblInstallNodejs","name":"Node.js"}','{"winget":"OpenJS.NodeJS.LTS","id":"DblInstallNodejslts","name":"Node.js LTS"}','{"winget":"CoreyButler.NVMforWindows","id":"DblInstallNodemanager","name":"Node Version Manager (NVM)"}','{"winget":"EclipseAdoptium.Temurin.8.JRE","id":"DblInstallJava8","name":"Java 8"}','{"winget":"EclipseAdoptium.Temurin.11.JRE","id":"DblInstallJava11","name":"Java 11"}','{"winget":"EclipseAdoptium.Temurin.17.JRE","id":"DblInstallJava17","name":"Java 17"}','{"winget":"EclipseAdoptium.Temurin.21.JDK","id":"DblInstallJava21","name":"Java 21"}','{"winget":"JanDeDobbeleer.OhMyPosh","id":"DblInstallOhmyposh","name":"Oh My Posh"}','{"winget":"Python.Python.3.12","id":"DblInstallPython3","name":"Python 3"}','{"winget":"RedHat.Podman","id":"DblInstallPodman","name":"Podman"}','{"winget":"Postman.Postman","id":"DblInstallPostman","name":"Postman"}','{"winget":"RubyInstallerTeam.Ruby.3.2","id":"DblInstallRuby","name":"Ruby 3.2"}','{"winget":"Rustlang.Rust.MSVC","id":"DblInstallRust","name":"Rust"}','{"winget":"DBBrowserForSQLite.DBBrowserForSQLite","id":"DblInstallSQLite","name":"SQLite"}','{"winget":"Microsoft.SQLServer.2022.Developer","id":"DblInstallSQLServer2022","name":"SQL Server 2022 Developer"}','{"winget":"Unity.Unity.2022","id":"DblInstallUnity","name":"Unity 2022"}','{"winget":"Hashicorp.Vagrant","id":"DblInstallVagrant","name":"Vagrant"}','{"winget":"Microsoft.VisualStudio.2022.Community","id":"DblInstallVisualstudio2022","name":"Visual Studio 2022"}','{"winget":"Microsoft.VisualStudioCode","id":"DblInstallCode","name":"Visual Studio Code"}','{"winget":"Microsoft.DotNet.DesktopRuntime.3_1","id":"DblInstallDotnet3","name":".NET Core 3"}','{"winget":"Microsoft.DotNet.DesktopRuntime.5","id":"DblInstallDotnet5","name":".NET 5"}','{"winget":"Microsoft.DotNet.DesktopRuntime.6","id":"DblInstallDotnet6","name":".NET 6"}','{"winget":"Microsoft.DotNet.DesktopRuntime.7","id":"DblInstallDotnet7","name":".NET 7"}','{"winget":"Microsoft.DotNet.DesktopRuntime.8","id":"DblInstallDotnet8","name":".NET 8"}','{"winget":"Microsoft.Sysinternals.Autoruns","id":"DblInstallAutoruns","name":"Autoruns"}','{"winget":"MHNexus.HxD","id":"DblInstallHxD","name":"HxD Hex Editor"}','{"winget":"Microsoft.PowerShell","id":"DblInstallPowershell","name":"PowerShell"}','{"winget":"Microsoft.PowerToys","id":"DblInstallPowertoys","name":"PowerToys"}','{"winget":"Microsoft.Sysinternals.ProcessExplorer","id":"DblInstallProcessExplorer","name":"Process Explorer"}','{"winget":"Microsoft.VCRedist.2015+.x64","id":"DblInstallvc2015_64","name":"Visual 2015 Redistributable (64-bit)"}','{"winget":"Microsoft.VCRedist.2015+.x86","id":"DblInstallvc2015_32","name":"Visual 2015 Redistributable (32-bit)"}','{"winget":"Microsoft.WindowsTerminal","id":"DblInstallTerminal","name":"Windows Terminal"}','{"winget":"Brave.Brave","id":"DblInstallBrave","name":"Brave"}','{"winget":"Google.Chrome","id":"DblInstallChrome","name":"Google Chrome"}','{"winget":"eloston.ungoogled-chromium","id":"DblInstallChromium","name":"Chromium"}','{"winget":"Mozilla.Firefox","id":"DblInstallFirefox","name":"Mozilla Firefox"}','{"winget":"MullvadVPN.MullvadBrowser","id":"DblInstallMullvad","name":"Mullvad"}','{"winget":"Alex313031.Thorium","id":"DblInstallThorium","name":"Thorium"}','{"winget":"Alex313031.Thorium.AVX2","id":"DblInstallThoriumAVX","name":"Thorium AVX2"}','{"winget":"TorProject.TorBrowser","id":"DblInstallTor","name":"Tor Browser"}','{"winget":"Librewolf.Librewolf","id":"DblInstallLibrewolf","name":"Librewolf"}','{"winget":"Ablaze.Floorp","id":"DblInstallFloorp","name":"Floorp"}','{"winget":"eloston.ungoogled-chromium","id":"DblInstallUngoogled","name":"Ungoogled"}','{"winget":"VivaldiTechnologies.Vivaldi","id":"DblInstallVivaldi","name":"Vivaldi"}','{"winget":"Waterfox.Waterfox","id":"DblInstallWaterfox","name":"Waterfox"}','{"winget":"Discord.Discord","id":"DblInstallDiscord","name":"Discord"}','{"winget":"Element.Element","id":"DblInstallMatrix","name":"Element (Matrix)"}','{"winget":"Microsoft.Skype","id":"DblInstallSkype","name":"Skype"}','{"winget":"SlackTechnologies.Slack","id":"DblInstallSlack","name":"Slack"}','{"winget":"Microsoft.Teams","id":"DblInstallTeams","name":"Microsoft Teams"}','{"winget":"Telegram.TelegramDesktop","id":"DblInstallTelegram","name":"Telegram"}','{"winget":"Viber.Viber","id":"DblInstallViber","name":"Viber"}','{"winget":"Zoom.Zoom","id":"DblInstallZoom","name":"Zoom"}','{"winget":"BlueStack.BlueStacks","id":"DblInstallBluestacks","name":"Bluestacks"}','{"winget":"Cemu.Cemu","id":"DblInstallCemu","name":"Cemu"}','{"winget":"ElectronicArts.EADesktop","id":"DblInstallEaapp","name":"EA Desktop App"}','{"winget":"Emulationstation.Emulationstation","id":"DblInstallEmulationstation","name":"Emulation Station"}','{"winget":"EpicGames.EpicGamesLauncher","id":"DblInstallEpicgames","name":"Epic Games Store"}','{"winget":"Nvidia.GeforceNOW","id":"DblInstallGeforcenow","name":"NVIDIA GeForce NOW"}','{"winget":"GOG.Galaxy","id":"DblInstallGog","name":"GOG Galaxy"}','{"winget":"Playnite.Playnite","id":"DblInstallPlaynite","name":"Playnite"}','{"winget":"PrismLauncher.PrismLauncher","id":"DblInstallPrism","name":"Prism Launcher"}','{"winget":"SideQuestVR.SideQuest","id":"DblInstallSideQuest","name":"SideQuestVR"}','{"winget":"Valve.Steam","id":"DblInstallSteam","name":"Steam"}','{"winget":"LizardByte.Sunshine","id":"DblInstallSunshine","name":"Sunshine Stream Server"}','{"winget":"HeroicGamesLauncher.HeroicGamesLauncher","id":"DblInstallHeroic","name":"Heroic Games Launcher"}','{"winget":"ItchIo.Itch","id":"DblInstallItch","name":"itch.io"}','{"winget":"MedalB.V.Medal","id":"DblInstallMedal","name":"Medal"}','{"winget":"MoonlightGameStreamingProject.Moonlight","id":"DblInstallMoonlight","name":"Moonlight Stream Client"}','{"winget":null,"id":"DblPythonEpicCLI","name":"Legendary Epic (Python)"}','{"winget":"Ubisoft.Connect","id":"DblInstallUbisoft","name":"Ubisoft Connect"}','{"winget":"Wargaming.GameCenter","id":"DblInstallWargaming","name":"Wargaming Game Center"}','{"winget":"xemu-project.xemu","id":"DblInstallXemu","name":"XEMU"}','{"winget":"Audacity.Audacity","id":"DblInstallAudacity","name":"Audacity"}','{"winget":"9MVZQVXJBQ9V","id":"DblInstallAV1","name":"AV1 Video Extension"}','{"winget":"BlenderFoundation.Blender","id":"DblInstallBlender","name":"Blender"}','{"winget":"Figma.Figma","id":"DblInstallFigma","name":"Figma"}','{"winget":"Gyan.FFmpeg","id":"DblInstallFFmpeg","name":"FFmpeg"}','{"winget":"CiderCollective.Cider","id":"DblInstallCider","name":"Cider"}','{"winget":"Greenshot.Greenshot","id":"DblInstallGreenshot","name":"Greenshot"}','{"winget":"HandBrake.HandBrake","id":"DblInstallHandbrake","name":"Handbrake"}','{"winget":"DuongDieuPhap.ImageGlass","id":"DblInstallImageglass","name":"ImageGlass"}','{"winget":"XBMCFoundation.Kodi","id":"DblInstallKodi","name":"Kodi"}','{"winget":"CodecGuide.K-LiteCodecPack.Standard","id":"DblInstallKlite","name":"K-Lite Codec Pack"}','{"winget":"MediaArea.MediaInfo.GUI","id":"DblInstallMediaInfo","name":"MediaInfo"}','{"winget":"MoritzBunkus.MKVToolNix","id":"DblInstallMKVToolNix","name":"MKVToolNix"}','{"winget":"Plex.Plex","id":"DblInstallPlex","name":"Plex Client"}','{"winget":"Plex.PlexMediaServer","id":"DblInstallPlexServer","name":"Plex Server"}','{"winget":"OBSProject.OBSStudio","id":"DblInstallObs","name":"OBS Studio"}','{"winget":"9NCBCSZSJRSB","id":"DblInstallSpotify","name":"Spotify"}','{"winget":"ShareX.ShareX","id":"DblInstallSharex","name":"ShareX"}','{"winget":"VideoLAN.VLC","id":"DblInstallVlc","name":"VLC Media Player"}','{"winget":"9N4D0MSMP0PT","id":"DblInstallVP9","name":"VP9 Video Extensions"}','{"winget":"yt-dlp.yt-dlp","id":"DblInstallYtdlp","name":"yt-dlp"}','{"winget":"Anki.Anki","id":"DblInstallAnki","name":"Anki"}','{"winget":"Adobe.Acrobat.Reader.64-bit","id":"DblInstallAdobe","name":"Adobe"}','{"winget":"Joplin.Joplin","id":"DblInstallJoplin","name":"Joplin"}','{"winget":"TheDocumentFoundation.LibreOffice","id":"DblInstallLibreoffice","name":"LibreOffice"}','{"winget":"Neovim.Neovim","id":"DblInstallNeovim","name":"Neovim"}','{"winget":"Neovim.Neovim.Nightly","id":"DblInstallNeovimNightly","name":"Neovim Nightly"}','{"winget":"Notion.Notion","id":"DblInstallNotion","name":"Notion"}','{"winget":"Notepad++.Notepad++","id":"DblInstallNotepadplus","name":"Notepad"}','{"winget":"JackieLiu.NotepadsApp","id":"DblInstallNotepadsApp","name":"Notepads"}','{"winget":"Obsidian.Obsidian","id":"DblInstallObsidian","name":"Obsidian"}','{"winget":"ONLYOFFICE.DesktopEditors","id":"DblInstallOnlyoffice","name":"OnlyOffice"}','{"winget":"SublimeHQ.SublimeText.3","id":"DblInstallSublime4","name":"Sublime Text 4"}','{"winget":"SumatraPDF.SumatraPDF","id":"DblInstallSumatra","name":"Sumatra"}','{"winget":"Kingsoft.WPSOffice","id":"DblInstallWPS","name":"WPS Office"}','{"winget":"WinMerge.WinMerge","id":"DblInstallWinmerge","name":"WinMerge"}','{"winget":"AgileBits.1Password","id":"DblInstall1Password","name":"1Password"}','{"winget":"7zip.7zip","id":"DblInstall7zip","name":"7-zip"}','{"winget":"Google.PlatformTools","id":"DblInstallADB","name":"Android Debug Bridge"}','{"winget":"Alacritty.Alacritty","id":"DblInstallAlacritty","name":"Alacritty"}','{"winget":"Anydo.Anydo","id":"DblInstallAnydo","name":"Anydo"}','{"winget":"autohotkey","id":"DblInstallAutohotkey","name":"AutoHotkey"}','{"winget":"Bitwarden.Bitwarden","id":"DblInstallBitwarden","name":"Bitwarden"}','{"winget":"ChatterinoTeam.Chatterino","id":"DblInstallChatterino","name":"Chatterino"}','{"winget":"PopeenCom.ClassicVolumeMixer","id":"DblInstallClasicMixer","name":"ClassicVolumeMixer"}','{"winget":"CPUID.CPU-Z","id":"DblInstallCpuz","name":"CPU-Z"}','{"winget":"Cryptomator.Cryptomator","id":"DblInstallCryptomator","name":"Cryptomator"}','{"winget":"Wagnardsoft.DisplayDriverUninstaller","id":"DblInstallDdu","name":"Display Driver Uninstaller"}','{"winget":"JGraph.Draw","id":"DblInstallDrawio","name":"Draw.io"}','{"winget":"oidtools.Everything","id":"DblInstallEsearch","name":"Everything"}','{"winget":"Google.GoogleDrive ","id":"DblInstallGoogleDrive","name":"Google Drive"}','{"winget":"TechPowerUp.GPU-Z","id":"DblInstallGpuz","name":"GPU-Z"}','{"winget":"gerardog.gsudo","id":"DblInstallGsudo","name":"gsudo"}','{"winget":"9P1TBXR6QDCX","id":"DblInstallNGENUITY","name":"HyperX NGENUITY"}','{"winget":"REALiX.HWiNFO","id":"DblInstallHwinfo","name":"HWiNFO"}','{"winget":"AppWork.JDownloader","id":"DblInstallJdownloader","name":"JDownloader"}','{"winget":"KDE.KDEConnect","id":"DblInstallKDEConnect","name":"KDE Connect"}','{"winget":"KeePassXCTeam.KeePassXC","id":"DblInstallKeepass","name":"KeePassXC"}','{"winget":"Guru3D.Afterburner","id":"DblInstallMsiafterburner","name":"Afterburner"}','{"winget":"Mozilla.Thunderbird","id":"DblInstallThunderbird","name":"Thunderbird"}','{"winget":"M2Team.NanaZip","id":"DblInstallNanazip","name":"NanaZip"}','{"winget":"gsass1.NTop","id":"DblInstallNTop","name":"NTop"}','{"winget":"TechPowerUp.NVCleanstall","id":"DblInstallNvclean","name":"NVCleanstall"}','{"winget":"Oracle.VirtualBox","id":"DblInstallOVirtualBox","name":"VirtualBox"}','{"winget":"Ookla.Speedtest.Desktop","id":"DblInstallSpeedtest","name":"Speedtest by Ookla"}','{"winget":"CalcProgrammer1.OpenRGB","id":"DblInstallOpenrgb","name":"OpenRGB"}','{"winget":"Parsec.Parsec","id":"DblInstallParsec","name":"Parsec"}','{"winget":"Postbox.Postbox","id":"DblInstallPostbox","name":"Postbox"}','{"winget":"BitSum.ProcessLasso","id":"DblInstallProcesslasso","name":"Process Lasso"}','{"winget":"ProxymanLLC.Proxyman","id":"DblInstallProxyman","name":"Proxyman"}','{"winget":"qBittorrent.qBittorrent","id":"DblInstallQbittorrent","name":"qBittorrent"}','{"winget":"Rclone.Rclone","id":"DblInstallRclone","name":"Rclone"}','{"winget":"RevoUninstaller.RevoUninstaller","id":"DblInstallRevo","name":"Revo"}','{"winget":"Rufus.Rufus","id":"DblInstallRufus","name":"Rufus"}','{"winget":"9PF4KZ2VN4W9","id":"DblInstallTtaskbar","name":"Ttaskbar"}','{"winget":"SomePythonThings.WingetUIStore","id":"DblInstallWingetUI","name":"WingetUI"}','{"winget":"RARLab.WinRAR","id":"DblInstallWinrar","name":"WinRAR"}')
+$appx = @('{"name":"MicrosoftCorporationII.QuickAssist","id":"MicrosoftCorporationIIQuickAssist"}','{"name":"Clipchamp.Clipchamp","id":"ClipchampClipchamp"}','{"name":"Microsoft.OutlookForWindows","id":"MicrosoftOutlookForWindows"}','{"name":"Microsoft.PowerAutomateDesktop","id":"MicrosoftPowerAutomateDesktop"}','{"name":"Microsoft.Todos","id":"MicrosoftTodos"}','{"name":"Microsoft.AppConnector","id":"MicrosoftAppConnector"}','{"name":"Microsoft.BingFinance","id":"MicrosoftBingFinance"}','{"name":"Microsoft.BingNews","id":"MicrosoftBingNews"}','{"name":"Microsoft.BingSports","id":"MicrosoftBingSports"}','{"name":"Microsoft.BingTranslator","id":"MicrosoftBingTranslator"}','{"name":"Microsoft.BingWeather","id":"MicrosoftBingWeather"}','{"name":"Microsoft.BingFoodAndDrink","id":"MicrosoftBingFoodAndDrink"}','{"name":"Microsoft.BingHealthAndFitness","id":"MicrosoftBingHealthAndFitness"}','{"name":"Microsoft.BingTravel","id":"MicrosoftBingTravel"}','{"name":"Microsoft.MinecraftUWP","id":"MicrosoftMinecraftUWP"}','{"name":"Microsoft.GamingServices","id":"MicrosoftGamingServices"}','{"name":"Microsoft.GetHelp","id":"MicrosoftGetHelp"}','{"name":"Microsoft.Getstarted","id":"MicrosoftGetstarted"}','{"name":"Microsoft.Messaging","id":"MicrosoftMessaging"}','{"name":"Microsoft.Microsoft3DViewer","id":"MicrosoftMicrosoft3DViewer"}','{"name":"Microsoft.MicrosoftSolitaireCollection","id":"MicrosoftMicrosoftSolitaireCollection"}','{"name":"Microsoft.NetworkSpeedTest","id":"MicrosoftNetworkSpeedTest"}','{"name":"Microsoft.News","id":"MicrosoftNews"}','{"name":"Microsoft.Office.Lens","id":"MicrosoftOfficeLens"}','{"name":"Microsoft.Office.Sway","id":"MicrosoftOfficeSway"}','{"name":"Microsoft.Office.OneNote","id":"MicrosoftOfficeOneNote"}','{"name":"Microsoft.OneConnect","id":"MicrosoftOneConnect"}','{"name":"Microsoft.People","id":"MicrosoftPeople"}','{"name":"Microsoft.Print3D","id":"MicrosoftPrint3D"}','{"name":"Microsoft.SkypeApp","id":"MicrosoftSkypeApp"}','{"name":"Microsoft.Wallet","id":"MicrosoftWallet"}','{"name":"Microsoft.Whiteboard","id":"MicrosoftWhiteboard"}','{"name":"Microsoft.WindowsAlarms","id":"MicrosoftWindowsAlarms"}','{"name":"microsoft.windowscommunicationsapps","id":"microsoftwindowscommunicationsapps"}','{"name":"Microsoft.WindowsFeedbackHub","id":"MicrosoftWindowsFeedbackHub"}','{"name":"Microsoft.WindowsMaps","id":"MicrosoftWindowsMaps"}','{"name":"Microsoft.WindowsPhone","id":"MicrosoftWindowsPhone"}','{"name":"Microsoft.WindowsSoundRecorder","id":"MicrosoftWindowsSoundRecorder"}','{"name":"Microsoft.XboxApp","id":"MicrosoftXboxApp"}','{"name":"Microsoft.GamingApp","id":"MicrosoftGamingApp"}','{"name":"Microsoft.ConnectivityStore","id":"MicrosoftConnectivityStore"}','{"name":"Microsoft.CommsPhone","id":"MicrosoftCommsPhone"}','{"name":"Microsoft.ScreenSketch","id":"MicrosoftScreenSketch"}','{"name":"Microsoft.Xbox.TCUI","id":"MicrosoftXboxTCUI"}','{"name":"Microsoft.XboxGameOverlay","id":"MicrosoftXboxGameOverlay"}','{"name":"Microsoft.XboxGamingOverlay","id":"MicrosoftXboxGamingOverlay"}','{"name":"Microsoft.XboxGameCallableUI","id":"MicrosoftXboxGameCallableUI"}','{"name":"Microsoft.XboxSpeechToTextOverlay","id":"MicrosoftXboxSpeechToTextOverlay"}','{"name":"Microsoft.XboxIdentityProvider","id":"MicrosoftXboxIdentityProvider"}','{"name":"Microsoft.MixedReality.Portal","id":"MicrosoftMixedRealityPortal"}','{"name":"Microsoft.YourPhone","id":"MicrosoftYourPhone"}','{"name":"Microsoft.ZuneMusic","id":"MicrosoftZuneMusic"}','{"name":"Microsoft.ZuneVideo","id":"MicrosoftZuneVideo"}','{"name":"Microsoft.Getstarted","id":"MicrosoftGetstarted"}','{"name":"Microsoft.Family","id":"MicrosoftFamily"}','{"name":"Microsoft.MicrosoftOfficeHub","id":"MicrosoftMicrosoftOfficeHub"}','{"name":"Microsoft.MicrosoftStickyNotes","id":"MicrosoftMicrosoftStickyNotes"}','{"name":"*EclipseManager*","id":"EclipseManager"}','{"name":"*ActiproSoftwareLLC*","id":"ActiproSoftwareLLC"}','{"name":"*AdobeSystemsIncorporated.AdobePhotoshopExpress*","id":"AdobePhotoshopExpress"}','{"name":"*Duolingo-LearnLanguagesforFree*","id":"DuolingoLearnLanguagesforFree"}','{"name":"*PandoraMediaInc*","id":"PandoraMediaInc"}','{"name":"*CandyCrush*","id":"CandyCrush"}','{"name":"*BubbleWitch3Saga*","id":"BubbleWitch3Saga"}','{"name":"*Wunderlist*","id":"Wunderlist"}','{"name":"*Flipboard*","id":"Flipboard"}','{"name":"*Twitter*","id":"Twitter"}','{"name":"*Facebook*","id":"Facebook"}','{"name":"*Royal Revolt*","id":"RoyalRevolt"}','{"name":"*Sway*","id":"Sway"}','{"name":"*Speed Test*","id":"SpeedTest"}','{"name":"*Dolby*","id":"Dolby"}','{"name":"*Viber*","id":"Viber"}','{"name":"*ACGMediaPlayer*","id":"ACGMediaPlayer"}','{"name":"*Netflix*","id":"Netflix"}','{"name":"*OneCalendar*","id":"OneCalendar"}','{"name":"*LinkedInforWindows*","id":"LinkedInforWindows"}','{"name":"*HiddenCityMysteryofShadows*","id":"HiddenCityMysteryofShadows"}','{"name":"*Hulu*","id":"Hulu"}','{"name":"*HiddenCity*","id":"HiddenCity"}','{"name":"*AdobePhotoshopExpress*","id":"AdobePhotoshopExpress"}','{"name":"*HotspotShieldFreeVPN*","id":"HotspotShieldFreeVPN"}','{"name":"*Microsoft.Advertising.Xaml*","id":"MicrosoftAdvertisingXaml"}','{"name":"*Windows.DevHome*","id":"WindowsDevHome"}')
 # Embedded from tweaks.json
 $tweaks = @'
 {
@@ -394,7 +402,7 @@ $tweaks = @'
         "Content": "Disable WiFi Sense",
         "Description": "Disables automatic connection to open hotspots and Wi-Fi reporting.",
         "DisableMessage": "Disabling Wi-Fi Sense...",
-        "Registry": [
+        "registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Microsoft\\PolicyManager\\default\\WiFi\\AllowWiFiHotSpotReporting",
                 "Name": "Value",
@@ -416,7 +424,7 @@ $tweaks = @'
         "Content": "Disable Activity History",
         "Description": "This erases recent docs, clipboard, and run history.",
         "DisableMessage": "Disabling Activity History...",
-        "Registry": [
+        "registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
                 "Name": "EnableActivityFeed",
@@ -775,11 +783,11 @@ $tweaks = @'
         "InvokeScript": [
             "Get-ChildItem -Path 'C:\\Windows\\Temp' *.* -Recurse -Force | ForEach-Object {
             try { Remove-Item $_.FullName -Force -Recurse -ErrorAction Stop } 
-            catch { }
+            catch { Write-Warning \"Failed to remove temp file: $_\" }
             }
             Get-ChildItem -Path $env:TEMP *.* -Recurse -Force | ForEach-Object {
                 try { Remove-Item $_.FullName -Force -Recurse -ErrorAction Stop } 
-                catch { }
+                catch { Write-Warning \"Failed to remove temp file: $_\" }
             }
             Write-Host '======================================='
             Write-Host '--- Cleaned following folders:'
@@ -1035,7 +1043,7 @@ $tweaks = @'
 
             # Flush the DNS resolver cache
             try {
-                Invoke-Expression \"ipconfig /flushdns\"
+                & ipconfig /flushdns
                 Write-Output \"DNS cache flushed successfully.\"
             } catch {
                 Write-Error \"Failed to flush DNS cache. Error: $_\"
@@ -1082,7 +1090,7 @@ $tweaks = @'
 
             # Flush the DNS resolver cache
             try {
-                Invoke-Expression \"ipconfig /flushdns\"
+                & ipconfig /flushdns
                 Write-Output \"DNS cache flushed successfully.\"
             } catch {
                 Write-Error \"Failed to flush DNS cache. Error: $_\"
@@ -1343,7 +1351,7 @@ $tweaks = @'
     },
     "DblOneDrive": {
         "Type": "CheckBox",
-        "Content": "Remove OneDrive âš ï¸",
+        "Content": "Remove OneDrive ⚠️",
         "Description": "Moves OneDrive files to Default Home Folders and Uninstalls it. Recomended on fresh installs!",
         "DisableMessage": "Removing OneDrive...",
         "InvokeScript": [
@@ -1680,7 +1688,7 @@ $tweaks = @'
             Get-ChildItem -Path $schemePath -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.PSChildName -eq '.Current' } | ForEach-Object { Set-ItemProperty -Path $_.PSPath -Name '(Default)' -Value '' }
 
             # Broadcast settings change so it applies immediately
-            Add-Type \"using System; using System.Runtime.InteropServices; public class RefreshSystem { [DllImport(\"user32.dll\", SetLastError=true, CharSet=CharSet.Auto)] public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult); }\"
+            Invoke-LoadNativeMethods -Type RefreshSystem
             $HWND_BROADCAST = [IntPtr]0xffff
             $WM_SETTINGCHANGE = 0x1A
             $SMTO_ABORTIFHUNG = 0x2
@@ -1697,7 +1705,7 @@ $tweaks = @'
             }
 
             # Broadcast settings change so it applies immediately
-            Add-Type \"using System; using System.Runtime.InteropServices; public class RefreshSystem { [DllImport(\"user32.dll\", SetLastError=true, CharSet=CharSet.Auto)] public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult); }\"
+            Invoke-LoadNativeMethods -Type RefreshSystem
             $HWND_BROADCAST = [IntPtr]0xffff
             $WM_SETTINGCHANGE = 0x1A
             $SMTO_ABORTIFHUNG = 0x2
@@ -2035,7 +2043,7 @@ $tweaks = @'
                 Set-ItemProperty -Path $registryPath -Name '(Default)' -Value 'Windows Default (system scheme)' -Force
 
                 Start-Sleep 1
-                Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class SystemParamInfo { [DllImport(\"user32.dll\", CharSet = CharSet.Unicode)] public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni); }' -Language CSharp
+                Invoke-LoadNativeMethods -Type SystemParamInfo
                 [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
                 Write-Host 'Restored Windows default mouse cursors.' -ForegroundColor Green
             "
@@ -2132,7 +2140,7 @@ $tweaks = @'
                 Set-ItemProperty -Path $registryPath -Name '(Default)' -Value 'Windows Default (system scheme)' -Force
 
                 Start-Sleep 1
-                Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class SystemParamInfo { [DllImport(\"user32.dll\", CharSet = CharSet.Unicode)] public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni); }' -Language CSharp
+                Invoke-LoadNativeMethods -Type SystemParamInfo
                 [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
                 Write-Host 'Restored Windows default mouse cursors.' -ForegroundColor Green
             "
@@ -2546,6 +2554,14 @@ $tweaks = @'
                 "Type": "Dword",
                 "DefaultState": "true"
             }
+        ],
+        "InvokeScript": [
+            "Write-Host \"Restarting Explorer to apply taskbar alignment...\" -ForegroundColor Green",
+            "Invoke-ExplorerUpdate"
+        ],
+        "UndoScript": [
+            "Write-Host \"Restarting Explorer to apply taskbar alignment...\" -ForegroundColor Green",
+            "Invoke-ExplorerUpdate"
         ]
     },
     "ToggleDetailedBSoD": {
@@ -2560,18 +2576,16 @@ $tweaks = @'
             "Name": "DisplayParameters",
             "Value": "1",
             "OriginalValue": "0",
-            "DefaultState": "false",
             "Type": "DWord",
-                "DefaultState": "true"
+            "DefaultState": "true"
         },
         {
             "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\CrashControl",
             "Name": "DisableEmoticon",
             "Value": "1",
             "OriginalValue": "0",
-            "DefaultState": "false",
             "Type": "DWord",
-                "DefaultState": "true"
+            "DefaultState": "true"
         }
         ]
     },
@@ -2886,6 +2900,7 @@ $feature = @'
         ]
     },
     "FeatureWsl": {
+        "Type": "CheckBox",
         "Content": "Windows Subsystem for Linux",
         "Category": "congif_p03",
         "Description": "Windows Subsystem for Linux is an optional feature of Windows that allows Linux programs to run natively on Windows without the need for a separate virtual machine or dual booting.",
@@ -3202,6 +3217,65 @@ $configuration = @'
 '@ | ConvertFrom-Json
 
 
+if ($SmokeTest) {
+    Write-Host "Running smoke test..." -ForegroundColor Cyan
+    $errors = @()
+
+    try {
+        $null = $tweaks.PSObject.Properties.Name
+        $tweakCount = ($tweaks.PSObject.Properties | Measure-Object).Count
+        Write-Host "tweaks.json: OK ($tweakCount entries)" -ForegroundColor Green
+    } catch {
+        $errors += "tweaks.json validation failed: $_"
+    }
+
+    try {
+        $null = $preset.PSObject.Properties.Name
+        Write-Host "preset.json: OK" -ForegroundColor Green
+    } catch {
+        $errors += "preset.json validation failed: $_"
+    }
+
+    try {
+        $null = $feature.PSObject.Properties.Name
+        Write-Host "feature.json: OK" -ForegroundColor Green
+    } catch {
+        $errors += "feature.json validation failed: $_"
+    }
+
+    try {
+        $null = $configuration.PSObject.Properties.Name
+        Write-Host "configuration.json: OK" -ForegroundColor Green
+    } catch {
+        $errors += "configuration.json validation failed: $_"
+    }
+
+    try {
+        $null = $programs.Count
+        $programsCount = ($programs | Measure-Object).Count
+        Write-Host "applications.json: OK ($programsCount entries)" -ForegroundColor Green
+    } catch {
+        $errors += "applications.json validation failed: $_"
+    }
+
+    try {
+        $null = $appx.Count
+        $appxCount = ($appx | Measure-Object).Count
+        Write-Host "msAppxDebloat.json: OK ($appxCount entries)" -ForegroundColor Green
+    } catch {
+        $errors += "msAppxDebloat.json validation failed: $_"
+    }
+
+    if ($errors.Count -gt 0) {
+        Write-Error "Smoke test failed with $($errors.Count) error(s):`n$($errors -join "`n")"
+        exit 1
+    }
+
+    Write-Host "Smoke test passed. All configs are valid." -ForegroundColor Green
+    exit 0
+}
+
+
 ################################################################################################################
 ###                                                                                                          ###
 ###                                        INFO: MAIN FUNCTIONS                                            ###
@@ -3214,24 +3288,56 @@ $configuration = @'
     Website        : https://vukilis.com
     GitHub         : https://github.com/vukilis
     Name:          : Windows11 Optimizer&Debloater
-    Version        : 3.4
+    Version        : 4.0
 #>
+
+#requires -Version 7.0
+Set-StrictMode -Version Latest
+
+# Self-elevate if not running as administrator
+if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    if ($PSCommandPath) {
+        $psi = New-Object System.Diagnostics.ProcessStartInfo
+        $psi.FileName = $PSCommandPath
+        $psi.Arguments = $args -join ' '
+        $psi.Verb = 'runas'
+        $psi.UseShellExecute = $true
+        try {
+            [System.Diagnostics.Process]::Start($psi) | Out-Null
+        } catch {
+            Write-Warning "Administrator elevation was cancelled or failed. The application may not work correctly."
+        }
+        exit
+    } else {
+        Write-Warning "Script was invoked from memory (e.g., via iex). Cannot self-elevate. Please restart as administrator."
+    }
+}
 
 Add-Type -AssemblyName PresentationFramework
 
 Start-Transcript $ENV:TEMP\win11deb.log -Append
 
-$ScriptVersion = "3.4 - 24.08.2025"
-# $xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
-# $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+$ScriptVersion = "4.0 - 28.08.2026"
+$xamlFile = Join-Path $PSScriptRoot "..\xaml\MainWindow.xaml"
+if (-not (Test-Path $xamlFile)) {
+    $xamlFile = Join-Path $PSScriptRoot "xaml\MainWindow.xaml"
+}
+if (-not (Test-Path $xamlFile)) {
+    $xamlFile = "MainWindow.xaml"
+}
+
+if (Test-Path $xamlFile) {
+    $inputXAML = Get-Content -Path $xamlFile -Raw
+} else {
+    $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/refs/heads/dev/xaml/MainWindow.xaml")
+}
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
-[void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
-[XML]$XAML=$inputXAML
+Add-Type -AssemblyName PresentationFramework
+Add-Type -AssemblyName System.Drawing
+Add-Type -AssemblyName System.Windows.Forms
 
-[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing") 
-[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms") 
+[XML]$XAML=$inputXAML
 
 $reader = New-Object System.Xml.XmlNodeReader $XAML
 try {
@@ -3245,7 +3351,7 @@ catch [System.Management.Automation.MethodInvocationException] {
     }
 }
 catch {
-    ### If it broke some other way <img draggable="false" role="img" class="emoji" alt="????" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f600.svg">
+    ### If it broke some other way <img draggable="false" role="img" class="emoji" alt="😀" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f600.svg">
     Write-Host "Unable to load Windows.Markup.XamlReader. Double-check syntax and ensure .net is installed."
 }
 
@@ -3477,20 +3583,23 @@ function Invoke-ToggleButtons {
                 $toggleEntry = $sync.configs.tweaks.$toggleName
             }
                 
-            $EnableMessage = $toggleEntry.EnableMessage
-            $DisableMessage = $toggleEntry.DisableMessage
-            $action = if ($isChecked) { "$EnableMessage" } else { "$DisableMessage" }
 
             if (-not $toggleEntry) {
                 Write-Warning "No toggle matched for '$toggleName'"
                 return
             }
 
+            $EnableMessage = $toggleEntry.EnableMessage
+            $DisableMessage = $toggleEntry.DisableMessage
+            $action = if ($isChecked) { "$EnableMessage" } else { "$DisableMessage" }
+
             Write-Host "$action" -ForegroundColor Green
             
             foreach ($regEntry in $toggleEntry.registry) {
                 $value = if ($isChecked) { $regEntry.Value } else { $regEntry.OriginalValue }
-                try { Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $value } catch {}
+                try { Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $value } catch {
+                    Write-Warning "Failed to set registry value at $($regEntry.Path)\$($regEntry.Name): $_"
+                }
             }
 
             $scriptType = if ($isChecked) { "InvokeScript" } else { "UndoScript" }
@@ -3506,7 +3615,7 @@ function Invoke-ToggleButtons {
                 }
             }
 
-            foreach ($svc in $toggleEntry.service) {
+            foreach ($svc in $toggleEntry.PSObject.Properties.Name -contains 'service' ? $toggleEntry.service : @()) {
                 try {
                     $service = Get-Service -Name $svc.Name -ErrorAction Stop
                     $desiredType = if ($isChecked) { $svc.StartupType } else { $svc.OriginalType }
@@ -3519,7 +3628,7 @@ function Invoke-ToggleButtons {
                 }
             }
 
-            foreach ($fw in $toggleEntry.firewall) {
+            foreach ($fw in $toggleEntry.PSObject.Properties.Name -contains 'firewall' ? $toggleEntry.firewall : @()) {
                 try {
                     $desiredAction = if ($isChecked) { $fw.Action } else { 
                         if ($fw.Action -eq "Disable") { "Enable" } else { "Disable" }
@@ -3536,6 +3645,71 @@ function Invoke-ToggleButtons {
     }
 }
 
+$script:ButtonActions = @{
+    'wpf_CloseButton'      = { Invoke-CloseButton }
+    'wpf_MinButton'        = { Invoke-MinButton }
+    'wpf_MaxButton'        = { Invoke-MaxButton }
+    'wpf_buymeacoffee'     = { Invoke-BuyMeACoffee }
+    'wpf_buymeakofi'       = { Invoke-BuyMeAKofi }
+    'wpf_SelectDebloat'    = { Invoke-SelectApplication }
+    'wpf_SelectDebloatAll' = { Invoke-SelectApplicationAll }
+    'wpf_UnselectDebloatAll' = { Invoke-UnselectApplicationAll }
+    'wpf_UninstallDebloat' = { Invoke-UninstallDebloat }
+    'wpf_optimizationButton' = { Invoke-optimizationButton }
+    'wpf_optimizationUndoButton' = { Invoke-OptimizationUndo }
+    'wpf_optimizationClearButton' = { Invoke-OptimizationClear }
+    'wpf_recommended'      = { Invoke-recommended }
+    'wpf_gaming'           = { Invoke-gaming }
+    'wpf_normal'           = { Invoke-normal }
+    'wpf_Updatesdefault'   = { Invoke-UpdatesDefault }
+    'wpf_PauseUpdate'      = { Invoke-PauseUpdate }
+    'wpf_FixesUpdate'      = { Invoke-FixesUpdate }
+    'wpf_Updatesdisable'   = { Invoke-UpdatesDisable }
+    'wpf_Updatessecurity'  = { Invoke-UpdatesSecurity }
+    'wpf_PanelControl'     = { Invoke-Configs -Panel $button }
+    'wpf_PanelPnF'         = { Invoke-Configs -Panel $button }
+    'wpf_PanelNetwork'     = { Invoke-Configs -Panel $button }
+    'wpf_PanelPower'       = { Invoke-Configs -Panel $button }
+    'wpf_PanelSound'       = { Invoke-Configs -Panel $button }
+    'wpf_PanelSystem'      = { Invoke-Configs -Panel $button }
+    'wpf_PanelUser'        = { Invoke-Configs -Panel $button }
+    'wpf_PanelServices'    = { Invoke-Configs -Panel $button }
+    'wpf_PanelWindowsFirewall' = { Invoke-Configs -Panel $button }
+    'wpf_PanelTimedate'    = { Invoke-Configs -Panel $button }
+    'wpf_PanelDeviceManager' = { Invoke-Configs -Panel $button }
+    'wpf_PanelExplorerOption' = { Invoke-Configs -Panel $button }
+    'wpf_PanelRegedit'     = { Invoke-Configs -Panel $button }
+    'wpf_PanelScheduler'   = { Invoke-Configs -Panel $button }
+    'wpf_PanelResourceMonitor' = { Invoke-Configs -Panel $button }
+    'wpf_PanelSysConf'     = { Invoke-Configs -Panel $button }
+    'wpf_PanelEvent'       = { Invoke-Configs -Panel $button }
+    'wpf_PanelSysInfo'     = { Invoke-Configs -Panel $button }
+    'wpf_PanelDiskManagement' = { Invoke-Configs -Panel $button }
+    'wpf_PanelComputer'    = { Invoke-Configs -Panel $button }
+    'wpf_PanelAutologin'   = { Invoke-PanelAutologin }
+    'wpf_PanelRegion'      = { Invoke-Configs -Panel $button }
+    'wpf_DblInstall'       = { Invoke-installButton }
+    'wpf_DblGetInstalled'  = { Invoke-getInstallButton }
+    'wpf_DblUninstall'     = { Invoke-UninstallButton }
+    'wpf_DblUpgrade'       = { Invoke-UpgradeButton }
+    'wpf_DblClearPrograms' = { Invoke-ClearProgramsButton }
+    'wpf_ResetButton'      = { Invoke-ResetButton }
+    'wpf_DblChocoInstall'  = { Invoke-ChocoInstall }
+    'wpf_DblChocoUpgrade'  = { Invoke-ChocoUpgrade }
+    'wpf_DblChocoUninstall' = { Invoke-ChocoUninstall }
+    'wpf_DblWingetFix'     = { Invoke-FixesWinget }
+    'wpf_DblMsStoreFix'    = { Invoke-MsStoreFix }
+    'wpf_ShortcutApp'      = { Invoke-ShortcutApp -ShortcutToAdd "Win11Deb" }
+    'wpf_FixesNetwork'     = { Invoke-FixesNetwork }
+    'wpf_FixesSound'       = { Invoke-FixesSound }
+    'wpf_RegistryBackup'   = { Invoke-RegistryBackup }
+    'wpf_VsCodeMenu'       = { Invoke-VsCodeMenu }
+    'wpf_VsCodeMenuRemove' = { Invoke-VsCodeMenuRemove }
+    'wpf_WingetConfig'     = { Set-WingetConfig }
+    'wpf_FixesADB'         = { Invoke-FixADB }
+    'wpf_ActivateWindows'  = { Invoke-ActivateWindows }
+}
+
 function Invoke-Button {
 
     <#
@@ -3549,73 +3723,23 @@ function Invoke-Button {
     
     Param ([string]$Button) 
 
-    Switch -Wildcard ($Button){
-
-        "wpf_Tab?BT" {Invoke-Tabs $Button}
-        "wpf_CloseButton" {Invoke-CloseButton}
-        "wpf_MinButton" {Invoke-MinButton}
-        "wpf_MaxButton" {Invoke-MaxButton}
-        "wpf_buymeacoffee" {Invoke-BuyMeACoffee}
-        "wpf_buymeakofi" {Invoke-BuyMeAKofi}
-        "wpf_SelectDebloat" {Invoke-SelectApplication}
-        "wpf_SelectDebloatAll" {Invoke-SelectApplicationAll}
-        "wpf_UnselectDebloatAll" {Invoke-UnselectApplicationAll}
-        "wpf_UninstallDebloat" {Invoke-UninstallDebloat}
-        "wpf_optimizationButton" {Invoke-optimizationButton}
-        "wpf_optimizationUndoButton" {Invoke-OptimizationUndo}
-        "wpf_optimizationClearButton" {Invoke-OptimizationClear}
-        "wpf_recommended" {Invoke-recommended}
-        "wpf_gaming" {Invoke-gaming}
-        "wpf_normal" {Invoke-normal}
-        "wpf_Updatesdefault" {Invoke-UpdatesDefault}
-        "wpf_PauseUpdate" {Invoke-PauseUpdate}
-        "wpf_FixesUpdate" {Invoke-FixesUpdate}
-        "wpf_Updatesdisable" {Invoke-UpdatesDisable}
-        "wpf_Updatessecurity" {Invoke-UpdatesSecurity}
-        "wpf_PanelControl" {Invoke-Configs -Panel $button}
-        "wpf_PanelPnF" {Invoke-Configs -Panel $button}
-        "wpf_PanelNetwork" {Invoke-Configs -Panel $button}
-        "wpf_PanelPower" {Invoke-Configs -Panel $button}
-        "wpf_PanelSound" {Invoke-Configs -Panel $button}
-        "wpf_PanelSystem" {Invoke-Configs -Panel $button}
-        "wpf_PanelUser" {Invoke-Configs -Panel $button}
-        "wpf_PanelServices" {Invoke-Configs -Panel $button}
-        "wpf_PanelWindowsFirewall" {Invoke-Configs -Panel $button}
-        "wpf_PanelTimedate" {Invoke-Configs -Panel $button}
-        "wpf_PanelDeviceManager" {Invoke-Configs -Panel $button}
-        "wpf_PanelExplorerOption" {Invoke-Configs -Panel $button}
-        "wpf_PanelRegedit" {Invoke-Configs -Panel $button}
-        "wpf_PanelScheduler" {Invoke-Configs -Panel $button}
-        "wpf_PanelResourceMonitor" {Invoke-Configs -Panel $button}
-        "wpf_PanelSysConf" {Invoke-Configs -Panel $button}
-        "wpf_PanelEvent" {Invoke-Configs -Panel $button}
-        "wpf_PanelSysInfo" {Invoke-Configs -Panel $button}
-        "wpf_PanelDiskManagement" {Invoke-Configs -Panel $button}
-        "wpf_PanelComputer" {Invoke-Configs -Panel $button}
-        # "wpf_FeatureInstall" {Invoke-FeatureInstall}
-        "wpf_PanelAutologin" {Invoke-PanelAutologin}
-        "wpf_PanelRegion" {Invoke-Configs -Panel $button}
-        "wpf_DblInstall" {Invoke-installButton}
-        "wpf_DblGetInstalled" {Invoke-getInstallButton}
-        "wpf_DblUninstall" {Invoke-UninstallButton}
-        "wpf_DblUpgrade" {Invoke-UpgradeButton}
-        "wpf_DblClearPrograms" {Invoke-ClearProgramsButton}
-        "wpf_ResetButton" {Invoke-ResetButton}
-        "wpf_DblChocoInstall" {Invoke-ChocoInstall}
-        "wpf_DblChocoUpgrade" {Invoke-ChocoUpgrade}
-        "wpf_DblChocoUninstall" {Invoke-ChocoUninstall}
-        "wpf_DblWingetFix" {Invoke-FixesWinget}
-        "wpf_DblMsStoreFix" {Invoke-MsStoreFix}
-        "wpf_ShortcutApp" {Invoke-ShortcutApp -ShortcutToAdd "Win11Deb"}
-        "wpf_FixesNetwork" {Invoke-FixesNetwork}
-        "wpf_FixesSound" {Invoke-FixesSound}
-        "wpf_RegistryBackup" {Invoke-RegistryBackup}
-        "wpf_VsCodeMenu" {Invoke-VsCodeMenu}
-        "wpf_VsCodeMenuRemove" {Invoke-VsCodeMenuRemove}
-        "wpf_WingetConfig" {Set-WingetConfig}
-        "wpf_FixesADB" {Invoke-FixADB}
-        "wpf_ActivateWindows" {Invoke-ActivateWindows}
+    if ($Button -match '^wpf_Tab\d+BT$') {
+        Invoke-Tabs $Button
+        return
     }
+
+    if ($script:ButtonActions.ContainsKey($Button)) {
+        & $script:ButtonActions[$Button]
+    } else {
+        Write-Warning "No action matched for button '$Button'"
+    }
+}
+
+$script:CheckboxActions = @{
+    'wpf_ToggleXboxPreset'  = { Invoke-ToggleXboxPreseta }
+    'wpf_ToggleLitePreset'  = { Invoke-ToggleLitePreset }
+    'wpf_ToggleDevPreset'   = { Invoke-ToggleDevPreset }
+    'wpf_ToggleGamingPreset' = { Invoke-ToggleGamingPreset }
 }
 
 function Invoke-Checkbox {
@@ -3630,11 +3754,8 @@ function Invoke-Checkbox {
 
     Param ([string]$checkbox) 
 
-    Switch -Wildcard ($checkbox){
-        "wpf_ToggleXboxPreset" {Invoke-ToggleXboxPreseta}
-        "wpf_ToggleLitePreset" {Invoke-ToggleLitePreset}
-        "wpf_ToggleDevPreset" {Invoke-ToggleDevPreset}
-        "wpf_ToggleGamingPreset" {Invoke-ToggleGamingPreset}
+    if ($script:CheckboxActions.ContainsKey($checkbox)) {
+        & $script:CheckboxActions[$checkbox]
     }
 }
 ################################
@@ -3780,6 +3901,7 @@ if (-not (Test-Path $destinationPath)) {
     Write-Output "File already exists at: $destinationPath"
 }
 
+
 ################################################################################################################
 ###                                                                                                          ###
 ###                                        INFO: HELPER FUNCTIONS                                            ###
@@ -3803,6 +3925,7 @@ function Get-NavigateUri {
 
     return $null
 }
+
 function Invoke-ExplorerUpdate {
     <#
     .SYNOPSIS
@@ -3819,6 +3942,7 @@ function Invoke-ExplorerUpdate {
         Start-Process "explorer.exe"
     }
 }
+
 function Invoke-jsonChecker {
     <#
 
@@ -3844,6 +3968,7 @@ function Invoke-jsonChecker {
         }
     }
 }
+
 function Invoke-MessageBox {
     <#
 
@@ -3883,6 +4008,8 @@ function Invoke-MessageBox {
 
     [System.Windows.MessageBox]::Show("Done", $MessageboxTitle, [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
 }
+
+
 function Invoke-Scripts {
     <#
     .SYNOPSIS
@@ -3936,6 +4063,54 @@ function Invoke-Scripts {
         Write-Warning $psitem.Exception.StackTrace
     }
 }
+
+
+function Invoke-LoadNativeMethods {
+    <#
+    .SYNOPSIS
+        Loads native Windows method types once and caches them.
+
+    .PARAMETER Type
+        The name of the native method type to load. Valid values: RefreshSystem, SystemParamInfo.
+
+    .EXAMPLE
+        Invoke-LoadNativeMethods -Type RefreshSystem
+    #>
+    param (
+        [Parameter(Mandatory)]
+        [ValidateSet('RefreshSystem', 'SystemParamInfo')]
+        [string]$Type
+    )
+
+    switch ($Type) {
+        'RefreshSystem' {
+            if (-not [type]::GetType('RefreshSystem')) {
+                Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+public class RefreshSystem {
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult);
+}
+"@
+            }
+        }
+        'SystemParamInfo' {
+            if (-not [type]::GetType('SystemParamInfo')) {
+                Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+public class SystemParamInfo {
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+    public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+}
+'@
+            }
+        }
+    }
+}
+
+
 Function Open-Link {
     <#
     .SYNOPSIS
@@ -3972,6 +4147,7 @@ $wpf_WebsiteHyperlink.Add_Click({
     $navigateUriSite = Get-NavigateUri -hyperlink $WebsiteHyperlink
     Open-Link -Uri $navigateUriSite
 })
+
 function AddCustomCheckBox {
     param (
         [string]$Id,
@@ -4013,6 +4189,7 @@ function AddCustomCheckBox {
 # $cbox.Margin = New-Object Windows.Thickness(15, 5, 15, 5)
 # $cbox.FontSize = 11
 # $cbox.FontFamily = New-Object Windows.Media.FontFamily("Gadugi")
+
 function AddCustomLabel {
     param (
         [string]$content,
@@ -4043,6 +4220,7 @@ function AddCustomLabel {
 # $label.FontWeight = "Bold"
 # $label.FontFamily = New-Object Windows.Media.FontFamily("Gadugi")
 # $panel.Children.Add($label) | Out-Null
+
 foreach ($ttKey in $sync.configs.tweaks.PSObject.Properties.Name) {
     $control = $psform.FindName($ttKey)
     if ($null -ne $control -and $sync.configs.tweaks.$ttKey.PSObject.Properties.Name -contains "Description") {
@@ -4066,6 +4244,7 @@ foreach ($ttKey in $sync.configs.configuration.PSObject.Properties.Name) {
         Write-Host "No matching control or description found for '$ttKey'." -ForegroundColor Yellow
     }
 }
+
 function Set-FirewallRule {
     <#
     .SYNOPSIS
@@ -4121,6 +4300,8 @@ function Set-FirewallRule {
         Write-Warning "Failed to update firewall group '$Group' on profile '$Profile': $_"
     }
 }
+
+
 function Set-RestorePoint {
     <#
     
@@ -4161,6 +4342,7 @@ function Set-RestorePoint {
         Write-Host -ForegroundColor Green "System Restore Point Created Successfully"
     }
 }
+
 Function Set-WinService {
     <#
 
@@ -4197,6 +4379,7 @@ Function Set-WinService {
     }
 
 }
+
 function Start-Sleep($seconds) {
     <#
 
@@ -4213,6 +4396,7 @@ function Start-Sleep($seconds) {
     }
     Write-Progress -Activity "Loading" -Status "Loading..." -SecondsRemaining 0 -Completed
 }
+
 
 ################################################################################################################
 ###                                                                                                          ###
@@ -4244,8 +4428,8 @@ if ($IsVirtual -like 'False'){
     $wpf_ramInfo.Content=[string]$ramInfoGB+"GB"
 }
 
-$mbInfo = Get-CimInstance -ClassName win32_baseboard | Select-Object *
-$wpf_mbInfo.Content=$mbInfo.Product
+$mbInfo = Get-CimInstance -ClassName win32_baseboard -ErrorAction SilentlyContinue
+$wpf_mbInfo.Content = if ($mbInfo -and $mbInfo.Product) { $mbInfo.Product } else { "Unknown" }
 
 # OS INFO
 $osInfo = $ComputerInfo.OSName
@@ -4300,6 +4484,7 @@ function Get-DiskSize {
     }
 }
 
+
 ################################################################################################################
 ###                                                                                                          ###
 ###                                        INFO: INSTALL FUNCTIONS                                           ###
@@ -4316,9 +4501,9 @@ function Invoke-APPX {
         $name = $program.name
         $winget = $program.winget
         $idPython = $id -like "DblPython*"
-        $pipPackage = $program.pip
+        $pipPackage = if ($program.PSObject.Properties.Name -contains 'pip') { $program.pip } else { $null }
         $idChoco = $id -like "DblChoco*"
-        $choco = $program.choco
+        $choco = if ($program.PSObject.Properties.Name -contains 'choco') { $program.choco } else { $null }
 
         $checkBox = $psform.FindName("$id")
         $isChecked = $checkBox.IsChecked
@@ -4337,6 +4522,7 @@ function Invoke-APPX {
 
     return $result
 }
+
 function Invoke-Filter {
     <#
 
@@ -4371,12 +4557,13 @@ function Invoke-Filter {
 $wpf_CheckboxFilter.Add_TextChanged({
     Invoke-Filter
 })
+
 function Invoke-ManageInstall {
     <#
 
     .SYNOPSIS
         Handler function for installing, uninstalling and upgrading apps
-        Invoke-ManageInstall -PackageManger "winget" -manage "Installing" -program $name -PackageName $winget
+        Invoke-ManageInstall -PackageManger "winget" -manage "Installing" -program $program -PackageName $winget
     #>
 
     param(
@@ -4388,18 +4575,18 @@ function Invoke-ManageInstall {
 
     if($manage -eq "Installing" -and $PackageManger -eq "pip"){
         if (Get-Command python -ErrorAction Ignore) {
-            Write-Host "Installing $name package" -ForegroundColor Green
+            Write-Host "Installing $program package" -ForegroundColor Green
             python -m pip install --no-input --quiet --upgrade pip
             pip install $PackageName --no-input --quiet 
         } else {
             Write-Host "Python is not installed." -ForegroundColor Red
         }
     }elseif($manage -eq "Installing" -and $PackageManger -eq "winget"){
-        Write-Host "Installing $name package" -ForegroundColor Green
+        Write-Host "Installing $program package" -ForegroundColor Green
         Start-Process -FilePath winget -ArgumentList "install --id $PackageName -e --accept-source-agreements --accept-package-agreements --disable-interactivity --silent" -NoNewWindow -Wait
     }elseif($manage -eq "Installing" -and $PackageManger -eq "choco"){
         if ((Get-Command -Name choco -ErrorAction Ignore) -and (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion) {
-            Write-Host "Installing $name package" -ForegroundColor Green
+            Write-Host "Installing $program package" -ForegroundColor Green
             Start-Process -FilePath choco -ArgumentList "install $PackageName -y" -NoNewWindow -Wait
         }else{
             Write-Host "Seems Chocolatey is not installed" -ForegroundColor Red
@@ -4408,17 +4595,17 @@ function Invoke-ManageInstall {
 
     if($manage -eq "Uninstalling" -and $PackageManger -eq "pip"){
         if (Get-Command python -ErrorAction Ignore) {
-            Write-Host "Uninstalling $name package" -ForegroundColor Red
+            Write-Host "Uninstalling $program package" -ForegroundColor Red
             pip uninstall $PackageName --yes --quiet --no-input
         } else {
             Write-Host "Python is not installed." -ForegroundColor Red
         }
     }elseif($manage -eq "Uninstalling" -and $PackageManger -eq "winget"){
-        Write-Host "Uninstalling $name package" -ForegroundColor Red
+        Write-Host "Uninstalling $program package" -ForegroundColor Red
         Start-Process -FilePath winget -ArgumentList "uninstall --id $PackageName -e --purge --force --disable-interactivity --silent" -NoNewWindow -Wait
     }elseif($manage -eq "Uninstalling" -and $PackageManger -eq "choco"){
         if ((Get-Command -Name choco -ErrorAction Ignore) -and (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion) {
-            Write-Host "Uninstalling $name package" -ForegroundColor Red
+            Write-Host "Uninstalling $program package" -ForegroundColor Red
             Start-Process -FilePath choco -ArgumentList "uninstall $PackageName -y" -NoNewWindow -Wait
         }else{
             Write-Host "Seems Chocolatey is not installed" -ForegroundColor Red
@@ -4427,23 +4614,24 @@ function Invoke-ManageInstall {
 
     if($manage -eq "Upgrading" -and $PackageManger -eq "pip"){
         if (Get-Command python -ErrorAction Ignore) {
-            Write-Host "Upgrading $name package" -ForegroundColor Blue
+            Write-Host "Upgrading $program package" -ForegroundColor Blue
             pip install --upgrade $PackageName --no-input --quiet --no-cache
         } else {
             Write-Host "Python is not installed." -ForegroundColor Red
         }
     }elseif($manage -eq "Upgrading" -and $PackageManger -eq "winget"){
-        Write-Host "Upgrading $name package" -ForegroundColor Blue
+        Write-Host "Upgrading $program package" -ForegroundColor Blue
         Start-Process -FilePath winget -ArgumentList "upgrade --id $PackageName -e --accept-source-agreements --accept-package-agreements --disable-interactivity --silent --force" -NoNewWindow -Wait
     }elseif($manage -eq "Upgrading" -and $PackageManger -eq "choco"){
         if ((Get-Command -Name choco -ErrorAction Ignore) -and (Get-Item "$env:ChocolateyInstall\choco.exe" -ErrorAction Ignore).VersionInfo.ProductVersion) {
-            Write-Host "Upgrading $name package" -ForegroundColor Blue
+            Write-Host "Upgrading $program package" -ForegroundColor Blue
             Start-Process -FilePath choco -ArgumentList "upgrade $PackageName -y" -NoNewWindow -Wait
         }else{
             Write-Host "Seems Chocolatey is not installed" -ForegroundColor Red
         }
     }
 }
+
 Function Install-ProgramWinget {
     <#
     .SYNOPSIS
@@ -4578,6 +4766,8 @@ Function Install-ProgramWinget {
     }
     return $failedPackages
 }
+
+
 function Invoke-ChocoInstall {
     <#
 
@@ -4595,6 +4785,7 @@ function Invoke-ChocoInstall {
     }
     Invoke-MessageBox -msg "install"
 }
+
 function Invoke-ChocoUninstall {
 
     <#
@@ -4619,6 +4810,7 @@ function Invoke-ChocoUninstall {
         Write-Host "Seems Chocolatey is not installed" -ForegroundColor Red
     }
 }
+
 function Invoke-ChocoUpgrade {
     <#
 
@@ -4634,6 +4826,7 @@ function Invoke-ChocoUpgrade {
         Write-Host "Seems Chocolatey is not installed" -ForegroundColor Red
     }
 }
+
 function Invoke-ClearProgramsButton {
     <#
 
@@ -4657,6 +4850,7 @@ function Invoke-ClearProgramsButton {
     }
     Write-Host "Selection cleared" -ForegroundColor Green
 }
+
 function Invoke-FixesWinget {
 
     <#
@@ -4671,6 +4865,7 @@ function Invoke-FixesWinget {
 
     Invoke-MessageBox -msg "install"
 }
+
 function Invoke-getInstallButton {
     <#
 
@@ -4680,55 +4875,67 @@ function Invoke-getInstallButton {
     #>
 
     Write-Host "Selecting Installed applications" -ForegroundColor Green
-    # Export winget package information to a JSON file
-    $wingetExportPath = Join-Path $env:TEMP "wingetPackage.json"
-    winget export -o $wingetExportPath
-    #Start-Sleep (2)
-    # Read and parse the JSON file
-    $jsonObject = Get-Content -Raw -Path $wingetExportPath | ConvertFrom-Json
-
-    # Export Choco packages to a text file
-    $chocoExportPath = Join-Path $env:TEMP "chocoPackage.json"
-    choco export -o $chocoExportPath
-    #Start-Sleep (2)
-    $chocoObject = Get-Content -Path $chocoExportPath
-    $xml = [xml]$chocoObject
-
-    # Export Python packages to a text file
-    pip freeze | Out-File -FilePath "$env:TEMP\pipPackage.txt"
-    $PIPpackage = "$env:TEMP\PIPpackage.txt" 
 
     # Process winget packages
-    foreach ($package in $jsonObject.Sources.Packages) {
-        $matchingProgram = Invoke-APPX | Where-Object { $_.Winget -eq $package.PackageIdentifier }
+    try {
+        $wingetExportPath = Join-Path $env:TEMP "wingetPackage.json"
+        winget export -o $wingetExportPath -ErrorAction Stop
+        $jsonObject = Get-Content -Raw -Path $wingetExportPath -ErrorAction Stop | ConvertFrom-Json
 
-        if ($matchingProgram -ne $null) {
-            $checkBox = $psform.FindName($matchingProgram.Id)
-            $checkBox.IsChecked = $true
+        foreach ($package in $jsonObject.Sources.Packages) {
+            $matchingProgram = Invoke-APPX | Where-Object { $_.Winget -eq $package.PackageIdentifier }
+
+            if ($matchingProgram -ne $null) {
+                $checkBox = $psform.FindName($matchingProgram.Id)
+                $checkBox.IsChecked = $true
+            }
         }
+    } catch {
+        Write-Warning "Failed to process winget packages: $_"
     }
 
     # Process Python packages
-    foreach ($line in Get-Content -Path $PIPpackage) {
-        $index = $line.IndexOf('=')
-        $result = $line.Substring(0, $index).Trim()
-        $matchingProgram = Invoke-APPX | Where-Object { $_.PipPackage -eq $result }
-        if ($matchingProgram -ne $null) {
-            $checkBox = $psform.FindName($matchingProgram.Id)
-            $checkBox.IsChecked = $true
+    try {
+        $pipExportPath = Join-Path $env:TEMP "pipPackage.txt"
+        pip freeze | Out-File -FilePath $pipExportPath -ErrorAction Stop
+
+        foreach ($line in Get-Content -Path $pipExportPath -ErrorAction Stop) {
+            $index = $line.IndexOf('=')
+            if ($index -lt 0) { continue }
+            $result = $line.Substring(0, $index).Trim()
+            $matchingProgram = Invoke-APPX | Where-Object { $_.PipPackage -eq $result }
+            if ($matchingProgram -ne $null) {
+                $checkBox = $psform.FindName($matchingProgram.Id)
+                $checkBox.IsChecked = $true
+            }
         }
+    } catch {
+        Write-Warning "Failed to process Python packages: $_"
     }
 
     # Process Choco packages
-    foreach ($package in $xml.packages.package) {
-        $matchingProgram = Invoke-APPX | Where-Object { $_.Choco -eq $package.id }
-        if ($matchingProgram -ne $null) {
-            $checkBox = $psform.FindName($matchingProgram.Id)
-            $checkBox.IsChecked = $true
+    try {
+        $chocoExportPath = Join-Path $env:TEMP "chocoPackage.json"
+        if (Get-Command -Name choco -ErrorAction SilentlyContinue) {
+            choco export -o $chocoExportPath -ErrorAction Stop
+            $chocoObject = Get-Content -Path $chocoExportPath -ErrorAction Stop
+            $xml = [xml]$chocoObject
+
+            foreach ($package in $xml.packages.package) {
+                $matchingProgram = Invoke-APPX | Where-Object { $_.Choco -eq $package.id }
+                if ($matchingProgram -ne $null) {
+                    $checkBox = $psform.FindName($matchingProgram.Id)
+                    $checkBox.IsChecked = $true
+                }
+            }
+        } else {
+            Write-Warning "Chocolatey is not installed. Skipping choco package detection."
         }
+    } catch {
+        Write-Warning "Failed to process Chocolatey packages: $_"
     }
-    
 }
+
 function Invoke-installButton {
     <#
 
@@ -4755,6 +4962,7 @@ function Invoke-installButton {
     
     Invoke-MessageBox -msg "install"
 }
+
 function Invoke-MsStoreFix {
     <#
 
@@ -4774,6 +4982,7 @@ function Invoke-MsStoreFix {
     }
     Invoke-MessageBox -msg "install"
 }
+
 function Invoke-ResetButton {
     <#
 
@@ -4794,6 +5003,7 @@ function Invoke-ResetButton {
         }
     }
 }
+
 function Invoke-ToggleDevPreset {
     <#
 
@@ -4825,6 +5035,7 @@ function Invoke-ToggleDevPreset {
     }
     if ($wpf_ToggleDevPreset.IsChecked){ Write-Host "Enabling Dev Preset" -ForegroundColor Green} else { Write-Host "Disabling Dev Preset" -ForegroundColor Red  }
 }
+
 function Invoke-ToggleGamingPreset {
     <#
 
@@ -4853,6 +5064,7 @@ function Invoke-ToggleGamingPreset {
     }
     if ($wpf_ToggleGamingPreset.IsChecked){ Write-Host "Enabling Gaming Preset" -ForegroundColor Green} else { Write-Host "Disabling Gaming Preset" -ForegroundColor Red  }
 }
+
 function Invoke-ToggleLitePreset {
     <#
 
@@ -4881,6 +5093,7 @@ function Invoke-ToggleLitePreset {
 
     if ($wpf_ToggleLitePreset.IsChecked){ Write-Host "Enabling Lite Preset" -ForegroundColor Green} else { Write-Host "Disabling Lite Preset" -ForegroundColor Red  }
 }
+
 function Invoke-UninstallButton {
     <#
 
@@ -4906,6 +5119,7 @@ function Invoke-UninstallButton {
     
     Invoke-MessageBox -msg "uninstall"
 }
+
 function Invoke-UpgradeButton {
     <#
 
@@ -4919,11 +5133,11 @@ function Invoke-UpgradeButton {
         $isChecked = $checkBox.IsChecked
 
         if ($isChecked -eq $true -and $program.IdPython) {
-            Invoke-ManageInstall -PackageManger "pip" -manage "Upgrading" -program $name -PackageName $program.PipPackage
+            Invoke-ManageInstall -PackageManger "pip" -manage "Upgrading" -program $program.Name -PackageName $program.PipPackage
         }elseif ($isChecked -eq $true -and $program.IdChoco){
-            Invoke-ManageInstall -PackageManger "choco" -manage "Upgrading" -program $name -PackageName $program.Choco
+            Invoke-ManageInstall -PackageManger "choco" -manage "Upgrading" -program $program.Name -PackageName $program.Choco
         }elseif ($isChecked -eq $true){
-            Invoke-ManageInstall -PackageManger "winget" -manage "Upgrading" -program $name -PackageName $program.Winget
+            Invoke-ManageInstall -PackageManger "winget" -manage "Upgrading" -program $program.Name -PackageName $program.Winget
         }else {
             continue
         }
@@ -4931,6 +5145,7 @@ function Invoke-UpgradeButton {
     
     Invoke-MessageBox -msg "upgrade"
 }
+
 
 ################################################################################################################
 ###                                                                                                          ###
@@ -4948,18 +5163,16 @@ function Invoke-MsAppxDebloat {
         $app = $app | ConvertFrom-Json
         $id = $app.id
         $name = $app.name
-        $GetDebloatCheckBox = $app.IsChecked
-        $isChecked = $GetDebloatCheckBox
 
         $result += [PSCustomObject]@{
             Id = $id
             Name = $name
-            IsChecked = $isChecked
         }
     }
 
     return $result
 }
+
 function Remove-WinDebloatAPPX {
     <#
         .DESCRIPTION
@@ -4990,15 +5203,21 @@ function Remove-WinDebloatAPPX {
         Write-Warning $psitem.Exception.StackTrace 
     }
 }
+
 $DblGetPanel = $psform.FindName("GetDebloat")
+if ($DblGetPanel) {
+    $DblGetPanel.Children.Clear()
+}
 $wpf_DblSelected.Content = "Selected: 0 of $($appx.Count)"
 
 # Iterate through each AppxPackage and create a TextBlock for each
 $matchingMsAppx = Invoke-MsAppxDebloat
-foreach ($app in $matchingMsAppx) {
-    #Write-Host "ID: $($app.id), Name: $($app.name)"
-    AddCustomCheckBox -Id "$($app.Id)" -Name "$($app.Name)" -panel $DblGetPanel -Foreground "#a69f6c" -HorizontalAlignment "Left" -Cursor "Hand" -Margin @(15, 10, 15, 5) -FontSize 11 -FontFamily "Gadugi"
+if ($DblGetPanel) {
+    foreach ($app in $matchingMsAppx) {
+        AddCustomCheckBox -Id "$($app.Id)" -Name "$($app.Name)" -panel $DblGetPanel -Foreground "#a69f6c" -HorizontalAlignment "Left" -Cursor "Hand" -Margin @(15, 10, 15, 5) -FontSize 11 -FontFamily "Gadugi"
+    }
 }
+
 function Invoke-SelectApplication {
     <#
 
@@ -5008,17 +5227,18 @@ function Invoke-SelectApplication {
 
     $DblSelectPanel = $psform.FindName("SetDebloat")
     $DblSelectPanel.Children.Clear()
+    $DblGetPanel = $psform.FindName("GetDebloat")
     $checkedCheckboxes = $DblGetPanel.Children
     $checkedCount = 0
-    foreach ($app in $checkedCheckboxes) {
-        $isChecked = $app.IsChecked
-        if ($isChecked -eq $true) {
-            AddCustomLabel -content $app.Content -panel $DblSelectPanel -Foreground "#a69f6c" -Margin @(15, 5, 15, 4) -FontSize 14 -FontWeight "Bold" -FontFamily "Gadugi"
+    foreach ($cb in $checkedCheckboxes) {
+        if ($cb -is [System.Windows.Controls.CheckBox] -and $cb.IsChecked -eq $true) {
+            AddCustomLabel -content $cb.Content -panel $DblSelectPanel -Foreground "#a69f6c" -Margin @(15, 5, 15, 4) -FontSize 14 -FontWeight "Bold" -FontFamily "Gadugi"
             $checkedCount++
         }
     }
-    $wpf_DblSelected.Content = "Selected: $checkedCount of $($matchingMsAppx.Count)"
+    $wpf_DblSelected.Content = "Selected: $checkedCount of $($checkedCheckboxes.Count)"
 }
+
 function Invoke-SelectApplicationAll {
     <#
 
@@ -5028,17 +5248,19 @@ function Invoke-SelectApplicationAll {
 
     $DblSelectPanel = $psform.FindName("SetDebloat")
     $DblSelectPanel.Children.Clear()
+    $DblGetPanel = $psform.FindName("GetDebloat")
     $checkedCheckboxes = $DblGetPanel.Children
     $checkedCount = 0
-    foreach ($app in $checkedCheckboxes) {
-        $isChecked = $app.IsChecked = $true
-        if ($isChecked -eq $true) {
-            AddCustomLabel -content $app.Content -panel $DblSelectPanel -Foreground "#a69f6c" -Margin @(15, 5, 15, 4) -FontSize 14 -FontWeight "Bold" -FontFamily "Gadugi"
+    foreach ($cb in $checkedCheckboxes) {
+        if ($cb -is [System.Windows.Controls.CheckBox]) {
+            $cb.IsChecked = $true
+            AddCustomLabel -content $cb.Content -panel $DblSelectPanel -Foreground "#a69f6c" -Margin @(15, 5, 15, 4) -FontSize 14 -FontWeight "Bold" -FontFamily "Gadugi"
             $checkedCount++
         }
     }
-    $wpf_DblSelected.Content = "Selected: $checkedCount of $($matchingMsAppx.Count)"
+    $wpf_DblSelected.Content = "Selected: $checkedCount of $($checkedCheckboxes.Count)"
 }
+
 function Invoke-ToggleXboxPreseta {
     <#
 
@@ -5051,6 +5273,7 @@ function Invoke-ToggleXboxPreseta {
 
     $DblSelectPanel = $psform.FindName("SetDebloat")
     $DblSelectPanel.Children.Clear()
+    $DblGetPanel = $psform.FindName("GetDebloat")
     $checkedCheckboxes = $DblGetPanel.Children
     $state = $wpf_ToggleXboxPreset.IsChecked
     
@@ -5061,21 +5284,20 @@ function Invoke-ToggleXboxPreseta {
     )
 
     $checkedCount = 0
-    foreach ($app in $checkedCheckboxes) {
-        if ($app -is [Windows.Controls.CheckBox]){
-            $isChecked = $app.IsChecked = $false
-
-            if ($isChecked -eq $false -and $state -and $xboxApps -notcontains $app.Content) {
-                AddCustomLabel -content $app.Content -panel $DblSelectPanel -Foreground "#a69f6c" -Margin @(15, 5, 15, 4) -FontSize 14 -FontWeight "Bold" -FontFamily "Gadugi"
-                $app.IsChecked = $true
+    foreach ($cb in $checkedCheckboxes) {
+        if ($cb -is [System.Windows.Controls.CheckBox]){
+            if ($state -and $xboxApps -notcontains $cb.Content) {
+                $cb.IsChecked = $true
+                AddCustomLabel -content $cb.Content -panel $DblSelectPanel -Foreground "#a69f6c" -Margin @(15, 5, 15, 4) -FontSize 14 -FontWeight "Bold" -FontFamily "Gadugi"
                 $checkedCount++
             } else {
-                $app.IsChecked = $false
+                $cb.IsChecked = $false
             }
         }
     }
-    $wpf_DblSelected.Content = "Selected: $checkedCount of $($matchingMsAppx.Count)"
+    $wpf_DblSelected.Content = "Selected: $checkedCount of $($checkedCheckboxes.Count)"
 }
+
 function Invoke-UninstallDebloat {
     <#
 
@@ -5125,6 +5347,7 @@ function Invoke-UninstallDebloat {
         Invoke-MessageBox -msg "debloatInfo"
     }
 }
+
 function Invoke-UninstallTeams {
     <#
 
@@ -5134,34 +5357,51 @@ function Invoke-UninstallTeams {
     $TeamsPath = [System.IO.Path]::Combine($env:LOCALAPPDATA, 'Microsoft', 'Teams')
     $TeamsUpdateExePath = [System.IO.Path]::Combine($TeamsPath, 'Update.exe')
 
-    Write-Host \"Stopping Teams process...\"
-    Stop-Process -Name \"*teams*\" -Force -ErrorAction SilentlyContinue
+    Write-Host "Stopping Teams process..."
+    Stop-Process -Name "*teams*" -Force -ErrorAction SilentlyContinue
 
-    Write-Host \"Uninstalling Teams from AppData\\Microsoft\\Teams\"
+    Write-Host "Uninstalling Teams from AppData\Microsoft\Teams"
     if ([System.IO.File]::Exists($TeamsUpdateExePath)) {
         # Uninstall app
-        $proc = Start-Process $TeamsUpdateExePath \"-uninstall -s\" -PassThru
+        $proc = Start-Process $TeamsUpdateExePath "-uninstall -s" -PassThru
         $proc.WaitForExit()
     }
 
-    Write-Host \"Removing Teams AppxPackage...\"
-    Get-AppxPackage \"*Teams*\" | Remove-AppxPackage -ErrorAction SilentlyContinue
-    Get-AppxPackage \"*Teams*\" -AllUsers | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue
+    Write-Host "Removing Teams AppxPackage..."
+    Get-AppxPackage "*Teams*" | Remove-AppxPackage -ErrorAction SilentlyContinue
+    Get-AppxPackage "*Teams*" -AllUsers | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue
 
-    Write-Host \"Deleting Teams directory\"
+    Write-Host "Deleting Teams directory"
     if ([System.IO.Directory]::Exists($TeamsPath)) {
         Remove-Item $TeamsPath -Force -Recurse -ErrorAction SilentlyContinue
     }
 
-    Write-Host \"Deleting Teams uninstall registry key\"
+    Write-Host "Deleting Teams uninstall registry key"
     # Uninstall from Uninstall registry key UninstallString
-    $us = (Get-ChildItem -Path HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall, HKLM:\\SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall | Get-ItemProperty | Where-Object { $_.DisplayName -like '*Teams*'}).UninstallString
-    if ($us.Length -gt 0) {
-        $us = ($us.Replace('/I', '/uninstall ') + ' /quiet').Replace('  ', ' ')
-        $FilePath = ($us.Substring(0, $us.IndexOf('.exe') + 4).Trim())
-        $ProcessArgs = ($us.Substring($us.IndexOf('.exe') + 5).Trim().replace('  ', ' '))
-        $proc = Start-Process -FilePath $FilePath -Args $ProcessArgs -PassThru
-        $proc.WaitForExit()
+    $uninstallPaths = @(
+        "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
+        "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
+    )
+    
+    foreach ($path in $uninstallPaths) {
+        if (-not (Test-Path $path)) { continue }
+        
+        $teamsEntry = Get-ChildItem -Path $path -ErrorAction SilentlyContinue | 
+            Get-ItemProperty -ErrorAction SilentlyContinue | 
+            Where-Object { 
+                $_.PSObject.Properties.Name -contains 'DisplayName' -and $_.DisplayName -like '*Teams*' 
+            }
+        
+        if ($teamsEntry -and $teamsEntry.PSObject.Properties.Name -contains 'UninstallString') {
+            $us = $teamsEntry.UninstallString
+            if ($us -and $us.Length -gt 0) {
+                $us = ($us.Replace('/I', '/uninstall ') + ' /quiet').Replace('  ', ' ')
+                $FilePath = ($us.Substring(0, $us.IndexOf('.exe') + 4).Trim())
+                $ProcessArgs = ($us.Substring($us.IndexOf('.exe') + 5).Trim().replace('  ', ' '))
+                $proc = Start-Process -FilePath $FilePath -Args $ProcessArgs -PassThru
+                $proc.WaitForExit()
+            }
+        }
     }
 }
 function Invoke-UnselectApplicationAll {
@@ -5173,13 +5413,16 @@ function Invoke-UnselectApplicationAll {
 
     $DblSelectPanel = $psform.FindName("SetDebloat")
     $DblSelectPanel.Children.Clear()
-    $checkedCheckboxes = $DblGetPanel.Children
+    $DblGetPanel = $psform.FindName("GetDebloat")
     $wpf_ToggleXboxPreset.IsChecked = $false
-    foreach ($app in $checkedCheckboxes) {
-        $app.IsChecked = $false
+    foreach ($cb in $DblGetPanel.Children) {
+        if ($cb -is [System.Windows.Controls.CheckBox]) {
+            $cb.IsChecked = $false
+        }
     }
-    $wpf_DblSelected.Content = "Selected: 0 of $($matchingMsAppx.Count)"
+    $wpf_DblSelected.Content = "Selected: 0 of $($DblGetPanel.Children.Count)"
 }
+
 
 ################################################################################################################
 ###                                                                                                          ###
@@ -5235,14 +5478,15 @@ function Set-RegistryValue {
     } catch [System.Security.SecurityException] {
         Write-Warning "Unable to set $Path\$Name to $Value due to a Security Exception"
     } catch [System.Management.Automation.ItemNotFoundException] {
-        Write-Warning $psitem.Exception.ErrorRecord
+        Write-Warning $_.Exception.ErrorRecord
     } catch [System.UnauthorizedAccessException] {
-        Write-Warning $psitem.Exception.Message
+        Write-Warning $_.Exception.Message
     } catch {
         Write-Warning "Unable to set $Name due to unhandled exception"
-        Write-Warning $psitem.Exception.StackTrace
+        Write-Warning $_.Exception.StackTrace
     }
 }
+
 function Set-ScheduledTask {
     <#
 
@@ -5285,6 +5529,7 @@ function Set-ScheduledTask {
         Write-Warning $psitem.Exception.StackTrace
     }
 }
+
 function Get-ToggleStatus {
     <#
     .SYNOPSIS
@@ -5307,14 +5552,27 @@ function Get-ToggleStatus {
             foreach ($regEntry in $entry.registry) {
                 try {
                     if (-not (Test-Path $regEntry.Path)) { New-Item -Path $regEntry.Path -Force | Out-Null }
-                    $regValue = (Get-ItemProperty -Path $regEntry.Path -ErrorAction SilentlyContinue).$($regEntry.Name)
+                    $regItem = Get-ItemProperty -Path $regEntry.Path -ErrorAction SilentlyContinue
+                    $regValue = $null
+
+                    if ($null -ne $regItem) {
+                        $prop = $regItem.PSObject.Properties[$regEntry.Name]
+                        if ($prop) {
+                            $regValue = $prop.Value
+                        }
+                    }
 
                     if ($regValue -eq $regEntry.Value) { $isChecked = $true }
                     elseif ($regValue -eq $regEntry.OriginalValue) { $isChecked = $false }
 
                     # If $isChecked is set, stop checking further
                     if ($isChecked -ne $null) { break }
-                } catch { }
+                } catch {
+                    $errorMessage = $_.Exception.Message
+                    if ($errorMessage -notmatch "property.*cannot be found.*this object") {
+                        Write-Warning "Failed to read registry value at $($regEntry.Path)\$($regEntry.Name): $_"
+                    }
+                }
             }
         }
 
@@ -5326,7 +5584,6 @@ function Get-ToggleStatus {
 
         # Ensure a boolean value
         $control.IsChecked = [bool]$isChecked
-        # Write-Host "Set '$key' toggle to $($control.IsChecked)" -ForegroundColor Green
     }
 }
 
@@ -5362,9 +5619,9 @@ function Invoke-OptimizationButton {
 
         # Apply registry changes if available and checkbox is checked
         if ($apply) {
-            if ($tweak.ScheduledTask) {
+            if ($tweak.PSObject.Properties.Name -contains 'ScheduledTask' -and $tweak.ScheduledTask) {
                 foreach ($msg in "DisableMessage","EnableMessage") {
-                    if ($tweak.$msg) { Write-Host "ScheduledTask:" $tweak.$msg -ForegroundColor Yellow }
+                    if ($tweak.PSObject.Properties.Name -contains $msg -and $tweak.$msg) { Write-Host "ScheduledTask:" $tweak.$msg -ForegroundColor Yellow }
                 }
                 foreach ($task in $tweak.ScheduledTask) {
                     try {
@@ -5375,28 +5632,28 @@ function Invoke-OptimizationButton {
                 }
             }
 
-            if ($tweak.Registry) {
+            if ($tweak.PSObject.Properties.Name -contains 'registry' -and $tweak.registry) {
                 foreach ($msg in "DisableMessage","EnableMessage") {
-                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
+                    if ($tweak.PSObject.Properties.Name -contains $msg -and $tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
                 }
-                foreach ($regEntry in $tweak.Registry) {
+                foreach ($regEntry in $tweak.registry) {
                     try { 
                         Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.Value }
                     catch { 
                         Write-Warning "Failed to apply registry tweak: $_" }
                 }
             }
-            if ($tweak.InvokeScript) {
+            if ($tweak.PSObject.Properties.Name -contains 'InvokeScript' -and $tweak.InvokeScript) {
                 foreach ($msg in "DisableMessage","EnableMessage") {
-                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Cyan }
+                    if ($tweak.PSObject.Properties.Name -contains $msg -and $tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Cyan }
                 }
                 foreach ($script in $tweak.InvokeScript) {
                     Invoke-Scripts -Name $tweak.Content -Script $script
                 }
             }
-            if ($tweak.service) {
+            if ($tweak.PSObject.Properties.Name -contains 'service' -and $tweak.service) {
                 foreach ($msg in "DisableMessage","EnableMessage") {
-                    if ($tweak.$msg) { Write-Host "Service:" $tweak.$msg -ForegroundColor Magenta }
+                    if ($tweak.PSObject.Properties.Name -contains $msg -and $tweak.$msg) { Write-Host "Service:" $tweak.$msg -ForegroundColor Magenta }
                 }
                 foreach ($service in $tweak.service) {
                     try {
@@ -5412,6 +5669,7 @@ function Invoke-OptimizationButton {
 
     Invoke-MessageBox -msg "tweak"
 }
+
 function Invoke-OptimizationClear {
     Write-Host "Clearing all checkboxes in the optimization form..." -ForegroundColor Cyan
     
@@ -5436,6 +5694,8 @@ function Invoke-OptimizationClear {
         }
     }
 }
+
+
 function Invoke-OptimizationUndo {
     <#
     .SYNOPSIS
@@ -5467,8 +5727,8 @@ function Invoke-OptimizationUndo {
 
         # Apply registry changes if available and checkbox is checked
         if ($apply) {
-            if ($tweak.ScheduledTask) {
-                Write-Host "ScheduledTask: Revert the $($tweak.Content) to the default settings!" $tweak.message -ForegroundColor Yellow
+            if ($tweak.PSObject.Properties.Name -contains 'ScheduledTask' -and $tweak.ScheduledTask) {
+                Write-Host "ScheduledTask: Revert the $($tweak.Content) to the default settings!" -ForegroundColor Yellow
                 foreach ($task in $tweak.ScheduledTask) {
                     try {
                         Set-ScheduledTask -Name $task.Name -State $task.OriginalState
@@ -5478,24 +5738,23 @@ function Invoke-OptimizationUndo {
                 }
             }
 
-            if ($tweak.Registry) {
+            if ($tweak.PSObject.Properties.Name -contains 'registry' -and $tweak.registry) {
                 Write-Host "Registry: Revert the $($tweak.Content) to the default settings!" -ForegroundColor Green
-                foreach ($regEntry in $tweak.Registry) {
+                foreach ($regEntry in $tweak.registry) {
                     try { 
                         Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.OriginalValue }
                     catch { 
                         Write-Warning "Failed to apply registry tweak: $_" }
                 }
             }
-            if ($tweak.UndoScript) {
-                # Write-Host "UndoScript:" $tweak.DisableMessage -ForegroundColor Cyan
+            if ($tweak.PSObject.Properties.Name -contains 'UndoScript' -and $tweak.UndoScript) {
                 Write-Host "UndoScript: Revert the $($tweak.Content) to the default settings!" -ForegroundColor Cyan
                 foreach ($script in $tweak.UndoScript) {
                     Invoke-Scripts -Name $tweak.Content -Script $script
                 }
             }
-            if ($tweak.service) {
-                Write-Host "Service: Revert the $($tweak.Content) to the default settings!" $tweak.message -ForegroundColor Magenta
+            if ($tweak.PSObject.Properties.Name -contains 'service' -and $tweak.service) {
+                Write-Host "Service: Revert the $($tweak.Content) to the default settings!" -ForegroundColor Magenta
                 foreach ($service in $tweak.service) {
                     try {
                         Set-WinService -Name $service.Name -StartupType $service.OriginalType
@@ -5510,6 +5769,7 @@ function Invoke-OptimizationUndo {
 
     Invoke-MessageBox -msg "undotweak"
 }
+
 function Invoke-ToggleFastPreset {
     param(
         [switch]$IsChecked  # Optional: allows forcing check/uncheck
@@ -5559,6 +5819,7 @@ function Invoke-ToggleFastPreset {
         Write-Host "Disabling Fast Preset" -ForegroundColor Red 
     }
 }
+
 function Invoke-ToggleMegaPreset {
     param(
         [switch]$IsChecked  # Optional: allows forcing check/uncheck
@@ -5607,6 +5868,7 @@ function Invoke-ToggleMegaPreset {
         Write-Host "Disabling Mega Preset" -ForegroundColor Red 
     }
 }
+
 function Invoke-TweakPS7{
         <#
     .SYNOPSIS
@@ -5661,6 +5923,8 @@ function Invoke-TweakPS7{
         Write-Host "No PowerShell 7 profile found in Windows Terminal settings using the name attribute."
     }
 }
+
+
 Function Invoke-UltimatePerformance {
     <#
 
@@ -5746,6 +6010,8 @@ Function Invoke-UltimatePerformance {
     }
 }
 
+
+
 ################################################################################################################
 ###                                                                                                          ###
 ###                                          INFO: SERVICE FUNCTIONS                                         ###
@@ -5785,6 +6051,7 @@ function Get-Services {
         default {'red'}
     }
 }
+
 function Invoke-gaming{
     <#
 
@@ -5899,6 +6166,7 @@ function Invoke-gaming{
 " -ch Cyan
     Invoke-MessageBox "tweak"
 }
+
 function Invoke-normal{
     <#
 
@@ -5910,6 +6178,7 @@ function Invoke-normal{
     cmd /c services.msc
     Invoke-MessageBox "tweak"
 }
+
 function Invoke-recommended{
     <#
 
@@ -6000,6 +6269,7 @@ function Invoke-recommended{
     Invoke-MessageBox "tweak"
 }
 
+
 ################################################################################################################
 ###                                                                                                          ###
 ###                                          INFO: UPDATES FUNCTIONS                                         ###
@@ -6089,6 +6359,7 @@ function Invoke-FixesUpdate{
 " -ch DarkGreen
     Invoke-MessageBox -msg "updateFix"
 }
+
 function Invoke-PauseUpdate {
     <#
 
@@ -6122,6 +6393,7 @@ function Invoke-PauseUpdate {
 " -ch DarkGreen
     Invoke-MessageBox -msg "updatePause" 
 }
+
 function Invoke-UpdatesDefault{
     <#
 
@@ -6170,6 +6442,7 @@ function Invoke-UpdatesDefault{
 " -ch Cyan
     Invoke-MessageBox -msg "updateDefault"
 }
+
 function Invoke-UpdatesDisable{
     <#
 
@@ -6208,6 +6481,7 @@ function Invoke-UpdatesDisable{
 " -ch DarkRed
     Invoke-MessageBox -msg "updateDisabled"
 }
+
 function Invoke-UpdatesSecurity{
     <#
 
@@ -6256,6 +6530,7 @@ function Invoke-UpdatesSecurity{
 " -ch Cyan
     Invoke-MessageBox -msg "updateSecurity"
 }
+
 
 ################################################################################################################
 ###                                                                                                          ###
@@ -6321,6 +6596,7 @@ foreach ($featureName in $sync.configs.feature.PSObject.Properties.Name) {
         }
     }   
 }
+
 function Invoke-FixADB {
     <#
 
@@ -6366,6 +6642,8 @@ function Invoke-FixADB {
     Invoke-MessageBox -msg "tweak"
     
 }
+
+
 function Set-WingetConfig {
     <#
 
@@ -6404,6 +6682,7 @@ function Set-WingetConfig {
 " -ch DarkGreen
     Invoke-MessageBox -msg "tweak"
 }
+
 function Invoke-ActivateWindows {
     <#
         .DESCRIPTION
@@ -6411,6 +6690,7 @@ function Invoke-ActivateWindows {
     #>
     Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command irm https://get.activated.win | iex" -Verb RunAs
 }
+
 
 function Invoke-Configs {
     <#
@@ -6443,6 +6723,7 @@ function Invoke-Configs {
         "wpf_PanelTimedate"             {cmd /c timedate.cpl}
     }
 }
+
 function Invoke-FeatureInstall {
     <#
     .SYNOPSIS
@@ -6465,12 +6746,12 @@ function Invoke-FeatureInstall {
         }
 
         if ($apply) {
-            if ($tweak.Registry) {
+            if ($tweak.PSObject.Properties.Name -contains 'registry' -and $tweak.registry) {
                 Write-Host "Applying feature: $($tweak.Content)" -ForegroundColor Green
                 foreach ($msg in "DisableMessage","EnableMessage") {
-                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
+                    if ($tweak.PSObject.Properties.Name -contains $msg -and $tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
                 }
-                foreach ($regEntry in $tweak.Registry) {
+                foreach ($regEntry in $tweak.registry) {
                     try { 
                         Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.Value 
                     }
@@ -6480,9 +6761,9 @@ function Invoke-FeatureInstall {
                 }
             }
 
-            if ($tweak.InvokeScript) {
+            if ($tweak.PSObject.Properties.Name -contains 'InvokeScript' -and $tweak.InvokeScript) {
                 foreach ($msg in "DisableMessage","EnableMessage") {
-                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Cyan }
+                    if ($tweak.PSObject.Properties.Name -contains $msg -and $tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Cyan }
                 }
                 foreach ($script in $tweak.InvokeScript) {
                     Invoke-Scripts -Name $tweak.Content -Script $script
@@ -6490,10 +6771,10 @@ function Invoke-FeatureInstall {
                 }
             }
 
-            if ($tweak.feature) {
+            if ($tweak.PSObject.Properties.Name -contains 'feature' -and $tweak.feature) {
                 foreach ($msg in "DisableMessage","EnableMessage") {
                     Write-Host "Applying feature: $($tweak.Content)" -ForegroundColor Green
-                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
+                    if ($tweak.PSObject.Properties.Name -contains $msg -and $tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
                 }
                 foreach ($ft in $tweak.feature) {
                     try {
@@ -6510,6 +6791,7 @@ function Invoke-FeatureInstall {
     
     Invoke-MessageBox -msg "feature"
 }
+
 function Invoke-FixesNetwork {
     <#
 
@@ -6535,6 +6817,7 @@ function Invoke-FixesNetwork {
 " -ch DarkGreen
     Invoke-MessageBox -msg "networkReset"
 }
+
 function Invoke-FixesSound {
     <#
 
@@ -6551,6 +6834,7 @@ function Invoke-FixesSound {
 " -ch DarkGreen
     Invoke-MessageBox -msg "soundReset"
 }
+
 function Invoke-PanelAutologin {
     <#
         .DESCRIPTION
@@ -6560,6 +6844,7 @@ function Invoke-PanelAutologin {
     cmd /c $env:temp\autologin.exe
     Write-Host "Autologin enabled" -ForegroundColor Green
 }
+
 function Invoke-RegistryBackup {
     <#
 
@@ -6610,6 +6895,7 @@ function Invoke-RegistryBackup {
 " -ch DarkRed
     }
 }
+
 
 function Invoke-ShortcutApp {
     <#
@@ -6680,6 +6966,7 @@ Shortcut for $ShortcutToAdd has been saved to $($FileBrowser.FileName)
 " -ch DarkRed
     }
 }
+
 function Invoke-VsCodeMenu {
     <#
     .SYNOPSIS
@@ -6690,7 +6977,7 @@ function Invoke-VsCodeMenu {
     $codePath = Join-Path $env:LOCALAPPDATA "Programs\Microsoft VS Code\Code.exe"
 
     if (-not (Test-Path $codePath)) {
-        Write-Warning "??? VS Code not found at: $codePath"
+        Write-Warning "❌ VS Code not found at: $codePath"
         return
     }
 
@@ -6726,6 +7013,7 @@ Windows Registry Editor Version 5.00
     Remove-Item $tempFile -Force
     Write-Host "VS Code context menu added!" -ForegroundColor Green
 }
+
 function Invoke-VsCodeMenuRemove {
     <#
     .SYNOPSIS
@@ -6745,8 +7033,9 @@ function Invoke-VsCodeMenuRemove {
         Start-Process reg.exe -ArgumentList "delete `"$key`" /f" -Verb RunAs -Wait
     }
 
-    Write-Host "??? VS Code context menu removed!" -ForegroundColor Green
+    Write-Host "✅ VS Code context menu removed!" -ForegroundColor Green
 }
+
 
 ################################################################################################################
 ###                                                                                                          ###
@@ -6765,17 +7054,6 @@ if ($psVersion.Major -eq 7 -and $psVersion.Minor -ge 1) {
     Write-Host "You are running a different version of PowerShell. Versions from 1.0 to 5.0 not supported!" -ForegroundColor Red
 }
 
-if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Host "################################################################################################" -ForegroundColor Red
-    Write-Host "Not running as administrator. Please run the script as an administrator!" -ForegroundColor Red
-    Write-Host "If you continue to use as non-admin user, it will result to script creates unexpected behaviour!" -ForegroundColor Red
-    Write-Host "################################################################################################" -ForegroundColor Red
-
-    $wpf_ElevatorStatus.Visibility = "Visible"
-    $wpf_ElevatorStatus.Background = "red"
-    $wpf_ElevatorMode.Content = "Not running as administrator. Please run the script as an administrator!!!"
-} 
-
 $wpf_diskNameInfo.Add_SelectionChanged({Get-DiskInfo})
 $wpf_diskName.Add_SelectionChanged({Get-DiskSize})
 $wpf_ddlServices.Add_SelectionChanged({Get-Services})
@@ -6788,3 +7066,4 @@ if ($psform.IsVisible -eq $false -or $psform.IsLoaded -eq $false) {
 }
 
 Stop-Transcript
+

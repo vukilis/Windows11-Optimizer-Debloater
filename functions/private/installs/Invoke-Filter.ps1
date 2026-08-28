@@ -32,3 +32,4 @@ function Invoke-Filter {
 $wpf_CheckboxFilter.Add_TextChanged({
     Invoke-Filter
 })
+

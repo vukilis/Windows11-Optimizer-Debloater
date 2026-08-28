@@ -376,7 +376,7 @@
         "Content": "Disable WiFi Sense",
         "Description": "Disables automatic connection to open hotspots and Wi-Fi reporting.",
         "DisableMessage": "Disabling Wi-Fi Sense...",
-        "Registry": [
+        "registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Microsoft\\PolicyManager\\default\\WiFi\\AllowWiFiHotSpotReporting",
                 "Name": "Value",
@@ -398,7 +398,7 @@
         "Content": "Disable Activity History",
         "Description": "This erases recent docs, clipboard, and run history.",
         "DisableMessage": "Disabling Activity History...",
-        "Registry": [
+        "registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
                 "Name": "EnableActivityFeed",
@@ -757,11 +757,11 @@
         "InvokeScript": [
             "Get-ChildItem -Path 'C:\\Windows\\Temp' *.* -Recurse -Force | ForEach-Object {
             try { Remove-Item $_.FullName -Force -Recurse -ErrorAction Stop } 
-            catch { }
+            catch { Write-Warning \"Failed to remove temp file: $_\" }
             }
             Get-ChildItem -Path $env:TEMP *.* -Recurse -Force | ForEach-Object {
                 try { Remove-Item $_.FullName -Force -Recurse -ErrorAction Stop } 
-                catch { }
+                catch { Write-Warning \"Failed to remove temp file: $_\" }
             }
             Write-Host '======================================='
             Write-Host '--- Cleaned following folders:'
@@ -1017,7 +1017,7 @@
 
             # Flush the DNS resolver cache
             try {
-                Invoke-Expression \"ipconfig /flushdns\"
+                & ipconfig /flushdns
                 Write-Output \"DNS cache flushed successfully.\"
             } catch {
                 Write-Error \"Failed to flush DNS cache. Error: $_\"
@@ -1064,7 +1064,7 @@
 
             # Flush the DNS resolver cache
             try {
-                Invoke-Expression \"ipconfig /flushdns\"
+                & ipconfig /flushdns
                 Write-Output \"DNS cache flushed successfully.\"
             } catch {
                 Write-Error \"Failed to flush DNS cache. Error: $_\"
@@ -1662,7 +1662,7 @@
             Get-ChildItem -Path $schemePath -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.PSChildName -eq '.Current' } | ForEach-Object { Set-ItemProperty -Path $_.PSPath -Name '(Default)' -Value '' }
 
             # Broadcast settings change so it applies immediately
-            Add-Type \"using System; using System.Runtime.InteropServices; public class RefreshSystem { [DllImport(\"user32.dll\", SetLastError=true, CharSet=CharSet.Auto)] public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult); }\"
+            Invoke-LoadNativeMethods -Type RefreshSystem
             $HWND_BROADCAST = [IntPtr]0xffff
             $WM_SETTINGCHANGE = 0x1A
             $SMTO_ABORTIFHUNG = 0x2
@@ -1679,7 +1679,7 @@
             }
 
             # Broadcast settings change so it applies immediately
-            Add-Type \"using System; using System.Runtime.InteropServices; public class RefreshSystem { [DllImport(\"user32.dll\", SetLastError=true, CharSet=CharSet.Auto)] public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult); }\"
+            Invoke-LoadNativeMethods -Type RefreshSystem
             $HWND_BROADCAST = [IntPtr]0xffff
             $WM_SETTINGCHANGE = 0x1A
             $SMTO_ABORTIFHUNG = 0x2
@@ -2017,7 +2017,7 @@
                 Set-ItemProperty -Path $registryPath -Name '(Default)' -Value 'Windows Default (system scheme)' -Force
 
                 Start-Sleep 1
-                Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class SystemParamInfo { [DllImport(\"user32.dll\", CharSet = CharSet.Unicode)] public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni); }' -Language CSharp
+                Invoke-LoadNativeMethods -Type SystemParamInfo
                 [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
                 Write-Host 'Restored Windows default mouse cursors.' -ForegroundColor Green
             "
@@ -2114,7 +2114,7 @@
                 Set-ItemProperty -Path $registryPath -Name '(Default)' -Value 'Windows Default (system scheme)' -Force
 
                 Start-Sleep 1
-                Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class SystemParamInfo { [DllImport(\"user32.dll\", CharSet = CharSet.Unicode)] public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni); }' -Language CSharp
+                Invoke-LoadNativeMethods -Type SystemParamInfo
                 [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
                 Write-Host 'Restored Windows default mouse cursors.' -ForegroundColor Green
             "
@@ -2528,6 +2528,14 @@
                 "Type": "Dword",
                 "DefaultState": "true"
             }
+        ],
+        "InvokeScript": [
+            "Write-Host \"Restarting Explorer to apply taskbar alignment...\" -ForegroundColor Green",
+            "Invoke-ExplorerUpdate"
+        ],
+        "UndoScript": [
+            "Write-Host \"Restarting Explorer to apply taskbar alignment...\" -ForegroundColor Green",
+            "Invoke-ExplorerUpdate"
         ]
     },
     "ToggleDetailedBSoD": {
@@ -2542,18 +2550,16 @@
             "Name": "DisplayParameters",
             "Value": "1",
             "OriginalValue": "0",
-            "DefaultState": "false",
             "Type": "DWord",
-                "DefaultState": "true"
+            "DefaultState": "true"
         },
         {
             "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\CrashControl",
             "Name": "DisableEmoticon",
             "Value": "1",
             "OriginalValue": "0",
-            "DefaultState": "false",
             "Type": "DWord",
-                "DefaultState": "true"
+            "DefaultState": "true"
         }
         ]
     },

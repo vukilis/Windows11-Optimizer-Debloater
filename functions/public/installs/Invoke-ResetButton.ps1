@@ -18,3 +18,4 @@ function Invoke-ResetButton {
         }
     }
 }
+

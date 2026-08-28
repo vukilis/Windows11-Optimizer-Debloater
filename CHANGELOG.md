@@ -8,6 +8,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [4.0] - 2026-08-28
+
+### Added
+
+- Comprehensive code quality improvements: modular architecture, dictionary-based event routing, and native method caching.
+- Pester test suite with config validation tests.
+- Local XAML loading with GitHub fallback for offline use.
+- Self-elevating admin enforcement with graceful fallback.
+- `-SmokeTest` flag for headless validation.
+- `CONTRIBUTING.md` and `docs/DEVELOPMENT.md` with architecture and development guides.
+
+### Changed
+
+- Standardized JSON key casing across all config files (`registry`, `service`, `firewall`, etc.).
+- Replaced deprecated `LoadWithPartialName` with `Add-Type -AssemblyName`.
+- Replaced `Invoke-Expression` with call operator `&` for security.
+- Standardized encoding to UTF-8 throughout build pipeline.
+- Added `Set-StrictMode -Version Latest` and `#requires -Version 7.0` to all scripts.
+
+### Fixed
+
+- Fixed compile-time `param()` placement to support `-SmokeTest` flag.
+- Fixed property access errors on optional config fields (`choco`, `pip`, `service`, `firewall`, `ScheduledTask`, `Registry`).
+- Fixed debloat tab unselect behavior and panel scope leakage.
+- Fixed Teams uninstall registry lookup with safe property access.
+- Fixed toggle initialization to silently handle missing registry values.
+- Fixed `FeatureWsl` missing `Type` property in `feature.json`.
+- Fixed duplicate `DefaultState` keys in `tweaks.json`.
+
 ## [3.4] - 2025-08-24
 
 ### Added

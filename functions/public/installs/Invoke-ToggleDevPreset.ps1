@@ -29,3 +29,4 @@ function Invoke-ToggleDevPreset {
     }
     if ($wpf_ToggleDevPreset.IsChecked){ Write-Host "Enabling Dev Preset" -ForegroundColor Green} else { Write-Host "Disabling Dev Preset" -ForegroundColor Red  }
 }
+

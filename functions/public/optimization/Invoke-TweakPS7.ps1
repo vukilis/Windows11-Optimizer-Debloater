@@ -52,3 +52,5 @@ function Invoke-TweakPS7{
         Write-Host "No PowerShell 7 profile found in Windows Terminal settings using the name attribute."
     }
 }
+
+

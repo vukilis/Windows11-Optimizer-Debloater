@@ -21,3 +21,4 @@ function Invoke-ClearProgramsButton {
     }
     Write-Host "Selection cleared" -ForegroundColor Green
 }
+

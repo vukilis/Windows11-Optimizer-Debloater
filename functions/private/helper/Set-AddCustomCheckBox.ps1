@@ -39,3 +39,4 @@ function AddCustomCheckBox {
 # $cbox.Margin = New-Object Windows.Thickness(15, 5, 15, 5)
 # $cbox.FontSize = 11
 # $cbox.FontFamily = New-Object Windows.Media.FontFamily("Gadugi")
+

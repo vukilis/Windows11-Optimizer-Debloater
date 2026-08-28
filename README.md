@@ -10,26 +10,26 @@
 This Utility show basic system information, install programs, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates.
 
 
-![Screenshot of the application in the tray menu and the Discord status](https://vukilis.com/images/2024/Windows_11_Optimizer_Debloater/Windows_11_Optimizer_Debloater.png)
+![Screenshot of the application in the tray menu and the Discord status](https://vukilis.com/_astro/optimization.C4VRkIbL_2qSvLj.webp)
 
 ## Usage:
 
 Requires you to launch PowerShell or Windows Terminal As ADMINISTRATOR!
 
-Launch Command:
+Stable Branch (recommended):
 ```
 iwr -useb vukilis.com/win11deb | iex
 ```
-or 
+
+Development Branch:
 ```
-iwr -useb dub.sh/win11deb | iex
-irm dub.sh/win11deb | iex
+iwr -useb vukilis.com/win11dev | iex
 ```
-If you are having TLS 1.2 Issues or You cannot find or resolve `dub.sh/win11deb` then run with the following command:
+
+If you are having TLS 1.2 Issues or You cannot find or resolve `vukilis.com/win11deb` then run with the following 
+command:
 ```
 [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12;iex(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/win11deb.ps1')
-```
-[Dub.co](https://github.com/dubinc/dub) - An open-source link management tool for modern marketing teams to create, share, and track short links.
 
 ## What Script Do?
 - **Info**
@@ -55,6 +55,34 @@ If you are having TLS 1.2 Issues or You cannot find or resolve `dub.sh/win11deb`
   > Makes shortcuts and backups  
   > Fixes and sets configs for applications  
   > Activate Windows with MAS script
+
+## Architecture
+
+This project uses a **compile-time concatenation** architecture. Source files are organized by function and compiled into a single artifact.
+
+```mermaid
+graph LR
+    A[scripts/start.ps1] --> C[compile.ps1]
+    B[scripts/main.ps1] --> C
+    D[scripts/closure.ps1] --> C
+    E[functions/...] --> C
+    F[config/*.json] --> C
+    G[xaml/MainWindow.xaml] --> C
+    C --> H[win11deb.ps1]
+    H --> I[User runs script]
+    I --> J[WPF UI]
+```
+
+### Key Design Decisions
+
+- **Single Artifact**: All code is compiled into `win11deb.ps1` for easy distribution
+- **JSON-Driven**: Tweaks and configurations are defined in JSON, not hardcoded
+- **Local XAML**: UI layout is loaded from `xaml/MainWindow.xaml` with GitHub fallback
+- **Dictionary Routing**: Button actions are mapped via hashtables instead of switch statements
+
+## Development
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for development setup and guidelines.
 
 ## Credits
 - Special thanks to [jepriCreations](https://www.deviantart.com/rosea92) for his amazing Windows 11 cursor concept.

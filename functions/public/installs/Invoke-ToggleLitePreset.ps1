@@ -26,3 +26,4 @@ function Invoke-ToggleLitePreset {
 
     if ($wpf_ToggleLitePreset.IsChecked){ Write-Host "Enabling Lite Preset" -ForegroundColor Green} else { Write-Host "Disabling Lite Preset" -ForegroundColor Red  }
 }
+

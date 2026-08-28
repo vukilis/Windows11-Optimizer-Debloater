@@ -7,3 +7,4 @@ function Invoke-PanelAutologin {
     cmd /c $env:temp\autologin.exe
     Write-Host "Autologin enabled" -ForegroundColor Green
 }
+

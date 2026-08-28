@@ -23,3 +23,4 @@ function Invoke-FixesNetwork {
 " -ch DarkGreen
     Invoke-MessageBox -msg "networkReset"
 }
+

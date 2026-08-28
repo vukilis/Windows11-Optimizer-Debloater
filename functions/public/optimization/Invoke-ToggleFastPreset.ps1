@@ -47,3 +47,4 @@ function Invoke-ToggleFastPreset {
         Write-Host "Disabling Fast Preset" -ForegroundColor Red 
     }
 }
+

@@ -1,13 +1,23 @@
-# $xamlFile="C:\Users\vukilis\Desktop\Windows11-Optimizer-Debloater\xaml\MainWindow.xaml" #uncomment for development
-# $inputXAML=Get-Content -Path $xamlFile -Raw #uncomment for development
-$inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml") #uncomment for Production
+$xamlFile = Join-Path $PSScriptRoot "..\xaml\MainWindow.xaml"
+if (-not (Test-Path $xamlFile)) {
+    $xamlFile = Join-Path $PSScriptRoot "xaml\MainWindow.xaml"
+}
+if (-not (Test-Path $xamlFile)) {
+    $xamlFile = "MainWindow.xaml"
+}
+
+if (Test-Path $xamlFile) {
+    $inputXAML = Get-Content -Path $xamlFile -Raw
+} else {
+    $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/refs/heads/dev/xaml/MainWindow.xaml")
+}
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
-[void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
-[XML]$XAML=$inputXAML
+Add-Type -AssemblyName PresentationFramework
+Add-Type -AssemblyName System.Drawing
+Add-Type -AssemblyName System.Windows.Forms
 
-[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing") 
-[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms") 
+[XML]$XAML=$inputXAML
 
 $reader = New-Object System.Xml.XmlNodeReader $XAML
 try {
@@ -253,20 +263,23 @@ function Invoke-ToggleButtons {
                 $toggleEntry = $sync.configs.tweaks.$toggleName
             }
                 
-            $EnableMessage = $toggleEntry.EnableMessage
-            $DisableMessage = $toggleEntry.DisableMessage
-            $action = if ($isChecked) { "$EnableMessage" } else { "$DisableMessage" }
 
             if (-not $toggleEntry) {
                 Write-Warning "No toggle matched for '$toggleName'"
                 return
             }
 
+            $EnableMessage = $toggleEntry.EnableMessage
+            $DisableMessage = $toggleEntry.DisableMessage
+            $action = if ($isChecked) { "$EnableMessage" } else { "$DisableMessage" }
+
             Write-Host "$action" -ForegroundColor Green
             
             foreach ($regEntry in $toggleEntry.registry) {
                 $value = if ($isChecked) { $regEntry.Value } else { $regEntry.OriginalValue }
-                try { Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $value } catch {}
+                try { Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $value } catch {
+                    Write-Warning "Failed to set registry value at $($regEntry.Path)\$($regEntry.Name): $_"
+                }
             }
 
             $scriptType = if ($isChecked) { "InvokeScript" } else { "UndoScript" }
@@ -282,7 +295,7 @@ function Invoke-ToggleButtons {
                 }
             }
 
-            foreach ($svc in $toggleEntry.service) {
+            foreach ($svc in $toggleEntry.PSObject.Properties.Name -contains 'service' ? $toggleEntry.service : @()) {
                 try {
                     $service = Get-Service -Name $svc.Name -ErrorAction Stop
                     $desiredType = if ($isChecked) { $svc.StartupType } else { $svc.OriginalType }
@@ -295,7 +308,7 @@ function Invoke-ToggleButtons {
                 }
             }
 
-            foreach ($fw in $toggleEntry.firewall) {
+            foreach ($fw in $toggleEntry.PSObject.Properties.Name -contains 'firewall' ? $toggleEntry.firewall : @()) {
                 try {
                     $desiredAction = if ($isChecked) { $fw.Action } else { 
                         if ($fw.Action -eq "Disable") { "Enable" } else { "Disable" }
@@ -312,6 +325,71 @@ function Invoke-ToggleButtons {
     }
 }
 
+$script:ButtonActions = @{
+    'wpf_CloseButton'      = { Invoke-CloseButton }
+    'wpf_MinButton'        = { Invoke-MinButton }
+    'wpf_MaxButton'        = { Invoke-MaxButton }
+    'wpf_buymeacoffee'     = { Invoke-BuyMeACoffee }
+    'wpf_buymeakofi'       = { Invoke-BuyMeAKofi }
+    'wpf_SelectDebloat'    = { Invoke-SelectApplication }
+    'wpf_SelectDebloatAll' = { Invoke-SelectApplicationAll }
+    'wpf_UnselectDebloatAll' = { Invoke-UnselectApplicationAll }
+    'wpf_UninstallDebloat' = { Invoke-UninstallDebloat }
+    'wpf_optimizationButton' = { Invoke-optimizationButton }
+    'wpf_optimizationUndoButton' = { Invoke-OptimizationUndo }
+    'wpf_optimizationClearButton' = { Invoke-OptimizationClear }
+    'wpf_recommended'      = { Invoke-recommended }
+    'wpf_gaming'           = { Invoke-gaming }
+    'wpf_normal'           = { Invoke-normal }
+    'wpf_Updatesdefault'   = { Invoke-UpdatesDefault }
+    'wpf_PauseUpdate'      = { Invoke-PauseUpdate }
+    'wpf_FixesUpdate'      = { Invoke-FixesUpdate }
+    'wpf_Updatesdisable'   = { Invoke-UpdatesDisable }
+    'wpf_Updatessecurity'  = { Invoke-UpdatesSecurity }
+    'wpf_PanelControl'     = { Invoke-Configs -Panel $button }
+    'wpf_PanelPnF'         = { Invoke-Configs -Panel $button }
+    'wpf_PanelNetwork'     = { Invoke-Configs -Panel $button }
+    'wpf_PanelPower'       = { Invoke-Configs -Panel $button }
+    'wpf_PanelSound'       = { Invoke-Configs -Panel $button }
+    'wpf_PanelSystem'      = { Invoke-Configs -Panel $button }
+    'wpf_PanelUser'        = { Invoke-Configs -Panel $button }
+    'wpf_PanelServices'    = { Invoke-Configs -Panel $button }
+    'wpf_PanelWindowsFirewall' = { Invoke-Configs -Panel $button }
+    'wpf_PanelTimedate'    = { Invoke-Configs -Panel $button }
+    'wpf_PanelDeviceManager' = { Invoke-Configs -Panel $button }
+    'wpf_PanelExplorerOption' = { Invoke-Configs -Panel $button }
+    'wpf_PanelRegedit'     = { Invoke-Configs -Panel $button }
+    'wpf_PanelScheduler'   = { Invoke-Configs -Panel $button }
+    'wpf_PanelResourceMonitor' = { Invoke-Configs -Panel $button }
+    'wpf_PanelSysConf'     = { Invoke-Configs -Panel $button }
+    'wpf_PanelEvent'       = { Invoke-Configs -Panel $button }
+    'wpf_PanelSysInfo'     = { Invoke-Configs -Panel $button }
+    'wpf_PanelDiskManagement' = { Invoke-Configs -Panel $button }
+    'wpf_PanelComputer'    = { Invoke-Configs -Panel $button }
+    'wpf_PanelAutologin'   = { Invoke-PanelAutologin }
+    'wpf_PanelRegion'      = { Invoke-Configs -Panel $button }
+    'wpf_DblInstall'       = { Invoke-installButton }
+    'wpf_DblGetInstalled'  = { Invoke-getInstallButton }
+    'wpf_DblUninstall'     = { Invoke-UninstallButton }
+    'wpf_DblUpgrade'       = { Invoke-UpgradeButton }
+    'wpf_DblClearPrograms' = { Invoke-ClearProgramsButton }
+    'wpf_ResetButton'      = { Invoke-ResetButton }
+    'wpf_DblChocoInstall'  = { Invoke-ChocoInstall }
+    'wpf_DblChocoUpgrade'  = { Invoke-ChocoUpgrade }
+    'wpf_DblChocoUninstall' = { Invoke-ChocoUninstall }
+    'wpf_DblWingetFix'     = { Invoke-FixesWinget }
+    'wpf_DblMsStoreFix'    = { Invoke-MsStoreFix }
+    'wpf_ShortcutApp'      = { Invoke-ShortcutApp -ShortcutToAdd "Win11Deb" }
+    'wpf_FixesNetwork'     = { Invoke-FixesNetwork }
+    'wpf_FixesSound'       = { Invoke-FixesSound }
+    'wpf_RegistryBackup'   = { Invoke-RegistryBackup }
+    'wpf_VsCodeMenu'       = { Invoke-VsCodeMenu }
+    'wpf_VsCodeMenuRemove' = { Invoke-VsCodeMenuRemove }
+    'wpf_WingetConfig'     = { Set-WingetConfig }
+    'wpf_FixesADB'         = { Invoke-FixADB }
+    'wpf_ActivateWindows'  = { Invoke-ActivateWindows }
+}
+
 function Invoke-Button {
 
     <#
@@ -325,73 +403,23 @@ function Invoke-Button {
     
     Param ([string]$Button) 
 
-    Switch -Wildcard ($Button){
-
-        "wpf_Tab?BT" {Invoke-Tabs $Button}
-        "wpf_CloseButton" {Invoke-CloseButton}
-        "wpf_MinButton" {Invoke-MinButton}
-        "wpf_MaxButton" {Invoke-MaxButton}
-        "wpf_buymeacoffee" {Invoke-BuyMeACoffee}
-        "wpf_buymeakofi" {Invoke-BuyMeAKofi}
-        "wpf_SelectDebloat" {Invoke-SelectApplication}
-        "wpf_SelectDebloatAll" {Invoke-SelectApplicationAll}
-        "wpf_UnselectDebloatAll" {Invoke-UnselectApplicationAll}
-        "wpf_UninstallDebloat" {Invoke-UninstallDebloat}
-        "wpf_optimizationButton" {Invoke-optimizationButton}
-        "wpf_optimizationUndoButton" {Invoke-OptimizationUndo}
-        "wpf_optimizationClearButton" {Invoke-OptimizationClear}
-        "wpf_recommended" {Invoke-recommended}
-        "wpf_gaming" {Invoke-gaming}
-        "wpf_normal" {Invoke-normal}
-        "wpf_Updatesdefault" {Invoke-UpdatesDefault}
-        "wpf_PauseUpdate" {Invoke-PauseUpdate}
-        "wpf_FixesUpdate" {Invoke-FixesUpdate}
-        "wpf_Updatesdisable" {Invoke-UpdatesDisable}
-        "wpf_Updatessecurity" {Invoke-UpdatesSecurity}
-        "wpf_PanelControl" {Invoke-Configs -Panel $button}
-        "wpf_PanelPnF" {Invoke-Configs -Panel $button}
-        "wpf_PanelNetwork" {Invoke-Configs -Panel $button}
-        "wpf_PanelPower" {Invoke-Configs -Panel $button}
-        "wpf_PanelSound" {Invoke-Configs -Panel $button}
-        "wpf_PanelSystem" {Invoke-Configs -Panel $button}
-        "wpf_PanelUser" {Invoke-Configs -Panel $button}
-        "wpf_PanelServices" {Invoke-Configs -Panel $button}
-        "wpf_PanelWindowsFirewall" {Invoke-Configs -Panel $button}
-        "wpf_PanelTimedate" {Invoke-Configs -Panel $button}
-        "wpf_PanelDeviceManager" {Invoke-Configs -Panel $button}
-        "wpf_PanelExplorerOption" {Invoke-Configs -Panel $button}
-        "wpf_PanelRegedit" {Invoke-Configs -Panel $button}
-        "wpf_PanelScheduler" {Invoke-Configs -Panel $button}
-        "wpf_PanelResourceMonitor" {Invoke-Configs -Panel $button}
-        "wpf_PanelSysConf" {Invoke-Configs -Panel $button}
-        "wpf_PanelEvent" {Invoke-Configs -Panel $button}
-        "wpf_PanelSysInfo" {Invoke-Configs -Panel $button}
-        "wpf_PanelDiskManagement" {Invoke-Configs -Panel $button}
-        "wpf_PanelComputer" {Invoke-Configs -Panel $button}
-        # "wpf_FeatureInstall" {Invoke-FeatureInstall}
-        "wpf_PanelAutologin" {Invoke-PanelAutologin}
-        "wpf_PanelRegion" {Invoke-Configs -Panel $button}
-        "wpf_DblInstall" {Invoke-installButton}
-        "wpf_DblGetInstalled" {Invoke-getInstallButton}
-        "wpf_DblUninstall" {Invoke-UninstallButton}
-        "wpf_DblUpgrade" {Invoke-UpgradeButton}
-        "wpf_DblClearPrograms" {Invoke-ClearProgramsButton}
-        "wpf_ResetButton" {Invoke-ResetButton}
-        "wpf_DblChocoInstall" {Invoke-ChocoInstall}
-        "wpf_DblChocoUpgrade" {Invoke-ChocoUpgrade}
-        "wpf_DblChocoUninstall" {Invoke-ChocoUninstall}
-        "wpf_DblWingetFix" {Invoke-FixesWinget}
-        "wpf_DblMsStoreFix" {Invoke-MsStoreFix}
-        "wpf_ShortcutApp" {Invoke-ShortcutApp -ShortcutToAdd "Win11Deb"}
-        "wpf_FixesNetwork" {Invoke-FixesNetwork}
-        "wpf_FixesSound" {Invoke-FixesSound}
-        "wpf_RegistryBackup" {Invoke-RegistryBackup}
-        "wpf_VsCodeMenu" {Invoke-VsCodeMenu}
-        "wpf_VsCodeMenuRemove" {Invoke-VsCodeMenuRemove}
-        "wpf_WingetConfig" {Set-WingetConfig}
-        "wpf_FixesADB" {Invoke-FixADB}
-        "wpf_ActivateWindows" {Invoke-ActivateWindows}
+    if ($Button -match '^wpf_Tab\d+BT$') {
+        Invoke-Tabs $Button
+        return
     }
+
+    if ($script:ButtonActions.ContainsKey($Button)) {
+        & $script:ButtonActions[$Button]
+    } else {
+        Write-Warning "No action matched for button '$Button'"
+    }
+}
+
+$script:CheckboxActions = @{
+    'wpf_ToggleXboxPreset'  = { Invoke-ToggleXboxPreseta }
+    'wpf_ToggleLitePreset'  = { Invoke-ToggleLitePreset }
+    'wpf_ToggleDevPreset'   = { Invoke-ToggleDevPreset }
+    'wpf_ToggleGamingPreset' = { Invoke-ToggleGamingPreset }
 }
 
 function Invoke-Checkbox {
@@ -406,11 +434,8 @@ function Invoke-Checkbox {
 
     Param ([string]$checkbox) 
 
-    Switch -Wildcard ($checkbox){
-        "wpf_ToggleXboxPreset" {Invoke-ToggleXboxPreseta}
-        "wpf_ToggleLitePreset" {Invoke-ToggleLitePreset}
-        "wpf_ToggleDevPreset" {Invoke-ToggleDevPreset}
-        "wpf_ToggleGamingPreset" {Invoke-ToggleGamingPreset}
+    if ($script:CheckboxActions.ContainsKey($checkbox)) {
+        & $script:CheckboxActions[$checkbox]
     }
 }
 ################################
@@ -555,3 +580,4 @@ if (-not (Test-Path $destinationPath)) {
 } else {
     Write-Output "File already exists at: $destinationPath"
 }
+

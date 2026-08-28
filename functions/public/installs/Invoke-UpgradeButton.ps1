@@ -11,11 +11,11 @@ function Invoke-UpgradeButton {
         $isChecked = $checkBox.IsChecked
 
         if ($isChecked -eq $true -and $program.IdPython) {
-            Invoke-ManageInstall -PackageManger "pip" -manage "Upgrading" -program $name -PackageName $program.PipPackage
+            Invoke-ManageInstall -PackageManger "pip" -manage "Upgrading" -program $program.Name -PackageName $program.PipPackage
         }elseif ($isChecked -eq $true -and $program.IdChoco){
-            Invoke-ManageInstall -PackageManger "choco" -manage "Upgrading" -program $name -PackageName $program.Choco
+            Invoke-ManageInstall -PackageManger "choco" -manage "Upgrading" -program $program.Name -PackageName $program.Choco
         }elseif ($isChecked -eq $true){
-            Invoke-ManageInstall -PackageManger "winget" -manage "Upgrading" -program $name -PackageName $program.Winget
+            Invoke-ManageInstall -PackageManger "winget" -manage "Upgrading" -program $program.Name -PackageName $program.Winget
         }else {
             continue
         }
@@ -23,3 +23,4 @@ function Invoke-UpgradeButton {
     
     Invoke-MessageBox -msg "upgrade"
 }
+

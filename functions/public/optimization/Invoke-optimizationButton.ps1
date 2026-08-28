@@ -29,9 +29,9 @@ function Invoke-OptimizationButton {
 
         # Apply registry changes if available and checkbox is checked
         if ($apply) {
-            if ($tweak.ScheduledTask) {
+            if ($tweak.PSObject.Properties.Name -contains 'ScheduledTask' -and $tweak.ScheduledTask) {
                 foreach ($msg in "DisableMessage","EnableMessage") {
-                    if ($tweak.$msg) { Write-Host "ScheduledTask:" $tweak.$msg -ForegroundColor Yellow }
+                    if ($tweak.PSObject.Properties.Name -contains $msg -and $tweak.$msg) { Write-Host "ScheduledTask:" $tweak.$msg -ForegroundColor Yellow }
                 }
                 foreach ($task in $tweak.ScheduledTask) {
                     try {
@@ -42,28 +42,28 @@ function Invoke-OptimizationButton {
                 }
             }
 
-            if ($tweak.Registry) {
+            if ($tweak.PSObject.Properties.Name -contains 'registry' -and $tweak.registry) {
                 foreach ($msg in "DisableMessage","EnableMessage") {
-                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
+                    if ($tweak.PSObject.Properties.Name -contains $msg -and $tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
                 }
-                foreach ($regEntry in $tweak.Registry) {
+                foreach ($regEntry in $tweak.registry) {
                     try { 
                         Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.Value }
                     catch { 
                         Write-Warning "Failed to apply registry tweak: $_" }
                 }
             }
-            if ($tweak.InvokeScript) {
+            if ($tweak.PSObject.Properties.Name -contains 'InvokeScript' -and $tweak.InvokeScript) {
                 foreach ($msg in "DisableMessage","EnableMessage") {
-                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Cyan }
+                    if ($tweak.PSObject.Properties.Name -contains $msg -and $tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Cyan }
                 }
                 foreach ($script in $tweak.InvokeScript) {
                     Invoke-Scripts -Name $tweak.Content -Script $script
                 }
             }
-            if ($tweak.service) {
+            if ($tweak.PSObject.Properties.Name -contains 'service' -and $tweak.service) {
                 foreach ($msg in "DisableMessage","EnableMessage") {
-                    if ($tweak.$msg) { Write-Host "Service:" $tweak.$msg -ForegroundColor Magenta }
+                    if ($tweak.PSObject.Properties.Name -contains $msg -and $tweak.$msg) { Write-Host "Service:" $tweak.$msg -ForegroundColor Magenta }
                 }
                 foreach ($service in $tweak.service) {
                     try {
@@ -79,3 +79,4 @@ function Invoke-OptimizationButton {
 
     Invoke-MessageBox -msg "tweak"
 }
+

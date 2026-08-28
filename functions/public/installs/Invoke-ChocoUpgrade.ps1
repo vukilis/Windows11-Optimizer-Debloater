@@ -13,3 +13,4 @@ function Invoke-ChocoUpgrade {
         Write-Host "Seems Chocolatey is not installed" -ForegroundColor Red
     }
 }
+

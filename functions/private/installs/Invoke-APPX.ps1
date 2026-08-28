@@ -8,9 +8,9 @@ function Invoke-APPX {
         $name = $program.name
         $winget = $program.winget
         $idPython = $id -like "DblPython*"
-        $pipPackage = $program.pip
+        $pipPackage = if ($program.PSObject.Properties.Name -contains 'pip') { $program.pip } else { $null }
         $idChoco = $id -like "DblChoco*"
-        $choco = $program.choco
+        $choco = if ($program.PSObject.Properties.Name -contains 'choco') { $program.choco } else { $null }
 
         $checkBox = $psform.FindName("$id")
         $isChecked = $checkBox.IsChecked
@@ -29,3 +29,4 @@ function Invoke-APPX {
 
     return $result
 }
+

@@ -29,8 +29,8 @@ function Invoke-OptimizationUndo {
 
         # Apply registry changes if available and checkbox is checked
         if ($apply) {
-            if ($tweak.ScheduledTask) {
-                Write-Host "ScheduledTask: Revert the $($tweak.Content) to the default settings!" $tweak.message -ForegroundColor Yellow
+            if ($tweak.PSObject.Properties.Name -contains 'ScheduledTask' -and $tweak.ScheduledTask) {
+                Write-Host "ScheduledTask: Revert the $($tweak.Content) to the default settings!" -ForegroundColor Yellow
                 foreach ($task in $tweak.ScheduledTask) {
                     try {
                         Set-ScheduledTask -Name $task.Name -State $task.OriginalState
@@ -40,24 +40,23 @@ function Invoke-OptimizationUndo {
                 }
             }
 
-            if ($tweak.Registry) {
+            if ($tweak.PSObject.Properties.Name -contains 'registry' -and $tweak.registry) {
                 Write-Host "Registry: Revert the $($tweak.Content) to the default settings!" -ForegroundColor Green
-                foreach ($regEntry in $tweak.Registry) {
+                foreach ($regEntry in $tweak.registry) {
                     try { 
                         Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.OriginalValue }
                     catch { 
                         Write-Warning "Failed to apply registry tweak: $_" }
                 }
             }
-            if ($tweak.UndoScript) {
-                # Write-Host "UndoScript:" $tweak.DisableMessage -ForegroundColor Cyan
+            if ($tweak.PSObject.Properties.Name -contains 'UndoScript' -and $tweak.UndoScript) {
                 Write-Host "UndoScript: Revert the $($tweak.Content) to the default settings!" -ForegroundColor Cyan
                 foreach ($script in $tweak.UndoScript) {
                     Invoke-Scripts -Name $tweak.Content -Script $script
                 }
             }
-            if ($tweak.service) {
-                Write-Host "Service: Revert the $($tweak.Content) to the default settings!" $tweak.message -ForegroundColor Magenta
+            if ($tweak.PSObject.Properties.Name -contains 'service' -and $tweak.service) {
+                Write-Host "Service: Revert the $($tweak.Content) to the default settings!" -ForegroundColor Magenta
                 foreach ($service in $tweak.service) {
                     try {
                         Set-WinService -Name $service.Name -StartupType $service.OriginalType
@@ -72,3 +71,4 @@ function Invoke-OptimizationUndo {
 
     Invoke-MessageBox -msg "undotweak"
 }
+

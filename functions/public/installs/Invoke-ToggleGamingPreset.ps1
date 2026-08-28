@@ -26,3 +26,4 @@ function Invoke-ToggleGamingPreset {
     }
     if ($wpf_ToggleGamingPreset.IsChecked){ Write-Host "Enabling Gaming Preset" -ForegroundColor Green} else { Write-Host "Disabling Gaming Preset" -ForegroundColor Red  }
 }
+

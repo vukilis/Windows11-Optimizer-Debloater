@@ -22,8 +22,8 @@ if ($IsVirtual -like 'False'){
     $wpf_ramInfo.Content=[string]$ramInfoGB+"GB"
 }
 
-$mbInfo = Get-CimInstance -ClassName win32_baseboard | Select-Object *
-$wpf_mbInfo.Content=$mbInfo.Product
+$mbInfo = Get-CimInstance -ClassName win32_baseboard -ErrorAction SilentlyContinue
+$wpf_mbInfo.Content = if ($mbInfo -and $mbInfo.Product) { $mbInfo.Product } else { "Unknown" }
 
 # OS INFO
 $osInfo = $ComputerInfo.OSName
@@ -77,3 +77,4 @@ function Get-DiskSize {
         }
     }
 }
+

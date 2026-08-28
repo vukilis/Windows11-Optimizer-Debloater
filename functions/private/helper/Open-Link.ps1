@@ -34,3 +34,4 @@ $wpf_WebsiteHyperlink.Add_Click({
     $navigateUriSite = Get-NavigateUri -hyperlink $WebsiteHyperlink
     Open-Link -Uri $navigateUriSite
 })
+

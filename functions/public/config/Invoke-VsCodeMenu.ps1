@@ -44,3 +44,4 @@ Windows Registry Editor Version 5.00
     Remove-Item $tempFile -Force
     Write-Host "VS Code context menu added!" -ForegroundColor Green
 }
+

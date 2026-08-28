@@ -19,3 +19,4 @@ function Invoke-VsCodeMenuRemove {
 
     Write-Host "✅ VS Code context menu removed!" -ForegroundColor Green
 }
+
