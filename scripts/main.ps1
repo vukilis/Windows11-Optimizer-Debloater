@@ -1,37 +1,20 @@
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'SilentlyContinue'
 $xamlFile = $null
 
-$scriptRoot = if ($PSScriptRoot) { $PSScriptRoot } elseif ($MyInvocation.MyCommand.Path) { Split-Path -Parent $MyInvocation.MyCommand.Path } else { $null }
-if ($scriptRoot) {
-    $xamlFile = Join-Path $scriptRoot "..\xaml\MainWindow.xaml"
+if ($PSScriptRoot) {
+    $xamlFile = Join-Path $PSScriptRoot "..\xaml\MainWindow.xaml"
     if (-not (Test-Path $xamlFile)) {
-        $xamlFile = Join-Path $scriptRoot "xaml\MainWindow.xaml"
+        $xamlFile = Join-Path $PSScriptRoot "xaml\MainWindow.xaml"
     }
-}
-if (-not $xamlFile -or -not (Test-Path $xamlFile)) {
-    $xamlFile = Join-Path $PWD.Path "xaml\MainWindow.xaml"
 }
 if (-not $xamlFile -or -not (Test-Path $xamlFile)) {
     $xamlFile = "MainWindow.xaml"
 }
 
 if (Test-Path $xamlFile) {
-    Write-Host "Loading XAML from local file: $xamlFile" -ForegroundColor Cyan
     $inputXAML = Get-Content -Path $xamlFile -Raw
 } else {
-    Write-Host "Local XAML not found. Downloading from GitHub..." -ForegroundColor Yellow
-    $url = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/xaml/MainWindow.xaml"
-    try {
-        $wc = New-Object Net.WebClient
-        $inputXAML = $wc.DownloadString($url)
-        if (-not $inputXAML -or $inputXAML -notmatch '<Window') {
-            throw "Downloaded content does not appear to be valid XAML."
-        }
-        Write-Host "XAML downloaded successfully from GitHub." -ForegroundColor Green
-    } catch {
-        Write-Warning "Failed to download XAML from GitHub: $_"
-        throw "Cannot load UI: local XAML file not found and GitHub download failed."
-    }
+    $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/xaml/MainWindow.xaml")
 }
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
