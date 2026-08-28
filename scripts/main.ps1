@@ -20,7 +20,18 @@ if (Test-Path $xamlFile) {
     $inputXAML = Get-Content -Path $xamlFile -Raw
 } else {
     Write-Host "Local XAML not found. Downloading from GitHub..." -ForegroundColor Yellow
-    $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/refs/heads/dev/xaml/MainWindow.xaml")
+    $url = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/xaml/MainWindow.xaml"
+    try {
+        $wc = New-Object Net.WebClient
+        $inputXAML = $wc.DownloadString($url)
+        if (-not $inputXAML -or $inputXAML -notmatch '<Window') {
+            throw "Downloaded content does not appear to be valid XAML."
+        }
+        Write-Host "XAML downloaded successfully from GitHub." -ForegroundColor Green
+    } catch {
+        Write-Warning "Failed to download XAML from GitHub: $_"
+        throw "Cannot load UI: local XAML file not found and GitHub download failed."
+    }
 }
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
