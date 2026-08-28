@@ -1,15 +1,26 @@
-$xamlFile = Join-Path $PSScriptRoot "..\xaml\MainWindow.xaml"
-if (-not (Test-Path $xamlFile)) {
-    $xamlFile = Join-Path $PSScriptRoot "xaml\MainWindow.xaml"
+$ErrorActionPreference = 'Stop'
+$xamlFile = $null
+
+$scriptRoot = if ($PSScriptRoot) { $PSScriptRoot } elseif ($MyInvocation.MyCommand.Path) { Split-Path -Parent $MyInvocation.MyCommand.Path } else { $null }
+if ($scriptRoot) {
+    $xamlFile = Join-Path $scriptRoot "..\xaml\MainWindow.xaml"
+    if (-not (Test-Path $xamlFile)) {
+        $xamlFile = Join-Path $scriptRoot "xaml\MainWindow.xaml"
+    }
 }
-if (-not (Test-Path $xamlFile)) {
+if (-not $xamlFile -or -not (Test-Path $xamlFile)) {
+    $xamlFile = Join-Path $PWD.Path "xaml\MainWindow.xaml"
+}
+if (-not $xamlFile -or -not (Test-Path $xamlFile)) {
     $xamlFile = "MainWindow.xaml"
 }
 
 if (Test-Path $xamlFile) {
+    Write-Host "Loading XAML from local file: $xamlFile" -ForegroundColor Cyan
     $inputXAML = Get-Content -Path $xamlFile -Raw
 } else {
-    $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/refs/heads/dev/xaml/MainWindow.xaml")
+    Write-Host "Local XAML not found. Downloading from GitHub..." -ForegroundColor Yellow
+    $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/refs/heads/main/xaml/MainWindow.xaml")
 }
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
