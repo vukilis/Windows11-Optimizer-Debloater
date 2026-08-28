@@ -20,7 +20,7 @@ if (Test-Path $xamlFile) {
     $inputXAML = Get-Content -Path $xamlFile -Raw
 } else {
     Write-Host "Local XAML not found. Downloading from GitHub..." -ForegroundColor Yellow
-    $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/refs/heads/main/xaml/MainWindow.xaml")
+    $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/refs/heads/dev/xaml/MainWindow.xaml")
 }
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
