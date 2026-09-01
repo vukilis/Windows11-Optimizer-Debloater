@@ -11,7 +11,10 @@ function Invoke-getInstallButton {
     # Process winget packages
     try {
         $wingetExportPath = Join-Path $env:TEMP "wingetPackage.json"
-        winget export -o $wingetExportPath -ErrorAction Stop
+        $exportResult = winget export -o $wingetExportPath 2>&1
+        if ($LASTEXITCODE -ne 0 -or -not (Test-Path -Path $wingetExportPath)) {
+            throw "winget export failed with exit code $LASTEXITCODE. Output: $exportResult"
+        }
         $jsonObject = Get-Content -Raw -Path $wingetExportPath -ErrorAction Stop | ConvertFrom-Json
 
         foreach ($package in $jsonObject.Sources.Packages) {
