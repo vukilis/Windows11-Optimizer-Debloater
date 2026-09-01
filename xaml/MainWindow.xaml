@@ -2412,6 +2412,11 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
+                                <CheckBox Name="DblIntelMM" Content="Disable Intel MM (vPro LMS)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="Disables Intel Management Engine (ME) vPro LMS service, removes driver packages, and deletes LMS executable files.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
                                 <CheckBox Name="DblOneDrive" Content="Remove OneDrive ⚠️" Foreground="DarkRed" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi"  ToolTip="Copies OneDrive file to default home folders and uninstalls it. RECOMMENDED ON FRESH WINDOWS❗">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -2495,6 +2500,29 @@
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
+                                <Separator Background="#FFF4AB51" Width="250" Margin="10,10" Height="2"/>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Margin="10,5,10,5">
+                                <Label Content="DNS" FontSize="18"  Foreground="#FFF4AB51" HorizontalAlignment="Center" Style="{StaticResource chfont}" FontWeight="Bold"/>
+                                <ComboBox x:Name="ddlDNS" Text="Select DNS"  Foreground="#1f1f21" Width="250" ForceCursor="true" Cursor="Hand" Margin="0,5,0,5" FontSize="14" HorizontalAlignment="Left" FontWeight="Bold" IsEditable="True" IsReadOnly="True" SelectedIndex="-1">
+                                    <ComboBoxItem Content="Default" IsSelected="True"/>
+                                    <ComboBoxItem Content="DHCP"/>
+                                    <ComboBoxItem Content="Google"/>
+                                    <ComboBoxItem Content="Cloudflare"/>
+                                    <ComboBoxItem Content="Cloudflare_Malware"/>
+                                    <ComboBoxItem Content="Cloudflare_Malware_Adult"/>
+                                    <ComboBoxItem Content="Open_DNS"/>
+                                    <ComboBoxItem Content="Quad9"/>
+                                    <ComboBoxItem Content="AdGuard_Ads_Trackers"/>
+                                    <ComboBoxItem Content="AdGuard_Ads_Trackers_Malware_Adult"/>
+                                    <ComboBoxItem Content="Mulvad"/>
+                                    <ComboBoxItem Content="Mulvad_Ads_Trackers"/>
+                                    <ComboBoxItem Content="Mulvad_Ads_Trackers_Malware"/>
+                                    <ComboBoxItem Content="Mulvad_Ads_Trackers_Malware_Social"/>
+                                    <ComboBoxItem Content="Mulvad_Ads_Trackers_Malware_Adult_Gambling"/>
+                                    <ComboBoxItem Content="Mulvad_Ads_Trackers_Malware_Adult_Gambling_Social"/>
+                                </ComboBox>
+                                <Button Name="ApplyDNS" Style="{DynamicResource ButtonStyle}" Content="Apply DNS" ForceCursor="true" Cursor="Hand" Height="30" Width="120" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,5,0,0" HorizontalAlignment="Center"/>
+                            </StackPanel>
                             </StackPanel>
                         </Border>
                         <Border Margin="10,5,5,5" Height="40" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
