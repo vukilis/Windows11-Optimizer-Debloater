@@ -3216,6 +3216,260 @@ $configuration = @'
 }
 '@ | ConvertFrom-Json
 
+# Embedded from services.json
+$services = @'
+{
+    "recommended": {
+        "Manual": [
+            "ALG",
+            "AJRouter",
+            "BcastDVRUserService_48486de",
+            "Browser",
+            "BthAvctpSvc",
+            "CaptureService_48486de",
+            "cbdhsvc_48486de",
+            "diagnosticshub.standardcollector.service",
+            "DiagTrack",
+            "dmwappushservice",
+            "DPS",
+            "edgeupdate",
+            "edgeupdatem",
+            "Fax",
+            "fhsvc",
+            "FontCache",
+            "gupdate",
+            "gupdatem",
+            "HPAppHelperCap",
+            "HPDiagsCap",
+            "HPNetworkCap",
+            "HPSysInfoCap",
+            "HpTouchpointAnalyticsService",
+            "HvHost",
+            "lfsvc",
+            "lmhosts",
+            "MapsBroker",
+            "MicrosoftEdgeElevationService",
+            "MSDTC",
+            "NahimicService",
+            "NetTcpPortSharing",
+            "PcaSvc",
+            "PerfHost",
+            "PhoneSvc",
+            "PrintNotify",
+            "QWAVE",
+            "RemoteAccess",
+            "RemoteRegistry",
+            "RetailDemo",
+            "RtkBtManServ",
+            "SCardSvr",
+            "seclogon",
+            "SEMgrSvc",
+            "SharedAccess",
+            "ssh-agent",
+            "stisvc",
+            "SysMain",
+            "TrkWks",
+            "vmicguestinterface",
+            "vmicheartbeat",
+            "vmickvpexchange",
+            "vmicrdv",
+            "vmicshutdown",
+            "vmictimesync",
+            "vmicvmsession",
+            "WerSvc",
+            "wisvc",
+            "WMPNetworkSvc",
+            "WpcMonSvc",
+            "WPDBusEnum",
+            "WpnService",
+            "WSearch",
+            "XblAuthManager",
+            "XblGameSave",
+            "XboxNetApiSvc",
+            "XboxGipSvc"
+        ]
+    },
+    "gaming": {
+        "Manual": [
+            "BcastDVRUserService_48486de",
+            "Browser",
+            "BthAvctpSvc",
+            "CaptureService_48486de",
+            "cbdhsvc_48486de",
+            "edgeupdate",
+            "edgeupdatem",
+            "FontCache",
+            "gupdate",
+            "gupdatem",
+            "HPAppHelperCap",
+            "HPDiagsCap",
+            "HPNetworkCap",
+            "HPSysInfoCap",
+            "HpTouchpointAnalyticsService",
+            "HvHost",
+            "lmhosts",
+            "MicrosoftEdgeElevationService",
+            "MSDTC",
+            "NahimicService",
+            "PerfHost",
+            "QWAVE",
+            "RtkBtManServ",
+            "SharedAccess",
+            "ssh-agent",
+            "TrkWks",
+            "vmicguestinterface",
+            "vmicheartbeat",
+            "vmickvpexchange",
+            "vmicrdv",
+            "vmicshutdown",
+            "vmictimesync",
+            "vmicvmsession",
+            "WMPNetworkSvc",
+            "WPDBusEnum",
+            "WpnService",
+            "WSearch",
+            "XblAuthManager",
+            "XblGameSave",
+            "XboxNetApiSvc",
+            "XboxGipSvc"
+        ],
+        "Disabled": [
+            "ALG",
+            "AJRouter",
+            "AppVClient",
+            "CertPropSvc",
+            "DiagTrack",
+            "DialogBlockingService",
+            "DPS",
+            "DusmSvc",
+            "Fax",
+            "fhsvc",
+            "diagnosticshub.standardcollector.service",
+            "dmwappushservice",
+            "icssvc",
+            "iphlpsvc",
+            "lfsvc",
+            "MapsBroker",
+            "MsKeyboardFilter",
+            "NcbService",
+            "NetTcpPortSharing",
+            "PcaSvc",
+            "PhoneSvc",
+            "PrintNotify",
+            "RemoteAccess",
+            "RemoteRegistry",
+            "RetailDemo",
+            "SCardSvr",
+            "SCPolicySvc",
+            "ScDeviceEnum",
+            "SEMgrSvc",
+            "seclogon",
+            "shpamsvc",
+            "Spooler",
+            "stisvc",
+            "SysMain",
+            "tzautoupdate",
+            "UevAgentService",
+            "uhssvc",
+            "WbioSrvc",
+            "WerSvc",
+            "WpcMonSvc",
+            "wisvc"
+        ]
+    },
+    "default": {
+        "Manual": [
+            "ALG",
+            "AJRouter",
+            "AppVClient",
+            "BcastDVRUserService_48486de",
+            "BthAvctpSvc",
+            "CaptureService_48486de",
+            "cbdhsvc_48486de",
+            "CertPropSvc",
+            "DialogBlockingService",
+            "diagnosticshub.standardcollector.service",
+            "dmwappushservice",
+            "Fax",
+            "fhsvc",
+            "FontCache",
+            "HPAppHelperCap",
+            "HPDiagsCap",
+            "HPNetworkCap",
+            "HPSysInfoCap",
+            "HpTouchpointAnalyticsService",
+            "icssvc",
+            "lfsvc",
+            "lmhosts",
+            "MapsBroker",
+            "MicrosoftEdgeElevationService",
+            "MSDTC",
+            "MsKeyboardFilter",
+            "NetTcpPortSharing",
+            "PcaSvc",
+            "PerfHost",
+            "PhoneSvc",
+            "PrintNotify",
+            "QWAVE",
+            "RemoteAccess",
+            "RemoteRegistry",
+            "RetailDemo",
+            "RtkBtManServ",
+            "SCardSvr",
+            "ScDeviceEnum",
+            "seclogon",
+            "SEMgrSvc",
+            "SharedAccess",
+            "shpamsvc",
+            "ssh-agent",
+            "stisvc",
+            "UevAgentService",
+            "vmicguestinterface",
+            "vmicheartbeat",
+            "vmickvpexchange",
+            "vmicrdv",
+            "vmicshutdown",
+            "vmictimesync",
+            "vmicvmsession",
+            "WerSvc",
+            "wisvc",
+            "WMPNetworkSvc",
+            "WpcMonSvc",
+            "WPDBusEnum",
+            "XblAuthManager",
+            "XblGameSave",
+            "XboxNetApiSvc",
+            "XboxGipSvc",
+            "wsearch"
+        ],
+        "Automatic": [
+            "Browser",
+            "DiagTrack",
+            "DPS",
+            "DusmSvc",
+            "edgeupdate",
+            "edgeupdatem",
+            "gupdate",
+            "gupdatem",
+            "HvHost",
+            "NahimicService",
+            "NcbService",
+            "SCPolicySvc",
+            "Spooler",
+            "iphlpsvc",
+            "SysMain",
+            "TrkWks",
+            "tzautoupdate",
+            "uhssvc",
+            "WbioSrvc",
+            "WpnService",
+            "WSearch"
+        ]
+    }
+}
+
+'@ | ConvertFrom-Json
+
 
 if ($SmokeTest) {
     Write-Host "Running smoke test..." -ForegroundColor Cyan
@@ -6067,115 +6321,7 @@ function Invoke-default{
         Set all services to their Windows default startup types
     #>
 
-    $services_manual = @(
-        "ALG"
-        "AJRouter"
-        "BcastDVRUserService_48486de"
-        "BthAvctpSvc"
-        "CaptureService_48486de"
-        "cbdhsvc_48486de"
-        "diagnosticshub.standardcollector.service"
-        "dmwappushservice"
-        "Fax"
-        "fhsvc"
-        "FontCache"
-        "lfsvc"
-        "lmhosts"
-        "MapsBroker"
-        "MicrosoftEdgeElevationService"
-        "MSDTC"
-        "NetTcpPortSharing"
-        "PcaSvc"
-        "PerfHost"
-        "PhoneSvc"
-        "PrintNotify"
-        "QWAVE"
-        "RemoteAccess"
-        "RemoteRegistry"
-        "RetailDemo"
-        "RtkBtManServ"
-        "SCardSvr"
-        "seclogon"
-        "SEMgrSvc"
-        "SharedAccess"
-        "ssh-agent"
-        "stisvc"
-        "WerSvc"
-        "wisvc"
-        "WMPNetworkSvc"
-        "WpcMonSvc"
-        "WPDBusEnum"
-        "XblAuthManager"
-        "XblGameSave"
-        "XboxNetApiSvc"
-        "XboxGipSvc"
-        "AppVClient"
-        "CertPropSvc"
-        "DialogBlockingService"
-        "MsKeyboardFilter"
-        "shpamsvc"
-        "ScDeviceEnum"
-        "UevAgentService"
-        "icssvc"
-        "vmicguestinterface"
-        "vmicheartbeat"
-        "vmickvpexchange"
-        "vmicrdv"
-        "vmicshutdown"
-        "vmictimesync"
-        "vmicvmsession"
-        "HPAppHelperCap"
-        "HPDiagsCap"
-        "HPNetworkCap"
-        "HPSysInfoCap"
-        "HpTouchpointAnalyticsService"
-        "wsearch"
-    )
-
-    foreach ($service in $services_manual) {
-        Write-Host "Setting $service StartupType to Manual" -ForegroundColor Yellow
-        Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue
-    }
-
-    $services_automatic = @(
-        "Browser"
-        "DiagTrack"
-        "DPS"
-        "edgeupdate"
-        "edgeupdatem"
-        "gupdate"
-        "gupdatem"
-        "NahimicService"
-        "SysMain"
-        "TrkWks"
-        "WpnService"
-        "WSearch"
-        "DusmSvc"
-        "uhssvc"
-        "NcbService"
-        "SCPolicySvc"
-        "Spooler"
-        "iphlpsvc"
-        "WbioSrvc"
-        "tzautoupdate"
-        "HvHost"
-        "HPAppHelperCap"
-        "HPDiagsCap"
-        "HPNetworkCap"
-        "HPSysInfoCap"
-        "HpTouchpointAnalyticsService"
-    )
-
-    foreach ($service in $services_automatic) {
-        Write-Host "Setting $service StartupType to Automatic" -ForegroundColor Yellow
-        Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Automatic -ErrorAction SilentlyContinue
-    }
-    Art -artN "
-=============================
---- Services set to Default ---
-=============================
-" -ch Cyan
-    Invoke-MessageBox "tweak"
+    Invoke-ServicePreset -Mode "default"
 }
 function Invoke-gaming{
     <#
@@ -6184,114 +6330,8 @@ function Invoke-gaming{
         Set all services to gaming mode 
     #>
 
-    # Set-Presets "gaming"
-    $services_m = @(
-        "BcastDVRUserService_48486de"                  # GameDVR and Broadcast is used for Game Recordings and Live Broadcasts
-        "Browser"                                      # Let users browse and locate shared resources in neighboring computers
-        "BthAvctpSvc"                                  # AVCTP service (needed for Bluetooth Audio Devices or Wireless Headphones)
-        "CaptureService_48486de"                       # Optional screen capture functionality for applications that call the Windows.Graphics.Capture API.
-        "cbdhsvc_48486de"                              # Clipboard Service
-        "edgeupdate"                                   # Edge Update Service
-        "edgeupdatem"                                  # Another Update Service
-        "FontCache"                                    # Windows font cache
-        "gupdate"                                      # Google Update
-        "gupdatem"                                     # Another Google Update Service
-        "lmhosts"                                      # TCP/IP NetBIOS Helper
-        "MicrosoftEdgeElevationService"                # Another Edge Update Service
-        "MSDTC"                                        # Distributed Transaction Coordinator
-        "NahimicService"                               # Nahimic Service
-        "PerfHost"                                     # Remote users and 64-bit processes to query performance.
-        "QWAVE"                                        # Quality Windows Audio Video Experience (audio and video might sound worse)
-        "RtkBtManServ"                                 # Realtek Bluetooth Device Manager Service
-        "SharedAccess"                                 # Internet Connection Sharing (ICS)
-        "ssh-agent"                                    # OpenSSH Authentication Agent
-        "TrkWks"                                       # Distributed Link Tracking Client
-        "WMPNetworkSvc"                                # Windows Media Player Network Sharing Service
-        "WPDBusEnum"                                   # Portable Device Enumerator Service
-        "WpnService"                                   # WpnService (Push Notifications may not work)
-        "WSearch"                                      # Windows Search
-        "XblAuthManager"                               # Xbox Live Auth Manager (Disabling Breaks Xbox Live Games)
-        "XblGameSave"                                  # Xbox Live Game Save Service (Disabling Breaks Xbox Live Games)
-        "XboxNetApiSvc"                                # Xbox Live Networking Service (Disabling Breaks Xbox Live Games)
-        "XboxGipSvc"                                   # Xbox Accessory Management Service
-        "HPAppHelperCap"
-        "HPDiagsCap"
-        "HPNetworkCap"
-        "HPSysInfoCap"
-        "HpTouchpointAnalyticsService"
-        "HvHost"
-        "vmicguestinterface"
-        "vmicheartbeat"
-        "vmickvpexchange"
-        "vmicrdv"
-        "vmicshutdown"
-        "vmictimesync"
-        "vmicvmsession"
-    )
-
-    foreach ($service in $services_m) {
-        # -ErrorAction SilentlyContinue is so it doesn't write an error to stdout if a service doesn't exist
-        Write-Host "Setting $service StartupType to Manual" -ForegroundColor Yellow
-        Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue
-    }
-
-    $services_d = @(
-        "ALG"                                          # Application Layer Gateway Service(Provides support for 3rd party protocol plug-ins for Internet Connection Sharing)
-        "AJRouter"                                     # Needed for AllJoyn Router Service
-        "tzautoupdate"                                 # DialogBlockingService
-        "CertPropSvc"                                  # Certificate Propagation
-        "DusmSvc"                                      # Data Usage
-        "DialogBlockingService"                        # DialogBlockingService
-        "DiagTrack"                                    # Diagnostics Tracking Service
-        "diagnosticshub.standardcollector.service"     # Microsoft (R) Diagnostics Hub Standard Collector Service
-        "dmwappushservice"                             # WAP Push Message Routing Service
-        "DPS"                                          # Diagnostic Policy Service (Detects and Troubleshoots Potential Problems)
-        "Fax"                                          # Fax Service
-        "fhsvc"                                        # Fax History
-        "AppVClient"                                   # Microsoft App-V Client
-        "MapsBroker"                                   # Downloaded Maps Manager
-        "MsKeyboardFilter"                             # Microsoft Keyboard Filter
-        "uhssvc"                                       # Microsoft Update Health
-        "NcbService"                                   # Network Connection Broker (allow Windows Store Apps to receive notifications from the internet)
-        "NetTcpPortSharing"                            # Net.Tcp Port Sharing Service
-        "PcaSvc"                                       # Program Compatibility Assistant Service
-        "PhoneSvc"                                     # Phone Service(Manages the telephony state on the device)
-        "PrintNotify"                                  # Windows printer notifications and extentions
-        "RemoteRegistry"                               # Remote Registry
-        "RemoteAccess"                                 # Routing and Remote Access
-        "RetailDemo"                                   # Demo Mode for Store Display
-        "shpamsvc"                                     # Shared PC Account Manager
-        "ScDeviceEnum"                                 # Smart Card Device Enumeration
-        "SCPolicySvc"                                  # Smart Card Removal Policy
-        "SEMgrSvc"                                     # Payments and NFC/SE Manager (Manages payments and Near Field Communication (NFC) based secure elements)
-        "seclogon"                                     # Secondary Logon (Disables other credentials only password will work)
-        "stisvc"                                       # Windows Image Acquisition (WIA)
-        "Spooler"                                      # Print Spooler
-        "SCardSvr"                                     # Windows Smart Card Service
-        "SysMain"                                      # Analyses System Usage and Improves Performance
-        "UevAgentService"                              # User Experience Virtualization Service
-        "lfsvc"                                        # Geolocation Service
-        "icssvc"                                       # Windows Mobile Hotspot Service 
-        "iphlpsvc"                                     # IP Helper
-        "WpcMonSvc"                                    # Parental Controls
-        "WerSvc"                                       # Windows error reporting
-        "WbioSrvc"                                     # Windows Biometric Service
-        "wisvc"                                        # Windows Insider program(Windows Insider will not work if Disabled)
-    )
-
-    foreach ($service in $services_d) {
-        # -ErrorAction SilentlyContinue is so it doesn't write an error to stdout if a service doesn't exist
-        Write-Host "Setting $service StartupType to Disabled" -ForegroundColor Red
-        Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled -ErrorAction SilentlyContinue
-    }
-    Art -artN "
-=======================================
------ Services set to Gaming Mode -----
-=======================================
-" -ch Cyan
-    Invoke-MessageBox "tweak"
+    Invoke-ServicePreset -Mode "gaming"
 }
-
 function Invoke-recommended{
     <#
 
@@ -6299,89 +6339,42 @@ function Invoke-recommended{
         Set all services to manual startup 
     #>
 
-    # Set-Presets "recommended"
-    $services = @(
-        "ALG"                                          # Application Layer Gateway Service(Provides support for 3rd party protocol plug-ins for Internet Connection Sharing)
-        "AJRouter"                                     # Needed for AllJoyn Router Service
-        "BcastDVRUserService_48486de"                  # GameDVR and Broadcast is used for Game Recordings and Live Broadcasts
-        "Browser"                                      # Let users browse and locate shared resources in neighboring computers
-        "BthAvctpSvc"                                  # AVCTP service (needed for Bluetooth Audio Devices or Wireless Headphones)
-        "CaptureService_48486de"                       # Optional screen capture functionality for applications that call the Windows.Graphics.Capture API.
-        "cbdhsvc_48486de"                              # Clipboard Service
-        "diagnosticshub.standardcollector.service"     # Microsoft (R) Diagnostics Hub Standard Collector Service
-        "DiagTrack"                                    # Diagnostics Tracking Service
-        "dmwappushservice"                             # WAP Push Message Routing Service
-        "DPS"                                          # Diagnostic Policy Service (Detects and Troubleshoots Potential Problems)
-        "edgeupdate"                                   # Edge Update Service
-        "edgeupdatem"                                  # Another Update Service
-        "Fax"                                          # Fax Service
-        "fhsvc"                                        # Fax History
-        "FontCache"                                    # Windows font cache
-        "gupdate"                                      # Google Update
-        "gupdatem"                                     # Another Google Update Service
-        "lfsvc"                                        # Geolocation Service
-        "lmhosts"                                      # TCP/IP NetBIOS Helper
-        "MapsBroker"                                   # Downloaded Maps Manager
-        "MicrosoftEdgeElevationService"                # Another Edge Update Service
-        "MSDTC"                                        # Distributed Transaction Coordinator
-        "NahimicService"                               # Nahimic Service
-        "NetTcpPortSharing"                            # Net.Tcp Port Sharing Service
-        "PcaSvc"                                       # Program Compatibility Assistant Service
-        "PerfHost"                                     # Remote users and 64-bit processes to query performance.
-        "PhoneSvc"                                     # Phone Service(Manages the telephony state on the device)
-        "PrintNotify"                                  # Windows printer notifications and extentions
-        "QWAVE"                                        # Quality Windows Audio Video Experience (audio and video might sound worse)
-        "RemoteAccess"                                 # Routing and Remote Access
-        "RemoteRegistry"                               # Remote Registry
-        "RetailDemo"                                   # Demo Mode for Store Display
-        "RtkBtManServ"                                 # Realtek Bluetooth Device Manager Service
-        "SCardSvr"                                     # Windows Smart Card Service
-        "seclogon"                                     # Secondary Logon (Disables other credentials only password will work)
-        "SEMgrSvc"                                     # Payments and NFC/SE Manager (Manages payments and Near Field Communication (NFC) based secure elements)
-        "SharedAccess"                                 # Internet Connection Sharing (ICS)
-        "ssh-agent"                                    # OpenSSH Authentication Agent
-        "stisvc"                                       # Windows Image Acquisition (WIA)
-        "SysMain"                                      # Analyses System Usage and Improves Performance
-        "TrkWks"                                       # Distributed Link Tracking Client
-        "WerSvc"                                       # Windows error reporting
-        "wisvc"                                        # Windows Insider program(Windows Insider will not work if Disabled)
-        "WMPNetworkSvc"                                # Windows Media Player Network Sharing Service
-        "WpcMonSvc"                                    # Parental Controls
-        "WPDBusEnum"                                   # Portable Device Enumerator Service
-        "WpnService"                                   # WpnService (Push Notifications may not work)
-        "WSearch"                                      # Windows Search
-        "XblAuthManager"                               # Xbox Live Auth Manager (Disabling Breaks Xbox Live Games)
-        "XblGameSave"                                  # Xbox Live Game Save Service (Disabling Breaks Xbox Live Games)
-        "XboxNetApiSvc"                                # Xbox Live Networking Service (Disabling Breaks Xbox Live Games)
-        "XboxGipSvc"                                   # Xbox Accessory Management Service
-        "HPAppHelperCap"
-        "HPDiagsCap"
-        "HPNetworkCap"
-        "HPSysInfoCap"
-        "HpTouchpointAnalyticsService"
-        "HvHost"
-        "vmicguestinterface"
-        "vmicheartbeat"
-        "vmickvpexchange"
-        "vmicrdv"
-        "vmicshutdown"
-        "vmictimesync"
-        "vmicvmsession"
+    Invoke-ServicePreset -Mode "recommended"
+}
+function Invoke-ServicePreset {
+    <#
+    .SYNOPSIS
+        Apply a service preset from config/services.json
+    .PARAMETER Mode
+        The preset mode: recommended, gaming, or default
+    #>
+    param(
+        [Parameter(Mandatory=$true)]
+        [ValidateSet("recommended","gaming","default")]
+        [string]$Mode
     )
-    
-    foreach ($service in $services) {
-        # -ErrorAction SilentlyContinue is so it doesn't write an error to stdout if a service doesn't exist
-        Write-Host "Setting $service StartupType to Manual" -ForegroundColor Yellow
-        Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Manual -ErrorAction SilentlyContinue
+
+    $preset = $services.$Mode
+    if (-not $preset) {
+        Write-Warning "Service preset '$Mode' not found in services.json"
+        return
     }
+
+    foreach ($type in $preset.PSObject.Properties.Name) {
+        foreach ($svc in $preset.$type) {
+            Write-Host "Setting $svc StartupType to $type" -ForegroundColor Yellow
+            Get-Service -Name $svc -ErrorAction SilentlyContinue | Set-Service -StartupType $type -ErrorAction SilentlyContinue
+        }
+    }
+
+    $modeName = $Mode.Substring(0,1).ToUpper() + $Mode.Substring(1)
     Art -artN "
 ======================================
--- Services set to Recommended Mode --
+----- Services set to $modeName Mode -----
 ======================================
 " -ch Cyan
     Invoke-MessageBox "tweak"
 }
-
 
 ################################################################################################################
 ###                                                                                                          ###
