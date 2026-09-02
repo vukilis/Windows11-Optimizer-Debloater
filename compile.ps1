@@ -79,8 +79,7 @@ $jsonFiles = @(
     ".\config\tweaks.json",
     ".\config\preset.json",
     ".\config\feature.json",
-    ".\config\configuration.json",
-    ".\config\services.json"
+    ".\config\configuration.json"
     # add more here...
 )
 
@@ -260,18 +259,6 @@ Get-ChildItem .\functions\private\optimization -Recurse -File | ForEach-Object {
     Get-Content $psitem.FullName | Out-File ./$scriptname -Append -Encoding UTF8
 }
 Get-ChildItem .\functions\public\optimization -Recurse -File | ForEach-Object {
-    Get-Content $psitem.FullName | Out-File ./$scriptname -Append -Encoding UTF8
-}
-
-Write-output '
-################################################################################################################
-###                                                                                                          ###
-###                                          INFO: SERVICE FUNCTIONS                                         ###
-###                                                                                                          ###
-################################################################################################################
-' | Out-File ./$scriptname -Append -Encoding UTF8
-
-Get-ChildItem .\functions\public\services -Recurse -File | ForEach-Object {
     Get-Content $psitem.FullName | Out-File ./$scriptname -Append -Encoding UTF8
 }
 

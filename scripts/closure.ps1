@@ -23,7 +23,6 @@ if ($Config) {
 
 $wpf_diskNameInfo.Add_SelectionChanged({Get-DiskInfo})
 $wpf_diskName.Add_SelectionChanged({Get-DiskSize})
-$wpf_ddlServices.Add_SelectionChanged({Get-Services})
 
 # Assign tooltips after the window is fully loaded so FindName sees all controls
 $psform.Add_Loaded({

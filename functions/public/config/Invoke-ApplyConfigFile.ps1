@@ -30,12 +30,6 @@ function Invoke-ApplyConfigFile {
         Invoke-ApplyDNS -Provider $config.dns.provider
     }
 
-    # Apply services mode
-    if ($config.PSObject.Properties.Name -contains 'services' -and $config.services) {
-        Write-Host "Applying Services mode: $($config.services.mode)" -ForegroundColor Yellow
-        Invoke-ServicePreset -Mode $config.services.mode
-    }
-
     # Apply updates mode
     if ($config.PSObject.Properties.Name -contains 'updates' -and $config.updates) {
         Write-Host "Applying Updates mode: $($config.updates.mode)" -ForegroundColor Yellow

@@ -1,6 +1,5 @@
 Function Set-WinService {
     <#
-
     .SYNOPSIS
         Changes the startup type of the given service
 
@@ -12,26 +11,31 @@ Function Set-WinService {
 
     .EXAMPLE
         Set-WinService -Name "HomeGroupListener" -StartupType "Manual"
-
     #>
+
     param (
-        $Name,
-        $StartupType
+        [Parameter(Mandatory = $true)]
+        [string]$Name,
+
+        [Parameter(Mandatory = $true)]
+        [ValidateSet("Automatic", "Manual", "Disabled")]
+        [string]$StartupType
     )
-    try {
-        Write-Host "Setting Service $Name to $StartupType"
 
-        # Check if the service exists
-        $service = Get-Service -Name $Name -ErrorAction Stop
+    Write-Host "Setting Service $Name to $StartupType"
 
-        # Service exists, proceed with changing properties
-        $service | Set-Service -StartupType $StartupType -ErrorAction Stop
-    } catch [System.ServiceProcess.ServiceNotFoundException] {
-        Write-Warning "Service $Name was not found"
-    } catch {
-        Write-Warning "Unable to set $Name due to unhandled exception"
-        Write-Warning $_.Exception.Message
+    # Check if the service exists
+    $service = Get-Service -Name $Name -ErrorAction SilentlyContinue
+
+    if ($null -eq $service) {
+        return
     }
 
+    try {
+        Write-Host "Setting Service $Name to $StartupType"
+        $service | Set-Service -StartupType $StartupType -ErrorAction Stop
+    }
+    catch {
+        Write-Warning "Unable to set service '$Name': $($_.Exception.Message)"
+    }
 }
-

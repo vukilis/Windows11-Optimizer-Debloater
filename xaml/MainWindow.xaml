@@ -1057,34 +1057,12 @@
                 </RadioButton.Background>
                 <ToggleButton.Content>
                     <TextBlock Background="Transparent" Foreground="#fac664" >
-                            SERVICES
-                    </TextBlock>
-                </ToggleButton.Content>
-            </RadioButton>
-            <RadioButton  HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}"
-                                 Foreground="#fac664" FontWeight="Bold" Name="Tab6BT" Margin="0,0,5,0">
-                <RadioButton.Background>
-                    <LinearGradientBrush EndPoint="-1,1" StartPoint="4,0" SpreadMethod="Pad">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
-                                <RotateTransform Angle="-90" CenterX="0.5" CenterY="0.5"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Color="#1f1f21" Offset="1"/>
-                        <GradientStop Color="#FF6B6D51" Offset="0"/>
-                    </LinearGradientBrush>
-                </RadioButton.Background>
-                <ToggleButton.Content>
-                    <TextBlock Background="Transparent" Foreground="#fac664" >
                             UPDATES
                     </TextBlock>
                 </ToggleButton.Content>
             </RadioButton>
             <RadioButton  HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}"
-                                 Foreground="#fac664" FontWeight="Bold" Name="Tab7BT" Margin="0,0,5,0">
+                                 Foreground="#fac664" FontWeight="Bold" Name="Tab6BT" Margin="0,0,5,0">
                 <RadioButton.Background>
                     <LinearGradientBrush EndPoint="-1,1" StartPoint="4,0" SpreadMethod="Pad">
                         <LinearGradientBrush.RelativeTransform>
@@ -2534,27 +2512,46 @@
                                 </CheckBox>
                                 <Separator Background="#FFF4AB51" Width="250" Margin="10,10" Height="2"/>
                                 <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Margin="10,5,10,5">
-                                <Label Content="DNS" FontSize="18"  Foreground="#FFF4AB51" HorizontalAlignment="Center" Style="{StaticResource chfont}" FontWeight="Bold"/>
-                                <ComboBox x:Name="ddlDNS" Text="Select DNS"  Foreground="#1f1f21" Width="250" ForceCursor="true" Cursor="Hand" Margin="0,5,0,5" FontSize="14" HorizontalAlignment="Left" FontWeight="Bold" IsEditable="True" IsReadOnly="True" SelectedIndex="-1">
-                                    <ComboBoxItem Content="Default" IsSelected="True"/>
-                                    <ComboBoxItem Content="DHCP"/>
-                                    <ComboBoxItem Content="Google"/>
-                                    <ComboBoxItem Content="Cloudflare"/>
-                                    <ComboBoxItem Content="Cloudflare_Malware"/>
-                                    <ComboBoxItem Content="Cloudflare_Malware_Adult"/>
-                                    <ComboBoxItem Content="Open_DNS"/>
-                                    <ComboBoxItem Content="Quad9"/>
-                                    <ComboBoxItem Content="AdGuard_Ads_Trackers"/>
-                                    <ComboBoxItem Content="AdGuard_Ads_Trackers_Malware_Adult"/>
-                                    <ComboBoxItem Content="Mulvad"/>
-                                    <ComboBoxItem Content="Mulvad_Ads_Trackers"/>
-                                    <ComboBoxItem Content="Mulvad_Ads_Trackers_Malware"/>
-                                    <ComboBoxItem Content="Mulvad_Ads_Trackers_Malware_Social"/>
-                                    <ComboBoxItem Content="Mulvad_Ads_Trackers_Malware_Adult_Gambling"/>
-                                    <ComboBoxItem Content="Mulvad_Ads_Trackers_Malware_Adult_Gambling_Social"/>
-                                </ComboBox>
-                                <Button Name="ApplyDNS" Style="{DynamicResource ButtonStyle}" Content="Apply DNS" ForceCursor="true" Cursor="Hand" Height="30" Width="120" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,5,0,0" HorizontalAlignment="Center"/>
-                            </StackPanel>
+                                    <Label Content="DNS" FontSize="18"  Foreground="#FFF4AB51" HorizontalAlignment="Center" Style="{StaticResource chfont}" FontWeight="Bold"/>
+                                    <ComboBox x:Name="ddlDNS" Text="Select DNS"  Foreground="#1f1f21" Width="250" ForceCursor="true" Cursor="Hand" Margin="0,5,0,5" FontSize="14" HorizontalAlignment="Left" FontWeight="Bold" IsEditable="True" IsReadOnly="True" SelectedIndex="-1">
+                                        <ComboBoxItem Content="Default" IsSelected="True"/>
+                                        <ComboBoxItem Content="DHCP"/>
+                                        <ComboBoxItem Content="Google"/>
+                                        <ComboBoxItem Content="Cloudflare"/>
+                                        <ComboBoxItem Content="Cloudflare_Malware"/>
+                                        <ComboBoxItem Content="Cloudflare_Malware_Adult"/>
+                                        <ComboBoxItem Content="Open_DNS"/>
+                                        <ComboBoxItem Content="Quad9"/>
+                                        <ComboBoxItem Content="AdGuard_Ads_Trackers"/>
+                                        <ComboBoxItem Content="AdGuard_Ads_Trackers_Malware_Adult"/>
+                                        <ComboBoxItem Content="Mulvad"/>
+                                        <ComboBoxItem Content="Mulvad_Ads_Trackers"/>
+                                        <ComboBoxItem Content="Mulvad_Ads_Trackers_Malware"/>
+                                        <ComboBoxItem Content="Mulvad_Ads_Trackers_Malware_Social"/>
+                                        <ComboBoxItem Content="Mulvad_Ads_Trackers_Malware_Adult_Gambling"/>
+                                        <ComboBoxItem Content="Mulvad_Ads_Trackers_Malware_Adult_Gambling_Social"/>
+                                    </ComboBox>
+                                    <Button Name="ApplyDNS" Style="{DynamicResource ButtonStyle}" Content="Apply DNS" ForceCursor="true" Cursor="Hand" Height="30" Width="120" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,5,0,0" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                                <Separator Background="#FFF4AB51" Width="250" Margin="10,10" Height="2"/>
+                                <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Margin="10,5,10,5">
+                                    <Label Content="Services" FontSize="18"  Foreground="#FFF4AB51" HorizontalAlignment="Center" Style="{StaticResource chfont}" FontWeight="Bold"/>
+                                    <CheckBox Name="DblServicesSmart" Content="Services - Smart Startup" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblServicesManual" Content="Services - Set to Manual" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Name="DblServicesDefault" Content="Services - Default" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                </StackPanel>
                             </StackPanel>
                         </Border>
                         <Border Margin="10,5,5,5" Height="40" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1">
@@ -2791,64 +2788,6 @@
                                         <ToggleButton Name="ToggleClipboardHistory" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="SERVICES" Visibility="Collapsed" Name="Tab5">
-                    <Grid Background="Transparent">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height=".20*"/>
-                            <RowDefinition Height=".80*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="0" HorizontalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Margin="10">
-                            <Button x:Name="recommended" Content="RECOMMENDED" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Left" Height="40" Width="120" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,5,0"/>
-                            <Button x:Name="gaming" Content="GAMING (XBOX)" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Left" Height="40" Width="120" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,5,0"/>
-                            <Button x:Name="default" Content="DEFAULT" ForceCursor="true" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Left" Height="40" Width="120" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,0,0"/>
-                        </StackPanel>
-                        <Border Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width=".50*"/>
-                                    <ColumnDefinition Width=".50*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height=".50*"/>
-                                </Grid.RowDefinitions>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="150,0,0,0">
-                                    <Label Content="Services : " Foreground="#FFDEE39B" FontSize="14"/>
-                                    <Label Content="DisplayName : " Foreground="#FFDEE39B" Margin="0,25,0,0" FontSize="14"/>
-                                    <Label Content="Status : "  Foreground="#FFDEE39B" FontSize="14"/>
-                                    <Label Content="StartupType : "  Grid.RowSpan="2" Foreground="#FFDEE39B" FontSize="14"/>
-                                </StackPanel>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="280,0,0,0">
-                                    <ComboBox x:Name="ddlServices" Text="Select Service"  Foreground="#1f1f21" Width="auto" ForceCursor="true" Cursor="Hand" Margin="0,5,0,5" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" IsEditable="True" IsReadOnly="True" SelectedIndex="-1"/>
-                                    <Label x:Name="lblName" Content=""  MaxWidth="280" Foreground="#FFFAF3F3" Margin="0,25,0,0" FontSize="14" HorizontalAlignment="Left"/>
-                                    <Label x:Name="lblStatus" Content="" Foreground="#FFFAF3F3" FontSize="14"/>
-                                    <Label x:Name="lblStartupType" Content="" Grid.RowSpan="2" Foreground="#FFFAF3F3" FontSize="14"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                        <Border Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height=".50*"/>
-                                </Grid.RowDefinitions>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="20,20,150,0">
-                                    <Viewbox Grid.RowSpan="2" Width="400">
-                                        <StackPanel RenderTransformOrigin="0.537,0.012" Background="Snow">
-                                            <TextBox   x:Name="lblServicesDesc" FontSize="14" TextWrapping="Wrap" Foreground="#a69f6c" Padding="10"
-                                            Text="" Cursor="Arrow" IsReadOnly="True"  Height="181" Width="400" VerticalScrollBarVisibility="Auto" SelectionBrush="Transparent" Background="#1f1f21" BorderBrush="#fac664"/>
-                                        </StackPanel>
-                                    </Viewbox>
                                 </StackPanel>
                             </Grid>
                         </Border>

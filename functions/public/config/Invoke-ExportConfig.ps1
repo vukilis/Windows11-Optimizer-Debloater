@@ -61,11 +61,6 @@ function Invoke-ExportConfig {
         }
     }
 
-    # Export services mode
-    if ($wpf_default.IsChecked) { $config.services = @{ mode = "default" } }
-    elseif ($wpf_recommended.IsChecked) { $config.services = @{ mode = "recommended" } }
-    elseif ($wpf_gaming.IsChecked) { $config.services = @{ mode = "gaming" } }
-
     # Export update mode
     if ($wpf_Updatesdefault.IsChecked) { $config.updates = @{ mode = "default" } }
     elseif ($wpf_PauseUpdate.IsChecked) { $config.updates = @{ mode = "pause" } }

@@ -3061,6 +3061,187 @@ $tweaks = @'
                 "DefaultState": "false"
             }
         ]
+    },
+    "DblServicesSmart": {
+        "Type": "CheckBox",
+        "Content": "Services - Smart Startup",
+        "Description": "Sets some services to Manual startup and adjusts the SvcHostSplitThresholdInKB registry value to better match system memory, which can significantly reduce the number of svchost.exe processes.",
+        "DisableMessage": "Setting Services to Smart Startup...",
+        "service": [
+            {
+                "Name": "CscService",
+                "StartupType": "Disabled",
+                "OriginalType": "Manual"
+            },
+            {
+                "Name": "DiagTrack",
+                "StartupType": "Disabled",
+                "OriginalType": "Automatic"
+            },
+            {
+                "Name": "MapsBroker",
+                "StartupType": "Manual",
+                "OriginalType": "Automatic"
+            },
+            {
+                "Name": "StorSvc",
+                "StartupType": "Manual",
+                "OriginalType": "Automatic"
+            },
+            {
+                "Name": "SharedAccess",
+                "StartupType": "Disabled",
+                "OriginalType": "Automatic"
+            }
+        ],
+        "InvokeScript": [
+        "
+        $Memory = (Get-CimInstance Win32_PhysicalMemory | Measure-Object Capacity -Sum).Sum / 1KB
+        Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\" -Name SvcHostSplitThresholdInKB -Value $Memory
+        "
+        ],
+    },
+    "DblServicesManual": {
+        "Type": "CheckBox",
+        "Content": "Services - Set to Manual",
+        "Description": "Sets services to Manual startup to reduce automatic background processes and improve system performance.",
+        "DisableMessage": "Setting Services to Manual...",
+        "service": [
+            { "Name": "ALG", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "AJRouter", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "Browser", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "BthAvctpSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "diagnosticshub.standardcollector.service", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "DiagTrack", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "dmwappushservice", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "DPS", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "edgeupdate", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "edgeupdatem", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "Fax", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "fhsvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "FontCache", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "gupdate", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "gupdatem", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPAppHelperCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPDiagsCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPNetworkCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPSysInfoCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HpTouchpointAnalyticsService", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HvHost", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "lfsvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "lmhosts", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "MapsBroker", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "MicrosoftEdgeElevationService", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "MSDTC", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "NahimicService", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "NetTcpPortSharing", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PcaSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PerfHost", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PhoneSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PrintNotify", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "QWAVE", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RemoteAccess", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RemoteRegistry", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RetailDemo", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RtkBtManServ", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "SCardSvr", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "seclogon", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "SEMgrSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "SharedAccess", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "ssh-agent", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "stisvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "SysMain", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "TrkWks", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "vmicguestinterface", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicheartbeat", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmickvpexchange", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicrdv", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicshutdown", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmictimesync", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicvmsession", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WerSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "wisvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WMPNetworkSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WpcMonSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WPDBusEnum", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WpnService", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "WSearch", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "XblAuthManager", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "XblGameSave", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "XboxNetApiSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "XboxGipSvc", "StartupType": "Manual", "OriginalType": "Manual" }
+        ]
+    },
+    "DblServicesDefault": {
+        "Type": "CheckBox",
+        "Content": "Services - Default",
+        "Description": "Restores services to their Windows factory default startup types.",
+        "DisableMessage": "Setting Services to Default...",
+        "service": [
+            { "Name": "ALG", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "AJRouter", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "Browser", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "BthAvctpSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "diagnosticshub.standardcollector.service", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "DiagTrack", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "dmwappushservice", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "DPS", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "edgeupdate", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "edgeupdatem", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "Fax", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "fhsvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "FontCache", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "gupdate", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "gupdatem", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPAppHelperCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPDiagsCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPNetworkCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPSysInfoCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HpTouchpointAnalyticsService", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HvHost", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "lfsvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "lmhosts", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "MapsBroker", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "MicrosoftEdgeElevationService", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "MSDTC", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "NahimicService", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "NetTcpPortSharing", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PcaSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PerfHost", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PhoneSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PrintNotify", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "QWAVE", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RemoteAccess", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RemoteRegistry", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RetailDemo", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RtkBtManServ", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "SCardSvr", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "seclogon", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "SEMgrSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "SharedAccess", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "ssh-agent", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "stisvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "SysMain", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "TrkWks", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "vmicguestinterface", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicheartbeat", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmickvpexchange", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicrdv", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicshutdown", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmictimesync", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicvmsession", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WerSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "wisvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WMPNetworkSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WpcMonSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WPDBusEnum", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WpnService", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "WSearch", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "XblAuthManager", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "XblGameSave", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "XboxNetApiSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "XboxGipSvc", "StartupType": "Manual", "OriginalType": "Manual" }
+        ]
     }
 }
 
@@ -3480,260 +3661,6 @@ $configuration = @'
         "Description": "A Windows and Office activator using HWID / Ohook / KMS38 / Online KMS activation methods, with a focus on open-source code and fewer antivirus detections."
     }
 }
-'@ | ConvertFrom-Json
-
-# Embedded from services.json
-$services = @'
-{
-    "recommended": {
-        "Manual": [
-            "ALG",
-            "AJRouter",
-            "BcastDVRUserService_48486de",
-            "Browser",
-            "BthAvctpSvc",
-            "CaptureService_48486de",
-            "cbdhsvc_48486de",
-            "diagnosticshub.standardcollector.service",
-            "DiagTrack",
-            "dmwappushservice",
-            "DPS",
-            "edgeupdate",
-            "edgeupdatem",
-            "Fax",
-            "fhsvc",
-            "FontCache",
-            "gupdate",
-            "gupdatem",
-            "HPAppHelperCap",
-            "HPDiagsCap",
-            "HPNetworkCap",
-            "HPSysInfoCap",
-            "HpTouchpointAnalyticsService",
-            "HvHost",
-            "lfsvc",
-            "lmhosts",
-            "MapsBroker",
-            "MicrosoftEdgeElevationService",
-            "MSDTC",
-            "NahimicService",
-            "NetTcpPortSharing",
-            "PcaSvc",
-            "PerfHost",
-            "PhoneSvc",
-            "PrintNotify",
-            "QWAVE",
-            "RemoteAccess",
-            "RemoteRegistry",
-            "RetailDemo",
-            "RtkBtManServ",
-            "SCardSvr",
-            "seclogon",
-            "SEMgrSvc",
-            "SharedAccess",
-            "ssh-agent",
-            "stisvc",
-            "SysMain",
-            "TrkWks",
-            "vmicguestinterface",
-            "vmicheartbeat",
-            "vmickvpexchange",
-            "vmicrdv",
-            "vmicshutdown",
-            "vmictimesync",
-            "vmicvmsession",
-            "WerSvc",
-            "wisvc",
-            "WMPNetworkSvc",
-            "WpcMonSvc",
-            "WPDBusEnum",
-            "WpnService",
-            "WSearch",
-            "XblAuthManager",
-            "XblGameSave",
-            "XboxNetApiSvc",
-            "XboxGipSvc"
-        ]
-    },
-    "gaming": {
-        "Manual": [
-            "BcastDVRUserService_48486de",
-            "Browser",
-            "BthAvctpSvc",
-            "CaptureService_48486de",
-            "cbdhsvc_48486de",
-            "edgeupdate",
-            "edgeupdatem",
-            "FontCache",
-            "gupdate",
-            "gupdatem",
-            "HPAppHelperCap",
-            "HPDiagsCap",
-            "HPNetworkCap",
-            "HPSysInfoCap",
-            "HpTouchpointAnalyticsService",
-            "HvHost",
-            "lmhosts",
-            "MicrosoftEdgeElevationService",
-            "MSDTC",
-            "NahimicService",
-            "PerfHost",
-            "QWAVE",
-            "RtkBtManServ",
-            "SharedAccess",
-            "ssh-agent",
-            "TrkWks",
-            "vmicguestinterface",
-            "vmicheartbeat",
-            "vmickvpexchange",
-            "vmicrdv",
-            "vmicshutdown",
-            "vmictimesync",
-            "vmicvmsession",
-            "WMPNetworkSvc",
-            "WPDBusEnum",
-            "WpnService",
-            "WSearch",
-            "XblAuthManager",
-            "XblGameSave",
-            "XboxNetApiSvc",
-            "XboxGipSvc"
-        ],
-        "Disabled": [
-            "ALG",
-            "AJRouter",
-            "AppVClient",
-            "CertPropSvc",
-            "DiagTrack",
-            "DialogBlockingService",
-            "DPS",
-            "DusmSvc",
-            "Fax",
-            "fhsvc",
-            "diagnosticshub.standardcollector.service",
-            "dmwappushservice",
-            "icssvc",
-            "iphlpsvc",
-            "lfsvc",
-            "MapsBroker",
-            "MsKeyboardFilter",
-            "NcbService",
-            "NetTcpPortSharing",
-            "PcaSvc",
-            "PhoneSvc",
-            "PrintNotify",
-            "RemoteAccess",
-            "RemoteRegistry",
-            "RetailDemo",
-            "SCardSvr",
-            "SCPolicySvc",
-            "ScDeviceEnum",
-            "SEMgrSvc",
-            "seclogon",
-            "shpamsvc",
-            "Spooler",
-            "stisvc",
-            "SysMain",
-            "tzautoupdate",
-            "UevAgentService",
-            "uhssvc",
-            "WbioSrvc",
-            "WerSvc",
-            "WpcMonSvc",
-            "wisvc"
-        ]
-    },
-    "default": {
-        "Manual": [
-            "ALG",
-            "AJRouter",
-            "AppVClient",
-            "BcastDVRUserService_48486de",
-            "BthAvctpSvc",
-            "CaptureService_48486de",
-            "cbdhsvc_48486de",
-            "CertPropSvc",
-            "DialogBlockingService",
-            "diagnosticshub.standardcollector.service",
-            "dmwappushservice",
-            "Fax",
-            "fhsvc",
-            "FontCache",
-            "HPAppHelperCap",
-            "HPDiagsCap",
-            "HPNetworkCap",
-            "HPSysInfoCap",
-            "HpTouchpointAnalyticsService",
-            "icssvc",
-            "lfsvc",
-            "lmhosts",
-            "MapsBroker",
-            "MicrosoftEdgeElevationService",
-            "MSDTC",
-            "MsKeyboardFilter",
-            "NetTcpPortSharing",
-            "PcaSvc",
-            "PerfHost",
-            "PhoneSvc",
-            "PrintNotify",
-            "QWAVE",
-            "RemoteAccess",
-            "RemoteRegistry",
-            "RetailDemo",
-            "RtkBtManServ",
-            "SCardSvr",
-            "ScDeviceEnum",
-            "seclogon",
-            "SEMgrSvc",
-            "SharedAccess",
-            "shpamsvc",
-            "ssh-agent",
-            "stisvc",
-            "UevAgentService",
-            "vmicguestinterface",
-            "vmicheartbeat",
-            "vmickvpexchange",
-            "vmicrdv",
-            "vmicshutdown",
-            "vmictimesync",
-            "vmicvmsession",
-            "WerSvc",
-            "wisvc",
-            "WMPNetworkSvc",
-            "WpcMonSvc",
-            "WPDBusEnum",
-            "XblAuthManager",
-            "XblGameSave",
-            "XboxNetApiSvc",
-            "XboxGipSvc",
-            "wsearch"
-        ],
-        "Automatic": [
-            "Browser",
-            "DiagTrack",
-            "DPS",
-            "DusmSvc",
-            "edgeupdate",
-            "edgeupdatem",
-            "gupdate",
-            "gupdatem",
-            "HvHost",
-            "NahimicService",
-            "NcbService",
-            "SCPolicySvc",
-            "Spooler",
-            "iphlpsvc",
-            "SysMain",
-            "TrkWks",
-            "tzautoupdate",
-            "uhssvc",
-            "WbioSrvc",
-            "WpnService",
-            "WSearch"
-        ]
-    }
-}
-
 '@ | ConvertFrom-Json
 
 
@@ -4186,9 +4113,6 @@ $script:ButtonActions = @{
     'wpf_GetInstalledTweaks' = { Invoke-GetInstalledTweaks }
     'wpf_ExportButton' = { Invoke-ExportConfig }
     'wpf_ApplyDNS' = { Invoke-ApplyDNS -Provider $wpf_ddlDNS.SelectedItem.Content }
-    'wpf_recommended'      = { Invoke-recommended }
-    'wpf_gaming'           = { Invoke-gaming }
-    'wpf_default'           = { Invoke-default }
     'wpf_Updatesdefault'   = { Invoke-UpdatesDefault }
     'wpf_PauseUpdate'      = { Invoke-PauseUpdate }
     'wpf_FixesUpdate'      = { Invoke-FixesUpdate }
@@ -4892,7 +4816,6 @@ function Set-RestorePoint {
 
 Function Set-WinService {
     <#
-
     .SYNOPSIS
         Changes the startup type of the given service
 
@@ -4904,29 +4827,34 @@ Function Set-WinService {
 
     .EXAMPLE
         Set-WinService -Name "HomeGroupListener" -StartupType "Manual"
-
     #>
+
     param (
-        $Name,
-        $StartupType
+        [Parameter(Mandatory = $true)]
+        [string]$Name,
+
+        [Parameter(Mandatory = $true)]
+        [ValidateSet("Automatic", "Manual", "Disabled")]
+        [string]$StartupType
     )
-    try {
-        Write-Host "Setting Service $Name to $StartupType"
 
-        # Check if the service exists
-        $service = Get-Service -Name $Name -ErrorAction Stop
+    Write-Host "Setting Service $Name to $StartupType"
 
-        # Service exists, proceed with changing properties
-        $service | Set-Service -StartupType $StartupType -ErrorAction Stop
-    } catch [System.ServiceProcess.ServiceNotFoundException] {
-        Write-Warning "Service $Name was not found"
-    } catch {
-        Write-Warning "Unable to set $Name due to unhandled exception"
-        Write-Warning $_.Exception.Message
+    # Check if the service exists
+    $service = Get-Service -Name $Name -ErrorAction SilentlyContinue
+
+    if ($null -eq $service) {
+        return
     }
 
+    try {
+        Write-Host "Setting Service $Name to $StartupType"
+        $service | Set-Service -StartupType $StartupType -ErrorAction Stop
+    }
+    catch {
+        Write-Warning "Unable to set service '$Name': $($_.Exception.Message)"
+    }
 }
-
 function Start-Sleep($seconds) {
     <#
 
@@ -6706,108 +6634,6 @@ Function Invoke-UltimatePerformance {
 
 ################################################################################################################
 ###                                                                                                          ###
-###                                          INFO: SERVICE FUNCTIONS                                         ###
-###                                                                                                          ###
-################################################################################################################
-
-Get-Service -ErrorAction SilentlyContinue | ForEach-Object {[void]$wpf_ddlServices.Items.Add($_.Name)}
-function Get-Services {
-    <#
-
-    .SYNOPSIS
-        Function to get all services and their information 
-    #>
-
-    $ServiceName = $wpf_ddlServices.SelectedItem
-    # Use Get-WmiObject to retrieve service information
-    $serviceInfo = Get-WmiObject -Class Win32_Service -Filter "Name = '$ServiceName'"
-    # Use Get-Service to retrieve service information
-    $serviceDetails = Get-Service -Name $ServiceName -ErrorAction SilentlyContinue | Select-Object *
-    # Use Display service information from Get-Service if available, otherwise fallback to WMI
-    $wpf_lblName.Content = if ($serviceDetails.DisplayName) { $serviceDetails.DisplayName } else { $serviceInfo.Name }
-    $wpf_lblStatus.Content = if ($serviceDetails.Status) { $serviceDetails.Status } else { $serviceInfo.State }
-    $wpf_lblStartupType.Content = if ($serviceDetails.StartupType) { $serviceDetails.StartupType } else { $serviceInfo.StartMode }
-    $wpf_lblServicesDesc.Text = if ($serviceDetails.Description) { $serviceDetails.Description } else { $serviceInfo.Description }
-
-
-    ### status color
-    $wpf_lblStatus.Foreground = switch ($wpf_lblStatus.Content) {
-        'Stopped' {'red'} 
-        'Paused' {'yellow'} 
-        default {'green'}
-    }
-    ### type color
-    $wpf_lblStartupType.Foreground = switch ($wpf_lblStartupType.Content) {
-        'Manual' {'yellow'} 
-        'Automatic' {'blue'} 
-        default {'red'}
-    }
-}
-
-function Invoke-default{
-    <#
-
-    .SYNOPSIS
-        Set all services to their Windows default startup types
-    #>
-
-    Invoke-ServicePreset -Mode "default"
-}
-function Invoke-gaming{
-    <#
-
-    .SYNOPSIS
-        Set all services to gaming mode 
-    #>
-
-    Invoke-ServicePreset -Mode "gaming"
-}
-function Invoke-recommended{
-    <#
-
-    .SYNOPSIS
-        Set all services to manual startup 
-    #>
-
-    Invoke-ServicePreset -Mode "recommended"
-}
-function Invoke-ServicePreset {
-    <#
-    .SYNOPSIS
-        Apply a service preset from config/services.json
-    .PARAMETER Mode
-        The preset mode: recommended, gaming, or default
-    #>
-    param(
-        [Parameter(Mandatory=$true)]
-        [ValidateSet("recommended","gaming","default")]
-        [string]$Mode
-    )
-
-    $preset = $services.$Mode
-    if (-not $preset) {
-        Write-Warning "Service preset '$Mode' not found in services.json"
-        return
-    }
-
-    foreach ($type in $preset.PSObject.Properties.Name) {
-        foreach ($svc in $preset.$type) {
-            Write-Host "Setting $svc StartupType to $type" -ForegroundColor Yellow
-            Get-Service -Name $svc -ErrorAction SilentlyContinue | Set-Service -StartupType $type -ErrorAction SilentlyContinue
-        }
-    }
-
-    $modeName = $Mode.Substring(0,1).ToUpper() + $Mode.Substring(1)
-    Art -artN "
-======================================
------ Services set to $modeName Mode -----
-======================================
-" -ch Cyan
-    Invoke-MessageBox "tweak"
-}
-
-################################################################################################################
-###                                                                                                          ###
 ###                                          INFO: UPDATES FUNCTIONS                                         ###
 ###                                                                                                          ###
 ################################################################################################################
@@ -7259,12 +7085,6 @@ function Invoke-ApplyConfigFile {
         Invoke-ApplyDNS -Provider $config.dns.provider
     }
 
-    # Apply services mode
-    if ($config.PSObject.Properties.Name -contains 'services' -and $config.services) {
-        Write-Host "Applying Services mode: $($config.services.mode)" -ForegroundColor Yellow
-        Invoke-ServicePreset -Mode $config.services.mode
-    }
-
     # Apply updates mode
     if ($config.PSObject.Properties.Name -contains 'updates' -and $config.updates) {
         Write-Host "Applying Updates mode: $($config.updates.mode)" -ForegroundColor Yellow
@@ -7501,11 +7321,6 @@ function Invoke-ExportConfig {
             provider = $wpf_ddlDNS.SelectedItem.Content
         }
     }
-
-    # Export services mode
-    if ($wpf_default.IsChecked) { $config.services = @{ mode = "default" } }
-    elseif ($wpf_recommended.IsChecked) { $config.services = @{ mode = "recommended" } }
-    elseif ($wpf_gaming.IsChecked) { $config.services = @{ mode = "gaming" } }
 
     # Export update mode
     if ($wpf_Updatesdefault.IsChecked) { $config.updates = @{ mode = "default" } }
@@ -7895,7 +7710,6 @@ if ($Config) {
 
 $wpf_diskNameInfo.Add_SelectionChanged({Get-DiskInfo})
 $wpf_diskName.Add_SelectionChanged({Get-DiskSize})
-$wpf_ddlServices.Add_SelectionChanged({Get-Services})
 
 # Assign tooltips after the window is fully loaded so FindName sees all controls
 $psform.Add_Loaded({
