@@ -30,18 +30,6 @@ function Invoke-ApplyConfigFile {
         Invoke-ApplyDNS -Provider $config.dns.provider
     }
 
-    # Apply updates mode
-    if ($config.PSObject.Properties.Name -contains 'updates' -and $config.updates) {
-        Write-Host "Applying Updates mode: $($config.updates.mode)" -ForegroundColor Yellow
-        switch ($config.updates.mode) {
-            "default" { Invoke-UpdatesDefault }
-            "pause" { Invoke-PauseUpdate }
-            "fixes" { Invoke-FixesUpdate }
-            "disable" { Invoke-UpdatesDisable }
-            "security" { Invoke-UpdatesSecurity }
-        }
-    }
-
     # Apply checked tweaks
     if ($config.PSObject.Properties.Name -contains 'tweaks' -and $config.tweaks) {
         Write-Host "Applying tweaks..." -ForegroundColor Yellow

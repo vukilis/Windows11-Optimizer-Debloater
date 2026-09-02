@@ -6638,261 +6638,868 @@ Function Invoke-UltimatePerformance {
 ###                                                                                                          ###
 ################################################################################################################
 
-function Invoke-FixesUpdate{
+function Invoke-FixesUpdate {
     <#
 
     .SYNOPSIS
-        Reset Windows Update Script - reregister dlls, services, and remove registry entires.
+        Repairs Windows Update by resetting services, cache,
+        DLL registrations, BITS jobs, networking, and Windows Update policies.
+
     #>
 
-    Write-Host "1. Stopping Windows Update Services..."
-    Stop-Service -Name BITS
-    Stop-Service -Name wuauserv
-    Stop-Service -Name appidsvc
-    Stop-Service -Name cryptsvc
-    Write-Host "2. Remove QMGR Data file..."
-        Remove-Item "$env:allusersprofile\Application Data\Microsoft\Network\Downloader\qmgr*.dat" -ErrorAction SilentlyContinue
+    Write-Host "1. Stopping Windows Update Services..." -ForegroundColor Yellow
 
-    Write-Host "3. Renaming the Software Distribution and CatRoot Folder..."
-        Rename-Item $env:systemroot\SoftwareDistribution SoftwareDistribution.bak -ErrorAction SilentlyContinue
-        Rename-Item $env:systemroot\System32\Catroot2 catroot2.bak -ErrorAction SilentlyContinue
-
-    Write-Host "4. Removing old Windows Update log..."
-        Remove-Item $env:systemroot\WindowsUpdate.log -ErrorAction SilentlyContinue
-
-    Write-Host "5. Resetting the Windows Update Services to default settings..."
-        Start-Process -NoNewWindow -FilePath "sc.exe" -ArgumentList "sdset", "bits", "D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;AU)(A;;CCLCSWRPWPDTLOCRRC;;;PU)"
-        Start-Process -NoNewWindow -FilePath "sc.exe" -ArgumentList "sdset", "wuauserv", "D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;AU)(A;;CCLCSWRPWPDTLOCRRC;;;PU)"
-        Set-Location $env:systemroot\system32
-
-    Write-Host "6. Registering some DLLs..."
-    $DLLs = @(
-        "atl.dll", "urlmon.dll", "mshtml.dll", "shdocvw.dll", "browseui.dll",
-        "jscript.dll", "vbscript.dll", "scrrun.dll", "msxml.dll", "msxml3.dll",
-        "msxml6.dll", "actxprxy.dll", "softpub.dll", "wintrust.dll", "dssenh.dll",
-        "rsaenh.dll", "gpkcsp.dll", "sccbase.dll", "slbcsp.dll", "cryptdlg.dll",
-        "oleaut32.dll", "ole32.dll", "shell32.dll", "initpki.dll", "wuapi.dll",
-        "wuaueng.dll", "wuaueng1.dll", "wucltui.dll", "wups.dll", "wups2.dll",
-        "wuweb.dll", "qmgr.dll", "qmgrprxy.dll", "wucltux.dll", "muweb.dll", "wuwebv.dll"
+    $services = @(
+        "BITS"
+        "wuauserv"
+        "appidsvc"
+        "cryptsvc"
     )
+
+    foreach ($service in $services) {
+        Write-Host "Stopping $service..."
+        Stop-Service -Name $service -Force -ErrorAction SilentlyContinue
+    }
+
+
+    Write-Host "2. Removing QMGR Data files..." -ForegroundColor Yellow
+
+    Remove-Item `
+        "$env:allusersprofile\Application Data\Microsoft\Network\Downloader\qmgr*.dat" `
+        -Force `
+        -ErrorAction SilentlyContinue
+
+
+    Write-Host "3. Renaming Windows Update folders..." -ForegroundColor Yellow
+
+    # SoftwareDistribution
+    If (Test-Path "$env:systemroot\SoftwareDistribution") {
+        Rename-Item `
+            "$env:systemroot\SoftwareDistribution" `
+            "SoftwareDistribution.bak" `
+            -ErrorAction SilentlyContinue
+    }
+
+    # Catroot2
+    If (Test-Path "$env:systemroot\System32\Catroot2") {
+        Rename-Item `
+            "$env:systemroot\System32\Catroot2" `
+            "Catroot2.bak" `
+            -ErrorAction SilentlyContinue
+    }
+
+
+    Write-Host "4. Removing old Windows Update log..." -ForegroundColor Yellow
+
+    Remove-Item `
+        "$env:systemroot\WindowsUpdate.log" `
+        -Force `
+        -ErrorAction SilentlyContinue
+
+
+    Write-Host "5. Resetting Windows Update service security..." -ForegroundColor Yellow
+
+    $serviceSecurityDescriptor = "D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;AU)(A;;CCLCSWRPWPDTLOCRRC;;;PU)"
+
+    Start-Process `
+        -NoNewWindow `
+        -FilePath "sc.exe" `
+        -ArgumentList "sdset", "bits", $serviceSecurityDescriptor `
+        -Wait
+
+    Start-Process `
+        -NoNewWindow `
+        -FilePath "sc.exe" `
+        -ArgumentList "sdset", "wuauserv", $serviceSecurityDescriptor `
+        -Wait
+
+
+    Write-Host "6. Registering Windows Update DLLs..." -ForegroundColor Yellow
+
+    $oldLocation = Get-Location
+
+    Set-Location "$env:systemroot\System32"
+
+    $DLLs = @(
+        "atl.dll"
+        "urlmon.dll"
+        "mshtml.dll"
+        "shdocvw.dll"
+        "browseui.dll"
+        "jscript.dll"
+        "vbscript.dll"
+        "scrrun.dll"
+        "msxml.dll"
+        "msxml3.dll"
+        "msxml6.dll"
+        "actxprxy.dll"
+        "softpub.dll"
+        "wintrust.dll"
+        "dssenh.dll"
+        "rsaenh.dll"
+        "gpkcsp.dll"
+        "sccbase.dll"
+        "slbcsp.dll"
+        "cryptdlg.dll"
+        "oleaut32.dll"
+        "ole32.dll"
+        "shell32.dll"
+        "initpki.dll"
+        "wuapi.dll"
+        "wuaueng.dll"
+        "wuaueng1.dll"
+        "wucltui.dll"
+        "wups.dll"
+        "wups2.dll"
+        "wuweb.dll"
+        "qmgr.dll"
+        "qmgrprxy.dll"
+        "wucltux.dll"
+        "muweb.dll"
+        "wuwebv.dll"
+    )
+
     foreach ($dll in $DLLs) {
-        Start-Process -NoNewWindow -FilePath "regsvr32.exe" -ArgumentList "/s", $dll
+        If (Test-Path $dll) {
+            Start-Process `
+                -NoNewWindow `
+                -FilePath "regsvr32.exe" `
+                -ArgumentList "/s", $dll `
+                -Wait
+        }
     }
 
-    Write-Host "7) Removing WSUS client settings..."
-    if (Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate") {
-        Start-Process -NoNewWindow -FilePath "REG" -ArgumentList "DELETE", "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate", "/v", "AccountDomainSid", "/f"
-        Start-Process -NoNewWindow -FilePath "REG" -ArgumentList "DELETE", "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate", "/v", "PingID", "/f"
-        Start-Process -NoNewWindow -FilePath "REG" -ArgumentList "DELETE", "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate", "/v", "SusClientId", "/f"
+    Set-Location $oldLocation
+
+
+    Write-Host "7. Removing WSUS client settings..." -ForegroundColor Yellow
+
+    $windowsUpdatePath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate"
+
+    If (Test-Path $windowsUpdatePath) {
+        Remove-ItemProperty `
+            -Path $windowsUpdatePath `
+            -Name "AccountDomainSid" `
+            -ErrorAction SilentlyContinue
+
+        Remove-ItemProperty `
+            -Path $windowsUpdatePath `
+            -Name "PingID" `
+            -ErrorAction SilentlyContinue
+
+        Remove-ItemProperty `
+            -Path $windowsUpdatePath `
+            -Name "SusClientId" `
+            -ErrorAction SilentlyContinue
     }
 
-    Write-Host "8) Resetting the WinSock..."
-        Start-Process -NoNewWindow -FilePath "netsh" -ArgumentList "winsock", "reset"
-        Start-Process -NoNewWindow -FilePath "netsh" -ArgumentList "winhttp", "reset", "proxy"
-        Start-Process -NoNewWindow -FilePath "netsh" -ArgumentList "int", "ip", "reset"
 
-    Write-Host "9) Delete all BITS jobs..."
-        Get-BitsTransfer | Remove-BitsTransfer
+    Write-Host "8. Removing Windows Update policy settings..." -ForegroundColor Yellow
 
-    Write-Host "10) Attempting to install the Windows Update Agent..."
-    If ([System.Environment]::Is64BitOperatingSystem) {
-        Start-Process -NoNewWindow -FilePath "wusa" -ArgumentList "Windows8-RT-KB2937636-x64", "/quiet"
+    $windowsUpdatePolicyPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate"
+    $automaticUpdatePolicyPath = Join-Path $windowsUpdatePolicyPath "AU"
+
+    $registryValues = @(
+        @{
+            Path = $automaticUpdatePolicyPath
+            Names = @(
+                "NoAutoUpdate"
+                "AUOptions"
+                "NoAutoRebootWithLoggedOnUsers"
+                "AUPowerManagement"
+            )
+        }
+        @{
+            Path = $windowsUpdatePolicyPath
+            Names = @(
+                "ExcludeWUDriversInQualityUpdate"
+                "DeferFeatureUpdates"
+                "DeferFeatureUpdatesPeriodInDays"
+                "DeferQualityUpdates"
+                "DeferQualityUpdatesPeriodInDays"
+            )
+        }
+        @{
+            Path = "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings"
+            Names = @(
+                "BranchReadinessLevel"
+                "DeferFeatureUpdatesPeriodInDays"
+                "DeferQualityUpdatesPeriodInDays"
+                "PauseUpdatesStartTime"
+                "PauseUpdatesExpiryTime"
+                "PauseFeatureUpdatesStartTime"
+                "PauseFeatureUpdatesEndTime"
+                "PauseQualityUpdatesStartTime"
+                "PauseQualityUpdatesEndTime"
+                "PauseUpdatesExpiryTime"
+            )
+        }
+        @{
+            Path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata"
+            Names = @(
+                "PreventDeviceMetadataFromNetwork"
+            )
+        }
+        @{
+            Path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching"
+            Names = @(
+                "DontPromptForWindowsUpdate"
+                "DontSearchWindowsUpdate"
+                "DriverUpdateWizardWuSearchEnabled"
+            )
+        }
+        @{
+            Path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config"
+            Names = @(
+                "DODownloadMode"
+            )
+        }
+    )
+
+    foreach ($registryEntry in $registryValues) {
+        foreach ($valueName in $registryEntry.Names) {
+            Remove-ItemProperty `
+                -Path $registryEntry.Path `
+                -Name $valueName `
+                -ErrorAction SilentlyContinue
+        }
     }
-    else {
-        Start-Process -NoNewWindow -FilePath "wusa" -ArgumentList "Windows8-RT-KB2937636-x86", "/quiet"
+
+
+    Write-Host "9. Resetting WinSock and network configuration..." -ForegroundColor Yellow
+
+    Start-Process `
+        -NoNewWindow `
+        -FilePath "netsh.exe" `
+        -ArgumentList "winsock", "reset" `
+        -Wait
+
+    Start-Process `
+        -NoNewWindow `
+        -FilePath "netsh.exe" `
+        -ArgumentList "winhttp", "reset", "proxy" `
+        -Wait
+
+    Start-Process `
+        -NoNewWindow `
+        -FilePath "netsh.exe" `
+        -ArgumentList "int", "ip", "reset" `
+        -Wait
+
+
+    Write-Host "10. Removing all BITS jobs..." -ForegroundColor Yellow
+
+    Get-BitsTransfer -AllUsers -ErrorAction SilentlyContinue |
+        Remove-BitsTransfer -ErrorAction SilentlyContinue
+
+
+    Write-Host "11. Restoring Windows Update Services..." -ForegroundColor Yellow
+
+    # BITS
+    Set-Service `
+        -Name "BITS" `
+        -StartupType Manual `
+        -ErrorAction SilentlyContinue
+
+    Start-Service `
+        -Name "BITS" `
+        -ErrorAction SilentlyContinue
+
+    # Windows Update
+    Set-Service `
+        -Name "wuauserv" `
+        -StartupType Manual `
+        -ErrorAction SilentlyContinue
+
+    Start-Service `
+        -Name "wuauserv" `
+        -ErrorAction SilentlyContinue
+
+    # AppIDSvc is protected, so configure it through the registry
+    Set-ItemProperty `
+        -Path "HKLM:\SYSTEM\CurrentControlSet\Services\AppIDSvc" `
+        -Name "Start" `
+        -Type DWord `
+        -Value 3 `
+        -ErrorAction SilentlyContinue
+
+    Start-Service `
+        -Name "AppIDSvc" `
+        -ErrorAction SilentlyContinue
+
+    # Cryptographic Services
+    Set-Service `
+        -Name "CryptSvc" `
+        -StartupType Automatic `
+        -ErrorAction SilentlyContinue
+
+    Start-Service `
+        -Name "CryptSvc" `
+        -ErrorAction SilentlyContinue
+
+
+    Write-Host "12. Enabling Windows Update scheduled tasks..." -ForegroundColor Yellow
+
+    $Tasks = @(
+        '\Microsoft\Windows\InstallService\*'
+        '\Microsoft\Windows\UpdateOrchestrator\*'
+        '\Microsoft\Windows\UpdateAssistant\*'
+        '\Microsoft\Windows\WaaSMedic\*'
+        '\Microsoft\Windows\WindowsUpdate\*'
+        '\Microsoft\WindowsUpdate\*'
+    )
+
+    foreach ($Task in $Tasks) {
+        Get-ScheduledTask `
+            -TaskPath $Task `
+            -ErrorAction SilentlyContinue |
+            Enable-ScheduledTask `
+                -ErrorAction SilentlyContinue
     }
 
-    Write-Host "11) Starting Windows Update Services..."
-        Start-Service -Name BITS
-        Start-Service -Name wuauserv
-        Start-Service -Name appidsvc
-        Start-Service -Name cryptsvc
 
-    Write-Host "12) Forcing discovery..."
-    Start-Process -NoNewWindow -FilePath "wuauclt" -ArgumentList "/resetauthorization", "/detectnow"
+    Write-Host "13. Forcing Windows Update discovery..." -ForegroundColor Yellow
+
+    try {
+        (New-Object -ComObject Microsoft.Update.AutoUpdate).DetectNow()
+    }
+    catch {
+        Write-Warning "Failed to create Windows Update COM object: $_"
+    }
+
+    Start-Process `
+        -NoNewWindow `
+        -FilePath "wuauclt.exe" `
+        -ArgumentList "/resetauthorization", "/detectnow" `
+        -Wait
 
 
-    Write-Host "Process complete. Please reboot your computer."
+    Write-Host ""
+    Write-Host "Process complete. Please reboot your computer." -ForegroundColor Yellow
 
     Art -artN "
-    ===============================================
--- Reset All Windows Update Settings to Stock --
+===============================================
+-- Reset All Windows Update Settings to Stock -
 ===============================================
 " -ch DarkGreen
+
     Invoke-MessageBox -msg "updateFix"
 }
-
 function Invoke-PauseUpdate {
     <#
 
     .SYNOPSIS
-        Pause Windows Update up to 35 days or 5 weeks.
+        Pause Windows Update for up to 35 days or 5 weeks.
+
     #>
 
     Write-Host "Pausing Windows Update for 5 weeks..." -ForegroundColor Green
 
-    $pause = (Get-Date).AddDays(35)
-    $pause = $pause.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
-    #Write-Host $pause
-    $pause_start = (Get-Date)
-    $pause_start = $pause_start.ToUniversalTime().ToString( "yyyy-MM-ddTHH:mm:ssZ" )
-    set-itemproperty -path 'hklm:\software\microsoft\windowsupdate\ux\settings' -name 'pauseupdatesexpirytime' -value $pause                                                                                        
-    set-itemproperty -path 'hklm:\software\microsoft\windowsupdate\ux\settings' -name 'pausefeatureupdatesstarttime' -value $pause_start
-    set-itemproperty -path 'hklm:\software\microsoft\windowsupdate\ux\settings' -name 'pausefeatureupdatesendtime' -value $pause
-    set-itemproperty -path 'hklm:\software\microsoft\windowsupdate\ux\settings' -name 'pausequalityupdatesstarttime' -value $pause_start
-    set-itemproperty -path 'hklm:\software\microsoft\windowsupdate\ux\settings' -name 'pausequalityupdatesendtime' -value $pause
-    set-itemproperty -path 'hklm:\software\microsoft\windowsupdate\ux\settings' -name 'pauseupdatesstarttime' -value $pause_start
-    new-item -path 'hklm:\software\policies\microsoft\windows\windowsupdate\au' -force
-    new-itemproperty -path  'hklm:\software\policies\microsoft\windows\windowsupdate\au' -name 'noautoupdate' -propertytype dword -value 1  
-    
-    $pauseDateOnly = (Get-Date).AddDays(35)
-    $pauseDateOnly = $pauseDateOnly.ToUniversalTime().ToString("yyyy-MM-dd")
+    $windowsUpdateUXPath = "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings"
+    $automaticUpdatePolicyPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU"
+
+    # Make sure the required registry paths exist
+    If (!(Test-Path $windowsUpdateUXPath)) {
+        New-Item -Path $windowsUpdateUXPath -Force | Out-Null
+    }
+
+    If (!(Test-Path $automaticUpdatePolicyPath)) {
+        New-Item -Path $automaticUpdatePolicyPath -Force | Out-Null
+    }
+
+    # Calculate pause start and expiry dates
+    $pauseStart = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+    $pauseEnd = (Get-Date).AddDays(35).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+
+    # Set Windows Update pause dates
+    Set-ItemProperty `
+        -Path $windowsUpdateUXPath `
+        -Name "PauseUpdatesStartTime" `
+        -Value $pauseStart
+
+    Set-ItemProperty `
+        -Path $windowsUpdateUXPath `
+        -Name "PauseUpdatesExpiryTime" `
+        -Value $pauseEnd
+
+    Set-ItemProperty `
+        -Path $windowsUpdateUXPath `
+        -Name "PauseFeatureUpdatesStartTime" `
+        -Value $pauseStart
+
+    Set-ItemProperty `
+        -Path $windowsUpdateUXPath `
+        -Name "PauseFeatureUpdatesEndTime" `
+        -Value $pauseEnd
+
+    Set-ItemProperty `
+        -Path $windowsUpdateUXPath `
+        -Name "PauseQualityUpdatesStartTime" `
+        -Value $pauseStart
+
+    Set-ItemProperty `
+        -Path $windowsUpdateUXPath `
+        -Name "PauseQualityUpdatesEndTime" `
+        -Value $pauseEnd
+
+    # Disable automatic updates while paused
+    Set-ItemProperty `
+        -Path $automaticUpdatePolicyPath `
+        -Name "NoAutoUpdate" `
+        -Type DWord `
+        -Value 1
+
+    # Date displayed to the user
+    $pauseDateOnly = (Get-Date).AddDays(35).ToString("yyyy-MM-dd")
 
     Art -artN "
 ======================================
 -- Updates paused until $pauseDateOnly --
 ======================================
 " -ch DarkGreen
-    Invoke-MessageBox -msg "updatePause" 
-}
 
-function Invoke-UpdatesDefault{
+    Invoke-MessageBox -msg "updatePause"
+}
+function Invoke-UpdatesDefault {
     <#
 
     .SYNOPSIS
         Resets Windows Update settings to default
+
     #>
 
-    If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU")) {
-        New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Force | Out-Null
-    }
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "NoAutoUpdate" -Type DWord -Value 0
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "AUOptions" -Type DWord -Value 3
-    If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config")) {
-        New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config" -Force | Out-Null
-    }
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config" -Name "DODownloadMode" -Type DWord -Value 1
-    
-    $services = @(
-        "BITS"
-        "wuauserv"
+    Write-Host "Removing Windows Update settings..." -ForegroundColor Green
+
+    $windowsUpdatePolicyPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate"
+    $automaticUpdatePolicyPath = Join-Path $windowsUpdatePolicyPath "AU"
+    $deliveryOptimizationPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config"
+
+    # Remove Windows Update policy settings
+    $registryValues = @(
+        @{
+            Path = $automaticUpdatePolicyPath
+            Names = @(
+                "NoAutoUpdate",
+                "AUOptions",
+                "NoAutoRebootWithLoggedOnUsers",
+                "AUPowerManagement"
+            )
+        },
+        @{
+            Path = $windowsUpdatePolicyPath
+            Names = @(
+                "ExcludeWUDriversInQualityUpdate",
+                "DeferFeatureUpdates",
+                "DeferFeatureUpdatesPeriodInDays",
+                "DeferQualityUpdates",
+                "DeferQualityUpdatesPeriodInDays"
+            )
+        },
+        @{
+            Path = "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings"
+            Names = @(
+                "BranchReadinessLevel",
+                "DeferFeatureUpdatesPeriodInDays",
+                "DeferQualityUpdatesPeriodInDays"
+            )
+        },
+        @{
+            Path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata"
+            Names = @(
+                "PreventDeviceMetadataFromNetwork"
+            )
+        },
+        @{
+            Path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching"
+            Names = @(
+                "DontPromptForWindowsUpdate",
+                "DontSearchWindowsUpdate",
+                "DriverUpdateWizardWuSearchEnabled"
+            )
+        },
+        @{
+            Path = $deliveryOptimizationPath
+            Names = @(
+                "DODownloadMode"
+            )
+        }
     )
 
-    foreach ($service in $services) {
-        # -ErrorAction SilentlyContinue is so it doesn't write an error to stdout if a service doesn't exist
-
-        Write-Host "Setting $service StartupType to Automatic"
-        Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Automatic
+    foreach ($registryEntry in $registryValues) {
+        foreach ($valueName in $registryEntry.Names) {
+            Remove-ItemProperty `
+                -Path $registryEntry.Path `
+                -Name $valueName `
+                -ErrorAction SilentlyContinue
+        }
     }
-    Write-Host "Enabling driver offering through Windows Update..."
-    Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" -Name "PreventDeviceMetadataFromNetwork" -ErrorAction SilentlyContinue
-    Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Name "DontPromptForWindowsUpdate" -ErrorAction SilentlyContinue
-    Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Name "DontSearchWindowsUpdate" -ErrorAction SilentlyContinue
-    Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Name "DriverUpdateWizardWuSearchEnabled" -ErrorAction SilentlyContinue
-    Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "ExcludeWUDriversInQualityUpdate" -ErrorAction SilentlyContinue
-    Write-Host "Enabling Windows Update automatic restart..."
-    Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "NoAutoRebootWithLoggedOnUsers" -ErrorAction SilentlyContinue
-    Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "AUPowerManagement" -ErrorAction SilentlyContinue
-    Write-Host "Enabled driver offering through Windows Update"
-    Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" -Name "BranchReadinessLevel" -ErrorAction SilentlyContinue
-    Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" -Name "DeferFeatureUpdatesPeriodInDays" -ErrorAction SilentlyContinue
-    Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" -Name "DeferQualityUpdatesPeriodInDays " -ErrorAction SilentlyContinue
+
+    # Restore legacy Windows Update settings page visibility
+    $explorerPolicyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer"
+
+    $settingsPageVisibility = (
+        Get-ItemProperty `
+            -Path $explorerPolicyPath `
+            -Name "SettingsPageVisibility" `
+            -ErrorAction SilentlyContinue
+    ).SettingsPageVisibility
+
+    If ($settingsPageVisibility -eq "hide:windowsupdate") {
+        Write-Host "Removing Windows Update settings page restriction..."
+        Remove-ItemProperty `
+            -Path $explorerPolicyPath `
+            -Name "SettingsPageVisibility" `
+            -ErrorAction SilentlyContinue
+    }
+
+    # Restore Windows Update services
+    Write-Host "Restoring Windows Update services..." -ForegroundColor Green
+
+    Write-Host "Restoring BITS to Manual."
+    Set-Service `
+        -Name "BITS" `
+        -StartupType Manual `
+        -ErrorAction SilentlyContinue
+
+    Write-Host "Restoring wuauserv to Manual."
+    Set-Service `
+        -Name "wuauserv" `
+        -StartupType Manual `
+        -ErrorAction SilentlyContinue
+
+    Write-Host "Restoring UsoSvc to Automatic."
+    Set-Service `
+        -Name "UsoSvc" `
+        -StartupType Automatic `
+        -ErrorAction SilentlyContinue
+
+    Start-Service `
+        -Name "UsoSvc" `
+        -ErrorAction SilentlyContinue
+
+    # Enable Windows Update scheduled tasks
+    Write-Host "Enabling Windows Update scheduled tasks..." -ForegroundColor Green
+
+    $Tasks = @(
+        '\Microsoft\Windows\InstallService\*',
+        '\Microsoft\Windows\UpdateOrchestrator\*',
+        '\Microsoft\Windows\UpdateAssistant\*',
+        '\Microsoft\Windows\WaaSMedic\*',
+        '\Microsoft\Windows\WindowsUpdate\*',
+        '\Microsoft\WindowsUpdate\*'
+    )
+
+    foreach ($Task in $Tasks) {
+        Get-ScheduledTask `
+            -TaskPath $Task `
+            -ErrorAction SilentlyContinue |
+            Enable-ScheduledTask `
+                -ErrorAction SilentlyContinue
+    }
+
     Art -artN "
 ==================================
 ----- Updates Set to Default -----
 ==================================
 " -ch Cyan
+
+    Write-Host "Note: You must restart your system for all changes to take effect." -ForegroundColor Yellow
+
     Invoke-MessageBox -msg "updateDefault"
 }
-
-function Invoke-UpdatesDisable{
+function Invoke-UpdatesDisable {
     <#
 
     .SYNOPSIS
         Disable Windows Update
-    
+
     .NOTES
         Disabling Windows Update is not recommended.
+        Security updates will not be installed until Windows Update is restored.
+
     #>
 
-    If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU")) {
-        New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Force | Out-Null
-    }
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "NoAutoUpdate" -Type DWord -Value 1
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "AUOptions" -Type DWord -Value 1
-    If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config")) {
-        New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config" -Force | Out-Null
-    }
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config" -Name "DODownloadMode" -Type DWord -Value 0
+    Write-Host "Configuring Windows Update registry settings..." -ForegroundColor Yellow
 
+    $windowsUpdatePolicyPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate"
+    $automaticUpdatePolicyPath = Join-Path $windowsUpdatePolicyPath "AU"
+    $deliveryOptimizationPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config"
+
+    # Windows Update policy
+    If (!(Test-Path $automaticUpdatePolicyPath)) {
+        New-Item -Path $automaticUpdatePolicyPath -Force | Out-Null
+    }
+
+    Set-ItemProperty `
+        -Path $automaticUpdatePolicyPath `
+        -Name "NoAutoUpdate" `
+        -Type DWord `
+        -Value 1
+
+    Set-ItemProperty `
+        -Path $automaticUpdatePolicyPath `
+        -Name "AUOptions" `
+        -Type DWord `
+        -Value 1
+
+    # Disable Delivery Optimization downloads
+    If (!(Test-Path $deliveryOptimizationPath)) {
+        New-Item -Path $deliveryOptimizationPath -Force | Out-Null
+    }
+
+    Set-ItemProperty `
+        -Path $deliveryOptimizationPath `
+        -Name "DODownloadMode" `
+        -Type DWord `
+        -Value 0
+
+    # Stop and disable Windows Update services
     $services = @(
         "BITS"
         "wuauserv"
+        "UsoSvc"
     )
 
     foreach ($service in $services) {
-        # -ErrorAction SilentlyContinue is so it doesn't write an error to stdout if a service doesn't exist
+        Write-Host "Stopping and disabling $service service..."
 
-        Write-Host "Setting $service StartupType to Disabled"
-        Get-Service -Name $service -ErrorAction SilentlyContinue | Set-Service -StartupType Disabled
+        Stop-Service `
+            -Name $service `
+            -Force `
+            -ErrorAction SilentlyContinue
+
+        Set-Service `
+            -Name $service `
+            -StartupType Disabled `
+            -ErrorAction SilentlyContinue
     }
+
+    # Clear downloaded Windows Update files
+    Write-Host "Clearing downloaded Windows Update files..." -ForegroundColor Yellow
+
+    Remove-Item `
+        -Path "C:\Windows\SoftwareDistribution\*" `
+        -Recurse `
+        -Force `
+        -ErrorAction SilentlyContinue
+
+    # Disable Windows Update scheduled tasks
+    Write-Host "Disabling Windows Update scheduled tasks..." -ForegroundColor Yellow
+
+    $Tasks = @(
+        '\Microsoft\Windows\InstallService\*'
+        '\Microsoft\Windows\UpdateOrchestrator\*'
+        '\Microsoft\Windows\UpdateAssistant\*'
+        '\Microsoft\Windows\WaaSMedic\*'
+        '\Microsoft\Windows\WindowsUpdate\*'
+        '\Microsoft\WindowsUpdate\*'
+    )
+
+    foreach ($Task in $Tasks) {
+        Get-ScheduledTask `
+            -TaskPath $Task `
+            -ErrorAction SilentlyContinue |
+            Disable-ScheduledTask `
+                -ErrorAction SilentlyContinue
+    }
+
     Art -artN "
 ==================================
 ------ Updates ARE DISABLED ------
 ==================================
 " -ch DarkRed
+
+    Write-Host "Note: You must restart your system for all changes to take effect." -ForegroundColor Yellow
+
     Invoke-MessageBox -msg "updateDisabled"
 }
-
-function Invoke-UpdatesSecurity{
+function Invoke-UpdatesSecurity {
     <#
 
     .SYNOPSIS
         Set Windows Update to security
-    
+
     .DESCRIPTION
         1. Disables driver offering through Windows Update
-        2. Disables Windows Update automatic restart
-        3. Sets Windows Update to Semi-Annual Channel (Targeted)
+        2. Restores Windows Update services and scheduled tasks
+        3. Prevents automatic restarts while a user is signed in
         4. Defers feature updates for 365 days
         5. Defers quality updates for 4 days
-        
+
     #>
 
+    $windowsUpdatePolicyPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate"
+    $automaticUpdatePolicyPath = Join-Path $windowsUpdatePolicyPath "AU"
+
+    Write-Host "Restoring Windows Update availability..."
+
+    # Restore Windows Update policy values that may have been disabled
+    Remove-ItemProperty `
+        -Path $automaticUpdatePolicyPath `
+        -Name "NoAutoUpdate" `
+        -ErrorAction SilentlyContinue
+
+    Remove-ItemProperty `
+        -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config" `
+        -Name "DODownloadMode" `
+        -ErrorAction SilentlyContinue
+
+    # Restore Windows Update services
+    Set-Service -Name BITS -StartupType Manual
+    Set-Service -Name wuauserv -StartupType Manual
+    Set-Service -Name UsoSvc -StartupType Automatic
+
+    Start-Service -Name UsoSvc -ErrorAction SilentlyContinue
+
+    # Enable Windows Update scheduled tasks
+    $Tasks = @(
+        '\Microsoft\Windows\InstallService\*',
+        '\Microsoft\Windows\UpdateOrchestrator\*',
+        '\Microsoft\Windows\UpdateAssistant\*',
+        '\Microsoft\Windows\WaaSMedic\*',
+        '\Microsoft\Windows\WindowsUpdate\*',
+        '\Microsoft\WindowsUpdate\*'
+    )
+
+    foreach ($Task in $Tasks) {
+        Get-ScheduledTask -TaskPath $Task -ErrorAction SilentlyContinue |
+            Enable-ScheduledTask -ErrorAction SilentlyContinue
+    }
+
     Write-Host "Disabling driver offering through Windows Update..."
+
+    # Device Metadata
     If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata")) {
-        New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" -Force | Out-Null
+        New-Item `
+            -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" `
+            -Force |
+            Out-Null
     }
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" -Name "PreventDeviceMetadataFromNetwork" -Type DWord -Value 1
+
+    Set-ItemProperty `
+        -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" `
+        -Name "PreventDeviceMetadataFromNetwork" `
+        -Type DWord `
+        -Value 1
+
+    # Driver Searching
     If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching")) {
-        New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Force | Out-Null
+        New-Item `
+            -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" `
+            -Force |
+            Out-Null
     }
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Name "DontPromptForWindowsUpdate" -Type DWord -Value 1
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Name "DontSearchWindowsUpdate" -Type DWord -Value 1
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Name "DriverUpdateWizardWuSearchEnabled" -Type DWord -Value 0
-    If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate")) {
-        New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" | Out-Null
+
+    Set-ItemProperty `
+        -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" `
+        -Name "DontPromptForWindowsUpdate" `
+        -Type DWord `
+        -Value 1
+
+    Set-ItemProperty `
+        -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" `
+        -Name "DontSearchWindowsUpdate" `
+        -Type DWord `
+        -Value 1
+
+    Set-ItemProperty `
+        -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" `
+        -Name "DriverUpdateWizardWuSearchEnabled" `
+        -Type DWord `
+        -Value 0
+
+    # Windows Update driver exclusion
+    If (!(Test-Path $windowsUpdatePolicyPath)) {
+        New-Item -Path $windowsUpdatePolicyPath -Force | Out-Null
     }
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "ExcludeWUDriversInQualityUpdate" -Type DWord -Value 1
+
+    Set-ItemProperty `
+        -Path $windowsUpdatePolicyPath `
+        -Name "ExcludeWUDriversInQualityUpdate" `
+        -Type DWord `
+        -Value 1
+
+    Write-Host "Deferring feature updates by 365 days and quality updates by 4 days..."
+
+    # Feature update deferral
+    Set-ItemProperty `
+        -Path $windowsUpdatePolicyPath `
+        -Name "DeferFeatureUpdates" `
+        -Type DWord `
+        -Value 1
+
+    Set-ItemProperty `
+        -Path $windowsUpdatePolicyPath `
+        -Name "DeferFeatureUpdatesPeriodInDays" `
+        -Type DWord `
+        -Value 365
+
+    # Quality update deferral
+    Set-ItemProperty `
+        -Path $windowsUpdatePolicyPath `
+        -Name "DeferQualityUpdates" `
+        -Type DWord `
+        -Value 1
+
+    Set-ItemProperty `
+        -Path $windowsUpdatePolicyPath `
+        -Name "DeferQualityUpdatesPeriodInDays" `
+        -Type DWord `
+        -Value 4
+
+    # Remove legacy Windows Update UX settings
+    $legacySettingsPath = "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings"
+
+    foreach ($legacyValue in @(
+        "BranchReadinessLevel",
+        "DeferFeatureUpdatesPeriodInDays",
+        "DeferQualityUpdatesPeriodInDays"
+    )) {
+        Remove-ItemProperty `
+            -Path $legacySettingsPath `
+            -Name $legacyValue `
+            -ErrorAction SilentlyContinue
+    }
+
     Write-Host "Disabling Windows Update automatic restart..."
-    If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU")) {
-        New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Force | Out-Null
+
+    # Create AU policy path
+    If (!(Test-Path $automaticUpdatePolicyPath)) {
+        New-Item `
+            -Path $automaticUpdatePolicyPath `
+            -Force |
+            Out-Null
     }
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "NoAutoRebootWithLoggedOnUsers" -Type DWord -Value 1
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "AUPowerManagement" -Type DWord -Value 0
-    Write-Host "Disabled driver offering through Windows Update"
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" -Name "BranchReadinessLevel" -Type DWord -Value 20
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" -Name "DeferFeatureUpdatesPeriodInDays" -Type DWord -Value 365
-    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" -Name "DeferQualityUpdatesPeriodInDays " -Type DWord -Value 4
+
+    # Scheduled automatic updates
+    Set-ItemProperty `
+        -Path $automaticUpdatePolicyPath `
+        -Name "AUOptions" `
+        -Type DWord `
+        -Value 4
+
+    # Prevent automatic restart while a user is logged on
+    Set-ItemProperty `
+        -Path $automaticUpdatePolicyPath `
+        -Name "NoAutoRebootWithLoggedOnUsers" `
+        -Type DWord `
+        -Value 1
+
+    # Do not use automatic restart/power management
+    Set-ItemProperty `
+        -Path $automaticUpdatePolicyPath `
+        -Name "AUPowerManagement" `
+        -Type DWord `
+        -Value 0
 
     Art -artN "
 ==================================
 --- Updates Set to Recommended ---
 ==================================
 " -ch Cyan
+
     Invoke-MessageBox -msg "updateSecurity"
 }
-
 
 ################################################################################################################
 ###                                                                                                          ###
@@ -7083,18 +7690,6 @@ function Invoke-ApplyConfigFile {
     if ($config.PSObject.Properties.Name -contains 'dns' -and $config.dns) {
         Write-Host "Applying DNS: $($config.dns.provider)" -ForegroundColor Yellow
         Invoke-ApplyDNS -Provider $config.dns.provider
-    }
-
-    # Apply updates mode
-    if ($config.PSObject.Properties.Name -contains 'updates' -and $config.updates) {
-        Write-Host "Applying Updates mode: $($config.updates.mode)" -ForegroundColor Yellow
-        switch ($config.updates.mode) {
-            "default" { Invoke-UpdatesDefault }
-            "pause" { Invoke-PauseUpdate }
-            "fixes" { Invoke-FixesUpdate }
-            "disable" { Invoke-UpdatesDisable }
-            "security" { Invoke-UpdatesSecurity }
-        }
     }
 
     # Apply checked tweaks

@@ -2802,29 +2802,129 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0">
+                        <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0" Grid.Row="0" Grid.RowSpan="1">
                             <StackPanel SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="10">
-                                <Button Name="Updatesdefault" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Default (Out of Box) Settings" Cursor="Hand" Margin="0,0,0,5" Padding="10" HorizontalAlignment="Center"/>
-                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFDEE39B">This is the default settings that come with Windows. <LineBreak/><LineBreak/> No modifications are made and will remove any custom windows update settings.</TextBlock>
+                                <Button Name="Updatesdefault" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Restore Defaults" Cursor="Hand" Margin="0,0,0,5" Padding="10" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Return control to Windows"
+                                    HorizontalAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="Helvetica"
+                                    Margin="0,4,0,0"
+                                    Padding="12"
+                                    TextWrapping="Wrap"
+                                    TextAlignment="Left"
+                                    MaxWidth="400"
+                                    Foreground="#FFDEE39B"/>
+                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFDEE39B">- This is the default settings that come with Windows. <LineBreak/>- Removes Windows Update policies managed by Wind11deb <LineBreak/>- Restores update service startup settings <LineBreak/>- Re-enables update scheduled tasks</TextBlock>
                                 <Separator Background="#FFF4AB51" Width="350"/>
                                 <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="320" Foreground="#FFDEE39B">Note: If you're not ready to get recommended updates, you can choose to temporarily pause them from being downloaded and installed.<LineBreak/><TextBlock Foreground="#FFF4AB51">Pause updates for 5 weeks.</TextBlock></TextBlock>
                                 <Button Name="PauseUpdate" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Pause Windows Updates" Cursor="Hand" Margin="0,5,0,0" Padding="10" HorizontalAlignment = "Center"/>
                             </StackPanel>
                         </Border>
-                        <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="1">
+                        <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="0" Grid.RowSpan="1">
                             <StackPanel SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="10">
-                                <Button Name="Updatessecurity" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Security (Recommended) Settings" Cursor="Hand" Padding="10" HorizontalAlignment="Center"/>
-                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFDEE39B">This is my recommended setting I use on all computers.<LineBreak/><LineBreak/> It will delay feature updates by 2 years and will install security updates 4 days after release.<LineBreak/><LineBreak/>Feature Updates: Adds features and often bugs to systems when they are released. You want to delay these as long as possible.<LineBreak/><LineBreak/>Security Updates: Typically these are pressing security flaws that need to be patched quickly. You only want to delay these a couple of days just to see if they are safe and don't break other systems. You don't want to go without these for ANY extended periods of time.</TextBlock>
+                                <Button Name="Updatessecurity" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Apply Recommended" Cursor="Hand" Padding="10" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Balanced security and stability"
+                                    HorizontalAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="Helvetica"
+                                    Margin="0,4,0,0"
+                                    Padding="12"
+                                    TextWrapping="Wrap"
+                                    TextAlignment="Left"
+                                    MaxWidth="400"
+                                    Foreground="#FFDEE39B"/>
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="14"
+                                    FontFamily="Helvetica"
+                                    Padding="12"
+                                    TextWrapping="Wrap"
+                                    TextAlignment="Left"
+                                    MaxWidth="400"
+                                    Foreground="#FFDEE39B">
+                                    <Run Text="This is my recommended setting I use on all computers."/>
+                                    <LineBreak/><LineBreak/>
+
+                                    <Run Text="• " Foreground="#FF8FAE72"/>
+                                    <Run Text="Defers feature updates for 365 days."/>
+                                    <LineBreak/><LineBreak/>
+
+                                    <Run Text="• " Foreground="#FF8FAE72"/>
+                                    <Run Text="Defers quality updates for 4 days."/>
+                                    <LineBreak/><LineBreak/>
+
+                                    <Run Text="• " Foreground="#FF8FAE72"/>
+                                    <Run Text="Excludes drivers from quality updates."/>
+                                    <LineBreak/><LineBreak/>
+
+                                    <Run Text="• " Foreground="#FF8FAE72"/>
+                                    <Run Text="Prevents automatic restarts while a user is signed in."/>
+                                    <LineBreak/><LineBreak/>
+
+                                    <Run Text="Available on " FontWeight="Bold" Foreground="#FF8FAE72"/>
+                                    <Run Text="Windows Pro, Enterprise, and Education editions."
+                                        FontStyle="Italic"
+                                        Foreground="#FFDEE39B"/>
+                                </TextBlock>
                             </StackPanel>
                         </Border>
-                        <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="3">
+                        <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="3" Grid.Row="0" Grid.RowSpan="1">
                             <StackPanel SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="10">
-                                <Button Name="Updatesdisable" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Background="#FF9E5050" Content="Disable ALL Updates (NOT RECOMMENDED!)" Cursor="Hand" Padding="10" HorizontalAlignment="Center"/>
-                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFDEE39B">This completely disables ALL Windows Updates and is NOT RECOMMENDED.<LineBreak/><LineBreak/> However, it can be suitable if you use your system for a select purpose and do not actively browse the internet. <LineBreak/><LineBreak/>Note: Your system will be easier to hack and infect without security updates.</TextBlock>
+                                <Button Name="Updatesdisable" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Background="#FF9E5050" Content="Disable Updates" Cursor="Hand" Padding="10" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Advanced use only!"
+                                    HorizontalAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="Helvetica"
+                                    Margin="0,4,0,0"
+                                    Padding="12"
+                                    TextWrapping="Wrap"
+                                    TextAlignment="Left"
+                                    MaxWidth="400"
+                                    Foreground="#DC143C"/>
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="14"
+                                    FontFamily="Helvetica"
+                                    Padding="12"
+                                    TextWrapping="Wrap"
+                                    TextAlignment="Left"
+                                    MaxWidth="350"
+                                    Foreground="#FFDEE39B">
+
+                                    <Run Text="• " Foreground="#FF8FAE72"/>
+                                    <Run Text="Disables automatic update policy."/>
+                                    <LineBreak/><LineBreak/>
+
+                                    <Run Text="• " Foreground="#FF8FAE72"/>
+                                    <Run Text="Stops update services and scheduled tasks."/>
+                                    <LineBreak/><LineBreak/>
+
+                                    <Run Text="• " Foreground="#FF8FAE72"/>
+                                    <Run Text="Clears downloaded update files."/>
+                                    <LineBreak/><LineBreak/>
+
+                                    <Run Text="Security updates will not be installed while this profile is active."
+                                        Foreground="#DC143C"/>
+                                </TextBlock>
                                 <Separator Background="#FFF4AB51" Width="350"/>
                                 <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="320" Foreground="#FFDEE39B">Note: If you still encounter update errors, reset all updates with button below. That will restore ALL Microsoft Update Services from their servers and reinstall them to default settings.</TextBlock>
                                 <Button Name="FixesUpdate" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Fix Windows Update" Cursor="Hand" Margin="0,5,0,0" Padding="10" HorizontalAlignment = "Center"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3">
+                            <StackPanel SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="10">
+                                <TextBlock Text="Changes apply system-wide. Restart Windows after switching profiles. Use Restore Defaults to undo win11deb update policies."
+                                    HorizontalAlignment="Center"
+                                    FontSize="16"
+                                    FontFamily="Helvetica"
+                                    Margin="0,4,0,0"
+                                    Padding="12"
+                                    TextWrapping="Wrap"
+                                    TextAlignment="Left"
+                                    Foreground="#FFDEE39B"/>
                             </StackPanel>
                         </Border>
                     </Grid>
