@@ -344,6 +344,7 @@ $script:ButtonActions = @{
     'wpf_optimizationUndoButton' = { Invoke-OptimizationUndo }
     'wpf_optimizationClearButton' = { Invoke-OptimizationClear }
     'wpf_GetInstalledTweaks' = { Invoke-GetInstalledTweaks }
+    'wpf_ExportButton' = { Invoke-ExportConfig }
     'wpf_ApplyDNS' = { Invoke-ApplyDNS -Provider $wpf_ddlDNS.SelectedItem.Content }
     'wpf_recommended'      = { Invoke-recommended }
     'wpf_gaming'           = { Invoke-gaming }

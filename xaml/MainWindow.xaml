@@ -1120,6 +1120,7 @@
                             Margin="5,0,10,0" ToolTip="Reset Search" VerticalAlignment="Center" Padding="5,0,0,0"
                         Style="{StaticResource ResetButtonStyle}"
                         Tag="{StaticResource ResetIcon}"/>
+                <Button Name="ExportButton" Style="{DynamicResource ButtonStyle}" Content="Export" ForceCursor="true" Cursor="Hand" Height="34" Width="80" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,0,0" ToolTip="Export configuration to JSON"/>
             </StackPanel>
         </DockPanel>
         <Grid Background="Transparent" Panel.ZIndex="1" Grid.Row="2" ShowGridLines="False" Name="AboutGrid" Width="Auto" Height="360" HorizontalAlignment="Center" Visibility="Collapsed" SnapsToDevicePixels="True">

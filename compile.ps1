@@ -18,7 +18,8 @@ Write-output '
 # Script-level param block MUST come before any other executable code
 Write-output '
 param (
-    [switch]$SmokeTest
+    [switch]$SmokeTest,
+    [string]$Config
 )
 
 #requires -Version 7.0
