@@ -2253,6 +2253,16 @@
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
                                 <Separator Background="#FFF4AB51" Width="250" Margin="10,10" Height="2"/>
+                                <CheckBox Name="DblDisableBitLocker" Content="Disable BitLocker" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Disables BitLocker encryption on the system drive.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblDisableDeliveryOptimization" Content="Disable Delivery Optimization" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Stops Windows from using your bandwidth to upload updates to other PCs on the internet or local network.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
                                 <CheckBox Name="DblTelemetry" Content="Disable Telemetry" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" ToolTip="Disables Microsoft Telemetry. Note: This will lock many Edge Browser settings. Microsoft spys heavily on you when using the Edge browser.">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -2279,6 +2289,11 @@
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
                                 <CheckBox Name="DblDebloatEdge" Content="Debloat Microsoft Edge" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblStoreSearch" Content="Disable Microsoft Store Recommended" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
@@ -2413,6 +2428,21 @@
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
                                 <CheckBox Name="DblIntelMM" Content="Disable Intel MM (vPro LMS)" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center" ToolTip="Disables Intel Management Engine (ME) vPro LMS service, removes driver packages, and deletes LMS executable files.">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblRazer" Content="Disable Razer Software Auto-Install" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblWarningForUnsignedRdp" Content="Disable RDP Unsigned File Warnings" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                                <CheckBox Name="DblWindowsAI" Content="Disable &amp; Remove WindowsAI" Foreground="#a69f6c" HorizontalAlignment="Left" Width="auto" ForceCursor="true" Cursor="Hand" Margin="8,5" FontSize="11" FontFamily="Gadugi" VerticalAlignment="Center">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                                     </CheckBox.LayoutTransform>
@@ -2627,6 +2657,12 @@
                                         <ToggleButton Name="ToggleDetailedBSoD" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
+                                    <Label Content="Scrollbars Always Visible" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="ToggleScrollbars" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
                                 </StackPanel>
                                 <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Top">
                                     <Label Content="Show File Extensions" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
@@ -2677,6 +2713,18 @@
                                         <ToggleButton Name="ToggleTaskbarWidgets" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
+                                    <Label Content="Logon Screen Acrylic Blur" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="ToggleLoginBlur" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="System Tray Battery Percentage" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="ToggleBatteryPercentage" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
                                 </StackPanel>
                                 <StackPanel Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" VerticalAlignment="Top">
                                     <Label Content="Recommendations in Start Menu" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
@@ -2707,6 +2755,12 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                                         <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                         <ToggleButton Name="ToggleTaskView" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
+                                        <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                    </StackPanel>
+                                    <Label Content="S0 Sleep Network Connectivity" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                                        <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
+                                        <ToggleButton Name="ToggleS0Sleep" Style="{StaticResource ToggleSwitchStyle}" Cursor="Hand" Margin="2.5,0"/>
                                         <Label Content="On" Foreground="#a69f6c" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
                                     </StackPanel>
                                     <Label Content="S3 Sleep" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#FFF4AB51" Margin="0,0,0,5"/>

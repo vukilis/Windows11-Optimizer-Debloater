@@ -8,6 +8,32 @@
             "Set-RestorePoint"
         ]
     },
+    "DblDisableBitLocker": {
+        "Type": "CheckBox",
+        "Content": "Disable BitLocker",
+        "Description": "Disables BitLocker encryption on the system drive.",
+        "DisableMessage": "Disabling BitLocker...",
+        "InvokeScript": [
+            "Disable-BitLocker -MountPoint $Env:SystemDrive"
+        ],
+        "UndoScript": [
+            "Enable-BitLocker -MountPoint $Env:SystemDrive"
+        ]
+    },
+    "DblDisableDeliveryOptimization": {
+        "Type": "CheckBox",
+        "Content": "Disable Delivery Optimization",
+        "Description": "Stops Windows from using your bandwidth to upload updates to other PCs on the internet or local network.",
+        "DisableMessage": "Disabling Delivery Optimization...",
+        "registry": 
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\\Config",
+                "OriginalValue": "<RemoveEntry>",
+                "Name": "DODownloadMode",
+                "Value": "0",
+                "Type": "DWord"
+            }
+    },
     "DblTelemetry": {
         "Type": "CheckBox",
         "Content": "Disable Telemetry",
@@ -190,13 +216,6 @@
                 "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting",
                 "OriginalValue": "0",
                 "Name": "Disabled",
-                "Value": "1",
-                "Type": "DWord"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\\Config",
-                "OriginalValue": "1",
-                "Name": "DODownloadMode",
                 "Value": "1",
                 "Type": "DWord"
             },
@@ -598,6 +617,111 @@
             "
         ]
     },
+    "DblRazer": {
+        "Type": "CheckBox",
+        "Content": "Disable Razer Software Auto-Install",
+        "Description": "Blocks ALL Razer Software installations. The hardware works fine without any software.",
+        "EnableMessage": "Disabling Razer Software Auto-Install...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DriverSearching",
+                "Name": "SearchOrderConfig",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "1"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Device Installer",
+                "Name": "DisableCoInstallers",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "0"
+            }
+        ],
+        "InvokeScript": [
+            "
+            $RazerPath = \"$Env:SystemRoot\\Installer\\Razer\"
+
+            if (Test-Path $RazerPath) {
+                Remove-Item $RazerPath\\* -Recurse -Force
+            } else {
+                New-Item -Path $RazerPath -ItemType Directory
+            }
+
+            icacls $RazerPath /deny \"Everyone:(W)\"
+            "
+        ],
+        "UndoScript": [
+            "
+            icacls \"$Env:SystemRoot\\Installer\\Razer\" /remove:d Everyone
+            "
+        ]
+    },
+    "DblWarningForUnsignedRdp": {
+        "Type": "CheckBox",
+        "Content": "Disable RDP Unsigned File Warnings",
+        "Description": "Disables warnings shown when launching unsigned RDP files introduced with the latest Windows 10 and 11 updates.",
+        "EnableMessage": "Disabling RDP Unsigned File Warnings...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Terminal Services\\Client",
+                "Name": "RedirectionWarningDialogVersion",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Terminal Server Client",
+                "Name": "RdpLaunchConsentAccepted",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            }
+        ]
+    },
+    "DblWindowsAI": {
+        "Type": "CheckBox",
+        "Content": "Disable & Remove WindowsAI",
+        "Description": "Removes and disables all AI features/packages.",
+        "EnableMessage": "Remove WindowsAI...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                "Name": "SettingsPageVisibility",
+                "Value": "hide:aicomponents",
+                "Type": "String",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\WindowsNotepad",
+                "Name": "DisableAIFeatures",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            }
+        ],
+        "InvokeScript": [
+            "
+            $Appx = (Get-AppxPackage MicrosoftWindows.Client.CoreAI).PackageFullName
+            $Sid = (Get-LocalUser $Env:UserName).Sid.Value
+
+            New-Item \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Appx\\AppxAllUserStore\\EndOfLife\\$Sid\\$Appx\" -Force
+
+            Get-AppxPackage -AllUsers \"*Copilot*\" | Remove-AppxPackage -AllUsers
+            winget uninstall -e --name \"Copilot\" --silent --force --accept-source-agreements 2>$null
+            Get-AppxPackage -AllUsers Microsoft.MicrosoftOfficeHub | Remove-AppxPackage -AllUsers
+
+            if ($Appx) {
+                Remove-AppxPackage $Appx
+            }
+
+            Set-Service -Name WSAIFabricSvc -StartupType Disabled
+            Disable-WindowsOptionalFeature -FeatureName Recall -Online -NoRestart
+
+            Write-Host \"Windows AI Disabled\"
+            "
+        ]
+    },
     "DblLaptopHibernation": {
         "Type": "CheckBox",
         "Content": "Set Hibernation as default (laptops)",
@@ -618,7 +742,7 @@
                 "Value": "2",
                 "Type": "DWord"
             }
-            ],
+        ],
         "InvokeScript": [
             "
             Write-Host \"Turn on Hibernation\"
@@ -643,6 +767,18 @@
             Start-Process -FilePath powercfg -ArgumentList \"/change monitor-timeout-dc 15\" -NoNewWindow -Wait
             "
         ]
+    },
+    "DblStoreSearch": {
+        "Type": "CheckBox",
+        "Content": "Disable Microsoft Store Recommended",
+        "Description": "Will not display recommended Microsoft Store apps when searching for apps in the Start menu.",
+        "DisableMessage": "Disabling Microsoft Store Recommended Search...",
+        "InvokeScript": [
+            "icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /deny Everyone:F"
+        ],
+        "UndoScript": [
+            "icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /grant Everyone:F"
+        ],
     },
     "DblDebloatEdge": {
         "Type": "CheckBox",
@@ -1504,9 +1640,9 @@
             },
             {
                 "Path": "HKCU:\\Control Panel\\Desktop",
-                "OriginalValue": "1",
+                "OriginalValue": "400",
                 "Name": "MenuShowDelay",
-                "Value": "1",
+                "Value": "200",
                 "Type": "String"
             },
             {
@@ -1520,7 +1656,7 @@
                 "Path": "HKCU:\\Control Panel\\Keyboard",
                 "OriginalValue": "1",
                 "Name": "KeyboardDelay",
-                "Value": "1",
+                "Value": "0",
                 "Type": "DWord"
             },
             {
@@ -1626,7 +1762,7 @@
     },
     "DblDisableNotifications": {
         "Type": "CheckBox",
-        "Content": "Disable Notifications",
+        "Content": "Disable Notifications & Calendar",
         "Description": "Disables all Notifications INCLUDING Calendar",
         "DisableMessage": "Disabling Notifications Tray/Calendar...",
         "registry": [
@@ -2678,6 +2814,14 @@
                 "Type": "DWord",
                 "DefaultState": "true"
             }
+        ],
+        "InvokeScript": [
+            "Write-Host \"Restarting Explorer to apply taskbar alignment...\" -ForegroundColor Green",
+            "Invoke-ExplorerUpdate"
+        ],
+        "UndoScript": [
+            "Write-Host \"Restarting Explorer to apply taskbar alignment...\" -ForegroundColor Green",
+            "Invoke-ExplorerUpdate"
         ]
     },
     "ToggleHideSettingsHome": {
@@ -2772,6 +2916,23 @@
             }
         ]
     },
+    "ToggleS0Sleep": {
+        "Type": "Toggle",
+        "Content": "S0 Sleep Network Connectivity",
+        "Description": "Toggles network connectivity during S0 Sleep which is low power idle in modern laptops.",
+        "EnableMessage": "Enable S0 Sleep Network Connectivity...",
+        "DisableMessage": "Disable S0 Sleep Network Connectivity...",
+        "registry": [
+            {
+                "Path": "HKCU:\\SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\f15576e8-98b7-4186-b944-eafa664402d9",
+                "Name": "ACSettingIndex",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "0",
+                "DefaultState": "true"
+            }
+        ]
+    },
     "ToggleS3Sleep": {
         "Type": "Toggle",
         "Content": "S3 Sleep",
@@ -2819,6 +2980,57 @@
                 "Value": "0",
                 "OriginalValue": "<RemoveEntry>",
                 "Type": "DWord",
+                "DefaultState": "false"
+            }
+        ]
+    },
+    "ToggleLoginBlur": {
+        "Type": "Toggle",
+        "Content": "Logon Screen Acrylic Blur",
+        "Description": "Toggles the acrylic blur effect on login screen background.",
+        "EnableMessage": "Enable Logon Screen Acrylic Blur...",
+        "DisableMessage": "Disable Logon Screen Acrylic Blur...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+                "Name": "DisableAcrylicBackgroundOnLogon",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "1",
+                "DefaultState": "true"
+            }
+        ]
+    },
+    "ToggleScrollbars": {
+        "Type": "Toggle",
+        "Content": "Scrollbars Always Visible",
+        "Description": "If enabled, scrollbars will always be visible. If disabled, Windows will automatically hide scrollbars when not in use.",
+        "EnableMessage": "Enable Scrollbars Always Visible...",
+        "DisableMessage": "Disable Scrollbars Always Visible...",
+        "registry": [
+            {
+                "Path": "HKCU:\\Control Panel\\Accessibility",
+                "Name": "DynamicScrollbars",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "1",
+                "DefaultState": "false"
+            }
+        ]
+    },
+    "ToggleBatteryPercentage": {
+        "Type": "Toggle",
+        "Content": "System Tray Battery Percentage",
+        "Description": "Shows numeric battery percentage next to the battery icon in the system tray.",
+        "EnableMessage": "Enable System Tray Battery Percentage...",
+        "DisableMessage": "Disable System Tray Battery Percentage...",
+        "registry": [
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                "Name": "IsBatteryPercentageEnabled",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>",
                 "DefaultState": "false"
             }
         ]

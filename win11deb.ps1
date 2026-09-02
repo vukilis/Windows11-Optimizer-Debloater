@@ -20,7 +20,7 @@ Set-StrictMode -Version Latest
 ###                                                                                                          ###
 ################################################################################################################
 
-$programs = @('{"name":"Docker Desktop","winget":"Docker.DockerDesktop","id":"DblInstallDockerdesktop"}','{"name":"Git","winget":"Git.Git","id":"DblInstallGit"}','{"name":"Git Extensions","winget":"GitExtensionsTeam.GitExtensions","id":"DblInstallGitextensions"}','{"name":"GitHub Desktop","winget":"GitHub.GitHubDesktop","id":"DblInstallGithubdesktop"}','{"name":"Godot Engine","winget":"GodotEngine.GodotEngine","id":"DblInstallGodotEngine"}','{"name":"Go Programming Language","winget":"GoLang.Go","id":"DblInstallGolang"}','{"name":"HeidiSQL","winget":"HeidiSQL.HeidiSQL","id":"DblInstallHeidisql"}','{"name":"MySQL","winget":"Oracle.MySQL","id":"DblInstallMySQL"}','{"name":"Node.js","winget":"OpenJS.NodeJS","id":"DblInstallNodejs"}','{"name":"Node.js LTS","winget":"OpenJS.NodeJS.LTS","id":"DblInstallNodejslts"}','{"name":"Node Version Manager (NVM)","winget":"CoreyButler.NVMforWindows","id":"DblInstallNodemanager"}','{"name":"Java 8","winget":"EclipseAdoptium.Temurin.8.JRE","id":"DblInstallJava8"}','{"name":"Java 11","winget":"EclipseAdoptium.Temurin.11.JRE","id":"DblInstallJava11"}','{"name":"Java 17","winget":"EclipseAdoptium.Temurin.17.JRE","id":"DblInstallJava17"}','{"name":"Java 21","winget":"EclipseAdoptium.Temurin.21.JDK","id":"DblInstallJava21"}','{"name":"Oh My Posh","winget":"JanDeDobbeleer.OhMyPosh","id":"DblInstallOhmyposh"}','{"name":"Python 3","winget":"Python.Python.3.12","id":"DblInstallPython3"}','{"name":"Podman","winget":"RedHat.Podman","id":"DblInstallPodman"}','{"name":"Postman","winget":"Postman.Postman","id":"DblInstallPostman"}','{"name":"Ruby 3.2","winget":"RubyInstallerTeam.Ruby.3.2","id":"DblInstallRuby"}','{"name":"Rust","winget":"Rustlang.Rust.MSVC","id":"DblInstallRust"}','{"name":"SQLite","winget":"DBBrowserForSQLite.DBBrowserForSQLite","id":"DblInstallSQLite"}','{"name":"SQL Server 2022 Developer","winget":"Microsoft.SQLServer.2022.Developer","id":"DblInstallSQLServer2022"}','{"name":"Unity 2022","winget":"Unity.Unity.2022","id":"DblInstallUnity"}','{"name":"Vagrant","winget":"Hashicorp.Vagrant","id":"DblInstallVagrant"}','{"name":"Visual Studio 2022","winget":"Microsoft.VisualStudio.2022.Community","id":"DblInstallVisualstudio2022"}','{"name":"Visual Studio Code","winget":"Microsoft.VisualStudioCode","id":"DblInstallCode"}','{"name":".NET Core 3","winget":"Microsoft.DotNet.DesktopRuntime.3_1","id":"DblInstallDotnet3"}','{"name":".NET 5","winget":"Microsoft.DotNet.DesktopRuntime.5","id":"DblInstallDotnet5"}','{"name":".NET 6","winget":"Microsoft.DotNet.DesktopRuntime.6","id":"DblInstallDotnet6"}','{"name":".NET 7","winget":"Microsoft.DotNet.DesktopRuntime.7","id":"DblInstallDotnet7"}','{"name":".NET 8","winget":"Microsoft.DotNet.DesktopRuntime.8","id":"DblInstallDotnet8"}','{"name":"Autoruns","winget":"Microsoft.Sysinternals.Autoruns","id":"DblInstallAutoruns"}','{"name":"HxD Hex Editor","winget":"MHNexus.HxD","id":"DblInstallHxD"}','{"name":"PowerShell","winget":"Microsoft.PowerShell","id":"DblInstallPowershell"}','{"name":"PowerToys","winget":"Microsoft.PowerToys","id":"DblInstallPowertoys"}','{"name":"Process Explorer","winget":"Microsoft.Sysinternals.ProcessExplorer","id":"DblInstallProcessExplorer"}','{"name":"Visual 2015 Redistributable (64-bit)","winget":"Microsoft.VCRedist.2015+.x64","id":"DblInstallvc2015_64"}','{"name":"Visual 2015 Redistributable (32-bit)","winget":"Microsoft.VCRedist.2015+.x86","id":"DblInstallvc2015_32"}','{"name":"Windows Terminal","winget":"Microsoft.WindowsTerminal","id":"DblInstallTerminal"}','{"name":"Brave","winget":"Brave.Brave","id":"DblInstallBrave"}','{"name":"Google Chrome","winget":"Google.Chrome","id":"DblInstallChrome"}','{"name":"Chromium","winget":"eloston.ungoogled-chromium","id":"DblInstallChromium"}','{"name":"Mozilla Firefox","winget":"Mozilla.Firefox","id":"DblInstallFirefox"}','{"name":"Mullvad","winget":"MullvadVPN.MullvadBrowser","id":"DblInstallMullvad"}','{"name":"Thorium","winget":"Alex313031.Thorium","id":"DblInstallThorium"}','{"name":"Thorium AVX2","winget":"Alex313031.Thorium.AVX2","id":"DblInstallThoriumAVX"}','{"name":"Tor Browser","winget":"TorProject.TorBrowser","id":"DblInstallTor"}','{"name":"Librewolf","winget":"Librewolf.Librewolf","id":"DblInstallLibrewolf"}','{"name":"Floorp","winget":"Ablaze.Floorp","id":"DblInstallFloorp"}','{"name":"Ungoogled","winget":"eloston.ungoogled-chromium","id":"DblInstallUngoogled"}','{"name":"Vivaldi","winget":"VivaldiTechnologies.Vivaldi","id":"DblInstallVivaldi"}','{"name":"Waterfox","winget":"Waterfox.Waterfox","id":"DblInstallWaterfox"}','{"name":"Discord","winget":"Discord.Discord","id":"DblInstallDiscord"}','{"name":"Element (Matrix)","winget":"Element.Element","id":"DblInstallMatrix"}','{"name":"Skype","winget":"Microsoft.Skype","id":"DblInstallSkype"}','{"name":"Slack","winget":"SlackTechnologies.Slack","id":"DblInstallSlack"}','{"name":"Microsoft Teams","winget":"Microsoft.Teams","id":"DblInstallTeams"}','{"name":"Telegram","winget":"Telegram.TelegramDesktop","id":"DblInstallTelegram"}','{"name":"Viber","winget":"Viber.Viber","id":"DblInstallViber"}','{"name":"Zoom","winget":"Zoom.Zoom","id":"DblInstallZoom"}','{"name":"Bluestacks","winget":"BlueStack.BlueStacks","id":"DblInstallBluestacks"}','{"name":"Cemu","winget":"Cemu.Cemu","id":"DblInstallCemu"}','{"name":"EA Desktop App","winget":"ElectronicArts.EADesktop","id":"DblInstallEaapp"}','{"name":"Emulation Station","winget":"Emulationstation.Emulationstation","id":"DblInstallEmulationstation"}','{"name":"Epic Games Store","winget":"EpicGames.EpicGamesLauncher","id":"DblInstallEpicgames"}','{"name":"NVIDIA GeForce NOW","winget":"Nvidia.GeforceNOW","id":"DblInstallGeforcenow"}','{"name":"GOG Galaxy","winget":"GOG.Galaxy","id":"DblInstallGog"}','{"name":"Playnite","winget":"Playnite.Playnite","id":"DblInstallPlaynite"}','{"name":"Prism Launcher","winget":"PrismLauncher.PrismLauncher","id":"DblInstallPrism"}','{"name":"SideQuestVR","winget":"SideQuestVR.SideQuest","id":"DblInstallSideQuest"}','{"name":"Steam","winget":"Valve.Steam","id":"DblInstallSteam"}','{"name":"Sunshine Stream Server","winget":"LizardByte.Sunshine","id":"DblInstallSunshine"}','{"name":"Heroic Games Launcher","winget":"HeroicGamesLauncher.HeroicGamesLauncher","id":"DblInstallHeroic"}','{"name":"itch.io","winget":"ItchIo.Itch","id":"DblInstallItch"}','{"name":"Medal","winget":"MedalB.V.Medal","id":"DblInstallMedal"}','{"name":"Moonlight Stream Client","winget":"MoonlightGameStreamingProject.Moonlight","id":"DblInstallMoonlight"}','{"name":"Legendary Epic (Python)","winget":null,"id":"DblPythonEpicCLI"}','{"name":"Ubisoft Connect","winget":"Ubisoft.Connect","id":"DblInstallUbisoft"}','{"name":"Wargaming Game Center","winget":"Wargaming.GameCenter","id":"DblInstallWargaming"}','{"name":"XEMU","winget":"xemu-project.xemu","id":"DblInstallXemu"}','{"name":"Audacity","winget":"Audacity.Audacity","id":"DblInstallAudacity"}','{"name":"AV1 Video Extension","winget":"9MVZQVXJBQ9V","id":"DblInstallAV1"}','{"name":"Blender","winget":"BlenderFoundation.Blender","id":"DblInstallBlender"}','{"name":"Figma","winget":"Figma.Figma","id":"DblInstallFigma"}','{"name":"FFmpeg","winget":"Gyan.FFmpeg","id":"DblInstallFFmpeg"}','{"name":"Cider","winget":"CiderCollective.Cider","id":"DblInstallCider"}','{"name":"Greenshot","winget":"Greenshot.Greenshot","id":"DblInstallGreenshot"}','{"name":"Handbrake","winget":"HandBrake.HandBrake","id":"DblInstallHandbrake"}','{"name":"ImageGlass","winget":"DuongDieuPhap.ImageGlass","id":"DblInstallImageglass"}','{"name":"Kodi","winget":"XBMCFoundation.Kodi","id":"DblInstallKodi"}','{"name":"K-Lite Codec Pack","winget":"CodecGuide.K-LiteCodecPack.Standard","id":"DblInstallKlite"}','{"name":"MediaInfo","winget":"MediaArea.MediaInfo.GUI","id":"DblInstallMediaInfo"}','{"name":"MKVToolNix","winget":"MoritzBunkus.MKVToolNix","id":"DblInstallMKVToolNix"}','{"name":"Plex Client","winget":"Plex.Plex","id":"DblInstallPlex"}','{"name":"Plex Server","winget":"Plex.PlexMediaServer","id":"DblInstallPlexServer"}','{"name":"OBS Studio","winget":"OBSProject.OBSStudio","id":"DblInstallObs"}','{"name":"Spotify","winget":"9NCBCSZSJRSB","id":"DblInstallSpotify"}','{"name":"ShareX","winget":"ShareX.ShareX","id":"DblInstallSharex"}','{"name":"VLC Media Player","winget":"VideoLAN.VLC","id":"DblInstallVlc"}','{"name":"VP9 Video Extensions","winget":"9N4D0MSMP0PT","id":"DblInstallVP9"}','{"name":"yt-dlp","winget":"yt-dlp.yt-dlp","id":"DblInstallYtdlp"}','{"name":"Anki","winget":"Anki.Anki","id":"DblInstallAnki"}','{"name":"Adobe","winget":"Adobe.Acrobat.Reader.64-bit","id":"DblInstallAdobe"}','{"name":"Joplin","winget":"Joplin.Joplin","id":"DblInstallJoplin"}','{"name":"LibreOffice","winget":"TheDocumentFoundation.LibreOffice","id":"DblInstallLibreoffice"}','{"name":"Neovim","winget":"Neovim.Neovim","id":"DblInstallNeovim"}','{"name":"Neovim Nightly","winget":"Neovim.Neovim.Nightly","id":"DblInstallNeovimNightly"}','{"name":"Notion","winget":"Notion.Notion","id":"DblInstallNotion"}','{"name":"Notepad","winget":"Notepad++.Notepad++","id":"DblInstallNotepadplus"}','{"name":"Notepads","winget":"JackieLiu.NotepadsApp","id":"DblInstallNotepadsApp"}','{"name":"Obsidian","winget":"Obsidian.Obsidian","id":"DblInstallObsidian"}','{"name":"OnlyOffice","winget":"ONLYOFFICE.DesktopEditors","id":"DblInstallOnlyoffice"}','{"name":"Sublime Text 4","winget":"SublimeHQ.SublimeText.3","id":"DblInstallSublime4"}','{"name":"Sumatra","winget":"SumatraPDF.SumatraPDF","id":"DblInstallSumatra"}','{"name":"WPS Office","winget":"Kingsoft.WPSOffice","id":"DblInstallWPS"}','{"name":"WinMerge","winget":"WinMerge.WinMerge","id":"DblInstallWinmerge"}','{"name":"1Password","winget":"AgileBits.1Password","id":"DblInstall1Password"}','{"name":"7-zip","winget":"7zip.7zip","id":"DblInstall7zip"}','{"name":"Android Debug Bridge","winget":"Google.PlatformTools","id":"DblInstallADB"}','{"name":"Alacritty","winget":"Alacritty.Alacritty","id":"DblInstallAlacritty"}','{"name":"Anydo","winget":"Anydo.Anydo","id":"DblInstallAnydo"}','{"name":"AutoHotkey","winget":"autohotkey","id":"DblInstallAutohotkey"}','{"name":"Bitwarden","winget":"Bitwarden.Bitwarden","id":"DblInstallBitwarden"}','{"name":"Chatterino","winget":"ChatterinoTeam.Chatterino","id":"DblInstallChatterino"}','{"name":"ClassicVolumeMixer","winget":"PopeenCom.ClassicVolumeMixer","id":"DblInstallClasicMixer"}','{"name":"CPU-Z","winget":"CPUID.CPU-Z","id":"DblInstallCpuz"}','{"name":"Cryptomator","winget":"Cryptomator.Cryptomator","id":"DblInstallCryptomator"}','{"name":"Display Driver Uninstaller","winget":"Wagnardsoft.DisplayDriverUninstaller","id":"DblInstallDdu"}','{"name":"Draw.io","winget":"JGraph.Draw","id":"DblInstallDrawio"}','{"name":"Everything","winget":"oidtools.Everything","id":"DblInstallEsearch"}','{"name":"Google Drive","winget":"Google.GoogleDrive ","id":"DblInstallGoogleDrive"}','{"name":"GPU-Z","winget":"TechPowerUp.GPU-Z","id":"DblInstallGpuz"}','{"name":"gsudo","winget":"gerardog.gsudo","id":"DblInstallGsudo"}','{"name":"HyperX NGENUITY","winget":"9P1TBXR6QDCX","id":"DblInstallNGENUITY"}','{"name":"HWiNFO","winget":"REALiX.HWiNFO","id":"DblInstallHwinfo"}','{"name":"JDownloader","winget":"AppWork.JDownloader","id":"DblInstallJdownloader"}','{"name":"KDE Connect","winget":"KDE.KDEConnect","id":"DblInstallKDEConnect"}','{"name":"KeePassXC","winget":"KeePassXCTeam.KeePassXC","id":"DblInstallKeepass"}','{"name":"Afterburner","winget":"Guru3D.Afterburner","id":"DblInstallMsiafterburner"}','{"name":"Thunderbird","winget":"Mozilla.Thunderbird","id":"DblInstallThunderbird"}','{"name":"NanaZip","winget":"M2Team.NanaZip","id":"DblInstallNanazip"}','{"name":"NTop","winget":"gsass1.NTop","id":"DblInstallNTop"}','{"name":"NVCleanstall","winget":"TechPowerUp.NVCleanstall","id":"DblInstallNvclean"}','{"name":"VirtualBox","winget":"Oracle.VirtualBox","id":"DblInstallOVirtualBox"}','{"name":"Speedtest by Ookla","winget":"Ookla.Speedtest.Desktop","id":"DblInstallSpeedtest"}','{"name":"OpenRGB","winget":"CalcProgrammer1.OpenRGB","id":"DblInstallOpenrgb"}','{"name":"Parsec","winget":"Parsec.Parsec","id":"DblInstallParsec"}','{"name":"Postbox","winget":"Postbox.Postbox","id":"DblInstallPostbox"}','{"name":"Process Lasso","winget":"BitSum.ProcessLasso","id":"DblInstallProcesslasso"}','{"name":"Proxyman","winget":"ProxymanLLC.Proxyman","id":"DblInstallProxyman"}','{"name":"qBittorrent","winget":"qBittorrent.qBittorrent","id":"DblInstallQbittorrent"}','{"name":"Rclone","winget":"Rclone.Rclone","id":"DblInstallRclone"}','{"name":"Revo","winget":"RevoUninstaller.RevoUninstaller","id":"DblInstallRevo"}','{"name":"Rufus","winget":"Rufus.Rufus","id":"DblInstallRufus"}','{"name":"Ttaskbar","winget":"9PF4KZ2VN4W9","id":"DblInstallTtaskbar"}','{"name":"WingetUI","winget":"SomePythonThings.WingetUIStore","id":"DblInstallWingetUI"}','{"name":"WinRAR","winget":"RARLab.WinRAR","id":"DblInstallWinrar"}')
+$programs = @('{"winget":"Docker.DockerDesktop","id":"DblInstallDockerdesktop","name":"Docker Desktop"}','{"winget":"Git.Git","id":"DblInstallGit","name":"Git"}','{"winget":"GitExtensionsTeam.GitExtensions","id":"DblInstallGitextensions","name":"Git Extensions"}','{"winget":"GitHub.GitHubDesktop","id":"DblInstallGithubdesktop","name":"GitHub Desktop"}','{"winget":"GodotEngine.GodotEngine","id":"DblInstallGodotEngine","name":"Godot Engine"}','{"winget":"GoLang.Go","id":"DblInstallGolang","name":"Go Programming Language"}','{"winget":"HeidiSQL.HeidiSQL","id":"DblInstallHeidisql","name":"HeidiSQL"}','{"winget":"Oracle.MySQL","id":"DblInstallMySQL","name":"MySQL"}','{"winget":"OpenJS.NodeJS","id":"DblInstallNodejs","name":"Node.js"}','{"winget":"OpenJS.NodeJS.LTS","id":"DblInstallNodejslts","name":"Node.js LTS"}','{"winget":"CoreyButler.NVMforWindows","id":"DblInstallNodemanager","name":"Node Version Manager (NVM)"}','{"winget":"EclipseAdoptium.Temurin.8.JRE","id":"DblInstallJava8","name":"Java 8"}','{"winget":"EclipseAdoptium.Temurin.11.JRE","id":"DblInstallJava11","name":"Java 11"}','{"winget":"EclipseAdoptium.Temurin.17.JRE","id":"DblInstallJava17","name":"Java 17"}','{"winget":"EclipseAdoptium.Temurin.21.JDK","id":"DblInstallJava21","name":"Java 21"}','{"winget":"JanDeDobbeleer.OhMyPosh","id":"DblInstallOhmyposh","name":"Oh My Posh"}','{"winget":"Python.Python.3.12","id":"DblInstallPython3","name":"Python 3"}','{"winget":"RedHat.Podman","id":"DblInstallPodman","name":"Podman"}','{"winget":"Postman.Postman","id":"DblInstallPostman","name":"Postman"}','{"winget":"RubyInstallerTeam.Ruby.3.2","id":"DblInstallRuby","name":"Ruby 3.2"}','{"winget":"Rustlang.Rust.MSVC","id":"DblInstallRust","name":"Rust"}','{"winget":"DBBrowserForSQLite.DBBrowserForSQLite","id":"DblInstallSQLite","name":"SQLite"}','{"winget":"Microsoft.SQLServer.2022.Developer","id":"DblInstallSQLServer2022","name":"SQL Server 2022 Developer"}','{"winget":"Unity.Unity.2022","id":"DblInstallUnity","name":"Unity 2022"}','{"winget":"Hashicorp.Vagrant","id":"DblInstallVagrant","name":"Vagrant"}','{"winget":"Microsoft.VisualStudio.2022.Community","id":"DblInstallVisualstudio2022","name":"Visual Studio 2022"}','{"winget":"Microsoft.VisualStudioCode","id":"DblInstallCode","name":"Visual Studio Code"}','{"winget":"Microsoft.DotNet.DesktopRuntime.3_1","id":"DblInstallDotnet3","name":".NET Core 3"}','{"winget":"Microsoft.DotNet.DesktopRuntime.5","id":"DblInstallDotnet5","name":".NET 5"}','{"winget":"Microsoft.DotNet.DesktopRuntime.6","id":"DblInstallDotnet6","name":".NET 6"}','{"winget":"Microsoft.DotNet.DesktopRuntime.7","id":"DblInstallDotnet7","name":".NET 7"}','{"winget":"Microsoft.DotNet.DesktopRuntime.8","id":"DblInstallDotnet8","name":".NET 8"}','{"winget":"Microsoft.Sysinternals.Autoruns","id":"DblInstallAutoruns","name":"Autoruns"}','{"winget":"MHNexus.HxD","id":"DblInstallHxD","name":"HxD Hex Editor"}','{"winget":"Microsoft.PowerShell","id":"DblInstallPowershell","name":"PowerShell"}','{"winget":"Microsoft.PowerToys","id":"DblInstallPowertoys","name":"PowerToys"}','{"winget":"Microsoft.Sysinternals.ProcessExplorer","id":"DblInstallProcessExplorer","name":"Process Explorer"}','{"winget":"Microsoft.VCRedist.2015+.x64","id":"DblInstallvc2015_64","name":"Visual 2015 Redistributable (64-bit)"}','{"winget":"Microsoft.VCRedist.2015+.x86","id":"DblInstallvc2015_32","name":"Visual 2015 Redistributable (32-bit)"}','{"winget":"Microsoft.WindowsTerminal","id":"DblInstallTerminal","name":"Windows Terminal"}','{"winget":"Brave.Brave","id":"DblInstallBrave","name":"Brave"}','{"winget":"Google.Chrome","id":"DblInstallChrome","name":"Google Chrome"}','{"winget":"eloston.ungoogled-chromium","id":"DblInstallChromium","name":"Chromium"}','{"winget":"Mozilla.Firefox","id":"DblInstallFirefox","name":"Mozilla Firefox"}','{"winget":"MullvadVPN.MullvadBrowser","id":"DblInstallMullvad","name":"Mullvad"}','{"winget":"Alex313031.Thorium","id":"DblInstallThorium","name":"Thorium"}','{"winget":"Alex313031.Thorium.AVX2","id":"DblInstallThoriumAVX","name":"Thorium AVX2"}','{"winget":"TorProject.TorBrowser","id":"DblInstallTor","name":"Tor Browser"}','{"winget":"Librewolf.Librewolf","id":"DblInstallLibrewolf","name":"Librewolf"}','{"winget":"Ablaze.Floorp","id":"DblInstallFloorp","name":"Floorp"}','{"winget":"eloston.ungoogled-chromium","id":"DblInstallUngoogled","name":"Ungoogled"}','{"winget":"VivaldiTechnologies.Vivaldi","id":"DblInstallVivaldi","name":"Vivaldi"}','{"winget":"Waterfox.Waterfox","id":"DblInstallWaterfox","name":"Waterfox"}','{"winget":"Discord.Discord","id":"DblInstallDiscord","name":"Discord"}','{"winget":"Element.Element","id":"DblInstallMatrix","name":"Element (Matrix)"}','{"winget":"Microsoft.Skype","id":"DblInstallSkype","name":"Skype"}','{"winget":"SlackTechnologies.Slack","id":"DblInstallSlack","name":"Slack"}','{"winget":"Microsoft.Teams","id":"DblInstallTeams","name":"Microsoft Teams"}','{"winget":"Telegram.TelegramDesktop","id":"DblInstallTelegram","name":"Telegram"}','{"winget":"Viber.Viber","id":"DblInstallViber","name":"Viber"}','{"winget":"Zoom.Zoom","id":"DblInstallZoom","name":"Zoom"}','{"winget":"BlueStack.BlueStacks","id":"DblInstallBluestacks","name":"Bluestacks"}','{"winget":"Cemu.Cemu","id":"DblInstallCemu","name":"Cemu"}','{"winget":"ElectronicArts.EADesktop","id":"DblInstallEaapp","name":"EA Desktop App"}','{"winget":"Emulationstation.Emulationstation","id":"DblInstallEmulationstation","name":"Emulation Station"}','{"winget":"EpicGames.EpicGamesLauncher","id":"DblInstallEpicgames","name":"Epic Games Store"}','{"winget":"Nvidia.GeforceNOW","id":"DblInstallGeforcenow","name":"NVIDIA GeForce NOW"}','{"winget":"GOG.Galaxy","id":"DblInstallGog","name":"GOG Galaxy"}','{"winget":"Playnite.Playnite","id":"DblInstallPlaynite","name":"Playnite"}','{"winget":"PrismLauncher.PrismLauncher","id":"DblInstallPrism","name":"Prism Launcher"}','{"winget":"SideQuestVR.SideQuest","id":"DblInstallSideQuest","name":"SideQuestVR"}','{"winget":"Valve.Steam","id":"DblInstallSteam","name":"Steam"}','{"winget":"LizardByte.Sunshine","id":"DblInstallSunshine","name":"Sunshine Stream Server"}','{"winget":"HeroicGamesLauncher.HeroicGamesLauncher","id":"DblInstallHeroic","name":"Heroic Games Launcher"}','{"winget":"ItchIo.Itch","id":"DblInstallItch","name":"itch.io"}','{"winget":"MedalB.V.Medal","id":"DblInstallMedal","name":"Medal"}','{"winget":"MoonlightGameStreamingProject.Moonlight","id":"DblInstallMoonlight","name":"Moonlight Stream Client"}','{"winget":null,"id":"DblPythonEpicCLI","name":"Legendary Epic (Python)"}','{"winget":"Ubisoft.Connect","id":"DblInstallUbisoft","name":"Ubisoft Connect"}','{"winget":"Wargaming.GameCenter","id":"DblInstallWargaming","name":"Wargaming Game Center"}','{"winget":"xemu-project.xemu","id":"DblInstallXemu","name":"XEMU"}','{"winget":"Audacity.Audacity","id":"DblInstallAudacity","name":"Audacity"}','{"winget":"9MVZQVXJBQ9V","id":"DblInstallAV1","name":"AV1 Video Extension"}','{"winget":"BlenderFoundation.Blender","id":"DblInstallBlender","name":"Blender"}','{"winget":"Figma.Figma","id":"DblInstallFigma","name":"Figma"}','{"winget":"Gyan.FFmpeg","id":"DblInstallFFmpeg","name":"FFmpeg"}','{"winget":"CiderCollective.Cider","id":"DblInstallCider","name":"Cider"}','{"winget":"Greenshot.Greenshot","id":"DblInstallGreenshot","name":"Greenshot"}','{"winget":"HandBrake.HandBrake","id":"DblInstallHandbrake","name":"Handbrake"}','{"winget":"DuongDieuPhap.ImageGlass","id":"DblInstallImageglass","name":"ImageGlass"}','{"winget":"XBMCFoundation.Kodi","id":"DblInstallKodi","name":"Kodi"}','{"winget":"CodecGuide.K-LiteCodecPack.Standard","id":"DblInstallKlite","name":"K-Lite Codec Pack"}','{"winget":"MediaArea.MediaInfo.GUI","id":"DblInstallMediaInfo","name":"MediaInfo"}','{"winget":"MoritzBunkus.MKVToolNix","id":"DblInstallMKVToolNix","name":"MKVToolNix"}','{"winget":"Plex.Plex","id":"DblInstallPlex","name":"Plex Client"}','{"winget":"Plex.PlexMediaServer","id":"DblInstallPlexServer","name":"Plex Server"}','{"winget":"OBSProject.OBSStudio","id":"DblInstallObs","name":"OBS Studio"}','{"winget":"9NCBCSZSJRSB","id":"DblInstallSpotify","name":"Spotify"}','{"winget":"ShareX.ShareX","id":"DblInstallSharex","name":"ShareX"}','{"winget":"VideoLAN.VLC","id":"DblInstallVlc","name":"VLC Media Player"}','{"winget":"9N4D0MSMP0PT","id":"DblInstallVP9","name":"VP9 Video Extensions"}','{"winget":"yt-dlp.yt-dlp","id":"DblInstallYtdlp","name":"yt-dlp"}','{"winget":"Anki.Anki","id":"DblInstallAnki","name":"Anki"}','{"winget":"Adobe.Acrobat.Reader.64-bit","id":"DblInstallAdobe","name":"Adobe"}','{"winget":"Joplin.Joplin","id":"DblInstallJoplin","name":"Joplin"}','{"winget":"TheDocumentFoundation.LibreOffice","id":"DblInstallLibreoffice","name":"LibreOffice"}','{"winget":"Neovim.Neovim","id":"DblInstallNeovim","name":"Neovim"}','{"winget":"Neovim.Neovim.Nightly","id":"DblInstallNeovimNightly","name":"Neovim Nightly"}','{"winget":"Notion.Notion","id":"DblInstallNotion","name":"Notion"}','{"winget":"Notepad++.Notepad++","id":"DblInstallNotepadplus","name":"Notepad"}','{"winget":"JackieLiu.NotepadsApp","id":"DblInstallNotepadsApp","name":"Notepads"}','{"winget":"Obsidian.Obsidian","id":"DblInstallObsidian","name":"Obsidian"}','{"winget":"ONLYOFFICE.DesktopEditors","id":"DblInstallOnlyoffice","name":"OnlyOffice"}','{"winget":"SublimeHQ.SublimeText.3","id":"DblInstallSublime4","name":"Sublime Text 4"}','{"winget":"SumatraPDF.SumatraPDF","id":"DblInstallSumatra","name":"Sumatra"}','{"winget":"Kingsoft.WPSOffice","id":"DblInstallWPS","name":"WPS Office"}','{"winget":"WinMerge.WinMerge","id":"DblInstallWinmerge","name":"WinMerge"}','{"winget":"AgileBits.1Password","id":"DblInstall1Password","name":"1Password"}','{"winget":"7zip.7zip","id":"DblInstall7zip","name":"7-zip"}','{"winget":"Google.PlatformTools","id":"DblInstallADB","name":"Android Debug Bridge"}','{"winget":"Alacritty.Alacritty","id":"DblInstallAlacritty","name":"Alacritty"}','{"winget":"Anydo.Anydo","id":"DblInstallAnydo","name":"Anydo"}','{"winget":"autohotkey","id":"DblInstallAutohotkey","name":"AutoHotkey"}','{"winget":"Bitwarden.Bitwarden","id":"DblInstallBitwarden","name":"Bitwarden"}','{"winget":"ChatterinoTeam.Chatterino","id":"DblInstallChatterino","name":"Chatterino"}','{"winget":"PopeenCom.ClassicVolumeMixer","id":"DblInstallClasicMixer","name":"ClassicVolumeMixer"}','{"winget":"CPUID.CPU-Z","id":"DblInstallCpuz","name":"CPU-Z"}','{"winget":"Cryptomator.Cryptomator","id":"DblInstallCryptomator","name":"Cryptomator"}','{"winget":"Wagnardsoft.DisplayDriverUninstaller","id":"DblInstallDdu","name":"Display Driver Uninstaller"}','{"winget":"JGraph.Draw","id":"DblInstallDrawio","name":"Draw.io"}','{"winget":"oidtools.Everything","id":"DblInstallEsearch","name":"Everything"}','{"winget":"Google.GoogleDrive ","id":"DblInstallGoogleDrive","name":"Google Drive"}','{"winget":"TechPowerUp.GPU-Z","id":"DblInstallGpuz","name":"GPU-Z"}','{"winget":"gerardog.gsudo","id":"DblInstallGsudo","name":"gsudo"}','{"winget":"9P1TBXR6QDCX","id":"DblInstallNGENUITY","name":"HyperX NGENUITY"}','{"winget":"REALiX.HWiNFO","id":"DblInstallHwinfo","name":"HWiNFO"}','{"winget":"AppWork.JDownloader","id":"DblInstallJdownloader","name":"JDownloader"}','{"winget":"KDE.KDEConnect","id":"DblInstallKDEConnect","name":"KDE Connect"}','{"winget":"KeePassXCTeam.KeePassXC","id":"DblInstallKeepass","name":"KeePassXC"}','{"winget":"Guru3D.Afterburner","id":"DblInstallMsiafterburner","name":"Afterburner"}','{"winget":"Mozilla.Thunderbird","id":"DblInstallThunderbird","name":"Thunderbird"}','{"winget":"M2Team.NanaZip","id":"DblInstallNanazip","name":"NanaZip"}','{"winget":"gsass1.NTop","id":"DblInstallNTop","name":"NTop"}','{"winget":"TechPowerUp.NVCleanstall","id":"DblInstallNvclean","name":"NVCleanstall"}','{"winget":"Oracle.VirtualBox","id":"DblInstallOVirtualBox","name":"VirtualBox"}','{"winget":"Ookla.Speedtest.Desktop","id":"DblInstallSpeedtest","name":"Speedtest by Ookla"}','{"winget":"CalcProgrammer1.OpenRGB","id":"DblInstallOpenrgb","name":"OpenRGB"}','{"winget":"Parsec.Parsec","id":"DblInstallParsec","name":"Parsec"}','{"winget":"Postbox.Postbox","id":"DblInstallPostbox","name":"Postbox"}','{"winget":"BitSum.ProcessLasso","id":"DblInstallProcesslasso","name":"Process Lasso"}','{"winget":"ProxymanLLC.Proxyman","id":"DblInstallProxyman","name":"Proxyman"}','{"winget":"qBittorrent.qBittorrent","id":"DblInstallQbittorrent","name":"qBittorrent"}','{"winget":"Rclone.Rclone","id":"DblInstallRclone","name":"Rclone"}','{"winget":"RevoUninstaller.RevoUninstaller","id":"DblInstallRevo","name":"Revo"}','{"winget":"Rufus.Rufus","id":"DblInstallRufus","name":"Rufus"}','{"winget":"9PF4KZ2VN4W9","id":"DblInstallTtaskbar","name":"Ttaskbar"}','{"winget":"SomePythonThings.WingetUIStore","id":"DblInstallWingetUI","name":"WingetUI"}','{"winget":"RARLab.WinRAR","id":"DblInstallWinrar","name":"WinRAR"}')
 $appx = @('{"id":"MicrosoftCorporationIIQuickAssist","name":"MicrosoftCorporationII.QuickAssist"}','{"id":"ClipchampClipchamp","name":"Clipchamp.Clipchamp"}','{"id":"MicrosoftOutlookForWindows","name":"Microsoft.OutlookForWindows"}','{"id":"MicrosoftPowerAutomateDesktop","name":"Microsoft.PowerAutomateDesktop"}','{"id":"MicrosoftTodos","name":"Microsoft.Todos"}','{"id":"MicrosoftAppConnector","name":"Microsoft.AppConnector"}','{"id":"MicrosoftBingFinance","name":"Microsoft.BingFinance"}','{"id":"MicrosoftBingNews","name":"Microsoft.BingNews"}','{"id":"MicrosoftBingSports","name":"Microsoft.BingSports"}','{"id":"MicrosoftBingTranslator","name":"Microsoft.BingTranslator"}','{"id":"MicrosoftBingWeather","name":"Microsoft.BingWeather"}','{"id":"MicrosoftBingFoodAndDrink","name":"Microsoft.BingFoodAndDrink"}','{"id":"MicrosoftBingHealthAndFitness","name":"Microsoft.BingHealthAndFitness"}','{"id":"MicrosoftBingTravel","name":"Microsoft.BingTravel"}','{"id":"MicrosoftMinecraftUWP","name":"Microsoft.MinecraftUWP"}','{"id":"MicrosoftGamingServices","name":"Microsoft.GamingServices"}','{"id":"MicrosoftGetHelp","name":"Microsoft.GetHelp"}','{"id":"MicrosoftGetstarted","name":"Microsoft.Getstarted"}','{"id":"MicrosoftMessaging","name":"Microsoft.Messaging"}','{"id":"MicrosoftMicrosoft3DViewer","name":"Microsoft.Microsoft3DViewer"}','{"id":"MicrosoftMicrosoftSolitaireCollection","name":"Microsoft.MicrosoftSolitaireCollection"}','{"id":"MicrosoftNetworkSpeedTest","name":"Microsoft.NetworkSpeedTest"}','{"id":"MicrosoftNews","name":"Microsoft.News"}','{"id":"MicrosoftOfficeLens","name":"Microsoft.Office.Lens"}','{"id":"MicrosoftOfficeSway","name":"Microsoft.Office.Sway"}','{"id":"MicrosoftOfficeOneNote","name":"Microsoft.Office.OneNote"}','{"id":"MicrosoftOneConnect","name":"Microsoft.OneConnect"}','{"id":"MicrosoftPeople","name":"Microsoft.People"}','{"id":"MicrosoftPrint3D","name":"Microsoft.Print3D"}','{"id":"MicrosoftSkypeApp","name":"Microsoft.SkypeApp"}','{"id":"MicrosoftWallet","name":"Microsoft.Wallet"}','{"id":"MicrosoftWhiteboard","name":"Microsoft.Whiteboard"}','{"id":"MicrosoftWindowsAlarms","name":"Microsoft.WindowsAlarms"}','{"id":"microsoftwindowscommunicationsapps","name":"microsoft.windowscommunicationsapps"}','{"id":"MicrosoftWindowsFeedbackHub","name":"Microsoft.WindowsFeedbackHub"}','{"id":"MicrosoftWindowsMaps","name":"Microsoft.WindowsMaps"}','{"id":"MicrosoftWindowsPhone","name":"Microsoft.WindowsPhone"}','{"id":"MicrosoftWindowsSoundRecorder","name":"Microsoft.WindowsSoundRecorder"}','{"id":"MicrosoftXboxApp","name":"Microsoft.XboxApp"}','{"id":"MicrosoftGamingApp","name":"Microsoft.GamingApp"}','{"id":"MicrosoftConnectivityStore","name":"Microsoft.ConnectivityStore"}','{"id":"MicrosoftCommsPhone","name":"Microsoft.CommsPhone"}','{"id":"MicrosoftScreenSketch","name":"Microsoft.ScreenSketch"}','{"id":"MicrosoftXboxTCUI","name":"Microsoft.Xbox.TCUI"}','{"id":"MicrosoftXboxGameOverlay","name":"Microsoft.XboxGameOverlay"}','{"id":"MicrosoftXboxGamingOverlay","name":"Microsoft.XboxGamingOverlay"}','{"id":"MicrosoftXboxGameCallableUI","name":"Microsoft.XboxGameCallableUI"}','{"id":"MicrosoftXboxSpeechToTextOverlay","name":"Microsoft.XboxSpeechToTextOverlay"}','{"id":"MicrosoftXboxIdentityProvider","name":"Microsoft.XboxIdentityProvider"}','{"id":"MicrosoftMixedRealityPortal","name":"Microsoft.MixedReality.Portal"}','{"id":"MicrosoftYourPhone","name":"Microsoft.YourPhone"}','{"id":"MicrosoftZuneMusic","name":"Microsoft.ZuneMusic"}','{"id":"MicrosoftZuneVideo","name":"Microsoft.ZuneVideo"}','{"id":"MicrosoftGetstarted","name":"Microsoft.Getstarted"}','{"id":"MicrosoftFamily","name":"Microsoft.Family"}','{"id":"MicrosoftMicrosoftOfficeHub","name":"Microsoft.MicrosoftOfficeHub"}','{"id":"MicrosoftMicrosoftStickyNotes","name":"Microsoft.MicrosoftStickyNotes"}','{"id":"EclipseManager","name":"*EclipseManager*"}','{"id":"ActiproSoftwareLLC","name":"*ActiproSoftwareLLC*"}','{"id":"AdobePhotoshopExpress","name":"*AdobeSystemsIncorporated.AdobePhotoshopExpress*"}','{"id":"DuolingoLearnLanguagesforFree","name":"*Duolingo-LearnLanguagesforFree*"}','{"id":"PandoraMediaInc","name":"*PandoraMediaInc*"}','{"id":"CandyCrush","name":"*CandyCrush*"}','{"id":"BubbleWitch3Saga","name":"*BubbleWitch3Saga*"}','{"id":"Wunderlist","name":"*Wunderlist*"}','{"id":"Flipboard","name":"*Flipboard*"}','{"id":"Twitter","name":"*Twitter*"}','{"id":"Facebook","name":"*Facebook*"}','{"id":"RoyalRevolt","name":"*Royal Revolt*"}','{"id":"Sway","name":"*Sway*"}','{"id":"SpeedTest","name":"*Speed Test*"}','{"id":"Dolby","name":"*Dolby*"}','{"id":"Viber","name":"*Viber*"}','{"id":"ACGMediaPlayer","name":"*ACGMediaPlayer*"}','{"id":"Netflix","name":"*Netflix*"}','{"id":"OneCalendar","name":"*OneCalendar*"}','{"id":"LinkedInforWindows","name":"*LinkedInforWindows*"}','{"id":"HiddenCityMysteryofShadows","name":"*HiddenCityMysteryofShadows*"}','{"id":"Hulu","name":"*Hulu*"}','{"id":"HiddenCity","name":"*HiddenCity*"}','{"id":"AdobePhotoshopExpress","name":"*AdobePhotoshopExpress*"}','{"id":"HotspotShieldFreeVPN","name":"*HotspotShieldFreeVPN*"}','{"id":"MicrosoftAdvertisingXaml","name":"*Microsoft.Advertising.Xaml*"}','{"id":"WindowsDevHome","name":"*Windows.DevHome*"}')
 # Embedded from tweaks.json
 $tweaks = @'
@@ -33,6 +33,32 @@ $tweaks = @'
         "InvokeScript": [
             "Set-RestorePoint"
         ]
+    },
+    "DblDisableBitLocker": {
+        "Type": "CheckBox",
+        "Content": "Disable BitLocker",
+        "Description": "Disables BitLocker encryption on the system drive.",
+        "DisableMessage": "Disabling BitLocker...",
+        "InvokeScript": [
+            "Disable-BitLocker -MountPoint $Env:SystemDrive"
+        ],
+        "UndoScript": [
+            "Enable-BitLocker -MountPoint $Env:SystemDrive"
+        ]
+    },
+    "DblDisableDeliveryOptimization": {
+        "Type": "CheckBox",
+        "Content": "Disable Delivery Optimization",
+        "Description": "Stops Windows from using your bandwidth to upload updates to other PCs on the internet or local network.",
+        "DisableMessage": "Disabling Delivery Optimization...",
+        "registry": 
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\\Config",
+                "OriginalValue": "<RemoveEntry>",
+                "Name": "DODownloadMode",
+                "Value": "0",
+                "Type": "DWord"
+            }
     },
     "DblTelemetry": {
         "Type": "CheckBox",
@@ -216,13 +242,6 @@ $tweaks = @'
                 "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting",
                 "OriginalValue": "0",
                 "Name": "Disabled",
-                "Value": "1",
-                "Type": "DWord"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\\Config",
-                "OriginalValue": "1",
-                "Name": "DODownloadMode",
                 "Value": "1",
                 "Type": "DWord"
             },
@@ -624,6 +643,111 @@ $tweaks = @'
             "
         ]
     },
+    "DblRazer": {
+        "Type": "CheckBox",
+        "Content": "Disable Razer Software Auto-Install",
+        "Description": "Blocks ALL Razer Software installations. The hardware works fine without any software.",
+        "EnableMessage": "Disabling Razer Software Auto-Install...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DriverSearching",
+                "Name": "SearchOrderConfig",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "1"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Device Installer",
+                "Name": "DisableCoInstallers",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "0"
+            }
+        ],
+        "InvokeScript": [
+            "
+            $RazerPath = \"$Env:SystemRoot\\Installer\\Razer\"
+
+            if (Test-Path $RazerPath) {
+                Remove-Item $RazerPath\\* -Recurse -Force
+            } else {
+                New-Item -Path $RazerPath -ItemType Directory
+            }
+
+            icacls $RazerPath /deny \"Everyone:(W)\"
+            "
+        ],
+        "UndoScript": [
+            "
+            icacls \"$Env:SystemRoot\\Installer\\Razer\" /remove:d Everyone
+            "
+        ]
+    },
+    "DblWarningForUnsignedRdp": {
+        "Type": "CheckBox",
+        "Content": "Disable RDP Unsigned File Warnings",
+        "Description": "Disables warnings shown when launching unsigned RDP files introduced with the latest Windows 10 and 11 updates.",
+        "EnableMessage": "Disabling RDP Unsigned File Warnings...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Terminal Services\\Client",
+                "Name": "RedirectionWarningDialogVersion",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Terminal Server Client",
+                "Name": "RdpLaunchConsentAccepted",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            }
+        ]
+    },
+    "DblWindowsAI": {
+        "Type": "CheckBox",
+        "Content": "Disable & Remove WindowsAI",
+        "Description": "Removes and disables all AI features/packages.",
+        "EnableMessage": "Remove WindowsAI...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                "Name": "SettingsPageVisibility",
+                "Value": "hide:aicomponents",
+                "Type": "String",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\WindowsNotepad",
+                "Name": "DisableAIFeatures",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            }
+        ],
+        "InvokeScript": [
+            "
+            $Appx = (Get-AppxPackage MicrosoftWindows.Client.CoreAI).PackageFullName
+            $Sid = (Get-LocalUser $Env:UserName).Sid.Value
+
+            New-Item \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Appx\\AppxAllUserStore\\EndOfLife\\$Sid\\$Appx\" -Force
+
+            Get-AppxPackage -AllUsers \"*Copilot*\" | Remove-AppxPackage -AllUsers
+            winget uninstall -e --name \"Copilot\" --silent --force --accept-source-agreements 2>$null
+            Get-AppxPackage -AllUsers Microsoft.MicrosoftOfficeHub | Remove-AppxPackage -AllUsers
+
+            if ($Appx) {
+                Remove-AppxPackage $Appx
+            }
+
+            Set-Service -Name WSAIFabricSvc -StartupType Disabled
+            Disable-WindowsOptionalFeature -FeatureName Recall -Online -NoRestart
+
+            Write-Host \"Windows AI Disabled\"
+            "
+        ]
+    },
     "DblLaptopHibernation": {
         "Type": "CheckBox",
         "Content": "Set Hibernation as default (laptops)",
@@ -644,7 +768,7 @@ $tweaks = @'
                 "Value": "2",
                 "Type": "DWord"
             }
-            ],
+        ],
         "InvokeScript": [
             "
             Write-Host \"Turn on Hibernation\"
@@ -669,6 +793,18 @@ $tweaks = @'
             Start-Process -FilePath powercfg -ArgumentList \"/change monitor-timeout-dc 15\" -NoNewWindow -Wait
             "
         ]
+    },
+    "DblStoreSearch": {
+        "Type": "CheckBox",
+        "Content": "Disable Microsoft Store Recommended",
+        "Description": "Will not display recommended Microsoft Store apps when searching for apps in the Start menu.",
+        "DisableMessage": "Disabling Microsoft Store Recommended Search...",
+        "InvokeScript": [
+            "icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /deny Everyone:F"
+        ],
+        "UndoScript": [
+            "icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /grant Everyone:F"
+        ],
     },
     "DblDebloatEdge": {
         "Type": "CheckBox",
@@ -1530,9 +1666,9 @@ $tweaks = @'
             },
             {
                 "Path": "HKCU:\\Control Panel\\Desktop",
-                "OriginalValue": "1",
+                "OriginalValue": "400",
                 "Name": "MenuShowDelay",
-                "Value": "1",
+                "Value": "200",
                 "Type": "String"
             },
             {
@@ -1546,7 +1682,7 @@ $tweaks = @'
                 "Path": "HKCU:\\Control Panel\\Keyboard",
                 "OriginalValue": "1",
                 "Name": "KeyboardDelay",
-                "Value": "1",
+                "Value": "0",
                 "Type": "DWord"
             },
             {
@@ -1652,7 +1788,7 @@ $tweaks = @'
     },
     "DblDisableNotifications": {
         "Type": "CheckBox",
-        "Content": "Disable Notifications",
+        "Content": "Disable Notifications & Calendar",
         "Description": "Disables all Notifications INCLUDING Calendar",
         "DisableMessage": "Disabling Notifications Tray/Calendar...",
         "registry": [
@@ -2704,6 +2840,14 @@ $tweaks = @'
                 "Type": "DWord",
                 "DefaultState": "true"
             }
+        ],
+        "InvokeScript": [
+            "Write-Host \"Restarting Explorer to apply taskbar alignment...\" -ForegroundColor Green",
+            "Invoke-ExplorerUpdate"
+        ],
+        "UndoScript": [
+            "Write-Host \"Restarting Explorer to apply taskbar alignment...\" -ForegroundColor Green",
+            "Invoke-ExplorerUpdate"
         ]
     },
     "ToggleHideSettingsHome": {
@@ -2798,6 +2942,23 @@ $tweaks = @'
             }
         ]
     },
+    "ToggleS0Sleep": {
+        "Type": "Toggle",
+        "Content": "S0 Sleep Network Connectivity",
+        "Description": "Toggles network connectivity during S0 Sleep which is low power idle in modern laptops.",
+        "EnableMessage": "Enable S0 Sleep Network Connectivity...",
+        "DisableMessage": "Disable S0 Sleep Network Connectivity...",
+        "registry": [
+            {
+                "Path": "HKCU:\\SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\f15576e8-98b7-4186-b944-eafa664402d9",
+                "Name": "ACSettingIndex",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "0",
+                "DefaultState": "true"
+            }
+        ]
+    },
     "ToggleS3Sleep": {
         "Type": "Toggle",
         "Content": "S3 Sleep",
@@ -2848,6 +3009,57 @@ $tweaks = @'
                 "DefaultState": "false"
             }
         ]
+    },
+    "ToggleLoginBlur": {
+        "Type": "Toggle",
+        "Content": "Logon Screen Acrylic Blur",
+        "Description": "Toggles the acrylic blur effect on login screen background.",
+        "EnableMessage": "Enable Logon Screen Acrylic Blur...",
+        "DisableMessage": "Disable Logon Screen Acrylic Blur...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+                "Name": "DisableAcrylicBackgroundOnLogon",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "1",
+                "DefaultState": "true"
+            }
+        ]
+    },
+    "ToggleScrollbars": {
+        "Type": "Toggle",
+        "Content": "Scrollbars Always Visible",
+        "Description": "If enabled, scrollbars will always be visible. If disabled, Windows will automatically hide scrollbars when not in use.",
+        "EnableMessage": "Enable Scrollbars Always Visible...",
+        "DisableMessage": "Disable Scrollbars Always Visible...",
+        "registry": [
+            {
+                "Path": "HKCU:\\Control Panel\\Accessibility",
+                "Name": "DynamicScrollbars",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "1",
+                "DefaultState": "false"
+            }
+        ]
+    },
+    "ToggleBatteryPercentage": {
+        "Type": "Toggle",
+        "Content": "System Tray Battery Percentage",
+        "Description": "Shows numeric battery percentage next to the battery icon in the system tray.",
+        "EnableMessage": "Enable System Tray Battery Percentage...",
+        "DisableMessage": "Disable System Tray Battery Percentage...",
+        "registry": [
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                "Name": "IsBatteryPercentageEnabled",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>",
+                "DefaultState": "false"
+            }
+        ]
     }
 }
 
@@ -2857,11 +3069,13 @@ $tweaks = @'
 $preset = @'
 {
     "megaPresetButton": [
+        "DblDisableDeliveryOptimization",
         "DblTelemetry",
         "DblConsumerFeatures",
         "DblWifi",
         "DblAH",
         "DblExplorerAutoDiscovery",
+        "DblStoreSearch",
         "DblDebloatEdge",
         "DblDeleteTempFiles",
         "DblRecycleBin",
@@ -2882,6 +3096,7 @@ $preset = @'
         "DblModernCursorLight"
     ],
     "fastPresetButton": [
+        "DblDisableDeliveryOptimization",
         "DblTelemetry", 
         "DblConsumerFeatures",
         "DblWifi", 
