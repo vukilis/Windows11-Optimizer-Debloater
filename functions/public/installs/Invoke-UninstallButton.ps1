@@ -6,18 +6,22 @@ function Invoke-UninstallButton {
     #>
 
     $matchingProgram = Invoke-APPX
+    $packageManager = $script:SelectedPackageManager
     foreach ($program in $matchingProgram) {
         $checkBox = $psform.FindName($program.Id)
+        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($program.Id)) {
+            $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
+        }
         $isChecked = $checkBox.IsChecked
+        $isEnabled = $checkBox.IsEnabled
 
-        if ($isChecked -eq $true -and $program.IdPython) {
-            Invoke-ManageInstall -PackageManger "pip" -manage "Uninstalling" -program $program.Name -PackageName $program.PipPackage
-        }elseif ($isChecked -eq $true -and $program.IdChoco){
-            Invoke-ManageInstall -PackageManger "choco" -manage "Uninstalling" -program $program.Name -PackageName $program.Choco
-        }elseif ($isChecked -eq $true){
-            Invoke-ManageInstall -PackageManger "winget" -manage "Uninstalling" -program $program.Name -PackageName $program.Winget
-        }else {
-            continue
+        if ($isChecked -eq $true -and $isEnabled -eq $true) {
+            if ($packageManager -eq "choco" -and $program.Choco -ne $null -and $program.Choco -ne '') {
+                Invoke-ManageInstall -PackageManger "choco" -manage "Uninstalling" -program $program.Name -PackageName $program.Choco
+            }
+            elseif ($program.Winget) {
+                Invoke-ManageInstall -PackageManger "winget" -manage "Uninstalling" -program $program.Name -PackageName $program.Winget
+            }
         }
     }
     

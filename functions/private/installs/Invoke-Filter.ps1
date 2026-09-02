@@ -9,21 +9,23 @@ function Invoke-Filter {
     foreach ($program in $matchingProgram) {
         $id = $program.Id
         $filter = $wpf_CheckboxFilter.Text
-        $checkBoxes = $psform.FindName("$id")
+        $checkBox = $psform.FindName("$id")
+        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($id)) {
+            $checkBox = $script:DynamicAppCheckBoxes[$id]
+        }
 
-        Foreach ($CheckBox in $CheckBoxes) {
-            if ($CheckBox.Content.ToLower().Contains($filter)) {
-                $CheckBox.Visibility = "Visible"
-                #Write-Host "Match found: $name"
+        if ($checkBox) {
+            if ($checkBox.Content.ToLower().Contains($filter)) {
+                $checkBox.Visibility = "Visible"
             }
-            elseif($CheckBox.Content.Contains($filter)){
-                $CheckBox.Visibility = "Visible"
+            elseif($checkBox.Content.Contains($filter)){
+                $checkBox.Visibility = "Visible"
             }
-            elseif($CheckBox.Content.ToUpper().Contains($filter)){
-                $CheckBox.Visibility = "Visible"
+            elseif($checkBox.Content.ToUpper().Contains($filter)){
+                $checkBox.Visibility = "Visible"
             }
             else {
-                $CheckBox.Visibility = "Collapsed"
+                $checkBox.Visibility = "Collapsed"
             }
         }
     }

@@ -141,17 +141,6 @@ function Invoke-ApplyConfigFile {
                 }
             }
         }
-
-        # Install pip packages
-        if ($config.installedApps.PSObject.Properties.Name -contains 'pip') {
-            foreach ($packageName in $config.installedApps.pip) {
-                Write-Host "  Installing pip package: $packageName" -ForegroundColor.Gray
-                $matchingProgram = Invoke-APPX | Where-Object { $_.PipPackage -eq $packageName }
-                if ($matchingProgram -ne $null) {
-                    Invoke-ManageInstall -PackageManger "pip" -manage "Installing" -program $matchingProgram -PackageName $packageName
-                }
-            }
-        }
     }
 
     Write-Host "`n========================================" -ForegroundColor Green

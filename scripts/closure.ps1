@@ -29,6 +29,83 @@ $psform.Add_Loaded({
     Invoke-SetDynamicToolTip
 })
 
+# Dynamically populate INSTALL tab app checkboxes from $programs
+$script:DynamicAppCheckBoxes = @{}
+$script:DynamicAppChocoSupport = @{}
+$script:SelectedPackageManager = "winget"
+
+$categoryPanels = @{
+    "Development"        = $wpf_CategoryDevelopmentPanel
+    "Microsoft Tools"    = $wpf_CategoryMicrosoftToolsPanel
+    "Browsers"           = $wpf_CategoryBrowsersPanel
+    "Communications"     = $wpf_CategoryCommunicationsPanel
+    "Gaming Launchers"   = $wpf_CategoryGamingLaunchersPanel
+    "Document"           = $wpf_CategoryDocumentPanel
+    "Multimedia Tools"   = $wpf_CategoryMultimediaToolsPanel
+    "Utilities"          = $wpf_CategoryUtilitiesPanel
+}
+
+foreach ($program in $programs) {
+    $program = $program | ConvertFrom-Json
+    $category = $program.category
+    if (-not $category -or -not $categoryPanels.ContainsKey($category)) {
+        continue
+    }
+
+    $panel = $categoryPanels[$category]
+    if (-not $panel) {
+        continue
+    }
+
+    $cbox = New-Object System.Windows.Controls.CheckBox
+    $cbox.Name = $program.id
+    $cbox.Content = $program.content
+    $cbox.Foreground = "#a69f6c"
+    $cbox.HorizontalAlignment = "Left"
+    $cbox.Width = "auto"
+    $cbox.Cursor = [System.Windows.Input.Cursors]::Hand
+    $cbox.Margin = New-Object System.Windows.Thickness(8, 5, 8, 5)
+    $cbox.FontSize = 11
+    $cbox.FontFamily = New-Object System.Windows.Media.FontFamily("Gadugi")
+
+    $scaleTransform = New-Object System.Windows.Media.ScaleTransform
+    $scaleTransform.ScaleX = 1.5
+    $scaleTransform.ScaleY = 1.5
+    $cbox.LayoutTransform = $scaleTransform
+
+    $panel.Children.Add($cbox) | Out-Null
+    $script:DynamicAppCheckBoxes[$program.id] = $cbox
+    $script:DynamicAppChocoSupport[$program.id] = ($program.choco -ne $null -and $program.choco -ne '')
+}
+
+$wpf_PkgMgrWinget.Add_Checked({
+    $script:SelectedPackageManager = "winget"
+    foreach ($program in $programs) {
+        $program = $program | ConvertFrom-Json
+        if ($script:DynamicAppCheckBoxes.ContainsKey($program.id)) {
+            $script:DynamicAppCheckBoxes[$program.id].IsEnabled = $true
+            $script:DynamicAppCheckBoxes[$program.id].Foreground = "#a69f6c"
+        }
+    }
+})
+
+$wpf_PkgMgrChoco.Add_Checked({
+    $script:SelectedPackageManager = "choco"
+    foreach ($program in $programs) {
+        $program = $program | ConvertFrom-Json
+        if ($script:DynamicAppCheckBoxes.ContainsKey($program.id)) {
+            $hasChoco = $script:DynamicAppChocoSupport[$program.id]
+            $script:DynamicAppCheckBoxes[$program.id].IsEnabled = $hasChoco
+            if (-not $hasChoco) {
+                $script:DynamicAppCheckBoxes[$program.id].IsChecked = $false
+                $script:DynamicAppCheckBoxes[$program.id].Foreground = "#5a5a5a"
+            } else {
+                $script:DynamicAppCheckBoxes[$program.id].Foreground = "#a69f6c"
+            }
+        }
+    }
+})
+
 # Check if the window is already opened or not
 if ($psform.IsVisible -eq $false -or $psform.IsLoaded -eq $false) {
     $psform.ShowDialog() | Out-Null

@@ -41,15 +41,16 @@ Get-ChildItem .\config\applications.json | ForEach-Object {
     $jsonObject = (Get-Content $_.FullName) -join "`n" | ConvertFrom-Json
 
     $convertedArray = $jsonObject | ForEach-Object {
-        $objString = @{
-            'id'    = $_.id
-            'name'  = $_.name
-            'winget'= $_.winget
-        } | ConvertTo-Json -Compress
-        "'$objString'"
+        $obj = $_
+        $hash = @{}
+        foreach ($prop in $obj.PSObject.Properties) {
+            $hash[$prop.Name] = $prop.Value
+        }
+        $json = $hash | ConvertTo-Json -Compress
+        "'$json'"
     }
 
-    $convertedArrayString = "@(" + ($convertedArray -join ',' ) + ")"
+    $convertedArrayString = "@(" + ($convertedArray -join ',') + ")"
 
     Write-Output "`$programs = $convertedArrayString" | Out-File ./$scriptname -Append -Encoding UTF8
 }

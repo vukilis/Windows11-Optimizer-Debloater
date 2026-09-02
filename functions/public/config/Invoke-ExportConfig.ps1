@@ -7,7 +7,7 @@ function Invoke-ExportConfig {
     $config = @{}
 
     # Export installed apps
-    $config.installedApps = @{ winget = @(); choco = @(); pip = @() }
+    $config.installedApps = @{ winget = @(); choco = @() }
     try {
         $wingetExportPath = Join-Path $env:TEMP "wingetPackage.json"
         $exportResult = winget export -o $wingetExportPath 2>&1
@@ -30,17 +30,6 @@ function Invoke-ExportConfig {
             }
         }
     } catch { Write-Warning "Failed to export choco packages: $_" }
-
-    try {
-        $pipExportPath = Join-Path $env:TEMP "pipPackage.txt"
-        pip freeze | Out-File -FilePath $pipExportPath -ErrorAction Stop
-        foreach ($line in Get-Content -Path $pipExportPath -ErrorAction Stop) {
-            $index = $line.IndexOf('=')
-            if ($index -lt 0) { continue }
-            $result = $line.Substring(0, $index).Trim()
-            $config.installedApps.pip += $result
-        }
-    } catch { Write-Warning "Failed to export pip packages: $_" }
 
     # Export checked tweaks
     $config.tweaks = @{}

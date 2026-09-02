@@ -108,11 +108,11 @@
         ],
         "registry": [
             {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
-                "OriginalValue": "1",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection",
                 "Name": "AllowTelemetry",
                 "Value": "0",
-                "Type": "DWord"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
@@ -186,10 +186,10 @@
             },
             {
                 "Path": "HKCU:\\SOFTWARE\\Microsoft\\Siuf\\Rules",
-                "OriginalValue": "0",
                 "Name": "NumberOfSIUFInPeriod",
                 "Value": "0",
-                "Type": "DWord"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
@@ -199,11 +199,46 @@
                 "Type": "DWord"
             },
             {
-                "Path": "HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
-                "OriginalValue": "0",
-                "Name": "DisableTailoredExperiencesWithDiagnosticData",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+                "Name": "TailoredExperiencesWithDiagnosticDataEnabled",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy",
+                "Name": "HasAccepted",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Input\\TIPC",
+                "Name": "Enabled",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\InputPersonalization",
+                "Name": "RestrictImplicitInkCollection",
                 "Value": "1",
-                "Type": "DWord"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\InputPersonalization\\TrainedDataStore",
+                "Name": "HarvestContacts",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Personalization\\Settings",
+                "Name": "AcceptedPrivacyPolicy",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\AdvertisingInfo",
@@ -239,6 +274,13 @@
                 "Name": "ShowTaskViewButton",
                 "Value": "0",
                 "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                "Name": "Start_TrackProgs",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\People",
@@ -356,38 +398,35 @@
         ],
         "InvokeScript": [
             "
-            bcdedit /set `{current`} bootmenupolicy Legacy | Out-Null
-                If ((get-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\" -Name CurrentBuild).CurrentBuild -lt 22557) {
-                    $taskmgr = Start-Process -WindowStyle Hidden -FilePath taskmgr.exe -PassThru
-                    Do {
-                        Start-Sleep -Milliseconds 100
-                        $preferences = Get-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\TaskManager\" -Name \"Preferences\" -ErrorAction SilentlyContinue
-                    } Until ($preferences)
-                    Stop-Process $taskmgr
-                    $preferences.Preferences[28] = 0
-                    Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\TaskManager\" -Name \"Preferences\" -Type Binary -Value $preferences.Preferences
-                }
-                Remove-Item -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}\" -Recurse -ErrorAction SilentlyContinue
+            # Disable Defender Auto Sample Submission
+            Set-MpPreference -SubmitSamplesConsent 2
 
-                # Fix Managed by your organization in Edge if regustry path exists then remove it
+            # Disable (Connected User Experiences and Telemetry) Service
+            Set-Service -Name diagtrack -StartupType Disabled
 
-                If (Test-Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge\") {
-                    Remove-Item -Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge\" -Recurse -ErrorAction SilentlyContinue
-                }
+            # Disable (Windows Error Reporting Manager) Service
+            Set-Service -Name wermgr -StartupType Disabled
 
-                # Group svchost.exe processes
-                $ram = (Get-CimInstance -ClassName Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum).Sum / 1kb
-                Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\" -Name \"SvcHostSplitThresholdInKB\" -Type DWord -Value $ram -Force
+            # Disable PowerShell 7 telemetry
+            [Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '1', 'Machine')
 
-                $autoLoggerDir = \"$env:PROGRAMDATA\\Microsoft\\Diagnosis\\ETLLogs\\AutoLogger\"
-                If (Test-Path \"$autoLoggerDir\\AutoLogger-Diagtrack-Listener.etl\") {
-                    Remove-Item \"$autoLoggerDir\\AutoLogger-Diagtrack-Listener.etl\"
-                }
-                icacls $autoLoggerDir /deny SYSTEM:`(OI`)`(CI`)F | Out-Null
+            Remove-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Siuf\\Rules\" -Name PeriodInNanoSeconds
+            "
+        ],
+        "UndoScript": [
+            "
+            # Enable Defender Auto Sample Submission
+            Set-MpPreference -SubmitSamplesConsent 1
 
-                # Disable Defender Auto Sample Submission
-                Set-MpPreference -SubmitSamplesConsent 2 -ErrorAction SilentlyContinue | Out-Null
-                "
+            # Enable (Connected User Experiences and Telemetry) Service
+            Set-Service -Name diagtrack -StartupType Automatic
+
+            # Enable (Windows Error Reporting Manager) Service
+            Set-Service -Name wermgr -StartupType Automatic
+
+            # Enable PowerShell 7 telemetry
+            [Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '', 'Machine')
+            "
         ]
     },
     "DblWifi": {
@@ -428,9 +467,9 @@
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
                 "Name": "PublishUserActivities",
-                "Value": 0,
-                "OriginalValue": 1,
-                "Type": "DWord"
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
@@ -789,149 +828,121 @@
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\EdgeUpdate",
                 "Name": "CreateDesktopShortcutDefault",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "EdgeEnhanceImagesEnabled",
                 "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "PersonalizationReportingEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge\\ExtensionInstallBlocklist",
+                "Name": "1",
+                "Value": "ofefcgjbeghpigppfmkologfjadafddi",
+                "Type": "String",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "ShowRecommendationsEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "HideFirstRunExperience",
-                "Type": "DWord",
                 "Value": "1",
-                "OriginalValue": "0"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "UserFeedbackAllowed",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "ConfigureDoNotTrack",
-                "Type": "DWord",
                 "Value": "1",
-                "OriginalValue": "0"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "AlternateErrorPagesEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "EdgeCollectionsEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "EdgeFollowEnabled",
                 "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "EdgeShoppingAssistantEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "MicrosoftEdgeInsiderPromotionEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "PersonalizationReportingEnabled",
                 "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "ShowMicrosoftRewards",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "WebWidgetAllowed",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "DiagnosticData",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "EdgeAssetDeliveryServiceEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "EdgeCollectionsEnabled",
                 "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "CryptoWalletEnabled",
-                "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "ConfigureDoNotTrack",
-                "Type": "DWord",
-                "Value": "1",
-                "OriginalValue": "0"
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "WalletDonationEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+                "Name": "DefaultBrowserSettingsCampaignEnabled",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             }
         ]
     },
@@ -3101,7 +3112,7 @@
             { "Name": "HPSysInfoCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
             { "Name": "HpTouchpointAnalyticsService", "StartupType": "Automatic", "OriginalType": "Automatic" },
             { "Name": "HvHost", "StartupType": "Automatic", "OriginalType": "Automatic" },
-            { "Name": "lfsvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "lfsvc", "StartupType": "Disabled", "OriginalType": "Manual" },
             { "Name": "lmhosts", "StartupType": "Manual", "OriginalType": "Manual" },
             { "Name": "MapsBroker", "StartupType": "Manual", "OriginalType": "Manual" },
             { "Name": "MicrosoftEdgeElevationService", "StartupType": "Manual", "OriginalType": "Manual" },

@@ -3,7 +3,7 @@ function Invoke-getInstallButton {
 
     .SYNOPSIS
         This function select all installed apps
-        Read installed winget, choco and pip packages  
+        Read installed winget and choco packages  
     #>
 
     Write-Host "Selecting Installed applications" -ForegroundColor Green
@@ -22,30 +22,16 @@ function Invoke-getInstallButton {
 
             if ($matchingProgram -ne $null) {
                 $checkBox = $psform.FindName($matchingProgram.Id)
-                $checkBox.IsChecked = $true
+                if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($matchingProgram.Id)) {
+                    $checkBox = $script:DynamicAppCheckBoxes[$matchingProgram.Id]
+                }
+                if ($checkBox -and $checkBox.IsEnabled) {
+                    $checkBox.IsChecked = $true
+                }
             }
         }
     } catch {
         Write-Warning "Failed to process winget packages: $_"
-    }
-
-    # Process Python packages
-    try {
-        $pipExportPath = Join-Path $env:TEMP "pipPackage.txt"
-        pip freeze | Out-File -FilePath $pipExportPath -ErrorAction Stop
-
-        foreach ($line in Get-Content -Path $pipExportPath -ErrorAction Stop) {
-            $index = $line.IndexOf('=')
-            if ($index -lt 0) { continue }
-            $result = $line.Substring(0, $index).Trim()
-            $matchingProgram = Invoke-APPX | Where-Object { $_.PipPackage -eq $result }
-            if ($matchingProgram -ne $null) {
-                $checkBox = $psform.FindName($matchingProgram.Id)
-                $checkBox.IsChecked = $true
-            }
-        }
-    } catch {
-        Write-Warning "Failed to process Python packages: $_"
     }
 
     # Process Choco packages
@@ -60,7 +46,12 @@ function Invoke-getInstallButton {
                 $matchingProgram = Invoke-APPX | Where-Object { $_.Choco -eq $package.id }
                 if ($matchingProgram -ne $null) {
                     $checkBox = $psform.FindName($matchingProgram.Id)
-                    $checkBox.IsChecked = $true
+                    if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($matchingProgram.Id)) {
+                        $checkBox = $script:DynamicAppCheckBoxes[$matchingProgram.Id]
+                    }
+                    if ($checkBox -and $checkBox.IsEnabled) {
+                        $checkBox.IsChecked = $true
+                    }
                 }
             }
         } else {

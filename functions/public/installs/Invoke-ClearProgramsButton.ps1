@@ -17,7 +17,13 @@ function Invoke-ClearProgramsButton {
     $matchingProgram = Invoke-APPX | Where-Object { $_.IsChecked}
 
     foreach ($program in $matchingProgram) {
-        $checkBox = $psform.FindName($program.Id).IsChecked = $false
+        $checkBox = $psform.FindName($program.Id)
+        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($program.Id)) {
+            $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
+        }
+        if ($checkBox) {
+            $checkBox.IsChecked = $false
+        }
     }
     Write-Host "Selection cleared" -ForegroundColor Green
 }

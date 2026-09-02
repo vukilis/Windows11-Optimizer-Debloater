@@ -21,7 +21,7 @@ Set-StrictMode -Version Latest
 ###                                                                                                          ###
 ################################################################################################################
 
-$programs = @('{"name":"Docker Desktop","id":"DblInstallDockerdesktop","winget":"Docker.DockerDesktop"}','{"name":"Git","id":"DblInstallGit","winget":"Git.Git"}','{"name":"Git Extensions","id":"DblInstallGitextensions","winget":"GitExtensionsTeam.GitExtensions"}','{"name":"GitHub Desktop","id":"DblInstallGithubdesktop","winget":"GitHub.GitHubDesktop"}','{"name":"Godot Engine","id":"DblInstallGodotEngine","winget":"GodotEngine.GodotEngine"}','{"name":"Go Programming Language","id":"DblInstallGolang","winget":"GoLang.Go"}','{"name":"HeidiSQL","id":"DblInstallHeidisql","winget":"HeidiSQL.HeidiSQL"}','{"name":"MySQL","id":"DblInstallMySQL","winget":"Oracle.MySQL"}','{"name":"Node.js","id":"DblInstallNodejs","winget":"OpenJS.NodeJS"}','{"name":"Node.js LTS","id":"DblInstallNodejslts","winget":"OpenJS.NodeJS.LTS"}','{"name":"Node Version Manager (NVM)","id":"DblInstallNodemanager","winget":"CoreyButler.NVMforWindows"}','{"name":"Java 8","id":"DblInstallJava8","winget":"EclipseAdoptium.Temurin.8.JRE"}','{"name":"Java 11","id":"DblInstallJava11","winget":"EclipseAdoptium.Temurin.11.JRE"}','{"name":"Java 17","id":"DblInstallJava17","winget":"EclipseAdoptium.Temurin.17.JRE"}','{"name":"Java 21","id":"DblInstallJava21","winget":"EclipseAdoptium.Temurin.21.JDK"}','{"name":"Oh My Posh","id":"DblInstallOhmyposh","winget":"JanDeDobbeleer.OhMyPosh"}','{"name":"Python 3","id":"DblInstallPython3","winget":"Python.Python.3.12"}','{"name":"Podman","id":"DblInstallPodman","winget":"RedHat.Podman"}','{"name":"Postman","id":"DblInstallPostman","winget":"Postman.Postman"}','{"name":"Ruby 3.2","id":"DblInstallRuby","winget":"RubyInstallerTeam.Ruby.3.2"}','{"name":"Rust","id":"DblInstallRust","winget":"Rustlang.Rust.MSVC"}','{"name":"SQLite","id":"DblInstallSQLite","winget":"DBBrowserForSQLite.DBBrowserForSQLite"}','{"name":"SQL Server 2022 Developer","id":"DblInstallSQLServer2022","winget":"Microsoft.SQLServer.2022.Developer"}','{"name":"Unity 2022","id":"DblInstallUnity","winget":"Unity.Unity.2022"}','{"name":"Vagrant","id":"DblInstallVagrant","winget":"Hashicorp.Vagrant"}','{"name":"Visual Studio 2022","id":"DblInstallVisualstudio2022","winget":"Microsoft.VisualStudio.2022.Community"}','{"name":"Visual Studio Code","id":"DblInstallCode","winget":"Microsoft.VisualStudioCode"}','{"name":".NET Core 3","id":"DblInstallDotnet3","winget":"Microsoft.DotNet.DesktopRuntime.3_1"}','{"name":".NET 5","id":"DblInstallDotnet5","winget":"Microsoft.DotNet.DesktopRuntime.5"}','{"name":".NET 6","id":"DblInstallDotnet6","winget":"Microsoft.DotNet.DesktopRuntime.6"}','{"name":".NET 7","id":"DblInstallDotnet7","winget":"Microsoft.DotNet.DesktopRuntime.7"}','{"name":".NET 8","id":"DblInstallDotnet8","winget":"Microsoft.DotNet.DesktopRuntime.8"}','{"name":"Autoruns","id":"DblInstallAutoruns","winget":"Microsoft.Sysinternals.Autoruns"}','{"name":"HxD Hex Editor","id":"DblInstallHxD","winget":"MHNexus.HxD"}','{"name":"PowerShell","id":"DblInstallPowershell","winget":"Microsoft.PowerShell"}','{"name":"PowerToys","id":"DblInstallPowertoys","winget":"Microsoft.PowerToys"}','{"name":"Process Explorer","id":"DblInstallProcessExplorer","winget":"Microsoft.Sysinternals.ProcessExplorer"}','{"name":"Visual 2015 Redistributable (64-bit)","id":"DblInstallvc2015_64","winget":"Microsoft.VCRedist.2015+.x64"}','{"name":"Visual 2015 Redistributable (32-bit)","id":"DblInstallvc2015_32","winget":"Microsoft.VCRedist.2015+.x86"}','{"name":"Windows Terminal","id":"DblInstallTerminal","winget":"Microsoft.WindowsTerminal"}','{"name":"Brave","id":"DblInstallBrave","winget":"Brave.Brave"}','{"name":"Google Chrome","id":"DblInstallChrome","winget":"Google.Chrome"}','{"name":"Chromium","id":"DblInstallChromium","winget":"eloston.ungoogled-chromium"}','{"name":"Mozilla Firefox","id":"DblInstallFirefox","winget":"Mozilla.Firefox"}','{"name":"Mullvad","id":"DblInstallMullvad","winget":"MullvadVPN.MullvadBrowser"}','{"name":"Thorium","id":"DblInstallThorium","winget":"Alex313031.Thorium"}','{"name":"Thorium AVX2","id":"DblInstallThoriumAVX","winget":"Alex313031.Thorium.AVX2"}','{"name":"Tor Browser","id":"DblInstallTor","winget":"TorProject.TorBrowser"}','{"name":"Librewolf","id":"DblInstallLibrewolf","winget":"Librewolf.Librewolf"}','{"name":"Floorp","id":"DblInstallFloorp","winget":"Ablaze.Floorp"}','{"name":"Ungoogled","id":"DblInstallUngoogled","winget":"eloston.ungoogled-chromium"}','{"name":"Vivaldi","id":"DblInstallVivaldi","winget":"VivaldiTechnologies.Vivaldi"}','{"name":"Waterfox","id":"DblInstallWaterfox","winget":"Waterfox.Waterfox"}','{"name":"Discord","id":"DblInstallDiscord","winget":"Discord.Discord"}','{"name":"Element (Matrix)","id":"DblInstallMatrix","winget":"Element.Element"}','{"name":"Skype","id":"DblInstallSkype","winget":"Microsoft.Skype"}','{"name":"Slack","id":"DblInstallSlack","winget":"SlackTechnologies.Slack"}','{"name":"Microsoft Teams","id":"DblInstallTeams","winget":"Microsoft.Teams"}','{"name":"Telegram","id":"DblInstallTelegram","winget":"Telegram.TelegramDesktop"}','{"name":"Viber","id":"DblInstallViber","winget":"Viber.Viber"}','{"name":"Zoom","id":"DblInstallZoom","winget":"Zoom.Zoom"}','{"name":"Bluestacks","id":"DblInstallBluestacks","winget":"BlueStack.BlueStacks"}','{"name":"Cemu","id":"DblInstallCemu","winget":"Cemu.Cemu"}','{"name":"EA Desktop App","id":"DblInstallEaapp","winget":"ElectronicArts.EADesktop"}','{"name":"Emulation Station","id":"DblInstallEmulationstation","winget":"Emulationstation.Emulationstation"}','{"name":"Epic Games Store","id":"DblInstallEpicgames","winget":"EpicGames.EpicGamesLauncher"}','{"name":"NVIDIA GeForce NOW","id":"DblInstallGeforcenow","winget":"Nvidia.GeforceNOW"}','{"name":"GOG Galaxy","id":"DblInstallGog","winget":"GOG.Galaxy"}','{"name":"Playnite","id":"DblInstallPlaynite","winget":"Playnite.Playnite"}','{"name":"Prism Launcher","id":"DblInstallPrism","winget":"PrismLauncher.PrismLauncher"}','{"name":"SideQuestVR","id":"DblInstallSideQuest","winget":"SideQuestVR.SideQuest"}','{"name":"Steam","id":"DblInstallSteam","winget":"Valve.Steam"}','{"name":"Sunshine Stream Server","id":"DblInstallSunshine","winget":"LizardByte.Sunshine"}','{"name":"Heroic Games Launcher","id":"DblInstallHeroic","winget":"HeroicGamesLauncher.HeroicGamesLauncher"}','{"name":"itch.io","id":"DblInstallItch","winget":"ItchIo.Itch"}','{"name":"Medal","id":"DblInstallMedal","winget":"MedalB.V.Medal"}','{"name":"Moonlight Stream Client","id":"DblInstallMoonlight","winget":"MoonlightGameStreamingProject.Moonlight"}','{"name":"Legendary Epic (Python)","id":"DblPythonEpicCLI","winget":null}','{"name":"Ubisoft Connect","id":"DblInstallUbisoft","winget":"Ubisoft.Connect"}','{"name":"Wargaming Game Center","id":"DblInstallWargaming","winget":"Wargaming.GameCenter"}','{"name":"XEMU","id":"DblInstallXemu","winget":"xemu-project.xemu"}','{"name":"Audacity","id":"DblInstallAudacity","winget":"Audacity.Audacity"}','{"name":"AV1 Video Extension","id":"DblInstallAV1","winget":"9MVZQVXJBQ9V"}','{"name":"Blender","id":"DblInstallBlender","winget":"BlenderFoundation.Blender"}','{"name":"Figma","id":"DblInstallFigma","winget":"Figma.Figma"}','{"name":"FFmpeg","id":"DblInstallFFmpeg","winget":"Gyan.FFmpeg"}','{"name":"Cider","id":"DblInstallCider","winget":"CiderCollective.Cider"}','{"name":"Greenshot","id":"DblInstallGreenshot","winget":"Greenshot.Greenshot"}','{"name":"Handbrake","id":"DblInstallHandbrake","winget":"HandBrake.HandBrake"}','{"name":"ImageGlass","id":"DblInstallImageglass","winget":"DuongDieuPhap.ImageGlass"}','{"name":"Kodi","id":"DblInstallKodi","winget":"XBMCFoundation.Kodi"}','{"name":"K-Lite Codec Pack","id":"DblInstallKlite","winget":"CodecGuide.K-LiteCodecPack.Standard"}','{"name":"MediaInfo","id":"DblInstallMediaInfo","winget":"MediaArea.MediaInfo.GUI"}','{"name":"MKVToolNix","id":"DblInstallMKVToolNix","winget":"MoritzBunkus.MKVToolNix"}','{"name":"Plex Client","id":"DblInstallPlex","winget":"Plex.Plex"}','{"name":"Plex Server","id":"DblInstallPlexServer","winget":"Plex.PlexMediaServer"}','{"name":"OBS Studio","id":"DblInstallObs","winget":"OBSProject.OBSStudio"}','{"name":"Spotify","id":"DblInstallSpotify","winget":"9NCBCSZSJRSB"}','{"name":"ShareX","id":"DblInstallSharex","winget":"ShareX.ShareX"}','{"name":"VLC Media Player","id":"DblInstallVlc","winget":"VideoLAN.VLC"}','{"name":"VP9 Video Extensions","id":"DblInstallVP9","winget":"9N4D0MSMP0PT"}','{"name":"yt-dlp","id":"DblInstallYtdlp","winget":"yt-dlp.yt-dlp"}','{"name":"Anki","id":"DblInstallAnki","winget":"Anki.Anki"}','{"name":"Adobe","id":"DblInstallAdobe","winget":"Adobe.Acrobat.Reader.64-bit"}','{"name":"Joplin","id":"DblInstallJoplin","winget":"Joplin.Joplin"}','{"name":"LibreOffice","id":"DblInstallLibreoffice","winget":"TheDocumentFoundation.LibreOffice"}','{"name":"Neovim","id":"DblInstallNeovim","winget":"Neovim.Neovim"}','{"name":"Neovim Nightly","id":"DblInstallNeovimNightly","winget":"Neovim.Neovim.Nightly"}','{"name":"Notion","id":"DblInstallNotion","winget":"Notion.Notion"}','{"name":"Notepad","id":"DblInstallNotepadplus","winget":"Notepad++.Notepad++"}','{"name":"Notepads","id":"DblInstallNotepadsApp","winget":"JackieLiu.NotepadsApp"}','{"name":"Obsidian","id":"DblInstallObsidian","winget":"Obsidian.Obsidian"}','{"name":"OnlyOffice","id":"DblInstallOnlyoffice","winget":"ONLYOFFICE.DesktopEditors"}','{"name":"Sublime Text 4","id":"DblInstallSublime4","winget":"SublimeHQ.SublimeText.3"}','{"name":"Sumatra","id":"DblInstallSumatra","winget":"SumatraPDF.SumatraPDF"}','{"name":"WPS Office","id":"DblInstallWPS","winget":"Kingsoft.WPSOffice"}','{"name":"WinMerge","id":"DblInstallWinmerge","winget":"WinMerge.WinMerge"}','{"name":"1Password","id":"DblInstall1Password","winget":"AgileBits.1Password"}','{"name":"7-zip","id":"DblInstall7zip","winget":"7zip.7zip"}','{"name":"Android Debug Bridge","id":"DblInstallADB","winget":"Google.PlatformTools"}','{"name":"Alacritty","id":"DblInstallAlacritty","winget":"Alacritty.Alacritty"}','{"name":"Anydo","id":"DblInstallAnydo","winget":"Anydo.Anydo"}','{"name":"AutoHotkey","id":"DblInstallAutohotkey","winget":"autohotkey"}','{"name":"Bitwarden","id":"DblInstallBitwarden","winget":"Bitwarden.Bitwarden"}','{"name":"Chatterino","id":"DblInstallChatterino","winget":"ChatterinoTeam.Chatterino"}','{"name":"ClassicVolumeMixer","id":"DblInstallClasicMixer","winget":"PopeenCom.ClassicVolumeMixer"}','{"name":"CPU-Z","id":"DblInstallCpuz","winget":"CPUID.CPU-Z"}','{"name":"Cryptomator","id":"DblInstallCryptomator","winget":"Cryptomator.Cryptomator"}','{"name":"Display Driver Uninstaller","id":"DblInstallDdu","winget":"Wagnardsoft.DisplayDriverUninstaller"}','{"name":"Draw.io","id":"DblInstallDrawio","winget":"JGraph.Draw"}','{"name":"Everything","id":"DblInstallEsearch","winget":"oidtools.Everything"}','{"name":"Google Drive","id":"DblInstallGoogleDrive","winget":"Google.GoogleDrive "}','{"name":"GPU-Z","id":"DblInstallGpuz","winget":"TechPowerUp.GPU-Z"}','{"name":"gsudo","id":"DblInstallGsudo","winget":"gerardog.gsudo"}','{"name":"HyperX NGENUITY","id":"DblInstallNGENUITY","winget":"9P1TBXR6QDCX"}','{"name":"HWiNFO","id":"DblInstallHwinfo","winget":"REALiX.HWiNFO"}','{"name":"JDownloader","id":"DblInstallJdownloader","winget":"AppWork.JDownloader"}','{"name":"KDE Connect","id":"DblInstallKDEConnect","winget":"KDE.KDEConnect"}','{"name":"KeePassXC","id":"DblInstallKeepass","winget":"KeePassXCTeam.KeePassXC"}','{"name":"Afterburner","id":"DblInstallMsiafterburner","winget":"Guru3D.Afterburner"}','{"name":"Thunderbird","id":"DblInstallThunderbird","winget":"Mozilla.Thunderbird"}','{"name":"NanaZip","id":"DblInstallNanazip","winget":"M2Team.NanaZip"}','{"name":"NTop","id":"DblInstallNTop","winget":"gsass1.NTop"}','{"name":"NVCleanstall","id":"DblInstallNvclean","winget":"TechPowerUp.NVCleanstall"}','{"name":"VirtualBox","id":"DblInstallOVirtualBox","winget":"Oracle.VirtualBox"}','{"name":"Speedtest by Ookla","id":"DblInstallSpeedtest","winget":"Ookla.Speedtest.Desktop"}','{"name":"OpenRGB","id":"DblInstallOpenrgb","winget":"CalcProgrammer1.OpenRGB"}','{"name":"Parsec","id":"DblInstallParsec","winget":"Parsec.Parsec"}','{"name":"Postbox","id":"DblInstallPostbox","winget":"Postbox.Postbox"}','{"name":"Process Lasso","id":"DblInstallProcesslasso","winget":"BitSum.ProcessLasso"}','{"name":"Proxyman","id":"DblInstallProxyman","winget":"ProxymanLLC.Proxyman"}','{"name":"qBittorrent","id":"DblInstallQbittorrent","winget":"qBittorrent.qBittorrent"}','{"name":"Rclone","id":"DblInstallRclone","winget":"Rclone.Rclone"}','{"name":"Revo","id":"DblInstallRevo","winget":"RevoUninstaller.RevoUninstaller"}','{"name":"Rufus","id":"DblInstallRufus","winget":"Rufus.Rufus"}','{"name":"Ttaskbar","id":"DblInstallTtaskbar","winget":"9PF4KZ2VN4W9"}','{"name":"WingetUI","id":"DblInstallWingetUI","winget":"SomePythonThings.WingetUIStore"}','{"name":"WinRAR","id":"DblInstallWinrar","winget":"RARLab.WinRAR"}')
+$programs = @('{"content":".NET 5","choco":null,"description":".NET Desktop Runtime 5 is a runtime environment required for running applications developed with .NET 5.","winget":"Microsoft.DotNet.DesktopRuntime.5","category":"Microsoft Tools","id":"DblInstallDotnet5"}','{"content":".NET 6","choco":null,"description":".NET Desktop Runtime 6 is a runtime environment required for running applications developed with .NET 6.","winget":"Microsoft.DotNet.DesktopRuntime.6","category":"Microsoft Tools","id":"DblInstallDotnet6"}','{"content":".NET 7","choco":null,"description":".NET Desktop Runtime 7 is a runtime environment required for running applications developed with .NET 7.","winget":"Microsoft.DotNet.DesktopRuntime.7","category":"Microsoft Tools","id":"DblInstallDotnet7"}','{"content":".NET 8","choco":null,"description":".NET Desktop Runtime 8 is a runtime environment required for running applications developed with .NET 8.","winget":"Microsoft.DotNet.DesktopRuntime.8","category":"Microsoft Tools","id":"DblInstallDotnet8"}','{"content":".NET Core 3","choco":null,"description":".NET Core 3 runtime for running applications developed with .NET Core 3.","winget":"Microsoft.DotNet.DesktopRuntime.3_1","category":"Microsoft Tools","id":"DblInstallDotnet3"}','{"content":".NET Desktop Runtime 10","choco":"dotnet-10.0-runtime","description":".NET Desktop Runtime 10 is a runtime environment required for running applications developed with .NET 10.","winget":"Microsoft.DotNet.DesktopRuntime.10","category":"Microsoft Tools","id":"DblInstallNetdesktopruntime10"}','{"content":".NET Desktop Runtime 9","choco":"dotnet-9.0-runtime","description":".NET Desktop Runtime 9 is a runtime environment required for running applications developed with .NET 9.","winget":"Microsoft.DotNet.DesktopRuntime.9","category":"Microsoft Tools","id":"DblInstallNetdesktopruntime9"}','{"content":"1Password","choco":"1password","description":"1Password is a password manager that allows you to store and manage your passwords securely.","winget":"AgileBits.1Password","category":"Utilities","id":"DblInstall1Password"}','{"content":"7-zip","choco":"7zip","description":"7-Zip is a free and open-source file archiver utility. It supports several compression formats and provides a high compression ratio, making it a popular choice for file compression.","winget":"7zip.7zip","category":"Utilities","id":"DblInstall7zip"}','{"content":"Adobe","choco":"adobereader","description":"Adobe Acrobat Reader is a free PDF viewer with essential features for viewing, printing, and annotating PDF documents.","winget":"Adobe.Acrobat.Reader.64-bit","category":"Document","id":"DblInstallAdobe"}','{"content":"Advanced IP Scanner","choco":"advanced-ip-scanner","description":"Advanced IP Scanner is a fast and easy-to-use network scanner. It is designed to analyze LAN networks and provides information about connected devices.","winget":"Famatech.AdvancedIPScanner","category":"Pro Tools","id":"DblInstallAdvancedipscanner"}','{"content":"Afterburner","choco":"msiafterburner","description":"MSI Afterburner is a graphics card overclocking utility with advanced features.","winget":"Guru3D.Afterburner","category":"Utilities","id":"DblInstallMsiafterburner"}','{"content":"AIMP (Music Player)","choco":"aimp","description":"AIMP is a feature-rich music player with support for various audio formats, playlists, and customizable user interface.","winget":"AIMP.AIMP","category":"Multimedia Tools","id":"DblInstallAimpmusicplayer"}','{"content":"Alacritty","choco":"alacritty","description":"Alacritty is a fast, cross-platform, GPU-accelerated terminal emulator.","winget":"Alacritty.Alacritty","category":"Utilities","id":"DblInstallAlacritty"}','{"content":"Amazon Corretto 21 (LTS)","choco":"corretto21jdk","description":"Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK).","winget":"Amazon.Corretto.21.JDK","category":"Development","id":"DblInstallAmazoncorretto21lts"}','{"content":"Amazon Corretto 25 (LTS)","choco":"corretto25jdk","description":"Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK).","winget":"Amazon.Corretto.25.JDK","category":"Development","id":"DblInstallAmazoncorretto25lts"}','{"content":"Amazon Corretto 8 (LTS)","choco":"corretto8jdk","description":"Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK).","winget":"Amazon.Corretto.8.JDK","category":"Development","id":"DblInstallAmazoncorretto8lts"}','{"content":"Android Debug Bridge","choco":"googleplatformtools","description":"Android Debug Bridge (ADB) is a versatile command-line tool that lets you communicate with a device.","winget":"Google.PlatformTools","category":"Utilities","id":"DblInstallADB"}','{"content":"Angry IP Scanner","choco":"angryip","description":"Angry IP Scanner is an open-source and cross-platform network scanner. It is used to scan IP addresses and ports, providing information about network connectivity.","winget":"angryziber.AngryIPScanner","category":"Pro Tools","id":"DblInstallAngryipscanner"}','{"content":"Anki","choco":null,"description":"Anki is a spaced repetition flashcard program that makes memorization more efficient.","winget":"Anki.Anki","category":"Document","id":"DblInstallAnki"}','{"content":"AnyDesk","choco":"anydesk","description":"AnyDesk is a remote desktop software that enables users to access and control computers remotely. It is known for its fast connection and low latency.","winget":"AnyDesk.AnyDesk","category":"Utilities","id":"DblInstallAnydesk"}','{"content":"Anydo","choco":"anydo","description":"","winget":"Anydo.Anydo","category":"Utilities","id":"DblInstallAnydo"}','{"content":"Audacity","choco":null,"description":"Audacity is a free and open-source audio editing software known for its powerful recording and editing capabilities.","winget":"Audacity.Audacity","category":"Multimedia Tools","id":"DblInstallAudacity"}','{"content":"AutoHotkey","choco":"autohotkey","description":"AutoHotkey is a scripting language for Windows that allows users to create custom automation scripts and macros. It is often used for automating repetitive tasks and customizing keyboard shortcuts.","winget":"autohotkey","category":"Utilities","id":"DblInstallAutohotkey"}','{"content":"Autoruns","choco":null,"description":"This utility shows you what programs are configured to run during system bootup or login.","winget":"Microsoft.Sysinternals.Autoruns","category":"Microsoft Tools","id":"DblInstallAutoruns"}','{"content":"AV1 Video Extension","choco":null,"description":"AV1 Video Extension provides support for the AV1 video codec in Windows.","winget":"9MVZQVXJBQ9V","category":"Multimedia Tools","id":"DblInstallAV1"}','{"content":"Battle.net","choco":null,"description":"Battle.net is a launcher for games created and developed by Activision Blizzard","winget":"Blizzard.BattleNet","category":"Games","id":"DblInstallBattlenet"}','{"content":"Betterbird","choco":"betterbird","description":"Betterbird is a fork of Mozilla Thunderbird with additional features and bugfixes.","winget":"Betterbird.Betterbird","category":"Communications","id":"DblInstallBetterbird"}','{"content":"Bitwarden","choco":"bitwarden","description":"Bitwarden is an open-source password management solution. It allows users to store and manage their passwords in a secure and encrypted vault, accessible across multiple devices.","winget":"Bitwarden.Bitwarden","category":"Utilities","id":"DblInstallBitwarden"}','{"content":"Blender","choco":"blender","description":"Blender is a powerful open-source 3D creation suite, offering modeling, sculpting, animation, and rendering tools.","winget":"BlenderFoundation.Blender","category":"Multimedia Tools","id":"DblInstallBlender"}','{"content":"Bluestacks","choco":null,"description":"BlueStacks is an Android emulator that lets you run Android apps and games on Windows.","winget":"BlueStack.BlueStacks","category":"Gaming Launchers","id":"DblInstallBluestacks"}','{"content":"BlurAutoClicker","choco":null,"description":"An Auto-clicker with a few advanced features and generally better performance than popular alternatives.","winget":"Blur009.BlurAutoClicker","category":"Utilities","id":"DblInstallBlurautoclicker"}','{"content":"Brave","choco":"brave","description":"Brave is a privacy-focused web browser that blocks ads and trackers, offering a faster and safer browsing experience.","winget":"Brave.Brave","category":"Browsers","id":"DblInstallBrave"}','{"content":"Bruno","choco":"bruno","description":"Bruno is a local-first API client that stores collections as plain text files for version control and collaboration.","winget":"Bruno.Bruno","category":"Development","id":"DblInstallBruno"}','{"content":"Bulk Crap Uninstaller","choco":"bulk-crap-uninstaller","description":"Bulk Crap Uninstaller is a free and open-source uninstaller utility for Windows. It helps users remove unwanted programs and clean up their system by uninstalling multiple applications at once.","winget":"Klocman.BulkCrapUninstaller","category":"Utilities","id":"DblInstallBulkcrapuninstaller"}','{"content":"Calibre","choco":"calibre","description":"Calibre is a powerful and easy-to-use e-book manager, viewer, and converter.","winget":"calibre.calibre","category":"Multimedia Tools","id":"DblInstallCalibre"}','{"content":"Cemu","choco":null,"description":"Cemu is a highly experimental software to emulate Wii U applications on PC.","winget":"Cemu.Cemu","category":"Gaming Launchers","id":"DblInstallCemu"}','{"content":"ChatGPT Desktop","choco":null,"description":"The official ChatGPT desktop app for Windows, distributed through the Microsoft Store.","winget":"msstore:9NT1R1C2HH7J","category":"Development","id":"DblInstallChatgptdesktop"}','{"content":"Chatterino","choco":"chatterino","description":"Chatterino is a chat client for Twitch chat that offers a clean and customizable interface for a better streaming experience.","winget":"ChatterinoTeam.Chatterino","category":"Utilities","id":"DblInstallChatterino"}','{"content":"Chromium","choco":"chromium","description":"Chromium is the open-source project that serves as the foundation for various web browsers, including Chrome.","winget":"eloston.ungoogled-chromium","category":"Browsers","id":"DblInstallChromium"}','{"content":"Cider","choco":null,"description":"Cider is an open-source Apple Music client for Windows.","winget":"CiderCollective.Cider","category":"Multimedia Tools","id":"DblInstallCider"}','{"content":"Cinebench R23","choco":null,"description":"Cinebench R23 is a benchmark tool for comparing CPU rendering performance across systems.","winget":"Maxon.CinebenchR23","category":"Pro Tools","id":"DblInstallCinebenchr23"}','{"content":"ClassicVolumeMixer","choco":null,"description":"Classic Volume Mixer provides quick access to the classic volume mixer in Windows.","winget":"PopeenCom.ClassicVolumeMixer","category":"Utilities","id":"DblInstallClasicMixer"}','{"content":"Claude Code","choco":"claude-code","description":"Anthropics agentic coding tool for terminal and IDE development workflows.","winget":"Anthropic.ClaudeCode","category":"Development","id":"DblInstallClaudecode"}','{"content":"Claude Desktop","choco":"claude","description":"Anthropics Claude desktop application for focused AI-assisted work and chat.","winget":"Anthropic.Claude","category":"Development","id":"DblInstallClaudedesktop"}','{"content":"Cloudflare WARP","choco":"warp","description":"WARP is a freemium VPN service provided by Cloudflare. Includes usage of Cloudflares DNS","winget":"Cloudflare.Warp","category":"Utilities","id":"DblInstallCloudflarewarp"}','{"content":"CMake","choco":"cmake","description":"CMake is an open-source, cross-platform family of tools designed to build, test and package software.","winget":"Kitware.CMake","category":"Development","id":"DblInstallCmake"}','{"content":"Codex","choco":"codex","description":"Codex CLI is an OpenAI coding agent that runs locally in your terminal.","winget":"OpenAI.Codex","category":"Development","id":"DblInstallCodex"}','{"content":"CPU-Z","choco":"cpu-z","description":"CPU-Z is a system monitoring and diagnostic tool for Windows. It provides detailed information about the computers hardware components, including the CPU, memory, and motherboard.","winget":"CPUID.CPU-Z","category":"Utilities","id":"DblInstallCpuz"}','{"content":"Cryptomator","choco":"cryptomator","description":"Cryptomator is a free and open-source tool for encrypting cloud storage files.","winget":"Cryptomator.Cryptomator","category":"Utilities","id":"DblInstallCryptomator"}','{"content":"Crystal Disk Info","choco":"crystaldiskinfo","description":"Crystal Disk Info is a disk health monitoring tool that provides information about the status and performance of hard drives. It helps users anticipate potential issues and monitor drive health.","winget":"CrystalDewWorld.CrystalDiskInfo","category":"Utilities","id":"DblInstallCrystaldiskinfo"}','{"content":"Crystal Disk Mark","choco":"crystaldiskmark","description":"Crystal Disk Mark is a disk benchmarking tool that measures the read and write speeds of storage devices. It helps users assess the performance of their hard drives and SSDs.","winget":"CrystalDewWorld.CrystalDiskMark","category":"Utilities","id":"DblInstallCrystaldiskmark"}','{"content":"Cursor","choco":"cursoride","description":"AI-powered code editor (VS Code-based) with agentic coding features and integrated AI assistance for development workflows.","winget":"Anysphere.Cursor","category":"Development","id":"DblInstallCursor"}','{"content":"Deskflow","choco":"deskflow","description":"Deskflow is a free and open-source software KVM that lets you share a single keyboard and mouse across multiple computers.","winget":"Deskflow.Deskflow","category":"Utilities","id":"DblInstallDeskflow"}','{"content":"Discord","choco":"discord","description":"Discord is a popular communication platform with voice, video, and text chat, designed for gamers but used by a wide range of communities.","winget":"Discord.Discord","category":"Communications","id":"DblInstallDiscord"}','{"content":"DISMTools","choco":"dismtools","description":"DISMTools is a fast, customizable GUI for the DISM utility, supporting Windows images from Windows 7 onward. It handles installations on any drive, offers project support, and lets users tweak settings like color modes, language, and DISM versions; powered by both native DISM and a managed DISM API.","winget":"CodingWondersSoftware.DISMTools.Stable","category":"Microsoft Tools","id":"DblInstallDismtools"}','{"content":"Display Driver Uninstaller","choco":"ddu","description":"Display Driver Uninstaller (DDU) is a tool for completely uninstalling graphics drivers from NVIDIA, AMD, and Intel. It is useful for troubleshooting graphics driver-related issues.","winget":"Wagnardsoft.DisplayDriverUninstaller","category":"Utilities","id":"DblInstallDdu"}','{"content":"Docker Desktop","choco":null,"description":"Docker Desktop provides a local environment for building, running, and testing containerized applications on Windows.","winget":"Docker.DockerDesktop","category":"Development","id":"DblInstallDockerdesktop"}','{"content":"Dorion","choco":"dorion","description":"Tiny alternative Discord client with a smaller footprint, snappier startup, themes, plugins and more!","winget":"SpikeHD.Dorion","category":"Communications","id":"DblInstallDorion"}','{"content":"Draw.io","choco":"drawio","description":"draw.io is a free online diagramming tool for creating flowcharts, mind maps, and more.","winget":"JGraph.Draw","category":"Utilities","id":"DblInstallDrawio"}','{"content":"Dropbox","choco":"dropbox","description":"Dropbox is a cloud storage client for syncing files, sharing content, and keeping documents available across devices.","winget":"Dropbox.Dropbox","category":"Utilities","id":"DblInstallDropbox"}','{"content":"EA Desktop App","choco":null,"description":"EA App is a platform for accessing and playing Electronic Arts games.","winget":"ElectronicArts.EADesktop","category":"Gaming Launchers","id":"DblInstallEaapp"}','{"content":"EarTrumpet (Audio)","choco":"eartrumpet","description":"EarTrumpet is an audio control app for Windows, providing a simple and intuitive interface for managing sound settings.","winget":"File-New-Project.EarTrumpet","category":"Multimedia Tools","id":"DblInstallEartrumpetaudio"}','{"content":"Edge","choco":"microsoft-edge","description":"Microsoft Edge is a modern web browser built on Chromium, offering performance, security, and integration with Microsoft services.","winget":"Microsoft.Edge","category":"Browsers","id":"DblInstallEdge"}','{"content":"Element (Matrix)","choco":"element-desktop","description":"Element is a client for Matrix; an open network for secure, decentralized communication.","winget":"Element.Element","category":"Communications","id":"DblInstallMatrix"}','{"content":"Emulation Station","choco":null,"description":"EmulationStation is a graphical frontend for RetroArch and other emulators.","winget":"Emulationstation.Emulationstation","category":"Gaming Launchers","id":"DblInstallEmulationstation"}','{"content":"EmulationStation Desktop Edition","choco":null,"description":"EmulationStation Desktop Edition is a frontend for browsing and launching games from your multi-platform game collection.","winget":"ES-DE.EmulationStation-DE","category":"Games","id":"DblInstallEmulationstationdesktopedition"}','{"content":"Ente Auth","choco":"ente-auth","description":"Ente Auth is a free, cross-platform, end-to-end encrypted authenticator app.","winget":"ente-io.auth-desktop","category":"Utilities","id":"DblInstallEnteauth"}','{"content":"Epic Games Store","choco":null,"description":"Epic Games Launcher is the client for accessing and playing games from the Epic Games Store.","winget":"EpicGames.EpicGamesLauncher","category":"Gaming Launchers","id":"DblInstallEpicgames"}','{"content":"Everything","choco":"everything","description":"Everything is a search engine that locates files and folders by filename instantly for Windows. Unlike Windows search Everything initially displays every file and folder on your computer (hence the name Everything). You type in a search filter to limit what files and folders are displayed.","winget":"oidtools.Everything","category":"Utilities","id":"DblInstallEsearch"}','{"content":"F.lux","choco":"flux","description":"f.lux adjusts the color temperature of your screen to reduce eye strain during nighttime use.","winget":"flux.flux","category":"Utilities","id":"DblInstallFlux"}','{"content":"Fast Node Manager","choco":"fnm","description":"Fast Node Manager (fnm) is a fast, cross-platform tool for installing and switching between Node.js versions.","winget":"Schniz.fnm","category":"Development","id":"DblInstallFastnodemanager"}','{"content":"FFmpeg","choco":null,"description":"FFmpeg is a complete, cross-platform solution for recording, converting, and streaming audio and video.","winget":"Gyan.FFmpeg","category":"Multimedia Tools","id":"DblInstallFFmpeg"}','{"content":"Figma","choco":null,"description":"Figma is a web-based vector graphics editor and prototyping tool for collaborative design.","winget":"Figma.Figma","category":"Multimedia Tools","id":"DblInstallFigma"}','{"content":"Files","choco":"files","description":"Alternative file explorer.","winget":"FilesCommunity.Files","category":"Utilities","id":"DblInstallFiles"}','{"content":"Firefox ESR","choco":"FirefoxESR","description":"Mozilla Firefox is an open-source web browser known for its customization options, privacy features, and extensions. Firefox ESR (Extended Support Release) receives major updates every 42 weeks with minor updates such as crash fixes, security fixes and policy updates as needed, but at least every four weeks.","winget":"Mozilla.Firefox.ESR","category":"Browsers","id":"DblInstallFirefoxesr"}','{"content":"Floorp","choco":"floorp","description":"Floorp is an open-source web browser project that aims to provide a simple and fast browsing experience.","winget":"Ablaze.Floorp","category":"Browsers","id":"DblInstallFloorp"}','{"content":"foobar2000 (Music Player)","choco":"foobar2000","description":"foobar2000 is a highly customizable and extensible music player for Windows, known for its modular design and advanced features.","winget":"PeterPawlowski.foobar2000","category":"Multimedia Tools","id":"DblInstallFoobar2000musicplayer"}','{"content":"Foxit PDF Reader","choco":"foxitreader","description":"Foxit PDF Reader is a free PDF viewer with a familiar ribbon-style interface.","winget":"Foxit.FoxitReader","category":"Document","id":"DblInstallFoxitpdfreader"}','{"content":"GIMP (Image Editor)","choco":"gimp","description":"GIMP is a versatile open-source raster graphics editor used for tasks such as photo retouching, image editing, and image composition.","winget":"GIMP.GIMP.3","category":"Multimedia Tools","id":"DblInstallGimpimageeditor"}','{"content":"Git","choco":null,"description":"Git is a distributed version control system widely used for tracking changes in source code during software development.","winget":"Git.Git","category":"Development","id":"DblInstallGit"}','{"content":"Git Extensions","choco":null,"description":"Git Extensions is a graphical Git client for Windows with repository, history, and commit management tools.","winget":"GitExtensionsTeam.GitExtensions","category":"Development","id":"DblInstallGitextensions"}','{"content":"GitHub CLI","choco":"gh","description":"GitHub CLI brings pull requests, issues, releases, and other GitHub workflows to the terminal.","winget":"GitHub.cli","category":"Development","id":"DblInstallGithubcli"}','{"content":"GitHub Desktop","choco":null,"description":"GitHub Desktop is a visual Git client that simplifies collaboration on GitHub repositories with an easy-to-use interface.","winget":"GitHub.GitHubDesktop","category":"Development","id":"DblInstallGithubdesktop"}','{"content":"GlazeWM","choco":"glazewm","description":"GlazeWM is a tiling window manager for Windows inspired by i3 and Polybar.","winget":"glzr-io.glazewm","category":"Utilities","id":"DblInstallGlazewm"}','{"content":"Go Programming Language","choco":null,"description":"Go (or Golang) is a statically typed, compiled programming language designed for simplicity, reliability, and efficiency.","winget":"GoLang.Go","category":"Development","id":"DblInstallGolang"}','{"content":"Godot Engine","choco":null,"description":"Godot Engine is a free and open-source game engine for 2D and 3D game development.","winget":"GodotEngine.GodotEngine","category":"Development","id":"DblInstallGodotEngine"}','{"content":"GOG Galaxy","choco":null,"description":"GOG Galaxy is a gaming client that offers DRM-free games, additional content, and more.","winget":"GOG.Galaxy","category":"Gaming Launchers","id":"DblInstallGog"}','{"content":"Google Chrome","choco":"googlechrome","description":"Google Chrome is a widely used web browser known for its speed, simplicity, and seamless integration with Google services.","winget":"Google.Chrome","category":"Browsers","id":"DblInstallChrome"}','{"content":"Google Drive","choco":null,"description":"File syncing across devices all tied to your Google account.","winget":"Google.GoogleDrive","category":"Utilities","id":"DblInstallGoogleDrive"}','{"content":"GPU-Z","choco":"gpu-z","description":"GPU-Z provides detailed information about your graphics card and GPU.","winget":"TechPowerUp.GPU-Z","category":"Utilities","id":"DblInstallGpuz"}','{"content":"Greenshot","choco":null,"description":"Greenshot is a free and open-source screenshot tool for Windows.","winget":"Greenshot.Greenshot","category":"Multimedia Tools","id":"DblInstallGreenshot"}','{"content":"gsudo","choco":"gsudo","description":"gsudo is a sudo equivalent for Windows. It allows you to run commands with elevated administrative privileges directly within the current console window.","winget":"gerardog.gsudo","category":"Utilities","id":"DblInstallGsudo"}','{"content":"Handbrake","choco":"handbrake","description":"HandBrake is an open-source video transcoder, allowing you to convert video from nearly any format to a selection of widely supported codecs.","winget":"HandBrake.HandBrake","category":"Multimedia Tools","id":"DblInstallHandbrake"}','{"content":"HeidiSQL","choco":null,"description":"HeidiSQL is a free and open-source database management tool for MySQL, MariaDB, and more.","winget":"HeidiSQL.HeidiSQL","category":"Development","id":"DblInstallHeidisql"}','{"content":"Helium","choco":"helium","description":"Private, fast, and honest web browser.","winget":"ImputNet.Helium","category":"Browsers","id":"DblInstallHelium"}','{"content":"Heroic Games Launcher","choco":null,"description":"Heroic Games Launcher is an open-source alternative game launcher for Epic Games Store.","winget":"HeroicGamesLauncher.HeroicGamesLauncher","category":"Gaming Launchers","id":"DblInstallHeroic"}','{"content":"Hugo","choco":"hugo-extended","description":"The worlds fastest framework for building websites.","winget":"Hugo.Hugo.Extended","category":"Utilities","id":"DblInstallHugo"}','{"content":"HWiNFO","choco":"hwinfo","description":"HWiNFO provides comprehensive hardware information and diagnostics for Windows.","winget":"REALiX.HWiNFO","category":"Utilities","id":"DblInstallHwinfo"}','{"content":"HWMonitor","choco":"hwmonitor","description":"HWMonitor is a hardware monitoring program that reads PC systems main health sensors.","winget":"CPUID.HWMonitor","category":"Pro Tools","id":"DblInstallHwmonitor"}','{"content":"HxD Hex Editor","choco":null,"description":"HxD is a free hex editor that allows you to edit, view, search, and analyze binary files.","winget":"MHNexus.HxD","category":"Microsoft Tools","id":"DblInstallHxD"}','{"content":"HyperX NGENUITY","choco":null,"description":"HyperX NGENUITY is a configuration software for HyperX peripherals.","winget":"9P1TBXR6QDCX","category":"Utilities","id":"DblInstallNGENUITY"}','{"content":"ImageGlass","choco":"imageglass","description":"ImageGlass is a versatile image viewer with support for various image formats and a focus on simplicity and speed.","winget":"DuongDieuPhap.ImageGlass","category":"Multimedia Tools","id":"DblInstallImageglass"}','{"content":"Internet Download Manager","choco":"internet-download-manager","description":"Internet Download Manager is a download manager for accelerating, resuming, and scheduling file downloads.","winget":"Tonec.InternetDownloadManager","category":"Utilities","id":"DblInstallInternetdownloadmanager"}','{"content":"IrfanView","choco":"irfanview","description":"IrfanView is a lightweight, fast, and free image viewer and editor. Supports multiple formats, batch processing, and powerful plugins.","winget":"IrfanSkiljan.IrfanView","category":"Multimedia Tools","id":"DblInstallIrfanview"}','{"content":"itch.io","choco":null,"description":"Itch.io is a digital distribution platform for indie games and creative projects.","winget":"ItchIo.Itch","category":"Gaming Launchers","id":"DblInstallItch"}','{"content":"iTunes","choco":"itunes","description":"iTunes is a media player, media library, and online radio broadcaster application developed by Apple Inc.","winget":"Apple.iTunes","category":"Multimedia Tools","id":"DblInstallItunes"}','{"content":"Java 11","choco":null,"description":"Java 11 is a long-term support release of the Java Development Kit.","winget":"EclipseAdoptium.Temurin.11.JRE","category":"Development","id":"DblInstallJava11"}','{"content":"Java 17","choco":null,"description":"Java 17 is a long-term support release of the Java Development Kit.","winget":"EclipseAdoptium.Temurin.17.JRE","category":"Development","id":"DblInstallJava17"}','{"content":"Java 21","choco":null,"description":"Java 21 is a long-term support release of the Java Development Kit.","winget":"EclipseAdoptium.Temurin.21.JDK","category":"Development","id":"DblInstallJava21"}','{"content":"Java 8","choco":null,"description":"Java 8 is a widely used version of the Java Development Kit.","winget":"EclipseAdoptium.Temurin.8.JRE","category":"Development","id":"DblInstallJava8"}','{"content":"JDownloader","choco":"jdownloader","description":"JDownloader is a free, open-source download manager that simplifies downloading files from hosting sites.","winget":"AppWork.JDownloader","category":"Utilities","id":"DblInstallJdownloader"}','{"content":"Jellyfin Media Player","choco":"jellyfin-media-player","description":"Jellyfin Media Player is a client application for the Jellyfin media server, providing access to your media library.","winget":"Jellyfin.JellyfinMediaPlayer","category":"Selfhosted Tools","id":"DblInstallJellyfinmediaplayer"}','{"content":"Jellyfin Server","choco":"jellyfin","description":"Jellyfin Server is an open-source media server software, allowing you to organize and stream your media library.","winget":"Jellyfin.Server","category":"Selfhosted Tools","id":"DblInstallJellyfinserver"}','{"content":"Jetbrains Toolbox","choco":"jetbrainstoolbox","description":"Jetbrains Toolbox is a platform for easy installation and management of JetBrains developer tools.","winget":"JetBrains.Toolbox","category":"Development","id":"DblInstallJetbrainstoolbox"}','{"content":"Joplin","choco":null,"description":"Joplin is an open-source note-taking and to-do application with synchronization capabilities.","winget":"Joplin.Joplin","category":"Document","id":"DblInstallJoplin"}','{"content":"JPEG View","choco":"jpegview","description":"JPEGView is a lean, fast and highly configurable viewer/editor for JPEG, BMP, PNG, WEBP, TGA, GIF, JXL, HEIC, HEIF, AVIF, and TIFF images with a minimal GUI.","winget":"sylikc.JPEGView","category":"Utilities","id":"DblInstallJpegview"}','{"content":"K-Lite Codec Pack","choco":"k-litecodecpackstandard","description":"K-Lite Codec Pack Standard is a collection of audio and video codecs and related tools, providing essential components for media playback.","winget":"CodecGuide.K-LiteCodecPack.Standard","category":"Multimedia Tools","id":"DblInstallKlite"}','{"content":"KDE Connect","choco":"kdeconnect","description":"KDE Connect is a tool that enables communication between your Linux desktop and Android device.","winget":"KDE.KDEConnect","category":"Utilities","id":"DblInstallKDEConnect"}','{"content":"KeePassXC","choco":"keepassxc","description":"KeePassXC is a modern, secure, and open-source password manager that stores and manages your most sensitive information. You can run KeePassXC on Windows, macOS, and Linux systems. KeePassXC is for people with extremely high demands of secure personal data management. It saves many different types of information, such as usernames, passwords, URLs, attachments, and notes in an offline, encrypted file that can be stored in any location, including private and public cloud solutions. For easy identification and management, user-defined titles and icons can be specified for entries. In addition, entries are sorted into customizable groups. An integrated search function allows you to use advanced patterns to easily find any entry in your database. A customizable, fast, and easy-to-use password generator utility allows you to create passwords with any combination of characters or easy to remember passphrases.","winget":"KeePassXCTeam.KeePassXC","category":"Utilities","id":"DblInstallKeepass"}','{"content":"Kodi","choco":null,"description":"Kodi is an open-source media center application that allows you to play and view most videos, music, podcasts, and other digital media files.","winget":"XBMCFoundation.Kodi","category":"Multimedia Tools","id":"DblInstallKodi"}','{"content":"Lazygit","choco":"lazygit","description":"Simple terminal UI for git commands.","winget":"JesseDuffield.lazygit","category":"Development","id":"DblInstallLazygit"}','{"content":"LibreOffice","choco":"libreoffice-fresh","description":"LibreOffice is a powerful and free office suite, compatible with other major office suites.","winget":"TheDocumentFoundation.LibreOffice","category":"Document","id":"DblInstallLibreoffice"}','{"content":"Librewolf","choco":"librewolf","description":"LibreWolf is a privacy-focused web browser based on Firefox, with additional privacy and security enhancements.","winget":"Librewolf.Librewolf","category":"Browsers","id":"DblInstallLibrewolf"}','{"content":"LocalSend","choco":"localsend.install","description":"An open-source cross-platform alternative to AirDrop.","winget":"LocalSend.LocalSend","category":"Selfhosted Tools","id":"DblInstallLocalsend"}','{"content":"Lua","choco":"lua","description":"A batteries included environment for the Lua scripting language on Windows.","winget":"rjpcomputing.luaforwindows","category":"Development","id":"DblInstallLua"}','{"content":"Medal","choco":null,"description":"Medal is a screen recording and sharing app for gamers.","winget":"MedalB.V.Medal","category":"Gaming Launchers","id":"DblInstallMedal"}','{"content":"Media Player Classic - Home Cinema","choco":"mpc-hc-clsid2","description":"Media Player Classic - Home Cinema (MPC-HC) is a free and open-source video and audio player for Windows. MPC-HC is based on the original Guliverkli project and contains many additional features and bug fixes.","winget":"clsid2.mpc-hc","category":"Multimedia Tools","id":"DblInstallMediaplayerclassichomecinema"}','{"content":"MediaInfo","choco":"mediainfo","description":"MediaInfo is a tool that provides detailed information about video and audio files.","winget":"MediaArea.MediaInfo.GUI","category":"Multimedia Tools","id":"DblInstallMediaInfo"}','{"content":"Microsoft Teams","choco":"teams","description":"Microsoft Teams is a collaboration platform that integrates with Office 365 and offers chat, video conferencing, file sharing, and more.","winget":"Microsoft.Teams","category":"Communications","id":"DblInstallTeams"}','{"content":"MiniTool Partition Wizard","choco":"minitoolpartitionwizard","description":"Comprehensive free partition manager that performs advanced operations Windows natively cannot, such as merging partitions, converting file systems, and organizing disk capacity.","winget":"MiniTool.PartitionWizard.Free","category":"Utilities","id":"DblInstallMinitoolpartitionwizard"}','{"content":"MKVToolNix","choco":"mkvtoolnix","description":"MKVToolNix is a set of tools for creating, altering, and inspecting Matroska (MKV) files.","winget":"MoritzBunkus.MKVToolNix","category":"Multimedia Tools","id":"DblInstallMKVToolNix"}','{"content":"Modrinth App","choco":"modrinth-app","description":"Modrinth App is a desktop application for managing Minecraft mods and modpacks.","winget":"Modrinth.ModrinthApp","category":"Games","id":"DblInstallModrinthapp"}','{"content":"Moonlight Stream Client","choco":null,"description":"Moonlight/GameStream Client allows you to stream PC games to other devices over your local network.","winget":"MoonlightGameStreamingProject.Moonlight","category":"Gaming Launchers","id":"DblInstallMoonlight"}','{"content":"Mozilla Firefox","choco":"firefox","description":"Mozilla Firefox is an open-source web browser known for its customization options, privacy features, and extensions.","winget":"Mozilla.Firefox","category":"Browsers","id":"DblInstallFirefox"}','{"content":"mpc-qt","choco":"mediainfo","description":"Media Player Classic Qute Theater","winget":"mpc-qt.mpc-qt","category":"Multimedia Tools","id":"DblInstallMpcqt"}','{"content":"mpv","choco":null,"description":"mpv is a free, open source, and cross-platform media player supporting a wide variety of media formats, codecs, and subtitle types.","winget":"shinchiro.mpv","category":"Multimedia Tools","id":"DblInstallMpv"}','{"content":"MSEdgeRedirect","choco":"msedgeredirect","description":"A Tool to Redirect News, Search, Widgets, Weather, and More to your default browser.","winget":"rcmaehl.MSEdgeRedirect","category":"Utilities","id":"DblInstallMsedgeredirect"}','{"content":"Mullvad","choco":null,"description":"Mullvad Browser is a privacy-focused web browser, developed in partnership with the Tor Project.","winget":"MullvadVPN.MullvadBrowser","category":"Browsers","id":"DblInstallMullvad"}','{"content":"Mullvad VPN","choco":"mullvad-app","description":"This is the VPN client software for the Mullvad VPN service.","winget":"MullvadVPN.MullvadVPN","category":"Pro Tools","id":"DblInstallMullvadvpn"}','{"content":"MySQL","choco":null,"description":"MySQL is a popular open-source relational database management system.","winget":"Oracle.MySQL","category":"Development","id":"DblInstallMySQL"}','{"content":"NanaZip","choco":"nanazip","description":"NanaZip is a fast and efficient file compression and decompression tool.","winget":"M2Team.NanaZip","category":"Utilities","id":"DblInstallNanazip"}','{"content":"NAPS2 (Scanner)","choco":"naps2","description":"NAPS2 is a document scanning application that simplifies the process of creating electronic documents.","winget":"Cyanfish.NAPS2","category":"Document","id":"DblInstallNaps2scanner"}','{"content":"Neovim","choco":"neovim","description":"Neovim is a highly extensible text editor and an improvement over the original Vim editor.","winget":"Neovim.Neovim","category":"Document","id":"DblInstallNeovim"}','{"content":"Neovim Nightly","choco":null,"description":"Neovim Nightly is the bleeding-edge build of the Neovim text editor.","winget":"Neovim.Neovim.Nightly","category":"Document","id":"DblInstallNeovimNightly"}','{"content":"NetBird","choco":"netbird","description":"NetBird is an open-source alternative comparable to TailScale that can be connected to a self-hosted server.","winget":"Netbird.Netbird","category":"Selfhosted Tools","id":"DblInstallNetbird"}','{"content":"Nextcloud Desktop","choco":"nextcloud-client","description":"Nextcloud Desktop is the official desktop client for the Nextcloud file synchronization and sharing platform.","winget":"Nextcloud.NextcloudDesktop","category":"Selfhosted Tools","id":"DblInstallNextclouddesktop"}','{"content":"Nilesoft Shell","choco":"nilesoft-shell","description":"Shell is an expanded context menu tool that adds extra functionality and customization options to the Windows context menu.","winget":"Nilesoft.Shell","category":"Utilities","id":"DblInstallNilesoftshell"}','{"content":"Nmap","choco":"nmap","description":"Nmap (Network Mapper) is an open-source tool for network exploration and security auditing. It discovers devices on a network and provides information about their ports and services.","winget":"Insecure.Nmap","category":"Pro Tools","id":"DblInstallNmap"}','{"content":"Node Version Manager (NVM)","choco":null,"description":"Node Version Manager (NVM) allows you to install and switch between multiple Node.js versions.","winget":"CoreyButler.NVMforWindows","category":"Development","id":"DblInstallNodemanager"}','{"content":"Node.js","choco":null,"description":"NodeJS is a JavaScript runtime built on Chromes V8 JavaScript engine for building server-side and networking applications.","winget":"OpenJS.NodeJS","category":"Development","id":"DblInstallNodejs"}','{"content":"Node.js LTS","choco":null,"description":"NodeJS LTS provides Long-Term Support releases for stable and reliable server-side JavaScript development.","winget":"OpenJS.NodeJS.LTS","category":"Development","id":"DblInstallNodejslts"}','{"content":"nomacs","choco":"nomacs","description":"nomacs is a free, open-source image viewer, which supports multiple platforms. You can use it for viewing all common image formats, including RAW and .psd images.","winget":"nomacs.nomacs","category":"Multimedia Tools","id":"DblInstallNomacs"}','{"content":"Notepad","choco":"notepadplusplus","description":"Notepad++ is a free, open-source code editor and Notepad replacement with support for multiple languages.","winget":"Notepad++.Notepad++","category":"Document","id":"DblInstallNotepadplus"}','{"content":"Notepads","choco":null,"description":"Notepads is a modern, lightweight text editor for Windows.","winget":"JackieLiu.NotepadsApp","category":"Document","id":"DblInstallNotepadsApp"}','{"content":"Notion","choco":null,"description":"Notion is an all-in-one workspace for notes, tasks, wikis, and databases.","winget":"Notion.Notion","category":"Document","id":"DblInstallNotion"}','{"content":"NTLite","choco":"ntlite-free","description":"Integrate updates, drivers, automate Windows and application setup, speedup Windows deployment process and have it all set for the next time.","winget":"Nlitesoft.NTLite","category":"Microsoft Tools","id":"DblInstallNtlite"}','{"content":"NTop","choco":"ntop","description":"NTop is a network monitoring tool that provides real-time traffic analysis.","winget":"gsass1.NTop","category":"Utilities","id":"DblInstallNTop"}','{"content":"NuGet","choco":"nuget.commandline","description":"NuGet is a package manager for the .NET framework, enabling developers to manage and share libraries in their .NET applications.","winget":"Microsoft.NuGet","category":"Microsoft Tools","id":"DblInstallNuget"}','{"content":"NVCleanstall","choco":null,"description":"NVCleanstall is a tool designed to customize NVIDIA driver installations, allowing advanced users to control more aspects of the installation process.","winget":"TechPowerUp.NVCleanstall","category":"Utilities","id":"DblInstallNvclean"}','{"content":"NVIDIA GeForce NOW","choco":null,"description":"GeForce NOW is a cloud gaming service that allows you to play high-quality PC games on your device.","winget":"Nvidia.GeforceNOW","category":"Gaming Launchers","id":"DblInstallGeforcenow"}','{"content":"OBS Studio","choco":null,"description":"OBS Studio is a free and open-source software for video recording and live streaming. It supports real-time video/audio capturing and mixing, making it popular among content creators.","winget":"OBSProject.OBSStudio","category":"Multimedia Tools","id":"DblInstallObs"}','{"content":"Obsidian","choco":null,"description":"Obsidian is a powerful note-taking and knowledge management application.","winget":"Obsidian.Obsidian","category":"Document","id":"DblInstallObsidian"}','{"content":"OFGB (Oh Frick Go Back)","choco":"ofgb","description":"GUI Tool to remove ads from various places around Windows 11","winget":"xM4ddy.OFGB","category":"Utilities","id":"DblInstallOfgbohfrickgoback"}','{"content":"Oh My Posh","choco":null,"description":"Oh My Posh is a cross-platform prompt theme engine for any shell.","winget":"JanDeDobbeleer.OhMyPosh","category":"Development","id":"DblInstallOhmyposh"}','{"content":"Okular","choco":"okular","description":"Okular is a versatile document viewer with advanced features.","winget":"KDE.Okular","category":"Document","id":"DblInstallOkular"}','{"content":"OneDrive","choco":"onedrive","description":"OneDrive is a cloud storage service provided by Microsoft, allowing users to store and share files securely across devices.","winget":"Microsoft.OneDrive","category":"Microsoft Tools","id":"DblInstallOnedrive"}','{"content":"OnlyOffice","choco":null,"description":"ONLYOFFICE Desktop is a comprehensive office suite for document editing and collaboration.","winget":"ONLYOFFICE.DesktopEditors","category":"Document","id":"DblInstallOnlyoffice"}','{"content":"OPAutoClicker","choco":"autoclicker","description":"A full-fledged autoclicker with two modes of autoclicking, at your dynamic cursor location or at a prespecified location.","winget":"OPAutoClicker.OPAutoClicker","category":"Utilities","id":"DblInstallOpautoclicker"}','{"content":"OpenRGB","choco":"openrgb","description":"OpenRGB is an open-source RGB lighting control software designed to manage and control RGB lighting for various components and peripherals.","winget":"CalcProgrammer1.OpenRGB","category":"Utilities","id":"DblInstallOpenrgb"}','{"content":"OpenVPN Connect","choco":"openvpn-connect","description":"OpenVPN Connect is a VPN client that allows you to connect securely to a VPN server. It provides a secure and encrypted connection for protecting your online privacy.","winget":"OpenVPNTechnologies.OpenVPNConnect","category":"Pro Tools","id":"DblInstallOpenvpnconnect"}','{"content":"Overwolf","choco":"overwolf","description":"Popular platform for game overlays and companion apps (mod managers, trackers, etc.), widely used by gamers.","winget":"Overwolf.CurseForge","category":"Games","id":"DblInstallOverwolf"}','{"content":"Paint.NET","choco":"paint.net","description":"Paint.NET is a free image and photo editing software for Windows. It features an intuitive user interface and supports a wide range of powerful editing tools.","winget":"dotPDN.PaintDotNet","category":"Multimedia Tools","id":"DblInstallPaintnet"}','{"content":"Parsec","choco":"parsec","description":"Parsec is a low-latency, high-quality remote desktop sharing application for collaborating and gaming across devices.","winget":"Parsec.Parsec","category":"Utilities","id":"DblInstallParsec"}','{"content":"PDF-XChange Editor","choco":"pdfxchangeeditor","description":"A comprehensive Windows-based software suite and editor for creating, viewing, editing, annotating, and signing PDF files.","winget":"TrackerSoftware.PDF-XChangeEditor","category":"Document","id":"DblInstallPdfxchangeeditor"}','{"content":"PDF24 Creator","choco":"pdf24","description":"Free and easy-to-use online/desktop PDF tools that make you more productive","winget":"geeksoftwareGmbH.PDF24Creator","category":"Document","id":"DblInstallPdf24creator"}','{"content":"PDFgear","choco":"pdfgear","description":"PDFgear is a piece of full-featured PDF management software for Windows, macOS, and mobile, and its completely free to use.","winget":"PDFgear.PDFgear","category":"Document","id":"DblInstallPdfgear"}','{"content":"PDFsam Basic","choco":"pdfsam","description":"PDFsam Basic is a free and open-source tool for splitting, merging, and rotating PDF files.","winget":"PDFsam.PDFsam","category":"Document","id":"DblInstallPdfsambasic"}','{"content":"PeaZip","choco":"peazip","description":"PeaZip is a free, open-source file archiver utility that supports multiple archive formats and provides encryption features.","winget":"Giorgiotani.Peazip","category":"Utilities","id":"DblInstallPeazip"}','{"content":"Playnite","choco":null,"description":"Playnite is an open-source video game library manager with one simple goal: To provide a unified interface for all of your games.","winget":"Playnite.Playnite","category":"Gaming Launchers","id":"DblInstallPlaynite"}','{"content":"Plex Client","choco":null,"description":"Plex Desktop for Windows is the front end for Plex Media Server.","winget":"Plex.Plex","category":"Multimedia Tools","id":"DblInstallPlex"}','{"content":"Plex Server","choco":null,"description":"Plex Media Server is a media server software that allows you to organize and stream your media library. It supports various media formats and offers a wide range of features.","winget":"Plex.PlexMediaServer","category":"Multimedia Tools","id":"DblInstallPlexServer"}','{"content":"pnpm","choco":null,"description":"pnpm is a fast and disk space efficient package manager for JavaScript and Node.js applications.","winget":"pnpm.pnpm","category":"Development","id":"DblInstallPnpm"}','{"content":"Podman","choco":null,"description":"Podman is a daemonless container engine for developing, managing, and running containers.","winget":"RedHat.Podman","category":"Development","id":"DblInstallPodman"}','{"content":"Policy Plus","choco":null,"description":"Local Group Policy Editor plus more, for all Windows editions.","winget":"Fleex255.PolicyPlus","category":"Utilities","id":"DblInstallPolicyplus"}','{"content":"Postbox","choco":null,"description":"Postbox is a powerful email client for professionals and enthusiasts.","winget":"Postbox.Postbox","category":"Utilities","id":"DblInstallPostbox"}','{"content":"Postman","choco":"postman","description":"Postman is an API platform and desktop client for designing, testing, documenting, and collaborating on APIs.","winget":"Postman.Postman","category":"Development","id":"DblInstallPostman"}','{"content":"PowerShell","choco":null,"description":"PowerShell is a task automation framework and scripting language designed for system administrators, offering powerful command-line capabilities.","winget":"Microsoft.PowerShell","category":"Microsoft Tools","id":"DblInstallPowershell"}','{"content":"PowerToys","choco":null,"description":"PowerToys is a set of utilities for power users to enhance productivity, featuring tools like FancyZones, PowerRename, and more.","winget":"Microsoft.PowerToys","category":"Microsoft Tools","id":"DblInstallPowertoys"}','{"content":"Prism Launcher","choco":null,"description":"Prism Launcher is an open-source Minecraft launcher with the ability to manage multiple instances, accounts, and mods.","winget":"PrismLauncher.PrismLauncher","category":"Gaming Launchers","id":"DblInstallPrism"}','{"content":"Process Explorer","choco":null,"description":"Process Explorer is a task manager and system monitor.","winget":"Microsoft.Sysinternals.ProcessExplorer","category":"Microsoft Tools","id":"DblInstallProcessExplorer"}','{"content":"Process Lasso","choco":"processlasso","description":"Process Lasso is a system optimization and automation tool that improves system responsiveness and stability by adjusting process priorities and CPU affinities.","winget":"BitSum.ProcessLasso","category":"Utilities","id":"DblInstallProcesslasso"}','{"content":"Process Monitor","choco":"procexp","description":"SysInternals Process Monitor is an advanced monitoring tool that shows real-time file system, registry, and process/thread activity.","winget":"Microsoft.Sysinternals.ProcessMonitor","category":"Microsoft Tools","id":"DblInstallProcessmonitor"}','{"content":"Proton Authenticator","choco":"protonauth","description":"2FA app from Proton to securely sync and backup 2FA codes.","winget":"Proton.ProtonAuthenticator","category":"Utilities","id":"DblInstallProtonauthenticator"}','{"content":"Proton Drive","choco":"protondrive","description":"Proton Drive is an end-to-end encrypted Swiss vault for your files that protects your data.","winget":"Proton.ProtonDrive","category":"Utilities","id":"DblInstallProtondrive"}','{"content":"Proton Mail","choco":"protonmail","description":"Proton Mail is an end-to-end encrypted email service by Proton, protecting your privacy with zero-access encryption.","winget":"Proton.ProtonMail","category":"Communications","id":"DblInstallProtonmail"}','{"content":"Proton Pass","choco":"protonpass","description":"Proton Pass is a cloud-based password manager with end-to-end encryption and unique email aliases.","winget":"Proton.ProtonPass","category":"Utilities","id":"DblInstallProtonpass"}','{"content":"Proton VPN","choco":"protonvpn","description":"Proton VPN is a no-logs VPN service that protects your privacy online with features like Secure Core and Tor over VPN.","winget":"Proton.ProtonVPN","category":"Pro Tools","id":"DblInstallProtonvpn"}','{"content":"Proxyman","choco":null,"description":"Proxyman is a native, high-performance macOS proxy server app for capturing and inspecting HTTP/HTTPS traffic.","winget":"ProxymanLLC.Proxyman","category":"Utilities","id":"DblInstallProxyman"}','{"content":"PuTTY","choco":"putty","description":"PuTTY is a free and open-source terminal emulator, serial console, and network file transfer application. It supports various network protocols such as SSH, Telnet, and SCP.","winget":"PuTTY.PuTTY","category":"Pro Tools","id":"DblInstallPutty"}','{"content":"Python 3","choco":null,"description":"Python 3 is a popular programming language used for web development, data analysis, AI, and more.","winget":"Python.Python.3.12","category":"Development","id":"DblInstallPython3"}','{"content":"Python3","choco":"python","description":"Python is a versatile programming language used for web development, data analysis, artificial intelligence, and more.","winget":"Python.Python.3.14","category":"Development","id":"DblInstallPython3"}','{"content":"qBittorrent","choco":"qbittorrent","description":"qBittorrent is a free and open-source BitTorrent client that aims to provide a feature-rich and lightweight alternative to other torrent clients.","winget":"qBittorrent.qBittorrent","category":"Utilities","id":"DblInstallQbittorrent"}','{"content":"QOwnNotes","choco":"qownnotes","description":"QOwnNotes is a free open-source note-taking app with Nextcloud/ownCloud integration.","winget":"pbek.QOwnNotes","category":"Document","id":"DblInstallQownnotes"}','{"content":"QTox","choco":"qtox","description":"QTox is a free and open-source messaging app that prioritizes user privacy and security in its design.","winget":"Tox.qTox","category":"Communications","id":"DblInstallQtox"}','{"content":"Rclone","choco":"rclone","description":"Rclone is a command-line program to manage files on cloud storage.","winget":"Rclone.Rclone","category":"Utilities","id":"DblInstallRclone"}','{"content":"RDCMan","choco":"rdcman","description":"RDCMan manages multiple remote desktop connections. It is useful for managing server labs where you need regular access to each machine such as automated checkin systems and data centers.","winget":"Microsoft.Sysinternals.RDCMan","category":"Microsoft Tools","id":"DblInstallRdcman"}','{"content":"Revo","choco":null,"description":"Revo Uninstaller is an advanced uninstaller tool that helps you remove unwanted software and clean up your system.","winget":"RevoUninstaller.RevoUninstaller","category":"Utilities","id":"DblInstallRevo"}','{"content":"Roblox","choco":null,"description":"Roblox is a platform and game creation system that allows users to create and play games developed by the community.","winget":"Roblox.Roblox","category":"Games","id":"DblInstallRoblox"}','{"content":"Ruby","choco":"ruby","description":"A Ruby language execution environment with a MSYS2 installation.","winget":"RubyInstallerTeam.Ruby.4.0","category":"Development","id":"DblInstallRuby"}','{"content":"Ruby 3.2","choco":null,"description":"Ruby is a dynamic, open-source programming language focused on simplicity and productivity.","winget":"RubyInstallerTeam.Ruby.3.2","category":"Development","id":"DblInstallRuby"}','{"content":"Rufus","choco":"rufus","description":"Rufus is a utility that helps format and create bootable USB drives, such as USB keys or pen drives.","winget":"Rufus.Rufus","category":"Utilities","id":"DblInstallRufus"}','{"content":"Rust","choco":null,"description":"Rust is a programming language designed for safety and performance, particularly focused on systems programming.","winget":"Rustlang.Rust.MSVC","category":"Development","id":"DblInstallRust"}','{"content":"ShareX","choco":null,"description":"ShareX is a free and open-source screen capture and file sharing tool. It supports various capture methods and offers advanced features for editing and sharing screenshots.","winget":"ShareX.ShareX","category":"Multimedia Tools","id":"DblInstallSharex"}','{"content":"SideQuestVR","choco":null,"description":"SideQuest is a platform for discovering and managing VR apps for standalone headsets.","winget":"SideQuestVR.SideQuest","category":"Gaming Launchers","id":"DblInstallSideQuest"}','{"content":"Signal","choco":"signal","description":"Signal is a privacy-focused messaging app that offers end-to-end encryption for secure and private communication.","winget":"OpenWhisperSystems.Signal","category":"Communications","id":"DblInstallSignal"}','{"content":"SignalRGB","choco":null,"description":"SignalRGB lets you control and sync your favorite RGB devices with one free application.","winget":"WhirlwindFX.SignalRgb","category":"Utilities","id":"DblInstallSignalrgb"}','{"content":"Simplenote","choco":"simplenote","description":"Simplenote is an easy way to keep notes, lists, ideas and more.","winget":"Automattic.Simplenote","category":"Document","id":"DblInstallSimplenote"}','{"content":"Simplewall","choco":"simplewall","description":"Simplewall is a free and open-source firewall application for Windows. It allows users to control and manage the inbound and outbound network traffic of applications.","winget":"Henry++.simplewall","category":"Pro Tools","id":"DblInstallSimplewall"}','{"content":"Skype","choco":null,"description":"Skype is a telecommunications application for video calls, voice calls, and instant messaging.","winget":"Microsoft.Skype","category":"Communications","id":"DblInstallSkype"}','{"content":"Slack","choco":"slack","description":"Slack is a collaboration hub that connects teams and facilitates communication through channels, messaging, and file sharing.","winget":"SlackTechnologies.Slack","category":"Communications","id":"DblInstallSlack"}','{"content":"Snappy Driver Installer Origin","choco":"sdio","description":"Snappy Driver Installer Origin is a free and open-source driver updater with a vast driver database for Windows.","winget":"GlennDelahoy.SnappyDriverInstallerOrigin","category":"Utilities","id":"DblInstallSnappydriverinstallerorigin"}','{"content":"Speedtest by Ookla","choco":null,"description":"Speedtest by Ookla is a tool for measuring internet connection speed.","winget":"Ookla.Speedtest.Desktop","category":"Utilities","id":"DblInstallSpeedtest"}','{"content":"Spotify","choco":null,"description":"Spotify is a digital music service that gives you access to millions of songs.","winget":"9NCBCSZSJRSB","category":"Multimedia Tools","id":"DblInstallSpotify"}','{"content":"SQL Server 2022 Developer","choco":null,"description":"SQL Server 2022 Developer is a free edition of Microsoft SQL Server for development.","winget":"Microsoft.SQLServer.2022.Developer","category":"Development","id":"DblInstallSQLServer2022"}','{"content":"SQLite","choco":null,"description":"SQLite is a lightweight, file-based SQL database engine.","winget":"DBBrowserForSQLite.DBBrowserForSQLite","category":"Development","id":"DblInstallSQLite"}','{"content":"Starship (Shell Prompt)","choco":"starship","description":"Starship is a fast, customizable, cross-platform prompt for PowerShell and other shells.","winget":"Starship.Starship","category":"Development","id":"DblInstallStarshipshellprompt"}','{"content":"StartAllBack","choco":"StartAllBack","description":"StartAllBack restores and improves Windows taskbar, Start menu, File Explorer, and shell UI behavior.","winget":"StartIsBack.StartAllBack","category":"Utilities","id":"DblInstallStartallback"}','{"content":"Steam","choco":"steam","description":"Steam is a digital distribution platform for purchasing and playing video games, offering multiplayer gaming, video streaming, and more.","winget":"Valve.Steam","category":"Gaming Launchers","id":"DblInstallSteam"}','{"content":"Sublime Text","choco":"sublimetext4","description":"Sublime Text is a sophisticated text editor for code, markup, and prose.","winget":"SublimeHQ.SublimeText.4","category":"Development","id":"DblInstallSublimetext"}','{"content":"Sublime Text 4","choco":null,"description":"Sublime Text is a sophisticated text editor for code, markup, and prose.","winget":"SublimeHQ.SublimeText.3","category":"Document","id":"DblInstallSublime4"}','{"content":"Sumatra","choco":null,"description":"Sumatra PDF is a lightweight and fast PDF viewer with minimalistic design.","winget":"SumatraPDF.SumatraPDF","category":"Document","id":"DblInstallSumatra"}','{"content":"Sunshine Stream Server","choco":null,"description":"Sunshine is a GameStream server that allows you to remotely play PC games on Android devices, offering low-latency streaming.","winget":"LizardByte.Sunshine","category":"Gaming Launchers","id":"DblInstallSunshine"}','{"content":"System Informer","choco":"systeminformer","description":"A free, powerful, multi-purpose tool that helps you monitor system resources, debug software and detect malware.","winget":"WinsiderSS.SystemInformer","category":"Development","id":"DblInstallSysteminformer"}','{"content":"Tailscale","choco":"tailscale","description":"The Tailscale client allows you to connect all your devices using WireGuardÂ®, without the hassle. Tailscale makes it as easy as installing an app and signing in.","winget":"Tailscale.Tailscale","category":"Utilities","id":"DblInstallTailscale"}','{"content":"TCPView","choco":"tcpview","description":"SysInternals TCPView is a network monitoring tool that displays a detailed list of all TCP and UDP endpoints on your system.","winget":"Microsoft.Sysinternals.TCPView","category":"Microsoft Tools","id":"DblInstallTcpview"}','{"content":"TeamSpeak 3","choco":"teamspeak","description":"TEAMSPEAK. YOUR TEAM. YOUR RULES. Use crystal clear sound to communicate with your teammates cross-platform with military-grade security, lag-free performance & unparalleled reliability and uptime.","winget":"TeamSpeakSystems.TeamSpeakClient","category":"Communications","id":"DblInstallTeamspeak3"}','{"content":"TeamSpeak 6","choco":null,"description":"TEAMSPEAK. YOUR TEAM. YOUR RULES. Use crystal clear sound to communicate with your teammates cross-platform with military-grade security, lag-free performance & unparalleled reliability and uptime.","winget":"TeamSpeakSystems.TeamSpeakClient.Beta.6","category":"Communications","id":"DblInstallTeamspeak6"}','{"content":"TeamViewer","choco":"teamviewer9","description":"TeamViewer is a popular remote access and support software that allows you to connect to and control remote devices.","winget":"TeamViewer.TeamViewer","category":"Utilities","id":"DblInstallTeamviewer"}','{"content":"Telegram","choco":"telegram","description":"Telegram is a cloud-based instant messaging app known for its security features, speed, and simplicity.","winget":"Telegram.TelegramDesktop","category":"Communications","id":"DblInstallTelegram"}','{"content":"Thorium","choco":null,"description":"Thorium is a privacy-focused browser based on Chromium.","winget":"Alex313031.Thorium","category":"Browsers","id":"DblInstallThorium"}','{"content":"Thorium AVX2","choco":null,"description":"Thorium AVX2 is a performance-optimized build of the Thorium browser.","winget":"Alex313031.Thorium.AVX2","category":"Browsers","id":"DblInstallThoriumAVX"}','{"content":"Thunderbird","choco":"thunderbird","description":"Mozilla Thunderbird is a free and open-source email client, news client, and chat client with advanced features.","winget":"Mozilla.Thunderbird","category":"Utilities","id":"DblInstallThunderbird"}','{"content":"TightVNC","choco":"TightVNC","description":"TightVNC is a free and open-source remote desktop software that lets you access and control a computer over the network. With its intuitive interface, you can interact with the remote screen as if you were sitting in front of it. You can open files, launch applications, and perform other actions on the remote desktop almost as if you were physically there.","winget":"GlavSoft.TightVNC","category":"Utilities","id":"DblInstallTightvnc"}','{"content":"Tor Browser","choco":null,"description":"Tor Browser is designed for anonymous web browsing, utilizing the Tor network to protect user privacy and security.","winget":"TorProject.TorBrowser","category":"Browsers","id":"DblInstallTor"}','{"content":"Total Commander","choco":"TotalCommander","description":"Total Commander is a file manager for Windows that provides a powerful and intuitive interface for file management.","winget":"Ghisler.TotalCommander","category":"Utilities","id":"DblInstallTotalcommander"}','{"content":"TranslucentTB","choco":"translucenttb","description":"TranslucentTB is a tool that allows you to customize the transparency of the Windows Taskbar.","winget":"CharlesMilette.TranslucentTB","category":"Utilities","id":"DblInstallTranslucenttb"}','{"content":"TreeSize Free","choco":"treesizefree","description":"TreeSize Free is a disk space manager that helps you analyze and visualize the space usage on your drives.","winget":"JAMSoftware.TreeSize.Free","category":"Utilities","id":"DblInstallTreesizefree"}','{"content":"Ttaskbar","choco":"translucent-taskbar","description":"TranslucentTB allows you to customize the transparency and appearance of the Windows taskbar.","winget":"9PF4KZ2VN4W9","category":"Utilities","id":"DblInstallTtaskbar"}','{"content":"Ubisoft Connect","choco":null,"description":"Ubisoft Connect is Ubisofts digital distribution and online gaming service, providing access to Ubisofts games and services.","winget":"Ubisoft.Connect","category":"Gaming Launchers","id":"DblInstallUbisoft"}','{"content":"Ungoogled","choco":null,"description":"Ungoogled Chromium is a version of Chromium without Googles integration for enhanced privacy and control.","winget":"eloston.ungoogled-chromium","category":"Browsers","id":"DblInstallUngoogled"}','{"content":"UniGetUI","choco":"wingetui","description":"UniGetUI is a GUI for WinGet, Chocolatey, and other Windows CLI package managers.","winget":"Devolutions.UniGetUI","category":"Utilities","id":"DblInstallUnigetui"}','{"content":"Unity 2022","choco":null,"description":"Unity is a cross-platform game engine for creating 2D and 3D games and interactive experiences.","winget":"Unity.Unity.2022","category":"Development","id":"DblInstallUnity"}','{"content":"Unity Game Engine","choco":"unityhub","description":"Unity is a powerful game development platform for creating 2D, 3D, augmented reality, and virtual reality games.","winget":"Unity.UnityHub","category":"Development","id":"DblInstallUnitygameengine"}','{"content":"uv","choco":"uv","description":"uv is a fast Python package and project manager written in Rust.","winget":"astral-sh.uv","category":"Development","id":"DblInstallUv"}','{"content":"Vagrant","choco":null,"description":"Vagrant builds and manages reproducible virtual machine development environments from declarative configuration.","winget":"Hashicorp.Vagrant","category":"Development","id":"DblInstallVagrant"}','{"content":"Ventoy","choco":"ventoy","description":"Ventoy is an open-source tool for creating bootable USB drives. It supports multiple ISO files on a single USB drive, making it a versatile solution for installing operating systems.","winget":"Ventoy.Ventoy","category":"Pro Tools","id":"DblInstallVentoy"}','{"content":"Vesktop","choco":null,"description":"A cross-platform electron-based desktop app aiming to give you a snappier Discord experience with Vencord pre-installed.","winget":"Vencord.Vesktop","category":"Communications","id":"DblInstallVesktop"}','{"content":"Viber","choco":"viber","description":"Viber is a free messaging and calling app with features like group chats, video calls, and more.","winget":"Viber.Viber","category":"Communications","id":"DblInstallViber"}','{"content":"Virtual Desktop Streamer","choco":null,"description":"Virtual Desktop Streamer is a tool that allows you to stream your desktop screen to VR devices.","winget":"VirtualDesktop.Streamer","category":"Games","id":"DblInstallVirtualdesktopstreamer"}','{"content":"VirtualBox","choco":"virtualbox","description":"Oracle VirtualBox is a powerful and free open-source virtualization tool for x86 and AMD64/Intel64 architectures.","winget":"Oracle.VirtualBox","category":"Utilities","id":"DblInstallOVirtualBox"}','{"content":"Visual 2015 Redistributable (32-bit)","choco":null,"description":"Visual C++ 2015-2022 32-bit redistributable package installs runtime components of Visual C++ libraries required to run 32-bit applications.","winget":"Microsoft.VCRedist.2015+.x86","category":"Microsoft Tools","id":"DblInstallvc2015_32"}','{"content":"Visual 2015 Redistributable (64-bit)","choco":null,"description":"Visual C++ 2015-2022 64-bit redistributable package installs runtime components of Visual C++ libraries required to run 64-bit applications.","winget":"Microsoft.VCRedist.2015+.x64","category":"Microsoft Tools","id":"DblInstallvc2015_64"}','{"content":"Visual Studio 2022","choco":null,"description":"Visual Studio 2022 is an integrated development environment (IDE) for building, debugging, and deploying applications.","winget":"Microsoft.VisualStudio.2022.Community","category":"Development","id":"DblInstallVisualstudio2022"}','{"content":"Visual Studio 2026","choco":"visualstudio2026community","description":"Visual Studio 2026 is an integrated development environment (IDE) for building, debugging, and deploying applications.","winget":"Microsoft.VisualStudio.Community","category":"Development","id":"DblInstallVisualstudio2026"}','{"content":"Visual Studio Code","choco":null,"description":"Visual Studio Code is a free, open-source code editor with support for multiple programming languages.","winget":"Microsoft.VisualStudioCode","category":"Development","id":"DblInstallCode"}','{"content":"Vivaldi","choco":"vivaldi","description":"Vivaldi is a highly customizable web browser with a focus on user personalization and productivity features.","winget":"VivaldiTechnologies.Vivaldi","category":"Browsers","id":"DblInstallVivaldi"}','{"content":"VLC Media Player","choco":"vlc","description":"VLC Media Player is a free and open-source multimedia player that supports a wide range of audio and video formats. It is known for its versatility and cross-platform compatibility.","winget":"VideoLAN.VLC","category":"Multimedia Tools","id":"DblInstallVlc"}','{"content":"VP9 Video Extensions","choco":null,"description":"VP9 Video Extensions provides support for the VP9 video codec in Windows.","winget":"9N4D0MSMP0PT","category":"Multimedia Tools","id":"DblInstallVP9"}','{"content":"VS Codium","choco":"vscodium","description":"VSCodium is a community-driven, freely-licensed binary distribution of Microsofts VS Code.","winget":"VSCodium.VSCodium","category":"Development","id":"DblInstallVscodium"}','{"content":"Wargaming Game Center","choco":null,"description":"Wargaming Game Center is a launcher for Wargaming.net games.","winget":"Wargaming.GameCenter","category":"Gaming Launchers","id":"DblInstallWargaming"}','{"content":"Waterfox","choco":"waterfox","description":"Waterfox is a fast, privacy-focused web browser based on Firefox, designed to preserve user choice and privacy.","winget":"Waterfox.Waterfox","category":"Browsers","id":"DblInstallWaterfox"}','{"content":"WhatsApp Desktop","choco":null,"description":"WhatsApp Desktop is the official Windows desktop messaging app from Meta, distributed through the Microsoft Store.","winget":"msstore:9NKSQGP7F2NH","category":"Communications","id":"DblInstallWhatsappdesktop"}','{"content":"Windows Terminal","choco":"microsoft-windows-terminal","description":"Windows Terminal is a modern, fast, and efficient terminal application for command-line users, supporting multiple tabs, panes, and more.","winget":"Microsoft.WindowsTerminal","category":"Microsoft Tools","id":"DblInstallTerminal"}','{"content":"WingetUI","choco":null,"description":"WingetUI is a GUI for managing packages with WinGet, Chocolatey, and other package managers.","winget":"SomePythonThings.WingetUIStore","category":"Utilities","id":"DblInstallWingetUI"}','{"content":"WinMerge","choco":null,"description":"WinMerge is a free and open-source file comparison and merging tool.","winget":"WinMerge.WinMerge","category":"Document","id":"DblInstallWinmerge"}','{"content":"WinRAR","choco":"winrar","description":"WinRAR is a powerful archive manager that allows you to create, manage, and extract compressed files.","winget":"RARLab.WinRAR","category":"Utilities","id":"DblInstallWinrar"}','{"content":"WinSCP","choco":"winscp","description":"WinSCP is a popular open-source SFTP, FTP, and SCP client for Windows. It allows secure file transfers between a local and a remote computer.","winget":"WinSCP.WinSCP","category":"Pro Tools","id":"DblInstallWinscp"}','{"content":"WireGuard","choco":"wireguard","description":"WireGuard is a fast and modern VPN (Virtual Private Network) protocol. It aims to be simpler and more efficient than other VPN protocols, providing secure and reliable connections.","winget":"WireGuard.WireGuard","category":"Pro Tools","id":"DblInstallWireguard"}','{"content":"Wireshark","choco":"wireshark","description":"Wireshark is a widely-used open-source network protocol analyzer. It allows users to capture and analyze network traffic in real-time, providing detailed insights into network activities.","winget":"WiresharkFoundation.Wireshark","category":"Pro Tools","id":"DblInstallWireshark"}','{"content":"Wise Program Uninstaller (WiseCleaner)","choco":null,"description":"Wise Program Uninstaller is the perfect solution for uninstalling Windows programs, allowing you to uninstall applications quickly and completely using its simple and user-friendly interface.","winget":"WiseCleaner.WiseProgramUninstaller","category":"Utilities","id":"DblInstallWiseprogramuninstallerwisecleaner"}','{"content":"WizTree","choco":"wiztree","description":"WizTree is a fast disk space analyzer that helps you quickly find the files and folders consuming the most space on your hard drive.","winget":"AntibodySoftware.WizTree","category":"Utilities","id":"DblInstallWiztree"}','{"content":"WPS Office","choco":null,"description":"WPS Office is a free office suite with word processing, spreadsheets, and presentations.","winget":"Kingsoft.WPSOffice","category":"Document","id":"DblInstallWPS"}','{"content":"XEMU","choco":null,"description":"XEMU is an open-source emulator for the original Microsoft Xbox console.","winget":"xemu-project.xemu","category":"Gaming Launchers","id":"DblInstallXemu"}','{"content":"Xournal++","choco":"xournalplusplus","description":"Xournal++ is an open-source handwriting notetaking software with PDF annotation capabilities.","winget":"Xournal++.Xournal++","category":"Document","id":"DblInstallXournal"}','{"content":"Yarn","choco":"yarn","description":"Yarn is a fast, reliable, and secure dependency management tool for JavaScript projects.","winget":"Yarn.Yarn","category":"Development","id":"DblInstallYarn"}','{"content":"yt-dlp","choco":"yt-dlp","description":"yt-dlp is a command-line program for downloading videos from YouTube and other sites.","winget":"yt-dlp.yt-dlp","category":"Multimedia Tools","id":"DblInstallYtdlp"}','{"content":"Zed","choco":"zed","description":"Zed is a modern, high-performance code editor designed from the ground up for speed and collaboration.","winget":"ZedIndustries.Zed","category":"Development","id":"DblInstallZed"}','{"content":"Zen Browser","choco":"zen-browser","description":"The modern, privacy-focused, performance-driven browser built on Firefox.","winget":"Zen-Team.Zen-Browser","category":"Browsers","id":"DblInstallZenbrowser"}','{"content":"Zoom","choco":"zoom","description":"Zoom is a popular video conferencing and web conferencing service for online meetings, webinars, and collaborative projects.","winget":"Zoom.Zoom","category":"Communications","id":"DblInstallZoom"}','{"content":"Zotero","choco":"zotero","description":"Zotero is a free, easy-to-use tool to help you collect, organize, cite, and share your research materials.","winget":"DigitalScholar.Zotero","category":"Document","id":"DblInstallZotero"}')
 $appx = @('{"name":"MicrosoftCorporationII.QuickAssist","id":"MicrosoftCorporationIIQuickAssist"}','{"name":"Clipchamp.Clipchamp","id":"ClipchampClipchamp"}','{"name":"Microsoft.OutlookForWindows","id":"MicrosoftOutlookForWindows"}','{"name":"Microsoft.PowerAutomateDesktop","id":"MicrosoftPowerAutomateDesktop"}','{"name":"Microsoft.Todos","id":"MicrosoftTodos"}','{"name":"Microsoft.AppConnector","id":"MicrosoftAppConnector"}','{"name":"Microsoft.BingFinance","id":"MicrosoftBingFinance"}','{"name":"Microsoft.BingNews","id":"MicrosoftBingNews"}','{"name":"Microsoft.BingSports","id":"MicrosoftBingSports"}','{"name":"Microsoft.BingTranslator","id":"MicrosoftBingTranslator"}','{"name":"Microsoft.BingWeather","id":"MicrosoftBingWeather"}','{"name":"Microsoft.BingFoodAndDrink","id":"MicrosoftBingFoodAndDrink"}','{"name":"Microsoft.BingHealthAndFitness","id":"MicrosoftBingHealthAndFitness"}','{"name":"Microsoft.BingTravel","id":"MicrosoftBingTravel"}','{"name":"Microsoft.MinecraftUWP","id":"MicrosoftMinecraftUWP"}','{"name":"Microsoft.GamingServices","id":"MicrosoftGamingServices"}','{"name":"Microsoft.GetHelp","id":"MicrosoftGetHelp"}','{"name":"Microsoft.Getstarted","id":"MicrosoftGetstarted"}','{"name":"Microsoft.Messaging","id":"MicrosoftMessaging"}','{"name":"Microsoft.Microsoft3DViewer","id":"MicrosoftMicrosoft3DViewer"}','{"name":"Microsoft.MicrosoftSolitaireCollection","id":"MicrosoftMicrosoftSolitaireCollection"}','{"name":"Microsoft.NetworkSpeedTest","id":"MicrosoftNetworkSpeedTest"}','{"name":"Microsoft.News","id":"MicrosoftNews"}','{"name":"Microsoft.Office.Lens","id":"MicrosoftOfficeLens"}','{"name":"Microsoft.Office.Sway","id":"MicrosoftOfficeSway"}','{"name":"Microsoft.Office.OneNote","id":"MicrosoftOfficeOneNote"}','{"name":"Microsoft.OneConnect","id":"MicrosoftOneConnect"}','{"name":"Microsoft.People","id":"MicrosoftPeople"}','{"name":"Microsoft.Print3D","id":"MicrosoftPrint3D"}','{"name":"Microsoft.SkypeApp","id":"MicrosoftSkypeApp"}','{"name":"Microsoft.Wallet","id":"MicrosoftWallet"}','{"name":"Microsoft.Whiteboard","id":"MicrosoftWhiteboard"}','{"name":"Microsoft.WindowsAlarms","id":"MicrosoftWindowsAlarms"}','{"name":"microsoft.windowscommunicationsapps","id":"microsoftwindowscommunicationsapps"}','{"name":"Microsoft.WindowsFeedbackHub","id":"MicrosoftWindowsFeedbackHub"}','{"name":"Microsoft.WindowsMaps","id":"MicrosoftWindowsMaps"}','{"name":"Microsoft.WindowsPhone","id":"MicrosoftWindowsPhone"}','{"name":"Microsoft.WindowsSoundRecorder","id":"MicrosoftWindowsSoundRecorder"}','{"name":"Microsoft.XboxApp","id":"MicrosoftXboxApp"}','{"name":"Microsoft.GamingApp","id":"MicrosoftGamingApp"}','{"name":"Microsoft.ConnectivityStore","id":"MicrosoftConnectivityStore"}','{"name":"Microsoft.CommsPhone","id":"MicrosoftCommsPhone"}','{"name":"Microsoft.ScreenSketch","id":"MicrosoftScreenSketch"}','{"name":"Microsoft.Xbox.TCUI","id":"MicrosoftXboxTCUI"}','{"name":"Microsoft.XboxGameOverlay","id":"MicrosoftXboxGameOverlay"}','{"name":"Microsoft.XboxGamingOverlay","id":"MicrosoftXboxGamingOverlay"}','{"name":"Microsoft.XboxGameCallableUI","id":"MicrosoftXboxGameCallableUI"}','{"name":"Microsoft.XboxSpeechToTextOverlay","id":"MicrosoftXboxSpeechToTextOverlay"}','{"name":"Microsoft.XboxIdentityProvider","id":"MicrosoftXboxIdentityProvider"}','{"name":"Microsoft.MixedReality.Portal","id":"MicrosoftMixedRealityPortal"}','{"name":"Microsoft.YourPhone","id":"MicrosoftYourPhone"}','{"name":"Microsoft.ZuneMusic","id":"MicrosoftZuneMusic"}','{"name":"Microsoft.ZuneVideo","id":"MicrosoftZuneVideo"}','{"name":"Microsoft.Getstarted","id":"MicrosoftGetstarted"}','{"name":"Microsoft.Family","id":"MicrosoftFamily"}','{"name":"Microsoft.MicrosoftOfficeHub","id":"MicrosoftMicrosoftOfficeHub"}','{"name":"Microsoft.MicrosoftStickyNotes","id":"MicrosoftMicrosoftStickyNotes"}','{"name":"*EclipseManager*","id":"EclipseManager"}','{"name":"*ActiproSoftwareLLC*","id":"ActiproSoftwareLLC"}','{"name":"*AdobeSystemsIncorporated.AdobePhotoshopExpress*","id":"AdobePhotoshopExpress"}','{"name":"*Duolingo-LearnLanguagesforFree*","id":"DuolingoLearnLanguagesforFree"}','{"name":"*PandoraMediaInc*","id":"PandoraMediaInc"}','{"name":"*CandyCrush*","id":"CandyCrush"}','{"name":"*BubbleWitch3Saga*","id":"BubbleWitch3Saga"}','{"name":"*Wunderlist*","id":"Wunderlist"}','{"name":"*Flipboard*","id":"Flipboard"}','{"name":"*Twitter*","id":"Twitter"}','{"name":"*Facebook*","id":"Facebook"}','{"name":"*Royal Revolt*","id":"RoyalRevolt"}','{"name":"*Sway*","id":"Sway"}','{"name":"*Speed Test*","id":"SpeedTest"}','{"name":"*Dolby*","id":"Dolby"}','{"name":"*Viber*","id":"Viber"}','{"name":"*ACGMediaPlayer*","id":"ACGMediaPlayer"}','{"name":"*Netflix*","id":"Netflix"}','{"name":"*OneCalendar*","id":"OneCalendar"}','{"name":"*LinkedInforWindows*","id":"LinkedInforWindows"}','{"name":"*HiddenCityMysteryofShadows*","id":"HiddenCityMysteryofShadows"}','{"name":"*Hulu*","id":"Hulu"}','{"name":"*HiddenCity*","id":"HiddenCity"}','{"name":"*AdobePhotoshopExpress*","id":"AdobePhotoshopExpress"}','{"name":"*HotspotShieldFreeVPN*","id":"HotspotShieldFreeVPN"}','{"name":"*Microsoft.Advertising.Xaml*","id":"MicrosoftAdvertisingXaml"}','{"name":"*Windows.DevHome*","id":"WindowsDevHome"}')
 # Embedded from tweaks.json
 $tweaks = @'
@@ -135,11 +135,11 @@ $tweaks = @'
         ],
         "registry": [
             {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
-                "OriginalValue": "1",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection",
                 "Name": "AllowTelemetry",
                 "Value": "0",
-                "Type": "DWord"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
@@ -213,10 +213,10 @@ $tweaks = @'
             },
             {
                 "Path": "HKCU:\\SOFTWARE\\Microsoft\\Siuf\\Rules",
-                "OriginalValue": "0",
                 "Name": "NumberOfSIUFInPeriod",
                 "Value": "0",
-                "Type": "DWord"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
@@ -226,11 +226,46 @@ $tweaks = @'
                 "Type": "DWord"
             },
             {
-                "Path": "HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
-                "OriginalValue": "0",
-                "Name": "DisableTailoredExperiencesWithDiagnosticData",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+                "Name": "TailoredExperiencesWithDiagnosticDataEnabled",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy",
+                "Name": "HasAccepted",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Input\\TIPC",
+                "Name": "Enabled",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\InputPersonalization",
+                "Name": "RestrictImplicitInkCollection",
                 "Value": "1",
-                "Type": "DWord"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\InputPersonalization\\TrainedDataStore",
+                "Name": "HarvestContacts",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Personalization\\Settings",
+                "Name": "AcceptedPrivacyPolicy",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\AdvertisingInfo",
@@ -266,6 +301,13 @@ $tweaks = @'
                 "Name": "ShowTaskViewButton",
                 "Value": "0",
                 "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                "Name": "Start_TrackProgs",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\People",
@@ -383,38 +425,35 @@ $tweaks = @'
         ],
         "InvokeScript": [
             "
-            bcdedit /set `{current`} bootmenupolicy Legacy | Out-Null
-                If ((get-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\" -Name CurrentBuild).CurrentBuild -lt 22557) {
-                    $taskmgr = Start-Process -WindowStyle Hidden -FilePath taskmgr.exe -PassThru
-                    Do {
-                        Start-Sleep -Milliseconds 100
-                        $preferences = Get-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\TaskManager\" -Name \"Preferences\" -ErrorAction SilentlyContinue
-                    } Until ($preferences)
-                    Stop-Process $taskmgr
-                    $preferences.Preferences[28] = 0
-                    Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\TaskManager\" -Name \"Preferences\" -Type Binary -Value $preferences.Preferences
-                }
-                Remove-Item -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}\" -Recurse -ErrorAction SilentlyContinue
+            # Disable Defender Auto Sample Submission
+            Set-MpPreference -SubmitSamplesConsent 2
 
-                # Fix Managed by your organization in Edge if regustry path exists then remove it
+            # Disable (Connected User Experiences and Telemetry) Service
+            Set-Service -Name diagtrack -StartupType Disabled
 
-                If (Test-Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge\") {
-                    Remove-Item -Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge\" -Recurse -ErrorAction SilentlyContinue
-                }
+            # Disable (Windows Error Reporting Manager) Service
+            Set-Service -Name wermgr -StartupType Disabled
 
-                # Group svchost.exe processes
-                $ram = (Get-CimInstance -ClassName Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum).Sum / 1kb
-                Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\" -Name \"SvcHostSplitThresholdInKB\" -Type DWord -Value $ram -Force
+            # Disable PowerShell 7 telemetry
+            [Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '1', 'Machine')
 
-                $autoLoggerDir = \"$env:PROGRAMDATA\\Microsoft\\Diagnosis\\ETLLogs\\AutoLogger\"
-                If (Test-Path \"$autoLoggerDir\\AutoLogger-Diagtrack-Listener.etl\") {
-                    Remove-Item \"$autoLoggerDir\\AutoLogger-Diagtrack-Listener.etl\"
-                }
-                icacls $autoLoggerDir /deny SYSTEM:`(OI`)`(CI`)F | Out-Null
+            Remove-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Siuf\\Rules\" -Name PeriodInNanoSeconds
+            "
+        ],
+        "UndoScript": [
+            "
+            # Enable Defender Auto Sample Submission
+            Set-MpPreference -SubmitSamplesConsent 1
 
-                # Disable Defender Auto Sample Submission
-                Set-MpPreference -SubmitSamplesConsent 2 -ErrorAction SilentlyContinue | Out-Null
-                "
+            # Enable (Connected User Experiences and Telemetry) Service
+            Set-Service -Name diagtrack -StartupType Automatic
+
+            # Enable (Windows Error Reporting Manager) Service
+            Set-Service -Name wermgr -StartupType Automatic
+
+            # Enable PowerShell 7 telemetry
+            [Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '', 'Machine')
+            "
         ]
     },
     "DblWifi": {
@@ -455,9 +494,9 @@ $tweaks = @'
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
                 "Name": "PublishUserActivities",
-                "Value": 0,
-                "OriginalValue": 1,
-                "Type": "DWord"
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
@@ -816,149 +855,121 @@ $tweaks = @'
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\EdgeUpdate",
                 "Name": "CreateDesktopShortcutDefault",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "EdgeEnhanceImagesEnabled",
                 "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "PersonalizationReportingEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge\\ExtensionInstallBlocklist",
+                "Name": "1",
+                "Value": "ofefcgjbeghpigppfmkologfjadafddi",
+                "Type": "String",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "ShowRecommendationsEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "HideFirstRunExperience",
-                "Type": "DWord",
                 "Value": "1",
-                "OriginalValue": "0"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "UserFeedbackAllowed",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "ConfigureDoNotTrack",
-                "Type": "DWord",
                 "Value": "1",
-                "OriginalValue": "0"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "AlternateErrorPagesEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "EdgeCollectionsEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "EdgeFollowEnabled",
                 "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "EdgeShoppingAssistantEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "MicrosoftEdgeInsiderPromotionEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "PersonalizationReportingEnabled",
                 "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "ShowMicrosoftRewards",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "WebWidgetAllowed",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "DiagnosticData",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "EdgeAssetDeliveryServiceEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "EdgeCollectionsEnabled",
                 "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "CryptoWalletEnabled",
-                "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "ConfigureDoNotTrack",
-                "Type": "DWord",
-                "Value": "1",
-                "OriginalValue": "0"
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "WalletDonationEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+                "Name": "DefaultBrowserSettingsCampaignEnabled",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             }
         ]
     },
@@ -3128,7 +3139,7 @@ $tweaks = @'
             { "Name": "HPSysInfoCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
             { "Name": "HpTouchpointAnalyticsService", "StartupType": "Automatic", "OriginalType": "Automatic" },
             { "Name": "HvHost", "StartupType": "Automatic", "OriginalType": "Automatic" },
-            { "Name": "lfsvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "lfsvc", "StartupType": "Disabled", "OriginalType": "Manual" },
             { "Name": "lmhosts", "StartupType": "Manual", "OriginalType": "Manual" },
             { "Name": "MapsBroker", "StartupType": "Manual", "OriginalType": "Manual" },
             { "Name": "MicrosoftEdgeElevationService", "StartupType": "Manual", "OriginalType": "Manual" },
@@ -4973,23 +4984,24 @@ function Invoke-APPX {
     foreach ($program in $programs) {
         $program = $program | ConvertFrom-Json
         $id = $program.id
-        $name = $program.name
+        $name = $program.content
         $winget = $program.winget
-        $idPython = $id -like "DblPython*"
-        $pipPackage = if ($program.PSObject.Properties.Name -contains 'pip') { $program.pip } else { $null }
-        $idChoco = $id -like "DblChoco*"
-        $choco = if ($program.PSObject.Properties.Name -contains 'choco') { $program.choco } else { $null }
+        $choco = $program.choco
 
         $checkBox = $psform.FindName("$id")
-        $isChecked = $checkBox.IsChecked
+        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($id)) {
+            $checkBox = $script:DynamicAppCheckBoxes[$id]
+        }
+        if ($checkBox) {
+            $isChecked = $checkBox.IsChecked
+        } else {
+            $isChecked = $false
+        }
 
         $result += [PSCustomObject]@{
             Id = $id
             Name = $name
             Winget = $winget
-            IdPython = $idPython
-            PipPackage = $pipPackage
-            IdChoco = $idChoco
             Choco = $choco
             IsChecked = $isChecked
         }
@@ -5009,21 +5021,23 @@ function Invoke-Filter {
     foreach ($program in $matchingProgram) {
         $id = $program.Id
         $filter = $wpf_CheckboxFilter.Text
-        $checkBoxes = $psform.FindName("$id")
+        $checkBox = $psform.FindName("$id")
+        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($id)) {
+            $checkBox = $script:DynamicAppCheckBoxes[$id]
+        }
 
-        Foreach ($CheckBox in $CheckBoxes) {
-            if ($CheckBox.Content.ToLower().Contains($filter)) {
-                $CheckBox.Visibility = "Visible"
-                #Write-Host "Match found: $name"
+        if ($checkBox) {
+            if ($checkBox.Content.ToLower().Contains($filter)) {
+                $checkBox.Visibility = "Visible"
             }
-            elseif($CheckBox.Content.Contains($filter)){
-                $CheckBox.Visibility = "Visible"
+            elseif($checkBox.Content.Contains($filter)){
+                $checkBox.Visibility = "Visible"
             }
-            elseif($CheckBox.Content.ToUpper().Contains($filter)){
-                $CheckBox.Visibility = "Visible"
+            elseif($checkBox.Content.ToUpper().Contains($filter)){
+                $checkBox.Visibility = "Visible"
             }
             else {
-                $CheckBox.Visibility = "Collapsed"
+                $checkBox.Visibility = "Collapsed"
             }
         }
     }
@@ -5048,15 +5062,7 @@ function Invoke-ManageInstall {
             $manage 
         )
 
-    if($manage -eq "Installing" -and $PackageManger -eq "pip"){
-        if (Get-Command python -ErrorAction Ignore) {
-            Write-Host "Installing $program package" -ForegroundColor Green
-            python -m pip install --no-input --quiet --upgrade pip
-            pip install $PackageName --no-input --quiet 
-        } else {
-            Write-Host "Python is not installed." -ForegroundColor Red
-        }
-    }elseif($manage -eq "Installing" -and $PackageManger -eq "winget"){
+    if($manage -eq "Installing" -and $PackageManger -eq "winget"){
         Write-Host "Installing $program package" -ForegroundColor Green
         Start-Process -FilePath winget -ArgumentList "install --id $PackageName -e --accept-source-agreements --accept-package-agreements --disable-interactivity --silent" -NoNewWindow -Wait
     }elseif($manage -eq "Installing" -and $PackageManger -eq "choco"){
@@ -5068,14 +5074,7 @@ function Invoke-ManageInstall {
         }
     }
 
-    if($manage -eq "Uninstalling" -and $PackageManger -eq "pip"){
-        if (Get-Command python -ErrorAction Ignore) {
-            Write-Host "Uninstalling $program package" -ForegroundColor Red
-            pip uninstall $PackageName --yes --quiet --no-input
-        } else {
-            Write-Host "Python is not installed." -ForegroundColor Red
-        }
-    }elseif($manage -eq "Uninstalling" -and $PackageManger -eq "winget"){
+    if($manage -eq "Uninstalling" -and $PackageManger -eq "winget"){
         Write-Host "Uninstalling $program package" -ForegroundColor Red
         Start-Process -FilePath winget -ArgumentList "uninstall --id $PackageName -e --purge --force --disable-interactivity --silent" -NoNewWindow -Wait
     }elseif($manage -eq "Uninstalling" -and $PackageManger -eq "choco"){
@@ -5087,14 +5086,7 @@ function Invoke-ManageInstall {
         }
     }
 
-    if($manage -eq "Upgrading" -and $PackageManger -eq "pip"){
-        if (Get-Command python -ErrorAction Ignore) {
-            Write-Host "Upgrading $program package" -ForegroundColor Blue
-            pip install --upgrade $PackageName --no-input --quiet --no-cache
-        } else {
-            Write-Host "Python is not installed." -ForegroundColor Red
-        }
-    }elseif($manage -eq "Upgrading" -and $PackageManger -eq "winget"){
+    if($manage -eq "Upgrading" -and $PackageManger -eq "winget"){
         Write-Host "Upgrading $program package" -ForegroundColor Blue
         Start-Process -FilePath winget -ArgumentList "upgrade --id $PackageName -e --accept-source-agreements --accept-package-agreements --disable-interactivity --silent --force" -NoNewWindow -Wait
     }elseif($manage -eq "Upgrading" -and $PackageManger -eq "choco"){
@@ -5321,7 +5313,13 @@ function Invoke-ClearProgramsButton {
     $matchingProgram = Invoke-APPX | Where-Object { $_.IsChecked}
 
     foreach ($program in $matchingProgram) {
-        $checkBox = $psform.FindName($program.Id).IsChecked = $false
+        $checkBox = $psform.FindName($program.Id)
+        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($program.Id)) {
+            $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
+        }
+        if ($checkBox) {
+            $checkBox.IsChecked = $false
+        }
     }
     Write-Host "Selection cleared" -ForegroundColor Green
 }
@@ -5346,7 +5344,7 @@ function Invoke-getInstallButton {
 
     .SYNOPSIS
         This function select all installed apps
-        Read installed winget, choco and pip packages  
+        Read installed winget and choco packages  
     #>
 
     Write-Host "Selecting Installed applications" -ForegroundColor Green
@@ -5365,30 +5363,16 @@ function Invoke-getInstallButton {
 
             if ($matchingProgram -ne $null) {
                 $checkBox = $psform.FindName($matchingProgram.Id)
-                $checkBox.IsChecked = $true
+                if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($matchingProgram.Id)) {
+                    $checkBox = $script:DynamicAppCheckBoxes[$matchingProgram.Id]
+                }
+                if ($checkBox -and $checkBox.IsEnabled) {
+                    $checkBox.IsChecked = $true
+                }
             }
         }
     } catch {
         Write-Warning "Failed to process winget packages: $_"
-    }
-
-    # Process Python packages
-    try {
-        $pipExportPath = Join-Path $env:TEMP "pipPackage.txt"
-        pip freeze | Out-File -FilePath $pipExportPath -ErrorAction Stop
-
-        foreach ($line in Get-Content -Path $pipExportPath -ErrorAction Stop) {
-            $index = $line.IndexOf('=')
-            if ($index -lt 0) { continue }
-            $result = $line.Substring(0, $index).Trim()
-            $matchingProgram = Invoke-APPX | Where-Object { $_.PipPackage -eq $result }
-            if ($matchingProgram -ne $null) {
-                $checkBox = $psform.FindName($matchingProgram.Id)
-                $checkBox.IsChecked = $true
-            }
-        }
-    } catch {
-        Write-Warning "Failed to process Python packages: $_"
     }
 
     # Process Choco packages
@@ -5403,7 +5387,12 @@ function Invoke-getInstallButton {
                 $matchingProgram = Invoke-APPX | Where-Object { $_.Choco -eq $package.id }
                 if ($matchingProgram -ne $null) {
                     $checkBox = $psform.FindName($matchingProgram.Id)
-                    $checkBox.IsChecked = $true
+                    if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($matchingProgram.Id)) {
+                        $checkBox = $script:DynamicAppCheckBoxes[$matchingProgram.Id]
+                    }
+                    if ($checkBox -and $checkBox.IsEnabled) {
+                        $checkBox.IsChecked = $true
+                    }
                 }
             }
         } else {
@@ -5419,22 +5408,26 @@ function Invoke-installButton {
 
     .SYNOPSIS
         This function install all selected apps
-        Support winget, choco and pip packages  
+        Support winget and choco packages  
     #>
 
     $matchingProgram = Invoke-APPX
+    $packageManager = $script:SelectedPackageManager
     foreach ($program in $matchingProgram) {
         $checkBox = $psform.FindName($program.Id)
+        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($program.Id)) {
+            $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
+        }
         $isChecked = $checkBox.IsChecked
+        $isEnabled = $checkBox.IsEnabled
 
-        if ($isChecked -eq $true -and $program.IdPython) {
-            Invoke-ManageInstall -PackageManger "pip" -manage "Installing" -program $program.Name -PackageName $program.PipPackage
-        }elseif ($isChecked -eq $true -and $program.IdChoco){
-            Invoke-ManageInstall -PackageManger "choco" -manage "Installing" -program $program.Name -PackageName $program.Choco
-        }elseif ($isChecked -eq $true){
-            Invoke-ManageInstall -PackageManger "winget" -manage "Installing" -program $program.Name -PackageName $program.Winget
-        }else {
-            continue
+        if ($isChecked -eq $true -and $isEnabled -eq $true) {
+            if ($packageManager -eq "choco" -and $program.Choco -ne $null -and $program.Choco -ne '') {
+                Invoke-ManageInstall -PackageManger "choco" -manage "Installing" -program $program.Name -PackageName $program.Choco
+            }
+            elseif ($program.Winget) {
+                Invoke-ManageInstall -PackageManger "winget" -manage "Installing" -program $program.Name -PackageName $program.Winget
+            }
         }
     }
     
@@ -5580,18 +5573,22 @@ function Invoke-UninstallButton {
     #>
 
     $matchingProgram = Invoke-APPX
+    $packageManager = $script:SelectedPackageManager
     foreach ($program in $matchingProgram) {
         $checkBox = $psform.FindName($program.Id)
+        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($program.Id)) {
+            $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
+        }
         $isChecked = $checkBox.IsChecked
+        $isEnabled = $checkBox.IsEnabled
 
-        if ($isChecked -eq $true -and $program.IdPython) {
-            Invoke-ManageInstall -PackageManger "pip" -manage "Uninstalling" -program $program.Name -PackageName $program.PipPackage
-        }elseif ($isChecked -eq $true -and $program.IdChoco){
-            Invoke-ManageInstall -PackageManger "choco" -manage "Uninstalling" -program $program.Name -PackageName $program.Choco
-        }elseif ($isChecked -eq $true){
-            Invoke-ManageInstall -PackageManger "winget" -manage "Uninstalling" -program $program.Name -PackageName $program.Winget
-        }else {
-            continue
+        if ($isChecked -eq $true -and $isEnabled -eq $true) {
+            if ($packageManager -eq "choco" -and $program.Choco -ne $null -and $program.Choco -ne '') {
+                Invoke-ManageInstall -PackageManger "choco" -manage "Uninstalling" -program $program.Name -PackageName $program.Choco
+            }
+            elseif ($program.Winget) {
+                Invoke-ManageInstall -PackageManger "winget" -manage "Uninstalling" -program $program.Name -PackageName $program.Winget
+            }
         }
     }
     
@@ -5606,18 +5603,22 @@ function Invoke-UpgradeButton {
     #>
 
     $matchingProgram = Invoke-APPX
+    $packageManager = $script:SelectedPackageManager
     foreach ($program in $matchingProgram) {
         $checkBox = $psform.FindName($program.Id)
+        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($program.Id)) {
+            $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
+        }
         $isChecked = $checkBox.IsChecked
+        $isEnabled = $checkBox.IsEnabled
 
-        if ($isChecked -eq $true -and $program.IdPython) {
-            Invoke-ManageInstall -PackageManger "pip" -manage "Upgrading" -program $program.Name -PackageName $program.PipPackage
-        }elseif ($isChecked -eq $true -and $program.IdChoco){
-            Invoke-ManageInstall -PackageManger "choco" -manage "Upgrading" -program $program.Name -PackageName $program.Choco
-        }elseif ($isChecked -eq $true){
-            Invoke-ManageInstall -PackageManger "winget" -manage "Upgrading" -program $program.Name -PackageName $program.Winget
-        }else {
-            continue
+        if ($isChecked -eq $true -and $isEnabled -eq $true) {
+            if ($packageManager -eq "choco" -and $program.Choco -ne $null -and $program.Choco -ne '') {
+                Invoke-ManageInstall -PackageManger "choco" -manage "Upgrading" -program $program.Name -PackageName $program.Choco
+            }
+            elseif ($program.Winget) {
+                Invoke-ManageInstall -PackageManger "winget" -manage "Upgrading" -program $program.Name -PackageName $program.Winget
+            }
         }
     }
     
@@ -7803,17 +7804,6 @@ function Invoke-ApplyConfigFile {
                 }
             }
         }
-
-        # Install pip packages
-        if ($config.installedApps.PSObject.Properties.Name -contains 'pip') {
-            foreach ($packageName in $config.installedApps.pip) {
-                Write-Host "  Installing pip package: $packageName" -ForegroundColor.Gray
-                $matchingProgram = Invoke-APPX | Where-Object { $_.PipPackage -eq $packageName }
-                if ($matchingProgram -ne $null) {
-                    Invoke-ManageInstall -PackageManger "pip" -manage "Installing" -program $matchingProgram -PackageName $packageName
-                }
-            }
-        }
     }
 
     Write-Host "`n========================================" -ForegroundColor Green
@@ -7863,7 +7853,7 @@ function Invoke-ExportConfig {
     $config = @{}
 
     # Export installed apps
-    $config.installedApps = @{ winget = @(); choco = @(); pip = @() }
+    $config.installedApps = @{ winget = @(); choco = @() }
     try {
         $wingetExportPath = Join-Path $env:TEMP "wingetPackage.json"
         $exportResult = winget export -o $wingetExportPath 2>&1
@@ -7886,17 +7876,6 @@ function Invoke-ExportConfig {
             }
         }
     } catch { Write-Warning "Failed to export choco packages: $_" }
-
-    try {
-        $pipExportPath = Join-Path $env:TEMP "pipPackage.txt"
-        pip freeze | Out-File -FilePath $pipExportPath -ErrorAction Stop
-        foreach ($line in Get-Content -Path $pipExportPath -ErrorAction Stop) {
-            $index = $line.IndexOf('=')
-            if ($index -lt 0) { continue }
-            $result = $line.Substring(0, $index).Trim()
-            $config.installedApps.pip += $result
-        }
-    } catch { Write-Warning "Failed to export pip packages: $_" }
 
     # Export checked tweaks
     $config.tweaks = @{}
@@ -8309,6 +8288,83 @@ $wpf_diskName.Add_SelectionChanged({Get-DiskSize})
 # Assign tooltips after the window is fully loaded so FindName sees all controls
 $psform.Add_Loaded({
     Invoke-SetDynamicToolTip
+})
+
+# Dynamically populate INSTALL tab app checkboxes from $programs
+$script:DynamicAppCheckBoxes = @{}
+$script:DynamicAppChocoSupport = @{}
+$script:SelectedPackageManager = "winget"
+
+$categoryPanels = @{
+    "Development"        = $wpf_CategoryDevelopmentPanel
+    "Microsoft Tools"    = $wpf_CategoryMicrosoftToolsPanel
+    "Browsers"           = $wpf_CategoryBrowsersPanel
+    "Communications"     = $wpf_CategoryCommunicationsPanel
+    "Gaming Launchers"   = $wpf_CategoryGamingLaunchersPanel
+    "Document"           = $wpf_CategoryDocumentPanel
+    "Multimedia Tools"   = $wpf_CategoryMultimediaToolsPanel
+    "Utilities"          = $wpf_CategoryUtilitiesPanel
+}
+
+foreach ($program in $programs) {
+    $program = $program | ConvertFrom-Json
+    $category = $program.category
+    if (-not $category -or -not $categoryPanels.ContainsKey($category)) {
+        continue
+    }
+
+    $panel = $categoryPanels[$category]
+    if (-not $panel) {
+        continue
+    }
+
+    $cbox = New-Object System.Windows.Controls.CheckBox
+    $cbox.Name = $program.id
+    $cbox.Content = $program.content
+    $cbox.Foreground = "#a69f6c"
+    $cbox.HorizontalAlignment = "Left"
+    $cbox.Width = "auto"
+    $cbox.Cursor = [System.Windows.Input.Cursors]::Hand
+    $cbox.Margin = New-Object System.Windows.Thickness(8, 5, 8, 5)
+    $cbox.FontSize = 11
+    $cbox.FontFamily = New-Object System.Windows.Media.FontFamily("Gadugi")
+
+    $scaleTransform = New-Object System.Windows.Media.ScaleTransform
+    $scaleTransform.ScaleX = 1.5
+    $scaleTransform.ScaleY = 1.5
+    $cbox.LayoutTransform = $scaleTransform
+
+    $panel.Children.Add($cbox) | Out-Null
+    $script:DynamicAppCheckBoxes[$program.id] = $cbox
+    $script:DynamicAppChocoSupport[$program.id] = ($program.choco -ne $null -and $program.choco -ne '')
+}
+
+$wpf_PkgMgrWinget.Add_Checked({
+    $script:SelectedPackageManager = "winget"
+    foreach ($program in $programs) {
+        $program = $program | ConvertFrom-Json
+        if ($script:DynamicAppCheckBoxes.ContainsKey($program.id)) {
+            $script:DynamicAppCheckBoxes[$program.id].IsEnabled = $true
+            $script:DynamicAppCheckBoxes[$program.id].Foreground = "#a69f6c"
+        }
+    }
+})
+
+$wpf_PkgMgrChoco.Add_Checked({
+    $script:SelectedPackageManager = "choco"
+    foreach ($program in $programs) {
+        $program = $program | ConvertFrom-Json
+        if ($script:DynamicAppCheckBoxes.ContainsKey($program.id)) {
+            $hasChoco = $script:DynamicAppChocoSupport[$program.id]
+            $script:DynamicAppCheckBoxes[$program.id].IsEnabled = $hasChoco
+            if (-not $hasChoco) {
+                $script:DynamicAppCheckBoxes[$program.id].IsChecked = $false
+                $script:DynamicAppCheckBoxes[$program.id].Foreground = "#5a5a5a"
+            } else {
+                $script:DynamicAppCheckBoxes[$program.id].Foreground = "#a69f6c"
+            }
+        }
+    }
 })
 
 # Check if the window is already opened or not
