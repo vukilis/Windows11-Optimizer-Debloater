@@ -27,6 +27,15 @@ Development Branch:
 iwr -useb vukilis.com/win11dev | iex
 ```
 
+Apply a predefined configuration without manual selection:
+
+Save the exported configuration from the GUI to a file, for example `config.json`, then run following commands:
+
+```powershell
+& ([ScriptBlock]::Create((irm https://vukilis.com/win11deb)))
+ -Config .\config.json
+```
+
 ---
 
 ## What Script Do?
