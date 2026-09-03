@@ -20,12 +20,12 @@ function Invoke-FeatureInstall {
         }
 
         if ($apply) {
-            if ($tweak.Registry) {
+            if ($tweak.PSObject.Properties.Name -contains 'registry' -and $tweak.registry) {
                 Write-Host "Applying feature: $($tweak.Content)" -ForegroundColor Green
                 foreach ($msg in "DisableMessage","EnableMessage") {
-                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
+                    if ($tweak.PSObject.Properties.Name -contains $msg -and $tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
                 }
-                foreach ($regEntry in $tweak.Registry) {
+                foreach ($regEntry in $tweak.registry) {
                     try { 
                         Set-RegistryValue -Path $regEntry.Path -Name $regEntry.Name -Type $regEntry.Type -Value $regEntry.Value 
                     }
@@ -35,9 +35,9 @@ function Invoke-FeatureInstall {
                 }
             }
 
-            if ($tweak.InvokeScript) {
+            if ($tweak.PSObject.Properties.Name -contains 'InvokeScript' -and $tweak.InvokeScript) {
                 foreach ($msg in "DisableMessage","EnableMessage") {
-                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Cyan }
+                    if ($tweak.PSObject.Properties.Name -contains $msg -and $tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Cyan }
                 }
                 foreach ($script in $tweak.InvokeScript) {
                     Invoke-Scripts -Name $tweak.Content -Script $script
@@ -45,10 +45,10 @@ function Invoke-FeatureInstall {
                 }
             }
 
-            if ($tweak.feature) {
+            if ($tweak.PSObject.Properties.Name -contains 'feature' -and $tweak.feature) {
                 foreach ($msg in "DisableMessage","EnableMessage") {
                     Write-Host "Applying feature: $($tweak.Content)" -ForegroundColor Green
-                    if ($tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
+                    if ($tweak.PSObject.Properties.Name -contains $msg -and $tweak.$msg) { Write-Host "InvokeScript:" $tweak.$msg -ForegroundColor Green }
                 }
                 foreach ($ft in $tweak.feature) {
                     try {
@@ -65,3 +65,4 @@ function Invoke-FeatureInstall {
     
     Invoke-MessageBox -msg "feature"
 }
+

@@ -56,3 +56,4 @@ foreach ($featureName in $sync.configs.feature.PSObject.Properties.Name) {
         }
     }   
 }
+

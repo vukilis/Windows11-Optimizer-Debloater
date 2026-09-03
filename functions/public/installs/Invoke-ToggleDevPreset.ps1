@@ -11,13 +11,13 @@ function Invoke-ToggleDevPreset {
 
     $matchingProgram = Invoke-APPX
     foreach ($program in $matchingProgram) {
-        $checkBox = $psform.FindName($program.Id)
+        $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
         $isChecked = $checkBox.IsChecked
 
         if ($checkBox.IsChecked -eq $false -and @(
             "Githubdesktop", "Nodemanager", "Java8", "Ohmyposh",
             "Python3", "Postman", "Ruby", "Visualstudio2022", "Code",
-            "Dotnet3", "Dotnet5", "Dotnet6", "Dotnet7",
+            "Dotnet6", "Dotnet7", "Dotnet8", "Dotnet9", "Dotnet10",
             "Powershell", "vc2015_64", "vc2015_32", "Terminal",
             "Thorium", "Discord", "Slack", "Teams", "Zoom",
             "Steam", "Greenshot", "Imageglass", "Klite", "Spotify", "Vlc",
@@ -29,3 +29,4 @@ function Invoke-ToggleDevPreset {
     }
     if ($wpf_ToggleDevPreset.IsChecked){ Write-Host "Enabling Dev Preset" -ForegroundColor Green} else { Write-Host "Disabling Dev Preset" -ForegroundColor Red  }
 }
+

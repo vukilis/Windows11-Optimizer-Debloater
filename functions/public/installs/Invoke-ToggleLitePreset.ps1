@@ -11,7 +11,7 @@ function Invoke-ToggleLitePreset {
 
     $matchingProgram = Invoke-APPX
     foreach ($program in $matchingProgram) {
-        $checkBox = $psform.FindName($program.Id)
+        $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
         $isChecked = $checkBox.IsChecked
 
         if ($checkBox.IsChecked -eq $false -and @(
@@ -26,3 +26,4 @@ function Invoke-ToggleLitePreset {
 
     if ($wpf_ToggleLitePreset.IsChecked){ Write-Host "Enabling Lite Preset" -ForegroundColor Green} else { Write-Host "Disabling Lite Preset" -ForegroundColor Red  }
 }
+

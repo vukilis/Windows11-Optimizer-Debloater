@@ -15,3 +15,4 @@ function Get-NavigateUri {
 
     return $null
 }
+

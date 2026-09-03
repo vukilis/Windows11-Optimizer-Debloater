@@ -22,3 +22,4 @@ function Invoke-ChocoUninstall {
         Write-Host "Seems Chocolatey is not installed" -ForegroundColor Red
     }
 }
+

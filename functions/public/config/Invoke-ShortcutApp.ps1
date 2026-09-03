@@ -68,3 +68,4 @@ Shortcut for $ShortcutToAdd has been saved to $($FileBrowser.FileName)
 " -ch DarkRed
     }
 }
+

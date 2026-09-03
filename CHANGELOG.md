@@ -8,6 +8,47 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [4.0] - 2026-09-03
+
+### Added
+
+- Configuration import functionality with `Invoke-ImportConfig` to restore previous configurations from JSON.
+- Configuration export and headless application support with `Invoke-ExportConfig`, `-Config` parameter, and headless mode.
+- Dynamic application checkbox generation based on `applications.json` with real-time Winget and Chocolatey package manager switching.
+- `Invoke-GetInstalledTweaks` function to check applied tweaks and update UI state.
+- DNS settings functionality and Intel MM disable option.
+- New checkboxes and toggle buttons for system settings: BitLocker, Delivery Optimization, Razer Software Auto-Install, RDP Unsigned File Warnings, WindowsAI, scrollbar visibility, logon screen acrylic blur, battery percentage in system tray, and S0 sleep network connectivity.
+- Service preset tweaks for recommended, gaming, and default startup modes, integrated into the tweak-based configuration system.
+- Major architectural overhaul: modular function organization, dictionary-based event routing, native method caching, Pester test suite, `-SmokeTest` flag, and comprehensive documentation.
+
+### Changed
+
+- Dropped support for Windows 10; the application now targets Windows 11 only.
+- Raised minimum PowerShell requirement to 7.0; older PowerShell versions are no longer supported.
+- Replaced standalone reset button with interactive search icon integrated in the filter input.
+- Refactored application management to support dynamic package manager switching and removed pip from configuration export and application installation workflows.
+- Migrated service presets to tweak-based system, unifying configuration logic and removing `services.json`.
+- Overhauled Windows Update management functions with improved reliability, error handling, and user feedback.
+- Renamed "NORMAL" button to "DEFAULT" for improved UI terminology consistency.
+- Simplified and improved XAML loading and path resolution logic.
+- Implemented robust XAML downloading and validation with error handling and content verification.
+- Standardized JSON key casing across all config files (`registry`, `service`, `firewall`, etc.).
+- Replaced deprecated `LoadWithPartialName` with `Add-Type -AssemblyName`.
+- Replaced `Invoke-Expression` with call operator `&` for security.
+- Standardized encoding to UTF-8 throughout build pipeline.
+- Added `Set-StrictMode -Version Latest` and `#requires -Version 7.0` to all scripts.
+
+### Fixed
+
+- Reverted XAML download source to dev branch to ensure UI components match the current development state.
+- Fixed compile-time `param()` placement to support `-SmokeTest` flag.
+- Fixed property access errors on optional config fields (`choco`, `pip`, `service`, `firewall`, `ScheduledTask`, `Registry`).
+- Fixed debloat tab unselect behavior and panel scope leakage.
+- Fixed Teams uninstall registry lookup with safe property access.
+- Fixed toggle initialization to silently handle missing registry values.
+- Fixed `FeatureWsl` missing `Type` property in `feature.json`.
+- Fixed duplicate `DefaultState` keys in `tweaks.json`.
+
 ## [3.4] - 2025-08-24
 
 ### Added

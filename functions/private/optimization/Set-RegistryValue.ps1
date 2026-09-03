@@ -46,11 +46,12 @@ function Set-RegistryValue {
     } catch [System.Security.SecurityException] {
         Write-Warning "Unable to set $Path\$Name to $Value due to a Security Exception"
     } catch [System.Management.Automation.ItemNotFoundException] {
-        Write-Warning $psitem.Exception.ErrorRecord
+        Write-Warning $_.Exception.ErrorRecord
     } catch [System.UnauthorizedAccessException] {
-        Write-Warning $psitem.Exception.Message
+        Write-Warning $_.Exception.Message
     } catch {
         Write-Warning "Unable to set $Name due to unhandled exception"
-        Write-Warning $psitem.Exception.StackTrace
+        Write-Warning $_.Exception.StackTrace
     }
 }
+

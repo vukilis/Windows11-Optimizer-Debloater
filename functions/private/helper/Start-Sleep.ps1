@@ -14,3 +14,4 @@ function Start-Sleep($seconds) {
     }
     Write-Progress -Activity "Loading" -Status "Loading..." -SecondsRemaining 0 -Completed
 }
+

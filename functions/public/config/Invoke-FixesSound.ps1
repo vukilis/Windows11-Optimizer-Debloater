@@ -14,3 +14,4 @@ function Invoke-FixesSound {
 " -ch DarkGreen
     Invoke-MessageBox -msg "soundReset"
 }
+

@@ -5,3 +5,4 @@ function Invoke-ActivateWindows {
     #>
     Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command irm https://get.activated.win | iex" -Verb RunAs
 }
+

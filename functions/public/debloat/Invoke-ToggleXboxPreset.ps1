@@ -10,6 +10,7 @@ function Invoke-ToggleXboxPreseta {
 
     $DblSelectPanel = $psform.FindName("SetDebloat")
     $DblSelectPanel.Children.Clear()
+    $DblGetPanel = $psform.FindName("GetDebloat")
     $checkedCheckboxes = $DblGetPanel.Children
     $state = $wpf_ToggleXboxPreset.IsChecked
     
@@ -20,18 +21,17 @@ function Invoke-ToggleXboxPreseta {
     )
 
     $checkedCount = 0
-    foreach ($app in $checkedCheckboxes) {
-        if ($app -is [Windows.Controls.CheckBox]){
-            $isChecked = $app.IsChecked = $false
-
-            if ($isChecked -eq $false -and $state -and $xboxApps -notcontains $app.Content) {
-                AddCustomLabel -content $app.Content -panel $DblSelectPanel -Foreground "#a69f6c" -Margin @(15, 5, 15, 4) -FontSize 14 -FontWeight "Bold" -FontFamily "Gadugi"
-                $app.IsChecked = $true
+    foreach ($cb in $checkedCheckboxes) {
+        if ($cb -is [System.Windows.Controls.CheckBox]){
+            if ($state -and $xboxApps -notcontains $cb.Content) {
+                $cb.IsChecked = $true
+                AddCustomLabel -content $cb.Content -panel $DblSelectPanel -Foreground "#a69f6c" -Margin @(15, 5, 15, 4) -FontSize 14 -FontWeight "Bold" -FontFamily "Gadugi"
                 $checkedCount++
             } else {
-                $app.IsChecked = $false
+                $cb.IsChecked = $false
             }
         }
     }
-    $wpf_DblSelected.Content = "Selected: $checkedCount of $($matchingMsAppx.Count)"
+    $wpf_DblSelected.Content = "Selected: $checkedCount of $($checkedCheckboxes.Count)"
 }
+

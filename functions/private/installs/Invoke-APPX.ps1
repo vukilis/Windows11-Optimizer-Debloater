@@ -5,27 +5,31 @@ function Invoke-APPX {
     foreach ($program in $programs) {
         $program = $program | ConvertFrom-Json
         $id = $program.id
-        $name = $program.name
+        $name = $program.content
         $winget = $program.winget
-        $idPython = $id -like "DblPython*"
-        $pipPackage = $program.pip
-        $idChoco = $id -like "DblChoco*"
         $choco = $program.choco
+        $description = $program.description
 
         $checkBox = $psform.FindName("$id")
-        $isChecked = $checkBox.IsChecked
+        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($id)) {
+            $checkBox = $script:DynamicAppCheckBoxes[$id]
+        }
+        if ($checkBox) {
+            $isChecked = $checkBox.IsChecked
+        } else {
+            $isChecked = $false
+        }
 
         $result += [PSCustomObject]@{
             Id = $id
             Name = $name
             Winget = $winget
-            IdPython = $idPython
-            PipPackage = $pipPackage
-            IdChoco = $idChoco
             Choco = $choco
+            description = $description
             IsChecked = $isChecked
         }
     }
 
     return $result
 }
+

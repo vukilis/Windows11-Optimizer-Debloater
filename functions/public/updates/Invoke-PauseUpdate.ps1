@@ -2,32 +2,74 @@ function Invoke-PauseUpdate {
     <#
 
     .SYNOPSIS
-        Pause Windows Update up to 35 days or 5 weeks.
+        Pause Windows Update for up to 35 days or 5 weeks.
+
     #>
 
     Write-Host "Pausing Windows Update for 5 weeks..." -ForegroundColor Green
 
-    $pause = (Get-Date).AddDays(35)
-    $pause = $pause.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
-    #Write-Host $pause
-    $pause_start = (Get-Date)
-    $pause_start = $pause_start.ToUniversalTime().ToString( "yyyy-MM-ddTHH:mm:ssZ" )
-    set-itemproperty -path 'hklm:\software\microsoft\windowsupdate\ux\settings' -name 'pauseupdatesexpirytime' -value $pause                                                                                        
-    set-itemproperty -path 'hklm:\software\microsoft\windowsupdate\ux\settings' -name 'pausefeatureupdatesstarttime' -value $pause_start
-    set-itemproperty -path 'hklm:\software\microsoft\windowsupdate\ux\settings' -name 'pausefeatureupdatesendtime' -value $pause
-    set-itemproperty -path 'hklm:\software\microsoft\windowsupdate\ux\settings' -name 'pausequalityupdatesstarttime' -value $pause_start
-    set-itemproperty -path 'hklm:\software\microsoft\windowsupdate\ux\settings' -name 'pausequalityupdatesendtime' -value $pause
-    set-itemproperty -path 'hklm:\software\microsoft\windowsupdate\ux\settings' -name 'pauseupdatesstarttime' -value $pause_start
-    new-item -path 'hklm:\software\policies\microsoft\windows\windowsupdate\au' -force
-    new-itemproperty -path  'hklm:\software\policies\microsoft\windows\windowsupdate\au' -name 'noautoupdate' -propertytype dword -value 1  
-    
-    $pauseDateOnly = (Get-Date).AddDays(35)
-    $pauseDateOnly = $pauseDateOnly.ToUniversalTime().ToString("yyyy-MM-dd")
+    $windowsUpdateUXPath = "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings"
+    $automaticUpdatePolicyPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU"
+
+    # Make sure the required registry paths exist
+    If (!(Test-Path $windowsUpdateUXPath)) {
+        New-Item -Path $windowsUpdateUXPath -Force | Out-Null
+    }
+
+    If (!(Test-Path $automaticUpdatePolicyPath)) {
+        New-Item -Path $automaticUpdatePolicyPath -Force | Out-Null
+    }
+
+    # Calculate pause start and expiry dates
+    $pauseStart = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+    $pauseEnd = (Get-Date).AddDays(35).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+
+    # Set Windows Update pause dates
+    Set-ItemProperty `
+        -Path $windowsUpdateUXPath `
+        -Name "PauseUpdatesStartTime" `
+        -Value $pauseStart
+
+    Set-ItemProperty `
+        -Path $windowsUpdateUXPath `
+        -Name "PauseUpdatesExpiryTime" `
+        -Value $pauseEnd
+
+    Set-ItemProperty `
+        -Path $windowsUpdateUXPath `
+        -Name "PauseFeatureUpdatesStartTime" `
+        -Value $pauseStart
+
+    Set-ItemProperty `
+        -Path $windowsUpdateUXPath `
+        -Name "PauseFeatureUpdatesEndTime" `
+        -Value $pauseEnd
+
+    Set-ItemProperty `
+        -Path $windowsUpdateUXPath `
+        -Name "PauseQualityUpdatesStartTime" `
+        -Value $pauseStart
+
+    Set-ItemProperty `
+        -Path $windowsUpdateUXPath `
+        -Name "PauseQualityUpdatesEndTime" `
+        -Value $pauseEnd
+
+    # Disable automatic updates while paused
+    Set-ItemProperty `
+        -Path $automaticUpdatePolicyPath `
+        -Name "NoAutoUpdate" `
+        -Type DWord `
+        -Value 1
+
+    # Date displayed to the user
+    $pauseDateOnly = (Get-Date).AddDays(35).ToString("yyyy-MM-dd")
 
     Art -artN "
 ======================================
 -- Updates paused until $pauseDateOnly --
 ======================================
 " -ch DarkGreen
-    Invoke-MessageBox -msg "updatePause" 
+
+    Invoke-MessageBox -msg "updatePause"
 }

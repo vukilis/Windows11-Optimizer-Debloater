@@ -3,56 +3,57 @@ function Invoke-getInstallButton {
 
     .SYNOPSIS
         This function select all installed apps
-        Read installed winget, choco and pip packages  
+        Read installed winget and choco packages  
     #>
 
     Write-Host "Selecting Installed applications" -ForegroundColor Green
-    # Export winget package information to a JSON file
-    $wingetExportPath = Join-Path $env:TEMP "wingetPackage.json"
-    winget export -o $wingetExportPath
-    #Start-Sleep (2)
-    # Read and parse the JSON file
-    $jsonObject = Get-Content -Raw -Path $wingetExportPath | ConvertFrom-Json
-
-    # Export Choco packages to a text file
-    $chocoExportPath = Join-Path $env:TEMP "chocoPackage.json"
-    choco export -o $chocoExportPath
-    #Start-Sleep (2)
-    $chocoObject = Get-Content -Path $chocoExportPath
-    $xml = [xml]$chocoObject
-
-    # Export Python packages to a text file
-    pip freeze | Out-File -FilePath "$env:TEMP\pipPackage.txt"
-    $PIPpackage = "$env:TEMP\PIPpackage.txt" 
 
     # Process winget packages
-    foreach ($package in $jsonObject.Sources.Packages) {
-        $matchingProgram = Invoke-APPX | Where-Object { $_.Winget -eq $package.PackageIdentifier }
-
-        if ($matchingProgram -ne $null) {
-            $checkBox = $psform.FindName($matchingProgram.Id)
-            $checkBox.IsChecked = $true
+    try {
+        $wingetExportPath = Join-Path $env:TEMP "wingetPackage.json"
+        $exportResult = winget export -o $wingetExportPath 2>&1
+        if ($LASTEXITCODE -ne 0 -or -not (Test-Path -Path $wingetExportPath)) {
+            throw "winget export failed with exit code $LASTEXITCODE. Output: $exportResult"
         }
-    }
+        $jsonObject = Get-Content -Raw -Path $wingetExportPath -ErrorAction Stop | ConvertFrom-Json
 
-    # Process Python packages
-    foreach ($line in Get-Content -Path $PIPpackage) {
-        $index = $line.IndexOf('=')
-        $result = $line.Substring(0, $index).Trim()
-        $matchingProgram = Invoke-APPX | Where-Object { $_.PipPackage -eq $result }
-        if ($matchingProgram -ne $null) {
-            $checkBox = $psform.FindName($matchingProgram.Id)
-            $checkBox.IsChecked = $true
+        foreach ($package in $jsonObject.Sources.Packages) {
+            $matchingProgram = Invoke-APPX | Where-Object { $_.Winget -eq $package.PackageIdentifier }
+
+            if ($matchingProgram -ne $null) {
+                $checkBox = $script:DynamicAppCheckBoxes[$matchingProgram.Id]
+                if ($checkBox -and $checkBox.IsEnabled) {
+                    $checkBox.IsChecked = $true
+                }
+            }
+
         }
+    } catch {
+        Write-Warning "Failed to process winget packages: $_"
     }
 
     # Process Choco packages
-    foreach ($package in $xml.packages.package) {
-        $matchingProgram = Invoke-APPX | Where-Object { $_.Choco -eq $package.id }
-        if ($matchingProgram -ne $null) {
-            $checkBox = $psform.FindName($matchingProgram.Id)
-            $checkBox.IsChecked = $true
+    try {
+        $chocoExportPath = Join-Path $env:TEMP "chocoPackage.json"
+        if (Get-Command -Name choco -ErrorAction SilentlyContinue) {
+            choco export -o $chocoExportPath -ErrorAction Stop
+            $chocoObject = Get-Content -Path $chocoExportPath -ErrorAction Stop
+            $xml = [xml]$chocoObject
+
+            foreach ($package in $xml.packages.package) {
+                $matchingProgram = Invoke-APPX | Where-Object { $_.Choco -eq $package.id }
+                if ($matchingProgram -ne $null) {
+                    $checkBox = $script:DynamicAppCheckBoxes[$matchingProgram.Id]
+                    if ($checkBox -and $checkBox.IsEnabled) {
+                        $checkBox.IsChecked = $true
+                    }
+                }
+            }
+        } else {
+            Write-Warning "Chocolatey is not installed. Skipping choco package detection."
         }
+    } catch {
+        Write-Warning "Failed to process Chocolatey packages: $_"
     }
-    
 }
+

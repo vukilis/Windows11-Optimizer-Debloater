@@ -46,3 +46,4 @@ function Invoke-ToggleMegaPreset {
         Write-Host "Disabling Mega Preset" -ForegroundColor Red 
     }
 }
+

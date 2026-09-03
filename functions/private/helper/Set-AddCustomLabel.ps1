@@ -28,3 +28,4 @@ function AddCustomLabel {
 # $label.FontWeight = "Bold"
 # $label.FontFamily = New-Object Windows.Media.FontFamily("Gadugi")
 # $panel.Children.Add($label) | Out-Null
+

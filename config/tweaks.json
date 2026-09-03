@@ -8,6 +8,32 @@
             "Set-RestorePoint"
         ]
     },
+    "DblDisableBitLocker": {
+        "Type": "CheckBox",
+        "Content": "Disable BitLocker",
+        "Description": "Disables BitLocker encryption on the system drive.",
+        "DisableMessage": "Disabling BitLocker...",
+        "InvokeScript": [
+            "Disable-BitLocker -MountPoint $Env:SystemDrive"
+        ],
+        "UndoScript": [
+            "Enable-BitLocker -MountPoint $Env:SystemDrive"
+        ]
+    },
+    "DblDisableDeliveryOptimization": {
+        "Type": "CheckBox",
+        "Content": "Disable Delivery Optimization",
+        "Description": "Stops Windows from using your bandwidth to upload updates to other PCs on the internet or local network.",
+        "DisableMessage": "Disabling Delivery Optimization...",
+        "registry": 
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\\Config",
+                "OriginalValue": "<RemoveEntry>",
+                "Name": "DODownloadMode",
+                "Value": "0",
+                "Type": "DWord"
+            }
+    },
     "DblTelemetry": {
         "Type": "CheckBox",
         "Content": "Disable Telemetry",
@@ -82,11 +108,11 @@
         ],
         "registry": [
             {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
-                "OriginalValue": "1",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection",
                 "Name": "AllowTelemetry",
                 "Value": "0",
-                "Type": "DWord"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
@@ -160,10 +186,10 @@
             },
             {
                 "Path": "HKCU:\\SOFTWARE\\Microsoft\\Siuf\\Rules",
-                "OriginalValue": "0",
                 "Name": "NumberOfSIUFInPeriod",
                 "Value": "0",
-                "Type": "DWord"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
@@ -173,11 +199,46 @@
                 "Type": "DWord"
             },
             {
-                "Path": "HKCU:\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
-                "OriginalValue": "0",
-                "Name": "DisableTailoredExperiencesWithDiagnosticData",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+                "Name": "TailoredExperiencesWithDiagnosticDataEnabled",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy",
+                "Name": "HasAccepted",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Input\\TIPC",
+                "Name": "Enabled",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\InputPersonalization",
+                "Name": "RestrictImplicitInkCollection",
                 "Value": "1",
-                "Type": "DWord"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\InputPersonalization\\TrainedDataStore",
+                "Name": "HarvestContacts",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Personalization\\Settings",
+                "Name": "AcceptedPrivacyPolicy",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\AdvertisingInfo",
@@ -190,13 +251,6 @@
                 "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting",
                 "OriginalValue": "0",
                 "Name": "Disabled",
-                "Value": "1",
-                "Type": "DWord"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\\Config",
-                "OriginalValue": "1",
-                "Name": "DODownloadMode",
                 "Value": "1",
                 "Type": "DWord"
             },
@@ -220,6 +274,13 @@
                 "Name": "ShowTaskViewButton",
                 "Value": "0",
                 "Type": "DWord"
+            },
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                "Name": "Start_TrackProgs",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\People",
@@ -337,38 +398,35 @@
         ],
         "InvokeScript": [
             "
-            bcdedit /set `{current`} bootmenupolicy Legacy | Out-Null
-                If ((get-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\" -Name CurrentBuild).CurrentBuild -lt 22557) {
-                    $taskmgr = Start-Process -WindowStyle Hidden -FilePath taskmgr.exe -PassThru
-                    Do {
-                        Start-Sleep -Milliseconds 100
-                        $preferences = Get-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\TaskManager\" -Name \"Preferences\" -ErrorAction SilentlyContinue
-                    } Until ($preferences)
-                    Stop-Process $taskmgr
-                    $preferences.Preferences[28] = 0
-                    Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\TaskManager\" -Name \"Preferences\" -Type Binary -Value $preferences.Preferences
-                }
-                Remove-Item -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}\" -Recurse -ErrorAction SilentlyContinue
+            # Disable Defender Auto Sample Submission
+            Set-MpPreference -SubmitSamplesConsent 2
 
-                # Fix Managed by your organization in Edge if regustry path exists then remove it
+            # Disable (Connected User Experiences and Telemetry) Service
+            Set-Service -Name diagtrack -StartupType Disabled
 
-                If (Test-Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge\") {
-                    Remove-Item -Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge\" -Recurse -ErrorAction SilentlyContinue
-                }
+            # Disable (Windows Error Reporting Manager) Service
+            Set-Service -Name wermgr -StartupType Disabled
 
-                # Group svchost.exe processes
-                $ram = (Get-CimInstance -ClassName Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum).Sum / 1kb
-                Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\" -Name \"SvcHostSplitThresholdInKB\" -Type DWord -Value $ram -Force
+            # Disable PowerShell 7 telemetry
+            [Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '1', 'Machine')
 
-                $autoLoggerDir = \"$env:PROGRAMDATA\\Microsoft\\Diagnosis\\ETLLogs\\AutoLogger\"
-                If (Test-Path \"$autoLoggerDir\\AutoLogger-Diagtrack-Listener.etl\") {
-                    Remove-Item \"$autoLoggerDir\\AutoLogger-Diagtrack-Listener.etl\"
-                }
-                icacls $autoLoggerDir /deny SYSTEM:`(OI`)`(CI`)F | Out-Null
+            Remove-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Siuf\\Rules\" -Name PeriodInNanoSeconds
+            "
+        ],
+        "UndoScript": [
+            "
+            # Enable Defender Auto Sample Submission
+            Set-MpPreference -SubmitSamplesConsent 1
 
-                # Disable Defender Auto Sample Submission
-                Set-MpPreference -SubmitSamplesConsent 2 -ErrorAction SilentlyContinue | Out-Null
-                "
+            # Enable (Connected User Experiences and Telemetry) Service
+            Set-Service -Name diagtrack -StartupType Automatic
+
+            # Enable (Windows Error Reporting Manager) Service
+            Set-Service -Name wermgr -StartupType Automatic
+
+            # Enable PowerShell 7 telemetry
+            [Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '', 'Machine')
+            "
         ]
     },
     "DblWifi": {
@@ -376,7 +434,7 @@
         "Content": "Disable WiFi Sense",
         "Description": "Disables automatic connection to open hotspots and Wi-Fi reporting.",
         "DisableMessage": "Disabling Wi-Fi Sense...",
-        "Registry": [
+        "registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Microsoft\\PolicyManager\\default\\WiFi\\AllowWiFiHotSpotReporting",
                 "Name": "Value",
@@ -398,7 +456,7 @@
         "Content": "Disable Activity History",
         "Description": "This erases recent docs, clipboard, and run history.",
         "DisableMessage": "Disabling Activity History...",
-        "Registry": [
+        "registry": [
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
                 "Name": "EnableActivityFeed",
@@ -409,9 +467,9 @@
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
                 "Name": "PublishUserActivities",
-                "Value": 0,
-                "OriginalValue": 1,
-                "Type": "DWord"
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
@@ -548,6 +606,161 @@
             "
         ]
     },
+    "DblIntelMM": {
+        "Type": "CheckBox",
+        "Content": "Disable Intel MM (vPro LMS)",
+        "Description": "Disables Intel Management Engine (ME) vPro LMS service, removes driver packages, and deletes LMS executable files.",
+        "DisableMessage": "Disabling Intel MM (vPro LMS)...",
+        "InvokeScript": [
+            "
+            Write-Host \"Kill LMS\"
+            $serviceName = \"LMS\"
+            Write-Host \"Stopping and disabling service: $serviceName\"
+            Stop-Service -Name $serviceName -Force -ErrorAction SilentlyContinue;
+            Set-Service -Name $serviceName -StartupType Disabled -ErrorAction SilentlyContinue;
+
+            Write-Host \"Removing service: $serviceName\";
+            sc.exe delete $serviceName;
+
+            Write-Host \"Removing LMS driver packages\";
+            $lmsDriverPackages = @(Get-ChildItem -Path \"C:\\Windows\\System32\\DriverStore\\FileRepository\" -Recurse -Filter \"lms.inf*\");
+            foreach ($package in $lmsDriverPackages) {
+                Write-Host \"Removing driver package: $($package.Name)\";
+                pnputil /delete-driver $($package.Name) /uninstall /force;
+            }
+            if ($lmsDriverPackages.Count -eq 0) {
+                Write-Host \"No LMS driver packages found in the driver store.\";
+            } else {
+                Write-Host \"All found LMS driver packages have been removed.\";
+            }
+
+            Write-Host \"Searching and deleting LMS executable files\";
+            $programFilesDirs = @(\"C:\\Program Files\", \"C:\\Program Files (x86)\");
+            $lmsFiles = @();
+            foreach ($dir in $programFilesDirs) {
+                $lmsFiles += Get-ChildItem -Path $dir -Recurse -Filter \"LMS.exe\" -ErrorAction SilentlyContinue;
+            }
+            foreach ($file in $lmsFiles) {
+                Write-Host \"Taking ownership of file: $($file.FullName)\";
+                & icacls $($file.FullName) /grant Administrators:F /T /C /Q;
+                & takeown /F $($file.FullName) /A /R /D Y;
+                Write-Host \"Deleting file: $($file.FullName)\";
+                Remove-Item $($file.FullName) -Force -ErrorAction SilentlyContinue;
+            }
+            if ($lmsFiles.Count -eq 0) {
+                Write-Host \"No LMS.exe files found in Program Files directories.\";
+            } else {
+                Write-Host \"All found LMS.exe files have been deleted.\";
+            }
+            Write-Host 'Intel LMS vPro service has been disabled, removed, and blocked.';
+            "
+        ]
+    },
+    "DblRazer": {
+        "Type": "CheckBox",
+        "Content": "Disable Razer Software Auto-Install",
+        "Description": "Blocks ALL Razer Software installations. The hardware works fine without any software.",
+        "EnableMessage": "Disabling Razer Software Auto-Install...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DriverSearching",
+                "Name": "SearchOrderConfig",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "1"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Device Installer",
+                "Name": "DisableCoInstallers",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "0"
+            }
+        ],
+        "InvokeScript": [
+            "
+            $RazerPath = \"$Env:SystemRoot\\Installer\\Razer\"
+
+            if (Test-Path $RazerPath) {
+                Remove-Item $RazerPath\\* -Recurse -Force
+            } else {
+                New-Item -Path $RazerPath -ItemType Directory
+            }
+
+            icacls $RazerPath /deny \"Everyone:(W)\"
+            "
+        ],
+        "UndoScript": [
+            "
+            icacls \"$Env:SystemRoot\\Installer\\Razer\" /remove:d Everyone
+            "
+        ]
+    },
+    "DblWarningForUnsignedRdp": {
+        "Type": "CheckBox",
+        "Content": "Disable RDP Unsigned File Warnings",
+        "Description": "Disables warnings shown when launching unsigned RDP files introduced with the latest Windows 10 and 11 updates.",
+        "EnableMessage": "Disabling RDP Unsigned File Warnings...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Terminal Services\\Client",
+                "Name": "RedirectionWarningDialogVersion",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKCU:\\SOFTWARE\\Microsoft\\Terminal Server Client",
+                "Name": "RdpLaunchConsentAccepted",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            }
+        ]
+    },
+    "DblWindowsAI": {
+        "Type": "CheckBox",
+        "Content": "Disable & Remove WindowsAI",
+        "Description": "Removes and disables all AI features/packages.",
+        "EnableMessage": "Remove WindowsAI...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                "Name": "SettingsPageVisibility",
+                "Value": "hide:aicomponents",
+                "Type": "String",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\WindowsNotepad",
+                "Name": "DisableAIFeatures",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            }
+        ],
+        "InvokeScript": [
+            "
+            $Appx = (Get-AppxPackage MicrosoftWindows.Client.CoreAI).PackageFullName
+            $Sid = (Get-LocalUser $Env:UserName).Sid.Value
+
+            New-Item \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Appx\\AppxAllUserStore\\EndOfLife\\$Sid\\$Appx\" -Force
+
+            Get-AppxPackage -AllUsers \"*Copilot*\" | Remove-AppxPackage -AllUsers
+            winget uninstall -e --name \"Copilot\" --silent --force --accept-source-agreements 2>$null
+            Get-AppxPackage -AllUsers Microsoft.MicrosoftOfficeHub | Remove-AppxPackage -AllUsers
+
+            if ($Appx) {
+                Remove-AppxPackage $Appx
+            }
+
+            Set-Service -Name WSAIFabricSvc -StartupType Disabled
+            Disable-WindowsOptionalFeature -FeatureName Recall -Online -NoRestart
+
+            Write-Host \"Windows AI Disabled\"
+            "
+        ]
+    },
     "DblLaptopHibernation": {
         "Type": "CheckBox",
         "Content": "Set Hibernation as default (laptops)",
@@ -568,7 +781,7 @@
                 "Value": "2",
                 "Type": "DWord"
             }
-            ],
+        ],
         "InvokeScript": [
             "
             Write-Host \"Turn on Hibernation\"
@@ -594,6 +807,18 @@
             "
         ]
     },
+    "DblStoreSearch": {
+        "Type": "CheckBox",
+        "Content": "Disable Microsoft Store Recommended",
+        "Description": "Will not display recommended Microsoft Store apps when searching for apps in the Start menu.",
+        "DisableMessage": "Disabling Microsoft Store Recommended Search...",
+        "InvokeScript": [
+            "icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /deny Everyone:F"
+        ],
+        "UndoScript": [
+            "icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /grant Everyone:F"
+        ],
+    },
     "DblDebloatEdge": {
         "Type": "CheckBox",
         "Content": "Debloat Microsoft Edge",
@@ -603,149 +828,121 @@
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\EdgeUpdate",
                 "Name": "CreateDesktopShortcutDefault",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "EdgeEnhanceImagesEnabled",
                 "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "PersonalizationReportingEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge\\ExtensionInstallBlocklist",
+                "Name": "1",
+                "Value": "ofefcgjbeghpigppfmkologfjadafddi",
+                "Type": "String",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "ShowRecommendationsEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "HideFirstRunExperience",
-                "Type": "DWord",
                 "Value": "1",
-                "OriginalValue": "0"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "UserFeedbackAllowed",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "ConfigureDoNotTrack",
-                "Type": "DWord",
                 "Value": "1",
-                "OriginalValue": "0"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "AlternateErrorPagesEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "EdgeCollectionsEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "EdgeFollowEnabled",
                 "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "EdgeShoppingAssistantEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "MicrosoftEdgeInsiderPromotionEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "PersonalizationReportingEnabled",
                 "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "ShowMicrosoftRewards",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "WebWidgetAllowed",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "DiagnosticData",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "EdgeAssetDeliveryServiceEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "EdgeCollectionsEnabled",
                 "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "CryptoWalletEnabled",
-                "Type": "DWord",
-                "Value": "0",
-                "OriginalValue": "1"
-            },
-            {
-                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
-                "Name": "ConfigureDoNotTrack",
-                "Type": "DWord",
-                "Value": "1",
-                "OriginalValue": "0"
+                "OriginalValue": "<RemoveEntry>"
             },
             {
                 "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
                 "Name": "WalletDonationEnabled",
-                "Type": "DWord",
                 "Value": "0",
-                "OriginalValue": "1"
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
+            },
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+                "Name": "DefaultBrowserSettingsCampaignEnabled",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>"
             }
         ]
     },
@@ -757,11 +954,11 @@
         "InvokeScript": [
             "Get-ChildItem -Path 'C:\\Windows\\Temp' *.* -Recurse -Force | ForEach-Object {
             try { Remove-Item $_.FullName -Force -Recurse -ErrorAction Stop } 
-            catch { }
+            catch { Write-Warning \"Failed to remove temp file: $_\" }
             }
             Get-ChildItem -Path $env:TEMP *.* -Recurse -Force | ForEach-Object {
                 try { Remove-Item $_.FullName -Force -Recurse -ErrorAction Stop } 
-                catch { }
+                catch { Write-Warning \"Failed to remove temp file: $_\" }
             }
             Write-Host '======================================='
             Write-Host '--- Cleaned following folders:'
@@ -1017,7 +1214,7 @@
 
             # Flush the DNS resolver cache
             try {
-                Invoke-Expression \"ipconfig /flushdns\"
+                & ipconfig /flushdns
                 Write-Output \"DNS cache flushed successfully.\"
             } catch {
                 Write-Error \"Failed to flush DNS cache. Error: $_\"
@@ -1064,7 +1261,7 @@
 
             # Flush the DNS resolver cache
             try {
-                Invoke-Expression \"ipconfig /flushdns\"
+                & ipconfig /flushdns
                 Write-Output \"DNS cache flushed successfully.\"
             } catch {
                 Write-Error \"Failed to flush DNS cache. Error: $_\"
@@ -1454,9 +1651,9 @@
             },
             {
                 "Path": "HKCU:\\Control Panel\\Desktop",
-                "OriginalValue": "1",
+                "OriginalValue": "400",
                 "Name": "MenuShowDelay",
-                "Value": "1",
+                "Value": "200",
                 "Type": "String"
             },
             {
@@ -1470,7 +1667,7 @@
                 "Path": "HKCU:\\Control Panel\\Keyboard",
                 "OriginalValue": "1",
                 "Name": "KeyboardDelay",
-                "Value": "1",
+                "Value": "0",
                 "Type": "DWord"
             },
             {
@@ -1576,7 +1773,7 @@
     },
     "DblDisableNotifications": {
         "Type": "CheckBox",
-        "Content": "Disable Notifications",
+        "Content": "Disable Notifications & Calendar",
         "Description": "Disables all Notifications INCLUDING Calendar",
         "DisableMessage": "Disabling Notifications Tray/Calendar...",
         "registry": [
@@ -1662,7 +1859,7 @@
             Get-ChildItem -Path $schemePath -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.PSChildName -eq '.Current' } | ForEach-Object { Set-ItemProperty -Path $_.PSPath -Name '(Default)' -Value '' }
 
             # Broadcast settings change so it applies immediately
-            Add-Type \"using System; using System.Runtime.InteropServices; public class RefreshSystem { [DllImport(\"user32.dll\", SetLastError=true, CharSet=CharSet.Auto)] public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult); }\"
+            Invoke-LoadNativeMethods -Type RefreshSystem
             $HWND_BROADCAST = [IntPtr]0xffff
             $WM_SETTINGCHANGE = 0x1A
             $SMTO_ABORTIFHUNG = 0x2
@@ -1679,7 +1876,7 @@
             }
 
             # Broadcast settings change so it applies immediately
-            Add-Type \"using System; using System.Runtime.InteropServices; public class RefreshSystem { [DllImport(\"user32.dll\", SetLastError=true, CharSet=CharSet.Auto)] public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult); }\"
+            Invoke-LoadNativeMethods -Type RefreshSystem
             $HWND_BROADCAST = [IntPtr]0xffff
             $WM_SETTINGCHANGE = 0x1A
             $SMTO_ABORTIFHUNG = 0x2
@@ -2017,7 +2214,7 @@
                 Set-ItemProperty -Path $registryPath -Name '(Default)' -Value 'Windows Default (system scheme)' -Force
 
                 Start-Sleep 1
-                Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class SystemParamInfo { [DllImport(\"user32.dll\", CharSet = CharSet.Unicode)] public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni); }' -Language CSharp
+                Invoke-LoadNativeMethods -Type SystemParamInfo
                 [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
                 Write-Host 'Restored Windows default mouse cursors.' -ForegroundColor Green
             "
@@ -2114,7 +2311,7 @@
                 Set-ItemProperty -Path $registryPath -Name '(Default)' -Value 'Windows Default (system scheme)' -Force
 
                 Start-Sleep 1
-                Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class SystemParamInfo { [DllImport(\"user32.dll\", CharSet = CharSet.Unicode)] public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni); }' -Language CSharp
+                Invoke-LoadNativeMethods -Type SystemParamInfo
                 [SystemParamInfo]::SystemParametersInfo(0x0057, 0, $null, 0)
                 Write-Host 'Restored Windows default mouse cursors.' -ForegroundColor Green
             "
@@ -2528,6 +2725,14 @@
                 "Type": "Dword",
                 "DefaultState": "true"
             }
+        ],
+        "InvokeScript": [
+            "Write-Host \"Restarting Explorer to apply taskbar alignment...\" -ForegroundColor Green",
+            "Invoke-ExplorerUpdate"
+        ],
+        "UndoScript": [
+            "Write-Host \"Restarting Explorer to apply taskbar alignment...\" -ForegroundColor Green",
+            "Invoke-ExplorerUpdate"
         ]
     },
     "ToggleDetailedBSoD": {
@@ -2542,18 +2747,16 @@
             "Name": "DisplayParameters",
             "Value": "1",
             "OriginalValue": "0",
-            "DefaultState": "false",
             "Type": "DWord",
-                "DefaultState": "true"
+            "DefaultState": "true"
         },
         {
             "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\CrashControl",
             "Name": "DisableEmoticon",
             "Value": "1",
             "OriginalValue": "0",
-            "DefaultState": "false",
             "Type": "DWord",
-                "DefaultState": "true"
+            "DefaultState": "true"
         }
         ]
     },
@@ -2622,6 +2825,14 @@
                 "Type": "DWord",
                 "DefaultState": "true"
             }
+        ],
+        "InvokeScript": [
+            "Write-Host \"Restarting Explorer to apply taskbar alignment...\" -ForegroundColor Green",
+            "Invoke-ExplorerUpdate"
+        ],
+        "UndoScript": [
+            "Write-Host \"Restarting Explorer to apply taskbar alignment...\" -ForegroundColor Green",
+            "Invoke-ExplorerUpdate"
         ]
     },
     "ToggleHideSettingsHome": {
@@ -2716,6 +2927,23 @@
             }
         ]
     },
+    "ToggleS0Sleep": {
+        "Type": "Toggle",
+        "Content": "S0 Sleep Network Connectivity",
+        "Description": "Toggles network connectivity during S0 Sleep which is low power idle in modern laptops.",
+        "EnableMessage": "Enable S0 Sleep Network Connectivity...",
+        "DisableMessage": "Disable S0 Sleep Network Connectivity...",
+        "registry": [
+            {
+                "Path": "HKCU:\\SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\f15576e8-98b7-4186-b944-eafa664402d9",
+                "Name": "ACSettingIndex",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "0",
+                "DefaultState": "true"
+            }
+        ]
+    },
     "ToggleS3Sleep": {
         "Type": "Toggle",
         "Content": "S3 Sleep",
@@ -2765,6 +2993,238 @@
                 "Type": "DWord",
                 "DefaultState": "false"
             }
+        ]
+    },
+    "ToggleLoginBlur": {
+        "Type": "Toggle",
+        "Content": "Logon Screen Acrylic Blur",
+        "Description": "Toggles the acrylic blur effect on login screen background.",
+        "EnableMessage": "Enable Logon Screen Acrylic Blur...",
+        "DisableMessage": "Disable Logon Screen Acrylic Blur...",
+        "registry": [
+            {
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+                "Name": "DisableAcrylicBackgroundOnLogon",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "1",
+                "DefaultState": "true"
+            }
+        ]
+    },
+    "ToggleScrollbars": {
+        "Type": "Toggle",
+        "Content": "Scrollbars Always Visible",
+        "Description": "If enabled, scrollbars will always be visible. If disabled, Windows will automatically hide scrollbars when not in use.",
+        "EnableMessage": "Enable Scrollbars Always Visible...",
+        "DisableMessage": "Disable Scrollbars Always Visible...",
+        "registry": [
+            {
+                "Path": "HKCU:\\Control Panel\\Accessibility",
+                "Name": "DynamicScrollbars",
+                "Value": "0",
+                "Type": "DWord",
+                "OriginalValue": "1",
+                "DefaultState": "false"
+            }
+        ]
+    },
+    "ToggleBatteryPercentage": {
+        "Type": "Toggle",
+        "Content": "System Tray Battery Percentage",
+        "Description": "Shows numeric battery percentage next to the battery icon in the system tray.",
+        "EnableMessage": "Enable System Tray Battery Percentage...",
+        "DisableMessage": "Disable System Tray Battery Percentage...",
+        "registry": [
+            {
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                "Name": "IsBatteryPercentageEnabled",
+                "Value": "1",
+                "Type": "DWord",
+                "OriginalValue": "<RemoveEntry>",
+                "DefaultState": "false"
+            }
+        ]
+    },
+    "DblServicesSmart": {
+        "Type": "CheckBox",
+        "Content": "Services - Smart Startup",
+        "Description": "Sets some services to Manual startup and adjusts the SvcHostSplitThresholdInKB registry value to better match system memory, which can significantly reduce the number of svchost.exe processes.",
+        "DisableMessage": "Setting Services to Smart Startup...",
+        "service": [
+            {
+                "Name": "CscService",
+                "StartupType": "Disabled",
+                "OriginalType": "Manual"
+            },
+            {
+                "Name": "DiagTrack",
+                "StartupType": "Disabled",
+                "OriginalType": "Automatic"
+            },
+            {
+                "Name": "MapsBroker",
+                "StartupType": "Manual",
+                "OriginalType": "Automatic"
+            },
+            {
+                "Name": "StorSvc",
+                "StartupType": "Manual",
+                "OriginalType": "Automatic"
+            },
+            {
+                "Name": "SharedAccess",
+                "StartupType": "Disabled",
+                "OriginalType": "Automatic"
+            }
+        ],
+        "InvokeScript": [
+        "
+        $Memory = (Get-CimInstance Win32_PhysicalMemory | Measure-Object Capacity -Sum).Sum / 1KB
+        Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\" -Name SvcHostSplitThresholdInKB -Value $Memory
+        "
+        ],
+    },
+    "DblServicesManual": {
+        "Type": "CheckBox",
+        "Content": "Services - Set to Manual",
+        "Description": "Sets services to Manual startup to reduce automatic background processes and improve system performance.",
+        "DisableMessage": "Setting Services to Manual...",
+        "service": [
+            { "Name": "ALG", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "AJRouter", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "Browser", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "BthAvctpSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "diagnosticshub.standardcollector.service", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "DiagTrack", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "dmwappushservice", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "DPS", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "edgeupdate", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "edgeupdatem", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "Fax", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "fhsvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "FontCache", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "gupdate", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "gupdatem", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPAppHelperCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPDiagsCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPNetworkCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPSysInfoCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HpTouchpointAnalyticsService", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HvHost", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "lfsvc", "StartupType": "Disabled", "OriginalType": "Manual" },
+            { "Name": "lmhosts", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "MapsBroker", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "MicrosoftEdgeElevationService", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "MSDTC", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "NahimicService", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "NetTcpPortSharing", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PcaSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PerfHost", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PhoneSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PrintNotify", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "QWAVE", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RemoteAccess", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RemoteRegistry", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RetailDemo", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RtkBtManServ", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "SCardSvr", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "seclogon", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "SEMgrSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "SharedAccess", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "ssh-agent", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "stisvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "SysMain", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "TrkWks", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "vmicguestinterface", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicheartbeat", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmickvpexchange", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicrdv", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicshutdown", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmictimesync", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicvmsession", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WerSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "wisvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WMPNetworkSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WpcMonSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WPDBusEnum", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WpnService", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "WSearch", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "XblAuthManager", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "XblGameSave", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "XboxNetApiSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "XboxGipSvc", "StartupType": "Manual", "OriginalType": "Manual" }
+        ]
+    },
+    "DblServicesDefault": {
+        "Type": "CheckBox",
+        "Content": "Services - Default",
+        "Description": "Restores services to their Windows factory default startup types.",
+        "DisableMessage": "Setting Services to Default...",
+        "service": [
+            { "Name": "ALG", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "AJRouter", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "Browser", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "BthAvctpSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "diagnosticshub.standardcollector.service", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "DiagTrack", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "dmwappushservice", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "DPS", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "edgeupdate", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "edgeupdatem", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "Fax", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "fhsvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "FontCache", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "gupdate", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "gupdatem", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPAppHelperCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPDiagsCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPNetworkCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HPSysInfoCap", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HpTouchpointAnalyticsService", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "HvHost", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "lfsvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "lmhosts", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "MapsBroker", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "MicrosoftEdgeElevationService", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "MSDTC", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "NahimicService", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "NetTcpPortSharing", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PcaSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PerfHost", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PhoneSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "PrintNotify", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "QWAVE", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RemoteAccess", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RemoteRegistry", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RetailDemo", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "RtkBtManServ", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "SCardSvr", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "seclogon", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "SEMgrSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "SharedAccess", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "ssh-agent", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "stisvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "SysMain", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "TrkWks", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "vmicguestinterface", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicheartbeat", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmickvpexchange", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicrdv", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicshutdown", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmictimesync", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "vmicvmsession", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WerSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "wisvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WMPNetworkSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WpcMonSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WPDBusEnum", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "WpnService", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "WSearch", "StartupType": "Automatic", "OriginalType": "Automatic" },
+            { "Name": "XblAuthManager", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "XblGameSave", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "XboxNetApiSvc", "StartupType": "Manual", "OriginalType": "Manual" },
+            { "Name": "XboxGipSvc", "StartupType": "Manual", "OriginalType": "Manual" }
         ]
     }
 }

@@ -7,10 +7,13 @@ function Invoke-UnselectApplicationAll {
 
     $DblSelectPanel = $psform.FindName("SetDebloat")
     $DblSelectPanel.Children.Clear()
-    $checkedCheckboxes = $DblGetPanel.Children
+    $DblGetPanel = $psform.FindName("GetDebloat")
     $wpf_ToggleXboxPreset.IsChecked = $false
-    foreach ($app in $checkedCheckboxes) {
-        $app.IsChecked = $false
+    foreach ($cb in $DblGetPanel.Children) {
+        if ($cb -is [System.Windows.Controls.CheckBox]) {
+            $cb.IsChecked = $false
+        }
     }
-    $wpf_DblSelected.Content = "Selected: 0 of $($matchingMsAppx.Count)"
+    $wpf_DblSelected.Content = "Selected: 0 of $($DblGetPanel.Children.Count)"
 }
+

@@ -10,6 +10,11 @@ function Invoke-MessageBox {
         [string]$msg
     )
 
+    if ($script:HeadlessMode) {
+        Write-Host "[Headless] Skipped MessageBox: $msg" -ForegroundColor DarkGray
+        return
+    }
+
     $MessageboxTitle = switch ($msg) {
         "install"  { "Installs are finished" }
         "uninstall" { "Uninstalls are finished" }
@@ -37,3 +42,5 @@ function Invoke-MessageBox {
 
     [System.Windows.MessageBox]::Show("Done", $MessageboxTitle, [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
 }
+
+
