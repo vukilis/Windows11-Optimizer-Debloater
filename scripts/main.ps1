@@ -301,29 +301,33 @@ function Invoke-ToggleButtons {
                 }
             }
 
-            foreach ($svc in $toggleEntry.PSObject.Properties.Name -contains 'service' ? $toggleEntry.service : @()) {
-                try {
-                    $service = Get-Service -Name $svc.Name -ErrorAction Stop
-                    $desiredType = if ($isChecked) { $svc.StartupType } else { $svc.OriginalType }
+            if ($toggleEntry.PSObject.Properties.Name -contains 'service') {
+                foreach ($svc in $toggleEntry.service) {
+                    try {
+                        $service = Get-Service -Name $svc.Name -ErrorAction Stop
+                        $desiredType = if ($isChecked) { $svc.StartupType } else { $svc.OriginalType }
 
-                    Write-Host "Setting service $($svc.Name) startup type to $desiredType" -ForegroundColor Yellow
-                    Set-WinService -Name $svc.Name -StartupType $desiredType
-                }
-                catch {
-                    Write-Warning "Service $($svc.Name) not found or could not be modified: $_"
+                        Write-Host "Setting service $($svc.Name) startup type to $desiredType" -ForegroundColor Yellow
+                        Set-WinService -Name $svc.Name -StartupType $desiredType
+                    }
+                    catch {
+                        Write-Warning "Service $($svc.Name) not found or could not be modified: $_"
+                    }
                 }
             }
 
-            foreach ($fw in $toggleEntry.PSObject.Properties.Name -contains 'firewall' ? $toggleEntry.firewall : @()) {
-                try {
-                    $desiredAction = if ($isChecked) { $fw.Action } else { 
-                        if ($fw.Action -eq "Disable") { "Enable" } else { "Disable" }
+            if ($toggleEntry.PSObject.Properties.Name -contains 'firewall') {
+                foreach ($fw in $toggleEntry.firewall) {
+                    try {
+                        $desiredAction = if ($isChecked) { $fw.Action } else { 
+                            if ($fw.Action -eq "Disable") { "Enable" } else { "Disable" }
+                        }
+                        Write-Host "Setting firewall group '$($fw.Group)' on profile '$($fw.Profile)' to $desiredAction" -ForegroundColor Cyan
+                        Set-FirewallRule -Group $fw.Group -Profile $fw.Profile -Action $desiredAction
                     }
-                    Write-Host "Setting firewall group '$($fw.Group)' on profile '$($fw.Profile)' to $desiredAction" -ForegroundColor Cyan
-                    Set-FirewallRule -Group $fw.Group -Profile $fw.Profile -Action $desiredAction
-                }
-                catch {
-                    Write-Warning "Failed to modify firewall rule group '$($fw.Group)': $_"
+                    catch {
+                        Write-Warning "Failed to modify firewall rule group '$($fw.Group)': $_"
+                    }
                 }
             }
 
