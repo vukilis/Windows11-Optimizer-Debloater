@@ -2067,7 +2067,31 @@
                                     TextAlignment="Left"
                                     MaxWidth="400"
                                     Foreground="#FFDEE39B"/>
-                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="350" Foreground="#FFDEE39B">- This is the default settings that come with Windows. <LineBreak/>- Removes Windows Update policies managed by Wind11deb <LineBreak/>- Restores update service startup settings <LineBreak/>- Re-enables update scheduled tasks</TextBlock>
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="14"
+                                    FontFamily="Helvetica"
+                                    Padding="12"
+                                    TextWrapping="Wrap"
+                                    TextAlignment="Left"
+                                    MaxWidth="400"
+                                    Foreground="#FFDEE39B">
+
+                                    <Run Text="• " Foreground="#FF8FAE72"/>
+                                    <Run Text="This is the default settings that come with Windows."/>
+                                    <LineBreak/><LineBreak/>
+
+                                    <Run Text="• " Foreground="#FF8FAE72"/>
+                                    <Run Text="Removes Windows Update policies managed by Wind11deb"/>
+                                    <LineBreak/><LineBreak/>
+
+                                    <Run Text="• " Foreground="#FF8FAE72"/>
+                                    <Run Text="Restores update service startup settings"/>
+                                    <LineBreak/><LineBreak/>
+
+                                    <Run Text="• " Foreground="#FF8FAE72"/>
+                                    <Run Text="Re-enables update scheduled tasks"/>
+                                </TextBlock>
                                 <Separator Background="#FFF4AB51" Width="350"/>
                                 <TextBlock HorizontalAlignment="Center" FontSize="14" FontFamily="Helvetica" Padding="10" TextWrapping="WrapWithOverflow" TextAlignment="Justify" MaxWidth="320" Foreground="#FFDEE39B">Note: If you're not ready to get recommended updates, you can choose to temporarily pause them from being downloaded and installed.<LineBreak/><TextBlock Foreground="#FFF4AB51">Pause updates for 5 weeks.</TextBlock></TextBlock>
                                 <Button Name="PauseUpdate" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Pause Windows Updates" Cursor="Hand" Margin="0,5,0,0" Padding="10" HorizontalAlignment = "Center"/>
