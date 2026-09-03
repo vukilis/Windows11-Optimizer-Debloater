@@ -21,14 +21,12 @@ function Invoke-getInstallButton {
             $matchingProgram = Invoke-APPX | Where-Object { $_.Winget -eq $package.PackageIdentifier }
 
             if ($matchingProgram -ne $null) {
-                $checkBox = $psform.FindName($matchingProgram.Id)
-                if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($matchingProgram.Id)) {
-                    $checkBox = $script:DynamicAppCheckBoxes[$matchingProgram.Id]
-                }
+                $checkBox = $script:DynamicAppCheckBoxes[$matchingProgram.Id]
                 if ($checkBox -and $checkBox.IsEnabled) {
                     $checkBox.IsChecked = $true
                 }
             }
+
         }
     } catch {
         Write-Warning "Failed to process winget packages: $_"
@@ -45,10 +43,7 @@ function Invoke-getInstallButton {
             foreach ($package in $xml.packages.package) {
                 $matchingProgram = Invoke-APPX | Where-Object { $_.Choco -eq $package.id }
                 if ($matchingProgram -ne $null) {
-                    $checkBox = $psform.FindName($matchingProgram.Id)
-                    if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($matchingProgram.Id)) {
-                        $checkBox = $script:DynamicAppCheckBoxes[$matchingProgram.Id]
-                    }
+                    $checkBox = $script:DynamicAppCheckBoxes[$matchingProgram.Id]
                     if ($checkBox -and $checkBox.IsEnabled) {
                         $checkBox.IsChecked = $true
                     }

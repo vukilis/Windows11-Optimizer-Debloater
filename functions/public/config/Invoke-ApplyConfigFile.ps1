@@ -117,27 +117,21 @@ function Invoke-ApplyConfigFile {
     }
 
     # Install apps
-    if ($config.PSObject.Properties.Name -contains 'installedApps' -and $config.installedApps) {
+    if ($config.PSObject.Properties.Name -contains 'packageManager' -and $config.PSObject.Properties.Name -contains 'installApps' -and $config.installApps) {
         Write-Host "Installing applications..." -ForegroundColor.Yellow
-        
-        # Install winget packages
-        if ($config.installedApps.PSObject.Properties.Name -contains 'winget') {
-            foreach ($packageId in $config.installedApps.winget) {
-                Write-Host "  Installing winget package: $packageId" -ForegroundColor.Gray
-                $matchingProgram = Invoke-APPX | Where-Object { $_.Winget -eq $packageId }
+        $packageManager = $config.packageManager
+        foreach ($appId in $config.installApps.PSObject.Properties.Name) {
+            if ($config.installApps.$appId -eq $true) {
+                Write-Host "  Installing app: $appId via $packageManager" -ForegroundColor.Gray
+                $matchingProgram = Invoke-APPX | Where-Object { $_.Id -eq $appId }
                 if ($matchingProgram -ne $null) {
-                    Invoke-ManageInstall -PackageManger "winget" -manage "Installing" -program $matchingProgram -PackageName $packageId
-                }
-            }
-        }
-
-        # Install choco packages
-        if ($config.installedApps.PSObject.Properties.Name -contains 'choco') {
-            foreach ($packageId in $config.installedApps.choco) {
-                Write-Host "  Installing choco package: $packageId" -ForegroundColor.Gray
-                $matchingProgram = Invoke-APPX | Where-Object { $_.Choco -eq $packageId }
-                if ($matchingProgram -ne $null) {
-                    Invoke-ManageInstall -PackageManger "choco" -manage "Installing" -program $matchingProgram -PackageName $packageId
+                    $packageName = switch ($packageManager) {
+                        "choco" { $matchingProgram.Choco }
+                        default { $matchingProgram.Winget }
+                    }
+                    if ($packageName) {
+                        Invoke-ManageInstall -PackageManger $packageManager -manage "Installing" -program $matchingProgram -PackageName $packageName
+                    }
                 }
             }
         }

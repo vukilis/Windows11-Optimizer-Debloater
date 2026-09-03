@@ -8,6 +8,7 @@ function Invoke-APPX {
         $name = $program.content
         $winget = $program.winget
         $choco = $program.choco
+        $description = $program.description
 
         $checkBox = $psform.FindName("$id")
         if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($id)) {
@@ -24,6 +25,7 @@ function Invoke-APPX {
             Name = $name
             Winget = $winget
             Choco = $choco
+            description = $description
             IsChecked = $isChecked
         }
     }

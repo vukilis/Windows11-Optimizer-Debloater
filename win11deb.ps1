@@ -21,8 +21,8 @@ Set-StrictMode -Version Latest
 ###                                                                                                          ###
 ################################################################################################################
 
-$programs = @('{"content":".NET 5","choco":null,"description":".NET Desktop Runtime 5 is a runtime environment required for running applications developed with .NET 5.","winget":"Microsoft.DotNet.DesktopRuntime.5","category":"Microsoft Tools","id":"DblInstallDotnet5"}','{"content":".NET 6","choco":null,"description":".NET Desktop Runtime 6 is a runtime environment required for running applications developed with .NET 6.","winget":"Microsoft.DotNet.DesktopRuntime.6","category":"Microsoft Tools","id":"DblInstallDotnet6"}','{"content":".NET 7","choco":null,"description":".NET Desktop Runtime 7 is a runtime environment required for running applications developed with .NET 7.","winget":"Microsoft.DotNet.DesktopRuntime.7","category":"Microsoft Tools","id":"DblInstallDotnet7"}','{"content":".NET 8","choco":null,"description":".NET Desktop Runtime 8 is a runtime environment required for running applications developed with .NET 8.","winget":"Microsoft.DotNet.DesktopRuntime.8","category":"Microsoft Tools","id":"DblInstallDotnet8"}','{"content":".NET Core 3","choco":null,"description":".NET Core 3 runtime for running applications developed with .NET Core 3.","winget":"Microsoft.DotNet.DesktopRuntime.3_1","category":"Microsoft Tools","id":"DblInstallDotnet3"}','{"content":".NET Desktop Runtime 10","choco":"dotnet-10.0-runtime","description":".NET Desktop Runtime 10 is a runtime environment required for running applications developed with .NET 10.","winget":"Microsoft.DotNet.DesktopRuntime.10","category":"Microsoft Tools","id":"DblInstallNetdesktopruntime10"}','{"content":".NET Desktop Runtime 9","choco":"dotnet-9.0-runtime","description":".NET Desktop Runtime 9 is a runtime environment required for running applications developed with .NET 9.","winget":"Microsoft.DotNet.DesktopRuntime.9","category":"Microsoft Tools","id":"DblInstallNetdesktopruntime9"}','{"content":"1Password","choco":"1password","description":"1Password is a password manager that allows you to store and manage your passwords securely.","winget":"AgileBits.1Password","category":"Utilities","id":"DblInstall1Password"}','{"content":"7-zip","choco":"7zip","description":"7-Zip is a free and open-source file archiver utility. It supports several compression formats and provides a high compression ratio, making it a popular choice for file compression.","winget":"7zip.7zip","category":"Utilities","id":"DblInstall7zip"}','{"content":"Adobe","choco":"adobereader","description":"Adobe Acrobat Reader is a free PDF viewer with essential features for viewing, printing, and annotating PDF documents.","winget":"Adobe.Acrobat.Reader.64-bit","category":"Document","id":"DblInstallAdobe"}','{"content":"Advanced IP Scanner","choco":"advanced-ip-scanner","description":"Advanced IP Scanner is a fast and easy-to-use network scanner. It is designed to analyze LAN networks and provides information about connected devices.","winget":"Famatech.AdvancedIPScanner","category":"Pro Tools","id":"DblInstallAdvancedipscanner"}','{"content":"Afterburner","choco":"msiafterburner","description":"MSI Afterburner is a graphics card overclocking utility with advanced features.","winget":"Guru3D.Afterburner","category":"Utilities","id":"DblInstallMsiafterburner"}','{"content":"AIMP (Music Player)","choco":"aimp","description":"AIMP is a feature-rich music player with support for various audio formats, playlists, and customizable user interface.","winget":"AIMP.AIMP","category":"Multimedia Tools","id":"DblInstallAimpmusicplayer"}','{"content":"Alacritty","choco":"alacritty","description":"Alacritty is a fast, cross-platform, GPU-accelerated terminal emulator.","winget":"Alacritty.Alacritty","category":"Utilities","id":"DblInstallAlacritty"}','{"content":"Amazon Corretto 21 (LTS)","choco":"corretto21jdk","description":"Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK).","winget":"Amazon.Corretto.21.JDK","category":"Development","id":"DblInstallAmazoncorretto21lts"}','{"content":"Amazon Corretto 25 (LTS)","choco":"corretto25jdk","description":"Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK).","winget":"Amazon.Corretto.25.JDK","category":"Development","id":"DblInstallAmazoncorretto25lts"}','{"content":"Amazon Corretto 8 (LTS)","choco":"corretto8jdk","description":"Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK).","winget":"Amazon.Corretto.8.JDK","category":"Development","id":"DblInstallAmazoncorretto8lts"}','{"content":"Android Debug Bridge","choco":"googleplatformtools","description":"Android Debug Bridge (ADB) is a versatile command-line tool that lets you communicate with a device.","winget":"Google.PlatformTools","category":"Utilities","id":"DblInstallADB"}','{"content":"Angry IP Scanner","choco":"angryip","description":"Angry IP Scanner is an open-source and cross-platform network scanner. It is used to scan IP addresses and ports, providing information about network connectivity.","winget":"angryziber.AngryIPScanner","category":"Pro Tools","id":"DblInstallAngryipscanner"}','{"content":"Anki","choco":null,"description":"Anki is a spaced repetition flashcard program that makes memorization more efficient.","winget":"Anki.Anki","category":"Document","id":"DblInstallAnki"}','{"content":"AnyDesk","choco":"anydesk","description":"AnyDesk is a remote desktop software that enables users to access and control computers remotely. It is known for its fast connection and low latency.","winget":"AnyDesk.AnyDesk","category":"Utilities","id":"DblInstallAnydesk"}','{"content":"Anydo","choco":"anydo","description":"","winget":"Anydo.Anydo","category":"Utilities","id":"DblInstallAnydo"}','{"content":"Audacity","choco":null,"description":"Audacity is a free and open-source audio editing software known for its powerful recording and editing capabilities.","winget":"Audacity.Audacity","category":"Multimedia Tools","id":"DblInstallAudacity"}','{"content":"AutoHotkey","choco":"autohotkey","description":"AutoHotkey is a scripting language for Windows that allows users to create custom automation scripts and macros. It is often used for automating repetitive tasks and customizing keyboard shortcuts.","winget":"autohotkey","category":"Utilities","id":"DblInstallAutohotkey"}','{"content":"Autoruns","choco":null,"description":"This utility shows you what programs are configured to run during system bootup or login.","winget":"Microsoft.Sysinternals.Autoruns","category":"Microsoft Tools","id":"DblInstallAutoruns"}','{"content":"AV1 Video Extension","choco":null,"description":"AV1 Video Extension provides support for the AV1 video codec in Windows.","winget":"9MVZQVXJBQ9V","category":"Multimedia Tools","id":"DblInstallAV1"}','{"content":"Battle.net","choco":null,"description":"Battle.net is a launcher for games created and developed by Activision Blizzard","winget":"Blizzard.BattleNet","category":"Games","id":"DblInstallBattlenet"}','{"content":"Betterbird","choco":"betterbird","description":"Betterbird is a fork of Mozilla Thunderbird with additional features and bugfixes.","winget":"Betterbird.Betterbird","category":"Communications","id":"DblInstallBetterbird"}','{"content":"Bitwarden","choco":"bitwarden","description":"Bitwarden is an open-source password management solution. It allows users to store and manage their passwords in a secure and encrypted vault, accessible across multiple devices.","winget":"Bitwarden.Bitwarden","category":"Utilities","id":"DblInstallBitwarden"}','{"content":"Blender","choco":"blender","description":"Blender is a powerful open-source 3D creation suite, offering modeling, sculpting, animation, and rendering tools.","winget":"BlenderFoundation.Blender","category":"Multimedia Tools","id":"DblInstallBlender"}','{"content":"Bluestacks","choco":null,"description":"BlueStacks is an Android emulator that lets you run Android apps and games on Windows.","winget":"BlueStack.BlueStacks","category":"Gaming Launchers","id":"DblInstallBluestacks"}','{"content":"BlurAutoClicker","choco":null,"description":"An Auto-clicker with a few advanced features and generally better performance than popular alternatives.","winget":"Blur009.BlurAutoClicker","category":"Utilities","id":"DblInstallBlurautoclicker"}','{"content":"Brave","choco":"brave","description":"Brave is a privacy-focused web browser that blocks ads and trackers, offering a faster and safer browsing experience.","winget":"Brave.Brave","category":"Browsers","id":"DblInstallBrave"}','{"content":"Bruno","choco":"bruno","description":"Bruno is a local-first API client that stores collections as plain text files for version control and collaboration.","winget":"Bruno.Bruno","category":"Development","id":"DblInstallBruno"}','{"content":"Bulk Crap Uninstaller","choco":"bulk-crap-uninstaller","description":"Bulk Crap Uninstaller is a free and open-source uninstaller utility for Windows. It helps users remove unwanted programs and clean up their system by uninstalling multiple applications at once.","winget":"Klocman.BulkCrapUninstaller","category":"Utilities","id":"DblInstallBulkcrapuninstaller"}','{"content":"Calibre","choco":"calibre","description":"Calibre is a powerful and easy-to-use e-book manager, viewer, and converter.","winget":"calibre.calibre","category":"Multimedia Tools","id":"DblInstallCalibre"}','{"content":"Cemu","choco":null,"description":"Cemu is a highly experimental software to emulate Wii U applications on PC.","winget":"Cemu.Cemu","category":"Gaming Launchers","id":"DblInstallCemu"}','{"content":"ChatGPT Desktop","choco":null,"description":"The official ChatGPT desktop app for Windows, distributed through the Microsoft Store.","winget":"msstore:9NT1R1C2HH7J","category":"Development","id":"DblInstallChatgptdesktop"}','{"content":"Chatterino","choco":"chatterino","description":"Chatterino is a chat client for Twitch chat that offers a clean and customizable interface for a better streaming experience.","winget":"ChatterinoTeam.Chatterino","category":"Utilities","id":"DblInstallChatterino"}','{"content":"Chromium","choco":"chromium","description":"Chromium is the open-source project that serves as the foundation for various web browsers, including Chrome.","winget":"eloston.ungoogled-chromium","category":"Browsers","id":"DblInstallChromium"}','{"content":"Cider","choco":null,"description":"Cider is an open-source Apple Music client for Windows.","winget":"CiderCollective.Cider","category":"Multimedia Tools","id":"DblInstallCider"}','{"content":"Cinebench R23","choco":null,"description":"Cinebench R23 is a benchmark tool for comparing CPU rendering performance across systems.","winget":"Maxon.CinebenchR23","category":"Pro Tools","id":"DblInstallCinebenchr23"}','{"content":"ClassicVolumeMixer","choco":null,"description":"Classic Volume Mixer provides quick access to the classic volume mixer in Windows.","winget":"PopeenCom.ClassicVolumeMixer","category":"Utilities","id":"DblInstallClasicMixer"}','{"content":"Claude Code","choco":"claude-code","description":"Anthropics agentic coding tool for terminal and IDE development workflows.","winget":"Anthropic.ClaudeCode","category":"Development","id":"DblInstallClaudecode"}','{"content":"Claude Desktop","choco":"claude","description":"Anthropics Claude desktop application for focused AI-assisted work and chat.","winget":"Anthropic.Claude","category":"Development","id":"DblInstallClaudedesktop"}','{"content":"Cloudflare WARP","choco":"warp","description":"WARP is a freemium VPN service provided by Cloudflare. Includes usage of Cloudflares DNS","winget":"Cloudflare.Warp","category":"Utilities","id":"DblInstallCloudflarewarp"}','{"content":"CMake","choco":"cmake","description":"CMake is an open-source, cross-platform family of tools designed to build, test and package software.","winget":"Kitware.CMake","category":"Development","id":"DblInstallCmake"}','{"content":"Codex","choco":"codex","description":"Codex CLI is an OpenAI coding agent that runs locally in your terminal.","winget":"OpenAI.Codex","category":"Development","id":"DblInstallCodex"}','{"content":"CPU-Z","choco":"cpu-z","description":"CPU-Z is a system monitoring and diagnostic tool for Windows. It provides detailed information about the computers hardware components, including the CPU, memory, and motherboard.","winget":"CPUID.CPU-Z","category":"Utilities","id":"DblInstallCpuz"}','{"content":"Cryptomator","choco":"cryptomator","description":"Cryptomator is a free and open-source tool for encrypting cloud storage files.","winget":"Cryptomator.Cryptomator","category":"Utilities","id":"DblInstallCryptomator"}','{"content":"Crystal Disk Info","choco":"crystaldiskinfo","description":"Crystal Disk Info is a disk health monitoring tool that provides information about the status and performance of hard drives. It helps users anticipate potential issues and monitor drive health.","winget":"CrystalDewWorld.CrystalDiskInfo","category":"Utilities","id":"DblInstallCrystaldiskinfo"}','{"content":"Crystal Disk Mark","choco":"crystaldiskmark","description":"Crystal Disk Mark is a disk benchmarking tool that measures the read and write speeds of storage devices. It helps users assess the performance of their hard drives and SSDs.","winget":"CrystalDewWorld.CrystalDiskMark","category":"Utilities","id":"DblInstallCrystaldiskmark"}','{"content":"Cursor","choco":"cursoride","description":"AI-powered code editor (VS Code-based) with agentic coding features and integrated AI assistance for development workflows.","winget":"Anysphere.Cursor","category":"Development","id":"DblInstallCursor"}','{"content":"Deskflow","choco":"deskflow","description":"Deskflow is a free and open-source software KVM that lets you share a single keyboard and mouse across multiple computers.","winget":"Deskflow.Deskflow","category":"Utilities","id":"DblInstallDeskflow"}','{"content":"Discord","choco":"discord","description":"Discord is a popular communication platform with voice, video, and text chat, designed for gamers but used by a wide range of communities.","winget":"Discord.Discord","category":"Communications","id":"DblInstallDiscord"}','{"content":"DISMTools","choco":"dismtools","description":"DISMTools is a fast, customizable GUI for the DISM utility, supporting Windows images from Windows 7 onward. It handles installations on any drive, offers project support, and lets users tweak settings like color modes, language, and DISM versions; powered by both native DISM and a managed DISM API.","winget":"CodingWondersSoftware.DISMTools.Stable","category":"Microsoft Tools","id":"DblInstallDismtools"}','{"content":"Display Driver Uninstaller","choco":"ddu","description":"Display Driver Uninstaller (DDU) is a tool for completely uninstalling graphics drivers from NVIDIA, AMD, and Intel. It is useful for troubleshooting graphics driver-related issues.","winget":"Wagnardsoft.DisplayDriverUninstaller","category":"Utilities","id":"DblInstallDdu"}','{"content":"Docker Desktop","choco":null,"description":"Docker Desktop provides a local environment for building, running, and testing containerized applications on Windows.","winget":"Docker.DockerDesktop","category":"Development","id":"DblInstallDockerdesktop"}','{"content":"Dorion","choco":"dorion","description":"Tiny alternative Discord client with a smaller footprint, snappier startup, themes, plugins and more!","winget":"SpikeHD.Dorion","category":"Communications","id":"DblInstallDorion"}','{"content":"Draw.io","choco":"drawio","description":"draw.io is a free online diagramming tool for creating flowcharts, mind maps, and more.","winget":"JGraph.Draw","category":"Utilities","id":"DblInstallDrawio"}','{"content":"Dropbox","choco":"dropbox","description":"Dropbox is a cloud storage client for syncing files, sharing content, and keeping documents available across devices.","winget":"Dropbox.Dropbox","category":"Utilities","id":"DblInstallDropbox"}','{"content":"EA Desktop App","choco":null,"description":"EA App is a platform for accessing and playing Electronic Arts games.","winget":"ElectronicArts.EADesktop","category":"Gaming Launchers","id":"DblInstallEaapp"}','{"content":"EarTrumpet (Audio)","choco":"eartrumpet","description":"EarTrumpet is an audio control app for Windows, providing a simple and intuitive interface for managing sound settings.","winget":"File-New-Project.EarTrumpet","category":"Multimedia Tools","id":"DblInstallEartrumpetaudio"}','{"content":"Edge","choco":"microsoft-edge","description":"Microsoft Edge is a modern web browser built on Chromium, offering performance, security, and integration with Microsoft services.","winget":"Microsoft.Edge","category":"Browsers","id":"DblInstallEdge"}','{"content":"Element (Matrix)","choco":"element-desktop","description":"Element is a client for Matrix; an open network for secure, decentralized communication.","winget":"Element.Element","category":"Communications","id":"DblInstallMatrix"}','{"content":"Emulation Station","choco":null,"description":"EmulationStation is a graphical frontend for RetroArch and other emulators.","winget":"Emulationstation.Emulationstation","category":"Gaming Launchers","id":"DblInstallEmulationstation"}','{"content":"EmulationStation Desktop Edition","choco":null,"description":"EmulationStation Desktop Edition is a frontend for browsing and launching games from your multi-platform game collection.","winget":"ES-DE.EmulationStation-DE","category":"Games","id":"DblInstallEmulationstationdesktopedition"}','{"content":"Ente Auth","choco":"ente-auth","description":"Ente Auth is a free, cross-platform, end-to-end encrypted authenticator app.","winget":"ente-io.auth-desktop","category":"Utilities","id":"DblInstallEnteauth"}','{"content":"Epic Games Store","choco":null,"description":"Epic Games Launcher is the client for accessing and playing games from the Epic Games Store.","winget":"EpicGames.EpicGamesLauncher","category":"Gaming Launchers","id":"DblInstallEpicgames"}','{"content":"Everything","choco":"everything","description":"Everything is a search engine that locates files and folders by filename instantly for Windows. Unlike Windows search Everything initially displays every file and folder on your computer (hence the name Everything). You type in a search filter to limit what files and folders are displayed.","winget":"oidtools.Everything","category":"Utilities","id":"DblInstallEsearch"}','{"content":"F.lux","choco":"flux","description":"f.lux adjusts the color temperature of your screen to reduce eye strain during nighttime use.","winget":"flux.flux","category":"Utilities","id":"DblInstallFlux"}','{"content":"Fast Node Manager","choco":"fnm","description":"Fast Node Manager (fnm) is a fast, cross-platform tool for installing and switching between Node.js versions.","winget":"Schniz.fnm","category":"Development","id":"DblInstallFastnodemanager"}','{"content":"FFmpeg","choco":null,"description":"FFmpeg is a complete, cross-platform solution for recording, converting, and streaming audio and video.","winget":"Gyan.FFmpeg","category":"Multimedia Tools","id":"DblInstallFFmpeg"}','{"content":"Figma","choco":null,"description":"Figma is a web-based vector graphics editor and prototyping tool for collaborative design.","winget":"Figma.Figma","category":"Multimedia Tools","id":"DblInstallFigma"}','{"content":"Files","choco":"files","description":"Alternative file explorer.","winget":"FilesCommunity.Files","category":"Utilities","id":"DblInstallFiles"}','{"content":"Firefox ESR","choco":"FirefoxESR","description":"Mozilla Firefox is an open-source web browser known for its customization options, privacy features, and extensions. Firefox ESR (Extended Support Release) receives major updates every 42 weeks with minor updates such as crash fixes, security fixes and policy updates as needed, but at least every four weeks.","winget":"Mozilla.Firefox.ESR","category":"Browsers","id":"DblInstallFirefoxesr"}','{"content":"Floorp","choco":"floorp","description":"Floorp is an open-source web browser project that aims to provide a simple and fast browsing experience.","winget":"Ablaze.Floorp","category":"Browsers","id":"DblInstallFloorp"}','{"content":"foobar2000 (Music Player)","choco":"foobar2000","description":"foobar2000 is a highly customizable and extensible music player for Windows, known for its modular design and advanced features.","winget":"PeterPawlowski.foobar2000","category":"Multimedia Tools","id":"DblInstallFoobar2000musicplayer"}','{"content":"Foxit PDF Reader","choco":"foxitreader","description":"Foxit PDF Reader is a free PDF viewer with a familiar ribbon-style interface.","winget":"Foxit.FoxitReader","category":"Document","id":"DblInstallFoxitpdfreader"}','{"content":"GIMP (Image Editor)","choco":"gimp","description":"GIMP is a versatile open-source raster graphics editor used for tasks such as photo retouching, image editing, and image composition.","winget":"GIMP.GIMP.3","category":"Multimedia Tools","id":"DblInstallGimpimageeditor"}','{"content":"Git","choco":null,"description":"Git is a distributed version control system widely used for tracking changes in source code during software development.","winget":"Git.Git","category":"Development","id":"DblInstallGit"}','{"content":"Git Extensions","choco":null,"description":"Git Extensions is a graphical Git client for Windows with repository, history, and commit management tools.","winget":"GitExtensionsTeam.GitExtensions","category":"Development","id":"DblInstallGitextensions"}','{"content":"GitHub CLI","choco":"gh","description":"GitHub CLI brings pull requests, issues, releases, and other GitHub workflows to the terminal.","winget":"GitHub.cli","category":"Development","id":"DblInstallGithubcli"}','{"content":"GitHub Desktop","choco":null,"description":"GitHub Desktop is a visual Git client that simplifies collaboration on GitHub repositories with an easy-to-use interface.","winget":"GitHub.GitHubDesktop","category":"Development","id":"DblInstallGithubdesktop"}','{"content":"GlazeWM","choco":"glazewm","description":"GlazeWM is a tiling window manager for Windows inspired by i3 and Polybar.","winget":"glzr-io.glazewm","category":"Utilities","id":"DblInstallGlazewm"}','{"content":"Go Programming Language","choco":null,"description":"Go (or Golang) is a statically typed, compiled programming language designed for simplicity, reliability, and efficiency.","winget":"GoLang.Go","category":"Development","id":"DblInstallGolang"}','{"content":"Godot Engine","choco":null,"description":"Godot Engine is a free and open-source game engine for 2D and 3D game development.","winget":"GodotEngine.GodotEngine","category":"Development","id":"DblInstallGodotEngine"}','{"content":"GOG Galaxy","choco":null,"description":"GOG Galaxy is a gaming client that offers DRM-free games, additional content, and more.","winget":"GOG.Galaxy","category":"Gaming Launchers","id":"DblInstallGog"}','{"content":"Google Chrome","choco":"googlechrome","description":"Google Chrome is a widely used web browser known for its speed, simplicity, and seamless integration with Google services.","winget":"Google.Chrome","category":"Browsers","id":"DblInstallChrome"}','{"content":"Google Drive","choco":null,"description":"File syncing across devices all tied to your Google account.","winget":"Google.GoogleDrive","category":"Utilities","id":"DblInstallGoogleDrive"}','{"content":"GPU-Z","choco":"gpu-z","description":"GPU-Z provides detailed information about your graphics card and GPU.","winget":"TechPowerUp.GPU-Z","category":"Utilities","id":"DblInstallGpuz"}','{"content":"Greenshot","choco":null,"description":"Greenshot is a free and open-source screenshot tool for Windows.","winget":"Greenshot.Greenshot","category":"Multimedia Tools","id":"DblInstallGreenshot"}','{"content":"gsudo","choco":"gsudo","description":"gsudo is a sudo equivalent for Windows. It allows you to run commands with elevated administrative privileges directly within the current console window.","winget":"gerardog.gsudo","category":"Utilities","id":"DblInstallGsudo"}','{"content":"Handbrake","choco":"handbrake","description":"HandBrake is an open-source video transcoder, allowing you to convert video from nearly any format to a selection of widely supported codecs.","winget":"HandBrake.HandBrake","category":"Multimedia Tools","id":"DblInstallHandbrake"}','{"content":"HeidiSQL","choco":null,"description":"HeidiSQL is a free and open-source database management tool for MySQL, MariaDB, and more.","winget":"HeidiSQL.HeidiSQL","category":"Development","id":"DblInstallHeidisql"}','{"content":"Helium","choco":"helium","description":"Private, fast, and honest web browser.","winget":"ImputNet.Helium","category":"Browsers","id":"DblInstallHelium"}','{"content":"Heroic Games Launcher","choco":null,"description":"Heroic Games Launcher is an open-source alternative game launcher for Epic Games Store.","winget":"HeroicGamesLauncher.HeroicGamesLauncher","category":"Gaming Launchers","id":"DblInstallHeroic"}','{"content":"Hugo","choco":"hugo-extended","description":"The worlds fastest framework for building websites.","winget":"Hugo.Hugo.Extended","category":"Utilities","id":"DblInstallHugo"}','{"content":"HWiNFO","choco":"hwinfo","description":"HWiNFO provides comprehensive hardware information and diagnostics for Windows.","winget":"REALiX.HWiNFO","category":"Utilities","id":"DblInstallHwinfo"}','{"content":"HWMonitor","choco":"hwmonitor","description":"HWMonitor is a hardware monitoring program that reads PC systems main health sensors.","winget":"CPUID.HWMonitor","category":"Pro Tools","id":"DblInstallHwmonitor"}','{"content":"HxD Hex Editor","choco":null,"description":"HxD is a free hex editor that allows you to edit, view, search, and analyze binary files.","winget":"MHNexus.HxD","category":"Microsoft Tools","id":"DblInstallHxD"}','{"content":"HyperX NGENUITY","choco":null,"description":"HyperX NGENUITY is a configuration software for HyperX peripherals.","winget":"9P1TBXR6QDCX","category":"Utilities","id":"DblInstallNGENUITY"}','{"content":"ImageGlass","choco":"imageglass","description":"ImageGlass is a versatile image viewer with support for various image formats and a focus on simplicity and speed.","winget":"DuongDieuPhap.ImageGlass","category":"Multimedia Tools","id":"DblInstallImageglass"}','{"content":"Internet Download Manager","choco":"internet-download-manager","description":"Internet Download Manager is a download manager for accelerating, resuming, and scheduling file downloads.","winget":"Tonec.InternetDownloadManager","category":"Utilities","id":"DblInstallInternetdownloadmanager"}','{"content":"IrfanView","choco":"irfanview","description":"IrfanView is a lightweight, fast, and free image viewer and editor. Supports multiple formats, batch processing, and powerful plugins.","winget":"IrfanSkiljan.IrfanView","category":"Multimedia Tools","id":"DblInstallIrfanview"}','{"content":"itch.io","choco":null,"description":"Itch.io is a digital distribution platform for indie games and creative projects.","winget":"ItchIo.Itch","category":"Gaming Launchers","id":"DblInstallItch"}','{"content":"iTunes","choco":"itunes","description":"iTunes is a media player, media library, and online radio broadcaster application developed by Apple Inc.","winget":"Apple.iTunes","category":"Multimedia Tools","id":"DblInstallItunes"}','{"content":"Java 11","choco":null,"description":"Java 11 is a long-term support release of the Java Development Kit.","winget":"EclipseAdoptium.Temurin.11.JRE","category":"Development","id":"DblInstallJava11"}','{"content":"Java 17","choco":null,"description":"Java 17 is a long-term support release of the Java Development Kit.","winget":"EclipseAdoptium.Temurin.17.JRE","category":"Development","id":"DblInstallJava17"}','{"content":"Java 21","choco":null,"description":"Java 21 is a long-term support release of the Java Development Kit.","winget":"EclipseAdoptium.Temurin.21.JDK","category":"Development","id":"DblInstallJava21"}','{"content":"Java 8","choco":null,"description":"Java 8 is a widely used version of the Java Development Kit.","winget":"EclipseAdoptium.Temurin.8.JRE","category":"Development","id":"DblInstallJava8"}','{"content":"JDownloader","choco":"jdownloader","description":"JDownloader is a free, open-source download manager that simplifies downloading files from hosting sites.","winget":"AppWork.JDownloader","category":"Utilities","id":"DblInstallJdownloader"}','{"content":"Jellyfin Media Player","choco":"jellyfin-media-player","description":"Jellyfin Media Player is a client application for the Jellyfin media server, providing access to your media library.","winget":"Jellyfin.JellyfinMediaPlayer","category":"Selfhosted Tools","id":"DblInstallJellyfinmediaplayer"}','{"content":"Jellyfin Server","choco":"jellyfin","description":"Jellyfin Server is an open-source media server software, allowing you to organize and stream your media library.","winget":"Jellyfin.Server","category":"Selfhosted Tools","id":"DblInstallJellyfinserver"}','{"content":"Jetbrains Toolbox","choco":"jetbrainstoolbox","description":"Jetbrains Toolbox is a platform for easy installation and management of JetBrains developer tools.","winget":"JetBrains.Toolbox","category":"Development","id":"DblInstallJetbrainstoolbox"}','{"content":"Joplin","choco":null,"description":"Joplin is an open-source note-taking and to-do application with synchronization capabilities.","winget":"Joplin.Joplin","category":"Document","id":"DblInstallJoplin"}','{"content":"JPEG View","choco":"jpegview","description":"JPEGView is a lean, fast and highly configurable viewer/editor for JPEG, BMP, PNG, WEBP, TGA, GIF, JXL, HEIC, HEIF, AVIF, and TIFF images with a minimal GUI.","winget":"sylikc.JPEGView","category":"Utilities","id":"DblInstallJpegview"}','{"content":"K-Lite Codec Pack","choco":"k-litecodecpackstandard","description":"K-Lite Codec Pack Standard is a collection of audio and video codecs and related tools, providing essential components for media playback.","winget":"CodecGuide.K-LiteCodecPack.Standard","category":"Multimedia Tools","id":"DblInstallKlite"}','{"content":"KDE Connect","choco":"kdeconnect","description":"KDE Connect is a tool that enables communication between your Linux desktop and Android device.","winget":"KDE.KDEConnect","category":"Utilities","id":"DblInstallKDEConnect"}','{"content":"KeePassXC","choco":"keepassxc","description":"KeePassXC is a modern, secure, and open-source password manager that stores and manages your most sensitive information. You can run KeePassXC on Windows, macOS, and Linux systems. KeePassXC is for people with extremely high demands of secure personal data management. It saves many different types of information, such as usernames, passwords, URLs, attachments, and notes in an offline, encrypted file that can be stored in any location, including private and public cloud solutions. For easy identification and management, user-defined titles and icons can be specified for entries. In addition, entries are sorted into customizable groups. An integrated search function allows you to use advanced patterns to easily find any entry in your database. A customizable, fast, and easy-to-use password generator utility allows you to create passwords with any combination of characters or easy to remember passphrases.","winget":"KeePassXCTeam.KeePassXC","category":"Utilities","id":"DblInstallKeepass"}','{"content":"Kodi","choco":null,"description":"Kodi is an open-source media center application that allows you to play and view most videos, music, podcasts, and other digital media files.","winget":"XBMCFoundation.Kodi","category":"Multimedia Tools","id":"DblInstallKodi"}','{"content":"Lazygit","choco":"lazygit","description":"Simple terminal UI for git commands.","winget":"JesseDuffield.lazygit","category":"Development","id":"DblInstallLazygit"}','{"content":"LibreOffice","choco":"libreoffice-fresh","description":"LibreOffice is a powerful and free office suite, compatible with other major office suites.","winget":"TheDocumentFoundation.LibreOffice","category":"Document","id":"DblInstallLibreoffice"}','{"content":"Librewolf","choco":"librewolf","description":"LibreWolf is a privacy-focused web browser based on Firefox, with additional privacy and security enhancements.","winget":"Librewolf.Librewolf","category":"Browsers","id":"DblInstallLibrewolf"}','{"content":"LocalSend","choco":"localsend.install","description":"An open-source cross-platform alternative to AirDrop.","winget":"LocalSend.LocalSend","category":"Selfhosted Tools","id":"DblInstallLocalsend"}','{"content":"Lua","choco":"lua","description":"A batteries included environment for the Lua scripting language on Windows.","winget":"rjpcomputing.luaforwindows","category":"Development","id":"DblInstallLua"}','{"content":"Medal","choco":null,"description":"Medal is a screen recording and sharing app for gamers.","winget":"MedalB.V.Medal","category":"Gaming Launchers","id":"DblInstallMedal"}','{"content":"Media Player Classic - Home Cinema","choco":"mpc-hc-clsid2","description":"Media Player Classic - Home Cinema (MPC-HC) is a free and open-source video and audio player for Windows. MPC-HC is based on the original Guliverkli project and contains many additional features and bug fixes.","winget":"clsid2.mpc-hc","category":"Multimedia Tools","id":"DblInstallMediaplayerclassichomecinema"}','{"content":"MediaInfo","choco":"mediainfo","description":"MediaInfo is a tool that provides detailed information about video and audio files.","winget":"MediaArea.MediaInfo.GUI","category":"Multimedia Tools","id":"DblInstallMediaInfo"}','{"content":"Microsoft Teams","choco":"teams","description":"Microsoft Teams is a collaboration platform that integrates with Office 365 and offers chat, video conferencing, file sharing, and more.","winget":"Microsoft.Teams","category":"Communications","id":"DblInstallTeams"}','{"content":"MiniTool Partition Wizard","choco":"minitoolpartitionwizard","description":"Comprehensive free partition manager that performs advanced operations Windows natively cannot, such as merging partitions, converting file systems, and organizing disk capacity.","winget":"MiniTool.PartitionWizard.Free","category":"Utilities","id":"DblInstallMinitoolpartitionwizard"}','{"content":"MKVToolNix","choco":"mkvtoolnix","description":"MKVToolNix is a set of tools for creating, altering, and inspecting Matroska (MKV) files.","winget":"MoritzBunkus.MKVToolNix","category":"Multimedia Tools","id":"DblInstallMKVToolNix"}','{"content":"Modrinth App","choco":"modrinth-app","description":"Modrinth App is a desktop application for managing Minecraft mods and modpacks.","winget":"Modrinth.ModrinthApp","category":"Games","id":"DblInstallModrinthapp"}','{"content":"Moonlight Stream Client","choco":null,"description":"Moonlight/GameStream Client allows you to stream PC games to other devices over your local network.","winget":"MoonlightGameStreamingProject.Moonlight","category":"Gaming Launchers","id":"DblInstallMoonlight"}','{"content":"Mozilla Firefox","choco":"firefox","description":"Mozilla Firefox is an open-source web browser known for its customization options, privacy features, and extensions.","winget":"Mozilla.Firefox","category":"Browsers","id":"DblInstallFirefox"}','{"content":"mpc-qt","choco":"mediainfo","description":"Media Player Classic Qute Theater","winget":"mpc-qt.mpc-qt","category":"Multimedia Tools","id":"DblInstallMpcqt"}','{"content":"mpv","choco":null,"description":"mpv is a free, open source, and cross-platform media player supporting a wide variety of media formats, codecs, and subtitle types.","winget":"shinchiro.mpv","category":"Multimedia Tools","id":"DblInstallMpv"}','{"content":"MSEdgeRedirect","choco":"msedgeredirect","description":"A Tool to Redirect News, Search, Widgets, Weather, and More to your default browser.","winget":"rcmaehl.MSEdgeRedirect","category":"Utilities","id":"DblInstallMsedgeredirect"}','{"content":"Mullvad","choco":null,"description":"Mullvad Browser is a privacy-focused web browser, developed in partnership with the Tor Project.","winget":"MullvadVPN.MullvadBrowser","category":"Browsers","id":"DblInstallMullvad"}','{"content":"Mullvad VPN","choco":"mullvad-app","description":"This is the VPN client software for the Mullvad VPN service.","winget":"MullvadVPN.MullvadVPN","category":"Pro Tools","id":"DblInstallMullvadvpn"}','{"content":"MySQL","choco":null,"description":"MySQL is a popular open-source relational database management system.","winget":"Oracle.MySQL","category":"Development","id":"DblInstallMySQL"}','{"content":"NanaZip","choco":"nanazip","description":"NanaZip is a fast and efficient file compression and decompression tool.","winget":"M2Team.NanaZip","category":"Utilities","id":"DblInstallNanazip"}','{"content":"NAPS2 (Scanner)","choco":"naps2","description":"NAPS2 is a document scanning application that simplifies the process of creating electronic documents.","winget":"Cyanfish.NAPS2","category":"Document","id":"DblInstallNaps2scanner"}','{"content":"Neovim","choco":"neovim","description":"Neovim is a highly extensible text editor and an improvement over the original Vim editor.","winget":"Neovim.Neovim","category":"Document","id":"DblInstallNeovim"}','{"content":"Neovim Nightly","choco":null,"description":"Neovim Nightly is the bleeding-edge build of the Neovim text editor.","winget":"Neovim.Neovim.Nightly","category":"Document","id":"DblInstallNeovimNightly"}','{"content":"NetBird","choco":"netbird","description":"NetBird is an open-source alternative comparable to TailScale that can be connected to a self-hosted server.","winget":"Netbird.Netbird","category":"Selfhosted Tools","id":"DblInstallNetbird"}','{"content":"Nextcloud Desktop","choco":"nextcloud-client","description":"Nextcloud Desktop is the official desktop client for the Nextcloud file synchronization and sharing platform.","winget":"Nextcloud.NextcloudDesktop","category":"Selfhosted Tools","id":"DblInstallNextclouddesktop"}','{"content":"Nilesoft Shell","choco":"nilesoft-shell","description":"Shell is an expanded context menu tool that adds extra functionality and customization options to the Windows context menu.","winget":"Nilesoft.Shell","category":"Utilities","id":"DblInstallNilesoftshell"}','{"content":"Nmap","choco":"nmap","description":"Nmap (Network Mapper) is an open-source tool for network exploration and security auditing. It discovers devices on a network and provides information about their ports and services.","winget":"Insecure.Nmap","category":"Pro Tools","id":"DblInstallNmap"}','{"content":"Node Version Manager (NVM)","choco":null,"description":"Node Version Manager (NVM) allows you to install and switch between multiple Node.js versions.","winget":"CoreyButler.NVMforWindows","category":"Development","id":"DblInstallNodemanager"}','{"content":"Node.js","choco":null,"description":"NodeJS is a JavaScript runtime built on Chromes V8 JavaScript engine for building server-side and networking applications.","winget":"OpenJS.NodeJS","category":"Development","id":"DblInstallNodejs"}','{"content":"Node.js LTS","choco":null,"description":"NodeJS LTS provides Long-Term Support releases for stable and reliable server-side JavaScript development.","winget":"OpenJS.NodeJS.LTS","category":"Development","id":"DblInstallNodejslts"}','{"content":"nomacs","choco":"nomacs","description":"nomacs is a free, open-source image viewer, which supports multiple platforms. You can use it for viewing all common image formats, including RAW and .psd images.","winget":"nomacs.nomacs","category":"Multimedia Tools","id":"DblInstallNomacs"}','{"content":"Notepad","choco":"notepadplusplus","description":"Notepad++ is a free, open-source code editor and Notepad replacement with support for multiple languages.","winget":"Notepad++.Notepad++","category":"Document","id":"DblInstallNotepadplus"}','{"content":"Notepads","choco":null,"description":"Notepads is a modern, lightweight text editor for Windows.","winget":"JackieLiu.NotepadsApp","category":"Document","id":"DblInstallNotepadsApp"}','{"content":"Notion","choco":null,"description":"Notion is an all-in-one workspace for notes, tasks, wikis, and databases.","winget":"Notion.Notion","category":"Document","id":"DblInstallNotion"}','{"content":"NTLite","choco":"ntlite-free","description":"Integrate updates, drivers, automate Windows and application setup, speedup Windows deployment process and have it all set for the next time.","winget":"Nlitesoft.NTLite","category":"Microsoft Tools","id":"DblInstallNtlite"}','{"content":"NTop","choco":"ntop","description":"NTop is a network monitoring tool that provides real-time traffic analysis.","winget":"gsass1.NTop","category":"Utilities","id":"DblInstallNTop"}','{"content":"NuGet","choco":"nuget.commandline","description":"NuGet is a package manager for the .NET framework, enabling developers to manage and share libraries in their .NET applications.","winget":"Microsoft.NuGet","category":"Microsoft Tools","id":"DblInstallNuget"}','{"content":"NVCleanstall","choco":null,"description":"NVCleanstall is a tool designed to customize NVIDIA driver installations, allowing advanced users to control more aspects of the installation process.","winget":"TechPowerUp.NVCleanstall","category":"Utilities","id":"DblInstallNvclean"}','{"content":"NVIDIA GeForce NOW","choco":null,"description":"GeForce NOW is a cloud gaming service that allows you to play high-quality PC games on your device.","winget":"Nvidia.GeforceNOW","category":"Gaming Launchers","id":"DblInstallGeforcenow"}','{"content":"OBS Studio","choco":null,"description":"OBS Studio is a free and open-source software for video recording and live streaming. It supports real-time video/audio capturing and mixing, making it popular among content creators.","winget":"OBSProject.OBSStudio","category":"Multimedia Tools","id":"DblInstallObs"}','{"content":"Obsidian","choco":null,"description":"Obsidian is a powerful note-taking and knowledge management application.","winget":"Obsidian.Obsidian","category":"Document","id":"DblInstallObsidian"}','{"content":"OFGB (Oh Frick Go Back)","choco":"ofgb","description":"GUI Tool to remove ads from various places around Windows 11","winget":"xM4ddy.OFGB","category":"Utilities","id":"DblInstallOfgbohfrickgoback"}','{"content":"Oh My Posh","choco":null,"description":"Oh My Posh is a cross-platform prompt theme engine for any shell.","winget":"JanDeDobbeleer.OhMyPosh","category":"Development","id":"DblInstallOhmyposh"}','{"content":"Okular","choco":"okular","description":"Okular is a versatile document viewer with advanced features.","winget":"KDE.Okular","category":"Document","id":"DblInstallOkular"}','{"content":"OneDrive","choco":"onedrive","description":"OneDrive is a cloud storage service provided by Microsoft, allowing users to store and share files securely across devices.","winget":"Microsoft.OneDrive","category":"Microsoft Tools","id":"DblInstallOnedrive"}','{"content":"OnlyOffice","choco":null,"description":"ONLYOFFICE Desktop is a comprehensive office suite for document editing and collaboration.","winget":"ONLYOFFICE.DesktopEditors","category":"Document","id":"DblInstallOnlyoffice"}','{"content":"OPAutoClicker","choco":"autoclicker","description":"A full-fledged autoclicker with two modes of autoclicking, at your dynamic cursor location or at a prespecified location.","winget":"OPAutoClicker.OPAutoClicker","category":"Utilities","id":"DblInstallOpautoclicker"}','{"content":"OpenRGB","choco":"openrgb","description":"OpenRGB is an open-source RGB lighting control software designed to manage and control RGB lighting for various components and peripherals.","winget":"CalcProgrammer1.OpenRGB","category":"Utilities","id":"DblInstallOpenrgb"}','{"content":"OpenVPN Connect","choco":"openvpn-connect","description":"OpenVPN Connect is a VPN client that allows you to connect securely to a VPN server. It provides a secure and encrypted connection for protecting your online privacy.","winget":"OpenVPNTechnologies.OpenVPNConnect","category":"Pro Tools","id":"DblInstallOpenvpnconnect"}','{"content":"Overwolf","choco":"overwolf","description":"Popular platform for game overlays and companion apps (mod managers, trackers, etc.), widely used by gamers.","winget":"Overwolf.CurseForge","category":"Games","id":"DblInstallOverwolf"}','{"content":"Paint.NET","choco":"paint.net","description":"Paint.NET is a free image and photo editing software for Windows. It features an intuitive user interface and supports a wide range of powerful editing tools.","winget":"dotPDN.PaintDotNet","category":"Multimedia Tools","id":"DblInstallPaintnet"}','{"content":"Parsec","choco":"parsec","description":"Parsec is a low-latency, high-quality remote desktop sharing application for collaborating and gaming across devices.","winget":"Parsec.Parsec","category":"Utilities","id":"DblInstallParsec"}','{"content":"PDF-XChange Editor","choco":"pdfxchangeeditor","description":"A comprehensive Windows-based software suite and editor for creating, viewing, editing, annotating, and signing PDF files.","winget":"TrackerSoftware.PDF-XChangeEditor","category":"Document","id":"DblInstallPdfxchangeeditor"}','{"content":"PDF24 Creator","choco":"pdf24","description":"Free and easy-to-use online/desktop PDF tools that make you more productive","winget":"geeksoftwareGmbH.PDF24Creator","category":"Document","id":"DblInstallPdf24creator"}','{"content":"PDFgear","choco":"pdfgear","description":"PDFgear is a piece of full-featured PDF management software for Windows, macOS, and mobile, and its completely free to use.","winget":"PDFgear.PDFgear","category":"Document","id":"DblInstallPdfgear"}','{"content":"PDFsam Basic","choco":"pdfsam","description":"PDFsam Basic is a free and open-source tool for splitting, merging, and rotating PDF files.","winget":"PDFsam.PDFsam","category":"Document","id":"DblInstallPdfsambasic"}','{"content":"PeaZip","choco":"peazip","description":"PeaZip is a free, open-source file archiver utility that supports multiple archive formats and provides encryption features.","winget":"Giorgiotani.Peazip","category":"Utilities","id":"DblInstallPeazip"}','{"content":"Playnite","choco":null,"description":"Playnite is an open-source video game library manager with one simple goal: To provide a unified interface for all of your games.","winget":"Playnite.Playnite","category":"Gaming Launchers","id":"DblInstallPlaynite"}','{"content":"Plex Client","choco":null,"description":"Plex Desktop for Windows is the front end for Plex Media Server.","winget":"Plex.Plex","category":"Multimedia Tools","id":"DblInstallPlex"}','{"content":"Plex Server","choco":null,"description":"Plex Media Server is a media server software that allows you to organize and stream your media library. It supports various media formats and offers a wide range of features.","winget":"Plex.PlexMediaServer","category":"Multimedia Tools","id":"DblInstallPlexServer"}','{"content":"pnpm","choco":null,"description":"pnpm is a fast and disk space efficient package manager for JavaScript and Node.js applications.","winget":"pnpm.pnpm","category":"Development","id":"DblInstallPnpm"}','{"content":"Podman","choco":null,"description":"Podman is a daemonless container engine for developing, managing, and running containers.","winget":"RedHat.Podman","category":"Development","id":"DblInstallPodman"}','{"content":"Policy Plus","choco":null,"description":"Local Group Policy Editor plus more, for all Windows editions.","winget":"Fleex255.PolicyPlus","category":"Utilities","id":"DblInstallPolicyplus"}','{"content":"Postbox","choco":null,"description":"Postbox is a powerful email client for professionals and enthusiasts.","winget":"Postbox.Postbox","category":"Utilities","id":"DblInstallPostbox"}','{"content":"Postman","choco":"postman","description":"Postman is an API platform and desktop client for designing, testing, documenting, and collaborating on APIs.","winget":"Postman.Postman","category":"Development","id":"DblInstallPostman"}','{"content":"PowerShell","choco":null,"description":"PowerShell is a task automation framework and scripting language designed for system administrators, offering powerful command-line capabilities.","winget":"Microsoft.PowerShell","category":"Microsoft Tools","id":"DblInstallPowershell"}','{"content":"PowerToys","choco":null,"description":"PowerToys is a set of utilities for power users to enhance productivity, featuring tools like FancyZones, PowerRename, and more.","winget":"Microsoft.PowerToys","category":"Microsoft Tools","id":"DblInstallPowertoys"}','{"content":"Prism Launcher","choco":null,"description":"Prism Launcher is an open-source Minecraft launcher with the ability to manage multiple instances, accounts, and mods.","winget":"PrismLauncher.PrismLauncher","category":"Gaming Launchers","id":"DblInstallPrism"}','{"content":"Process Explorer","choco":null,"description":"Process Explorer is a task manager and system monitor.","winget":"Microsoft.Sysinternals.ProcessExplorer","category":"Microsoft Tools","id":"DblInstallProcessExplorer"}','{"content":"Process Lasso","choco":"processlasso","description":"Process Lasso is a system optimization and automation tool that improves system responsiveness and stability by adjusting process priorities and CPU affinities.","winget":"BitSum.ProcessLasso","category":"Utilities","id":"DblInstallProcesslasso"}','{"content":"Process Monitor","choco":"procexp","description":"SysInternals Process Monitor is an advanced monitoring tool that shows real-time file system, registry, and process/thread activity.","winget":"Microsoft.Sysinternals.ProcessMonitor","category":"Microsoft Tools","id":"DblInstallProcessmonitor"}','{"content":"Proton Authenticator","choco":"protonauth","description":"2FA app from Proton to securely sync and backup 2FA codes.","winget":"Proton.ProtonAuthenticator","category":"Utilities","id":"DblInstallProtonauthenticator"}','{"content":"Proton Drive","choco":"protondrive","description":"Proton Drive is an end-to-end encrypted Swiss vault for your files that protects your data.","winget":"Proton.ProtonDrive","category":"Utilities","id":"DblInstallProtondrive"}','{"content":"Proton Mail","choco":"protonmail","description":"Proton Mail is an end-to-end encrypted email service by Proton, protecting your privacy with zero-access encryption.","winget":"Proton.ProtonMail","category":"Communications","id":"DblInstallProtonmail"}','{"content":"Proton Pass","choco":"protonpass","description":"Proton Pass is a cloud-based password manager with end-to-end encryption and unique email aliases.","winget":"Proton.ProtonPass","category":"Utilities","id":"DblInstallProtonpass"}','{"content":"Proton VPN","choco":"protonvpn","description":"Proton VPN is a no-logs VPN service that protects your privacy online with features like Secure Core and Tor over VPN.","winget":"Proton.ProtonVPN","category":"Pro Tools","id":"DblInstallProtonvpn"}','{"content":"Proxyman","choco":null,"description":"Proxyman is a native, high-performance macOS proxy server app for capturing and inspecting HTTP/HTTPS traffic.","winget":"ProxymanLLC.Proxyman","category":"Utilities","id":"DblInstallProxyman"}','{"content":"PuTTY","choco":"putty","description":"PuTTY is a free and open-source terminal emulator, serial console, and network file transfer application. It supports various network protocols such as SSH, Telnet, and SCP.","winget":"PuTTY.PuTTY","category":"Pro Tools","id":"DblInstallPutty"}','{"content":"Python 3","choco":null,"description":"Python 3 is a popular programming language used for web development, data analysis, AI, and more.","winget":"Python.Python.3.12","category":"Development","id":"DblInstallPython3"}','{"content":"Python3","choco":"python","description":"Python is a versatile programming language used for web development, data analysis, artificial intelligence, and more.","winget":"Python.Python.3.14","category":"Development","id":"DblInstallPython3"}','{"content":"qBittorrent","choco":"qbittorrent","description":"qBittorrent is a free and open-source BitTorrent client that aims to provide a feature-rich and lightweight alternative to other torrent clients.","winget":"qBittorrent.qBittorrent","category":"Utilities","id":"DblInstallQbittorrent"}','{"content":"QOwnNotes","choco":"qownnotes","description":"QOwnNotes is a free open-source note-taking app with Nextcloud/ownCloud integration.","winget":"pbek.QOwnNotes","category":"Document","id":"DblInstallQownnotes"}','{"content":"QTox","choco":"qtox","description":"QTox is a free and open-source messaging app that prioritizes user privacy and security in its design.","winget":"Tox.qTox","category":"Communications","id":"DblInstallQtox"}','{"content":"Rclone","choco":"rclone","description":"Rclone is a command-line program to manage files on cloud storage.","winget":"Rclone.Rclone","category":"Utilities","id":"DblInstallRclone"}','{"content":"RDCMan","choco":"rdcman","description":"RDCMan manages multiple remote desktop connections. It is useful for managing server labs where you need regular access to each machine such as automated checkin systems and data centers.","winget":"Microsoft.Sysinternals.RDCMan","category":"Microsoft Tools","id":"DblInstallRdcman"}','{"content":"Revo","choco":null,"description":"Revo Uninstaller is an advanced uninstaller tool that helps you remove unwanted software and clean up your system.","winget":"RevoUninstaller.RevoUninstaller","category":"Utilities","id":"DblInstallRevo"}','{"content":"Roblox","choco":null,"description":"Roblox is a platform and game creation system that allows users to create and play games developed by the community.","winget":"Roblox.Roblox","category":"Games","id":"DblInstallRoblox"}','{"content":"Ruby","choco":"ruby","description":"A Ruby language execution environment with a MSYS2 installation.","winget":"RubyInstallerTeam.Ruby.4.0","category":"Development","id":"DblInstallRuby"}','{"content":"Ruby 3.2","choco":null,"description":"Ruby is a dynamic, open-source programming language focused on simplicity and productivity.","winget":"RubyInstallerTeam.Ruby.3.2","category":"Development","id":"DblInstallRuby"}','{"content":"Rufus","choco":"rufus","description":"Rufus is a utility that helps format and create bootable USB drives, such as USB keys or pen drives.","winget":"Rufus.Rufus","category":"Utilities","id":"DblInstallRufus"}','{"content":"Rust","choco":null,"description":"Rust is a programming language designed for safety and performance, particularly focused on systems programming.","winget":"Rustlang.Rust.MSVC","category":"Development","id":"DblInstallRust"}','{"content":"ShareX","choco":null,"description":"ShareX is a free and open-source screen capture and file sharing tool. It supports various capture methods and offers advanced features for editing and sharing screenshots.","winget":"ShareX.ShareX","category":"Multimedia Tools","id":"DblInstallSharex"}','{"content":"SideQuestVR","choco":null,"description":"SideQuest is a platform for discovering and managing VR apps for standalone headsets.","winget":"SideQuestVR.SideQuest","category":"Gaming Launchers","id":"DblInstallSideQuest"}','{"content":"Signal","choco":"signal","description":"Signal is a privacy-focused messaging app that offers end-to-end encryption for secure and private communication.","winget":"OpenWhisperSystems.Signal","category":"Communications","id":"DblInstallSignal"}','{"content":"SignalRGB","choco":null,"description":"SignalRGB lets you control and sync your favorite RGB devices with one free application.","winget":"WhirlwindFX.SignalRgb","category":"Utilities","id":"DblInstallSignalrgb"}','{"content":"Simplenote","choco":"simplenote","description":"Simplenote is an easy way to keep notes, lists, ideas and more.","winget":"Automattic.Simplenote","category":"Document","id":"DblInstallSimplenote"}','{"content":"Simplewall","choco":"simplewall","description":"Simplewall is a free and open-source firewall application for Windows. It allows users to control and manage the inbound and outbound network traffic of applications.","winget":"Henry++.simplewall","category":"Pro Tools","id":"DblInstallSimplewall"}','{"content":"Skype","choco":null,"description":"Skype is a telecommunications application for video calls, voice calls, and instant messaging.","winget":"Microsoft.Skype","category":"Communications","id":"DblInstallSkype"}','{"content":"Slack","choco":"slack","description":"Slack is a collaboration hub that connects teams and facilitates communication through channels, messaging, and file sharing.","winget":"SlackTechnologies.Slack","category":"Communications","id":"DblInstallSlack"}','{"content":"Snappy Driver Installer Origin","choco":"sdio","description":"Snappy Driver Installer Origin is a free and open-source driver updater with a vast driver database for Windows.","winget":"GlennDelahoy.SnappyDriverInstallerOrigin","category":"Utilities","id":"DblInstallSnappydriverinstallerorigin"}','{"content":"Speedtest by Ookla","choco":null,"description":"Speedtest by Ookla is a tool for measuring internet connection speed.","winget":"Ookla.Speedtest.Desktop","category":"Utilities","id":"DblInstallSpeedtest"}','{"content":"Spotify","choco":null,"description":"Spotify is a digital music service that gives you access to millions of songs.","winget":"9NCBCSZSJRSB","category":"Multimedia Tools","id":"DblInstallSpotify"}','{"content":"SQL Server 2022 Developer","choco":null,"description":"SQL Server 2022 Developer is a free edition of Microsoft SQL Server for development.","winget":"Microsoft.SQLServer.2022.Developer","category":"Development","id":"DblInstallSQLServer2022"}','{"content":"SQLite","choco":null,"description":"SQLite is a lightweight, file-based SQL database engine.","winget":"DBBrowserForSQLite.DBBrowserForSQLite","category":"Development","id":"DblInstallSQLite"}','{"content":"Starship (Shell Prompt)","choco":"starship","description":"Starship is a fast, customizable, cross-platform prompt for PowerShell and other shells.","winget":"Starship.Starship","category":"Development","id":"DblInstallStarshipshellprompt"}','{"content":"StartAllBack","choco":"StartAllBack","description":"StartAllBack restores and improves Windows taskbar, Start menu, File Explorer, and shell UI behavior.","winget":"StartIsBack.StartAllBack","category":"Utilities","id":"DblInstallStartallback"}','{"content":"Steam","choco":"steam","description":"Steam is a digital distribution platform for purchasing and playing video games, offering multiplayer gaming, video streaming, and more.","winget":"Valve.Steam","category":"Gaming Launchers","id":"DblInstallSteam"}','{"content":"Sublime Text","choco":"sublimetext4","description":"Sublime Text is a sophisticated text editor for code, markup, and prose.","winget":"SublimeHQ.SublimeText.4","category":"Development","id":"DblInstallSublimetext"}','{"content":"Sublime Text 4","choco":null,"description":"Sublime Text is a sophisticated text editor for code, markup, and prose.","winget":"SublimeHQ.SublimeText.3","category":"Document","id":"DblInstallSublime4"}','{"content":"Sumatra","choco":null,"description":"Sumatra PDF is a lightweight and fast PDF viewer with minimalistic design.","winget":"SumatraPDF.SumatraPDF","category":"Document","id":"DblInstallSumatra"}','{"content":"Sunshine Stream Server","choco":null,"description":"Sunshine is a GameStream server that allows you to remotely play PC games on Android devices, offering low-latency streaming.","winget":"LizardByte.Sunshine","category":"Gaming Launchers","id":"DblInstallSunshine"}','{"content":"System Informer","choco":"systeminformer","description":"A free, powerful, multi-purpose tool that helps you monitor system resources, debug software and detect malware.","winget":"WinsiderSS.SystemInformer","category":"Development","id":"DblInstallSysteminformer"}','{"content":"Tailscale","choco":"tailscale","description":"The Tailscale client allows you to connect all your devices using WireGuardÂ®, without the hassle. Tailscale makes it as easy as installing an app and signing in.","winget":"Tailscale.Tailscale","category":"Utilities","id":"DblInstallTailscale"}','{"content":"TCPView","choco":"tcpview","description":"SysInternals TCPView is a network monitoring tool that displays a detailed list of all TCP and UDP endpoints on your system.","winget":"Microsoft.Sysinternals.TCPView","category":"Microsoft Tools","id":"DblInstallTcpview"}','{"content":"TeamSpeak 3","choco":"teamspeak","description":"TEAMSPEAK. YOUR TEAM. YOUR RULES. Use crystal clear sound to communicate with your teammates cross-platform with military-grade security, lag-free performance & unparalleled reliability and uptime.","winget":"TeamSpeakSystems.TeamSpeakClient","category":"Communications","id":"DblInstallTeamspeak3"}','{"content":"TeamSpeak 6","choco":null,"description":"TEAMSPEAK. YOUR TEAM. YOUR RULES. Use crystal clear sound to communicate with your teammates cross-platform with military-grade security, lag-free performance & unparalleled reliability and uptime.","winget":"TeamSpeakSystems.TeamSpeakClient.Beta.6","category":"Communications","id":"DblInstallTeamspeak6"}','{"content":"TeamViewer","choco":"teamviewer9","description":"TeamViewer is a popular remote access and support software that allows you to connect to and control remote devices.","winget":"TeamViewer.TeamViewer","category":"Utilities","id":"DblInstallTeamviewer"}','{"content":"Telegram","choco":"telegram","description":"Telegram is a cloud-based instant messaging app known for its security features, speed, and simplicity.","winget":"Telegram.TelegramDesktop","category":"Communications","id":"DblInstallTelegram"}','{"content":"Thorium","choco":null,"description":"Thorium is a privacy-focused browser based on Chromium.","winget":"Alex313031.Thorium","category":"Browsers","id":"DblInstallThorium"}','{"content":"Thorium AVX2","choco":null,"description":"Thorium AVX2 is a performance-optimized build of the Thorium browser.","winget":"Alex313031.Thorium.AVX2","category":"Browsers","id":"DblInstallThoriumAVX"}','{"content":"Thunderbird","choco":"thunderbird","description":"Mozilla Thunderbird is a free and open-source email client, news client, and chat client with advanced features.","winget":"Mozilla.Thunderbird","category":"Utilities","id":"DblInstallThunderbird"}','{"content":"TightVNC","choco":"TightVNC","description":"TightVNC is a free and open-source remote desktop software that lets you access and control a computer over the network. With its intuitive interface, you can interact with the remote screen as if you were sitting in front of it. You can open files, launch applications, and perform other actions on the remote desktop almost as if you were physically there.","winget":"GlavSoft.TightVNC","category":"Utilities","id":"DblInstallTightvnc"}','{"content":"Tor Browser","choco":null,"description":"Tor Browser is designed for anonymous web browsing, utilizing the Tor network to protect user privacy and security.","winget":"TorProject.TorBrowser","category":"Browsers","id":"DblInstallTor"}','{"content":"Total Commander","choco":"TotalCommander","description":"Total Commander is a file manager for Windows that provides a powerful and intuitive interface for file management.","winget":"Ghisler.TotalCommander","category":"Utilities","id":"DblInstallTotalcommander"}','{"content":"TranslucentTB","choco":"translucenttb","description":"TranslucentTB is a tool that allows you to customize the transparency of the Windows Taskbar.","winget":"CharlesMilette.TranslucentTB","category":"Utilities","id":"DblInstallTranslucenttb"}','{"content":"TreeSize Free","choco":"treesizefree","description":"TreeSize Free is a disk space manager that helps you analyze and visualize the space usage on your drives.","winget":"JAMSoftware.TreeSize.Free","category":"Utilities","id":"DblInstallTreesizefree"}','{"content":"Ttaskbar","choco":"translucent-taskbar","description":"TranslucentTB allows you to customize the transparency and appearance of the Windows taskbar.","winget":"9PF4KZ2VN4W9","category":"Utilities","id":"DblInstallTtaskbar"}','{"content":"Ubisoft Connect","choco":null,"description":"Ubisoft Connect is Ubisofts digital distribution and online gaming service, providing access to Ubisofts games and services.","winget":"Ubisoft.Connect","category":"Gaming Launchers","id":"DblInstallUbisoft"}','{"content":"Ungoogled","choco":null,"description":"Ungoogled Chromium is a version of Chromium without Googles integration for enhanced privacy and control.","winget":"eloston.ungoogled-chromium","category":"Browsers","id":"DblInstallUngoogled"}','{"content":"UniGetUI","choco":"wingetui","description":"UniGetUI is a GUI for WinGet, Chocolatey, and other Windows CLI package managers.","winget":"Devolutions.UniGetUI","category":"Utilities","id":"DblInstallUnigetui"}','{"content":"Unity 2022","choco":null,"description":"Unity is a cross-platform game engine for creating 2D and 3D games and interactive experiences.","winget":"Unity.Unity.2022","category":"Development","id":"DblInstallUnity"}','{"content":"Unity Game Engine","choco":"unityhub","description":"Unity is a powerful game development platform for creating 2D, 3D, augmented reality, and virtual reality games.","winget":"Unity.UnityHub","category":"Development","id":"DblInstallUnitygameengine"}','{"content":"uv","choco":"uv","description":"uv is a fast Python package and project manager written in Rust.","winget":"astral-sh.uv","category":"Development","id":"DblInstallUv"}','{"content":"Vagrant","choco":null,"description":"Vagrant builds and manages reproducible virtual machine development environments from declarative configuration.","winget":"Hashicorp.Vagrant","category":"Development","id":"DblInstallVagrant"}','{"content":"Ventoy","choco":"ventoy","description":"Ventoy is an open-source tool for creating bootable USB drives. It supports multiple ISO files on a single USB drive, making it a versatile solution for installing operating systems.","winget":"Ventoy.Ventoy","category":"Pro Tools","id":"DblInstallVentoy"}','{"content":"Vesktop","choco":null,"description":"A cross-platform electron-based desktop app aiming to give you a snappier Discord experience with Vencord pre-installed.","winget":"Vencord.Vesktop","category":"Communications","id":"DblInstallVesktop"}','{"content":"Viber","choco":"viber","description":"Viber is a free messaging and calling app with features like group chats, video calls, and more.","winget":"Viber.Viber","category":"Communications","id":"DblInstallViber"}','{"content":"Virtual Desktop Streamer","choco":null,"description":"Virtual Desktop Streamer is a tool that allows you to stream your desktop screen to VR devices.","winget":"VirtualDesktop.Streamer","category":"Games","id":"DblInstallVirtualdesktopstreamer"}','{"content":"VirtualBox","choco":"virtualbox","description":"Oracle VirtualBox is a powerful and free open-source virtualization tool for x86 and AMD64/Intel64 architectures.","winget":"Oracle.VirtualBox","category":"Utilities","id":"DblInstallOVirtualBox"}','{"content":"Visual 2015 Redistributable (32-bit)","choco":null,"description":"Visual C++ 2015-2022 32-bit redistributable package installs runtime components of Visual C++ libraries required to run 32-bit applications.","winget":"Microsoft.VCRedist.2015+.x86","category":"Microsoft Tools","id":"DblInstallvc2015_32"}','{"content":"Visual 2015 Redistributable (64-bit)","choco":null,"description":"Visual C++ 2015-2022 64-bit redistributable package installs runtime components of Visual C++ libraries required to run 64-bit applications.","winget":"Microsoft.VCRedist.2015+.x64","category":"Microsoft Tools","id":"DblInstallvc2015_64"}','{"content":"Visual Studio 2022","choco":null,"description":"Visual Studio 2022 is an integrated development environment (IDE) for building, debugging, and deploying applications.","winget":"Microsoft.VisualStudio.2022.Community","category":"Development","id":"DblInstallVisualstudio2022"}','{"content":"Visual Studio 2026","choco":"visualstudio2026community","description":"Visual Studio 2026 is an integrated development environment (IDE) for building, debugging, and deploying applications.","winget":"Microsoft.VisualStudio.Community","category":"Development","id":"DblInstallVisualstudio2026"}','{"content":"Visual Studio Code","choco":null,"description":"Visual Studio Code is a free, open-source code editor with support for multiple programming languages.","winget":"Microsoft.VisualStudioCode","category":"Development","id":"DblInstallCode"}','{"content":"Vivaldi","choco":"vivaldi","description":"Vivaldi is a highly customizable web browser with a focus on user personalization and productivity features.","winget":"VivaldiTechnologies.Vivaldi","category":"Browsers","id":"DblInstallVivaldi"}','{"content":"VLC Media Player","choco":"vlc","description":"VLC Media Player is a free and open-source multimedia player that supports a wide range of audio and video formats. It is known for its versatility and cross-platform compatibility.","winget":"VideoLAN.VLC","category":"Multimedia Tools","id":"DblInstallVlc"}','{"content":"VP9 Video Extensions","choco":null,"description":"VP9 Video Extensions provides support for the VP9 video codec in Windows.","winget":"9N4D0MSMP0PT","category":"Multimedia Tools","id":"DblInstallVP9"}','{"content":"VS Codium","choco":"vscodium","description":"VSCodium is a community-driven, freely-licensed binary distribution of Microsofts VS Code.","winget":"VSCodium.VSCodium","category":"Development","id":"DblInstallVscodium"}','{"content":"Wargaming Game Center","choco":null,"description":"Wargaming Game Center is a launcher for Wargaming.net games.","winget":"Wargaming.GameCenter","category":"Gaming Launchers","id":"DblInstallWargaming"}','{"content":"Waterfox","choco":"waterfox","description":"Waterfox is a fast, privacy-focused web browser based on Firefox, designed to preserve user choice and privacy.","winget":"Waterfox.Waterfox","category":"Browsers","id":"DblInstallWaterfox"}','{"content":"WhatsApp Desktop","choco":null,"description":"WhatsApp Desktop is the official Windows desktop messaging app from Meta, distributed through the Microsoft Store.","winget":"msstore:9NKSQGP7F2NH","category":"Communications","id":"DblInstallWhatsappdesktop"}','{"content":"Windows Terminal","choco":"microsoft-windows-terminal","description":"Windows Terminal is a modern, fast, and efficient terminal application for command-line users, supporting multiple tabs, panes, and more.","winget":"Microsoft.WindowsTerminal","category":"Microsoft Tools","id":"DblInstallTerminal"}','{"content":"WingetUI","choco":null,"description":"WingetUI is a GUI for managing packages with WinGet, Chocolatey, and other package managers.","winget":"SomePythonThings.WingetUIStore","category":"Utilities","id":"DblInstallWingetUI"}','{"content":"WinMerge","choco":null,"description":"WinMerge is a free and open-source file comparison and merging tool.","winget":"WinMerge.WinMerge","category":"Document","id":"DblInstallWinmerge"}','{"content":"WinRAR","choco":"winrar","description":"WinRAR is a powerful archive manager that allows you to create, manage, and extract compressed files.","winget":"RARLab.WinRAR","category":"Utilities","id":"DblInstallWinrar"}','{"content":"WinSCP","choco":"winscp","description":"WinSCP is a popular open-source SFTP, FTP, and SCP client for Windows. It allows secure file transfers between a local and a remote computer.","winget":"WinSCP.WinSCP","category":"Pro Tools","id":"DblInstallWinscp"}','{"content":"WireGuard","choco":"wireguard","description":"WireGuard is a fast and modern VPN (Virtual Private Network) protocol. It aims to be simpler and more efficient than other VPN protocols, providing secure and reliable connections.","winget":"WireGuard.WireGuard","category":"Pro Tools","id":"DblInstallWireguard"}','{"content":"Wireshark","choco":"wireshark","description":"Wireshark is a widely-used open-source network protocol analyzer. It allows users to capture and analyze network traffic in real-time, providing detailed insights into network activities.","winget":"WiresharkFoundation.Wireshark","category":"Pro Tools","id":"DblInstallWireshark"}','{"content":"Wise Program Uninstaller (WiseCleaner)","choco":null,"description":"Wise Program Uninstaller is the perfect solution for uninstalling Windows programs, allowing you to uninstall applications quickly and completely using its simple and user-friendly interface.","winget":"WiseCleaner.WiseProgramUninstaller","category":"Utilities","id":"DblInstallWiseprogramuninstallerwisecleaner"}','{"content":"WizTree","choco":"wiztree","description":"WizTree is a fast disk space analyzer that helps you quickly find the files and folders consuming the most space on your hard drive.","winget":"AntibodySoftware.WizTree","category":"Utilities","id":"DblInstallWiztree"}','{"content":"WPS Office","choco":null,"description":"WPS Office is a free office suite with word processing, spreadsheets, and presentations.","winget":"Kingsoft.WPSOffice","category":"Document","id":"DblInstallWPS"}','{"content":"XEMU","choco":null,"description":"XEMU is an open-source emulator for the original Microsoft Xbox console.","winget":"xemu-project.xemu","category":"Gaming Launchers","id":"DblInstallXemu"}','{"content":"Xournal++","choco":"xournalplusplus","description":"Xournal++ is an open-source handwriting notetaking software with PDF annotation capabilities.","winget":"Xournal++.Xournal++","category":"Document","id":"DblInstallXournal"}','{"content":"Yarn","choco":"yarn","description":"Yarn is a fast, reliable, and secure dependency management tool for JavaScript projects.","winget":"Yarn.Yarn","category":"Development","id":"DblInstallYarn"}','{"content":"yt-dlp","choco":"yt-dlp","description":"yt-dlp is a command-line program for downloading videos from YouTube and other sites.","winget":"yt-dlp.yt-dlp","category":"Multimedia Tools","id":"DblInstallYtdlp"}','{"content":"Zed","choco":"zed","description":"Zed is a modern, high-performance code editor designed from the ground up for speed and collaboration.","winget":"ZedIndustries.Zed","category":"Development","id":"DblInstallZed"}','{"content":"Zen Browser","choco":"zen-browser","description":"The modern, privacy-focused, performance-driven browser built on Firefox.","winget":"Zen-Team.Zen-Browser","category":"Browsers","id":"DblInstallZenbrowser"}','{"content":"Zoom","choco":"zoom","description":"Zoom is a popular video conferencing and web conferencing service for online meetings, webinars, and collaborative projects.","winget":"Zoom.Zoom","category":"Communications","id":"DblInstallZoom"}','{"content":"Zotero","choco":"zotero","description":"Zotero is a free, easy-to-use tool to help you collect, organize, cite, and share your research materials.","winget":"DigitalScholar.Zotero","category":"Document","id":"DblInstallZotero"}')
-$appx = @('{"name":"MicrosoftCorporationII.QuickAssist","id":"MicrosoftCorporationIIQuickAssist"}','{"name":"Clipchamp.Clipchamp","id":"ClipchampClipchamp"}','{"name":"Microsoft.OutlookForWindows","id":"MicrosoftOutlookForWindows"}','{"name":"Microsoft.PowerAutomateDesktop","id":"MicrosoftPowerAutomateDesktop"}','{"name":"Microsoft.Todos","id":"MicrosoftTodos"}','{"name":"Microsoft.AppConnector","id":"MicrosoftAppConnector"}','{"name":"Microsoft.BingFinance","id":"MicrosoftBingFinance"}','{"name":"Microsoft.BingNews","id":"MicrosoftBingNews"}','{"name":"Microsoft.BingSports","id":"MicrosoftBingSports"}','{"name":"Microsoft.BingTranslator","id":"MicrosoftBingTranslator"}','{"name":"Microsoft.BingWeather","id":"MicrosoftBingWeather"}','{"name":"Microsoft.BingFoodAndDrink","id":"MicrosoftBingFoodAndDrink"}','{"name":"Microsoft.BingHealthAndFitness","id":"MicrosoftBingHealthAndFitness"}','{"name":"Microsoft.BingTravel","id":"MicrosoftBingTravel"}','{"name":"Microsoft.MinecraftUWP","id":"MicrosoftMinecraftUWP"}','{"name":"Microsoft.GamingServices","id":"MicrosoftGamingServices"}','{"name":"Microsoft.GetHelp","id":"MicrosoftGetHelp"}','{"name":"Microsoft.Getstarted","id":"MicrosoftGetstarted"}','{"name":"Microsoft.Messaging","id":"MicrosoftMessaging"}','{"name":"Microsoft.Microsoft3DViewer","id":"MicrosoftMicrosoft3DViewer"}','{"name":"Microsoft.MicrosoftSolitaireCollection","id":"MicrosoftMicrosoftSolitaireCollection"}','{"name":"Microsoft.NetworkSpeedTest","id":"MicrosoftNetworkSpeedTest"}','{"name":"Microsoft.News","id":"MicrosoftNews"}','{"name":"Microsoft.Office.Lens","id":"MicrosoftOfficeLens"}','{"name":"Microsoft.Office.Sway","id":"MicrosoftOfficeSway"}','{"name":"Microsoft.Office.OneNote","id":"MicrosoftOfficeOneNote"}','{"name":"Microsoft.OneConnect","id":"MicrosoftOneConnect"}','{"name":"Microsoft.People","id":"MicrosoftPeople"}','{"name":"Microsoft.Print3D","id":"MicrosoftPrint3D"}','{"name":"Microsoft.SkypeApp","id":"MicrosoftSkypeApp"}','{"name":"Microsoft.Wallet","id":"MicrosoftWallet"}','{"name":"Microsoft.Whiteboard","id":"MicrosoftWhiteboard"}','{"name":"Microsoft.WindowsAlarms","id":"MicrosoftWindowsAlarms"}','{"name":"microsoft.windowscommunicationsapps","id":"microsoftwindowscommunicationsapps"}','{"name":"Microsoft.WindowsFeedbackHub","id":"MicrosoftWindowsFeedbackHub"}','{"name":"Microsoft.WindowsMaps","id":"MicrosoftWindowsMaps"}','{"name":"Microsoft.WindowsPhone","id":"MicrosoftWindowsPhone"}','{"name":"Microsoft.WindowsSoundRecorder","id":"MicrosoftWindowsSoundRecorder"}','{"name":"Microsoft.XboxApp","id":"MicrosoftXboxApp"}','{"name":"Microsoft.GamingApp","id":"MicrosoftGamingApp"}','{"name":"Microsoft.ConnectivityStore","id":"MicrosoftConnectivityStore"}','{"name":"Microsoft.CommsPhone","id":"MicrosoftCommsPhone"}','{"name":"Microsoft.ScreenSketch","id":"MicrosoftScreenSketch"}','{"name":"Microsoft.Xbox.TCUI","id":"MicrosoftXboxTCUI"}','{"name":"Microsoft.XboxGameOverlay","id":"MicrosoftXboxGameOverlay"}','{"name":"Microsoft.XboxGamingOverlay","id":"MicrosoftXboxGamingOverlay"}','{"name":"Microsoft.XboxGameCallableUI","id":"MicrosoftXboxGameCallableUI"}','{"name":"Microsoft.XboxSpeechToTextOverlay","id":"MicrosoftXboxSpeechToTextOverlay"}','{"name":"Microsoft.XboxIdentityProvider","id":"MicrosoftXboxIdentityProvider"}','{"name":"Microsoft.MixedReality.Portal","id":"MicrosoftMixedRealityPortal"}','{"name":"Microsoft.YourPhone","id":"MicrosoftYourPhone"}','{"name":"Microsoft.ZuneMusic","id":"MicrosoftZuneMusic"}','{"name":"Microsoft.ZuneVideo","id":"MicrosoftZuneVideo"}','{"name":"Microsoft.Getstarted","id":"MicrosoftGetstarted"}','{"name":"Microsoft.Family","id":"MicrosoftFamily"}','{"name":"Microsoft.MicrosoftOfficeHub","id":"MicrosoftMicrosoftOfficeHub"}','{"name":"Microsoft.MicrosoftStickyNotes","id":"MicrosoftMicrosoftStickyNotes"}','{"name":"*EclipseManager*","id":"EclipseManager"}','{"name":"*ActiproSoftwareLLC*","id":"ActiproSoftwareLLC"}','{"name":"*AdobeSystemsIncorporated.AdobePhotoshopExpress*","id":"AdobePhotoshopExpress"}','{"name":"*Duolingo-LearnLanguagesforFree*","id":"DuolingoLearnLanguagesforFree"}','{"name":"*PandoraMediaInc*","id":"PandoraMediaInc"}','{"name":"*CandyCrush*","id":"CandyCrush"}','{"name":"*BubbleWitch3Saga*","id":"BubbleWitch3Saga"}','{"name":"*Wunderlist*","id":"Wunderlist"}','{"name":"*Flipboard*","id":"Flipboard"}','{"name":"*Twitter*","id":"Twitter"}','{"name":"*Facebook*","id":"Facebook"}','{"name":"*Royal Revolt*","id":"RoyalRevolt"}','{"name":"*Sway*","id":"Sway"}','{"name":"*Speed Test*","id":"SpeedTest"}','{"name":"*Dolby*","id":"Dolby"}','{"name":"*Viber*","id":"Viber"}','{"name":"*ACGMediaPlayer*","id":"ACGMediaPlayer"}','{"name":"*Netflix*","id":"Netflix"}','{"name":"*OneCalendar*","id":"OneCalendar"}','{"name":"*LinkedInforWindows*","id":"LinkedInforWindows"}','{"name":"*HiddenCityMysteryofShadows*","id":"HiddenCityMysteryofShadows"}','{"name":"*Hulu*","id":"Hulu"}','{"name":"*HiddenCity*","id":"HiddenCity"}','{"name":"*AdobePhotoshopExpress*","id":"AdobePhotoshopExpress"}','{"name":"*HotspotShieldFreeVPN*","id":"HotspotShieldFreeVPN"}','{"name":"*Microsoft.Advertising.Xaml*","id":"MicrosoftAdvertisingXaml"}','{"name":"*Windows.DevHome*","id":"WindowsDevHome"}')
+$programs = @('{"description":".NET Desktop Runtime 6 is a runtime environment required for running applications developed with .NET 6.","choco":"dotnet-6.0-runtime","id":"DblInstallDotnet6","winget":"Microsoft.DotNet.DesktopRuntime.6","category":"Microsoft Tools","content":".NET Desktop Runtime 6"}','{"description":".NET Desktop Runtime 7 is a runtime environment required for running applications developed with .NET 7.","choco":"dotnet-7.0-runtime","id":"DblInstallDotnet7","winget":"Microsoft.DotNet.DesktopRuntime.7","category":"Microsoft Tools","content":".NET 7 Desktop Runtime"}','{"description":".NET Desktop Runtime 8 is a runtime environment required for running applications developed with .NET 8.","choco":"dotnet-8.0-runtime","id":"DblInstallDotnet8","winget":"Microsoft.DotNet.DesktopRuntime.8","category":"Microsoft Tools","content":".NET 8 Desktop Runtime"}','{"description":".NET Desktop Runtime 9 is a runtime environment required for running applications developed with .NET 9.","choco":"dotnet-9.0-runtime","id":"DblInstallDotnet9","winget":"Microsoft.DotNet.DesktopRuntime.9","category":"Microsoft Tools","content":".NET 9 Desktop Runtime"}','{"description":".NET Desktop Runtime 10 is a runtime environment required for running applications developed with .NET 10.","choco":"dotnet-10.0-runtime","id":"DblInstallDotnet10","winget":"Microsoft.DotNet.DesktopRuntime.10","category":"Microsoft Tools","content":".NET 10 Desktop Runtime"}','{"description":"1Password is a password manager that allows you to store and manage your passwords securely.","choco":"1password","id":"DblInstall1Password","winget":"AgileBits.1Password","category":"Utilities","content":"1Password"}','{"description":"7-Zip is a free and open-source file archiver utility. It supports several compression formats and provides a high compression ratio, making it a popular choice for file compression.","choco":"7zip","id":"DblInstall7zip","winget":"7zip.7zip","category":"Utilities","content":"7-zip"}','{"description":"Adobe Acrobat Reader is a free PDF viewer with essential features for viewing, printing, and annotating PDF documents.","choco":"adobereader","id":"DblInstallAdobe","winget":"Adobe.Acrobat.Reader.64-bit","category":"Document","content":"Adobe"}','{"description":"Advanced IP Scanner is a fast and easy-to-use network scanner. It is designed to analyze LAN networks and provides information about connected devices.","choco":"advanced-ip-scanner","id":"DblInstallAdvancedipscanner","winget":"Famatech.AdvancedIPScanner","category":"Pro Tools","content":"Advanced IP Scanner"}','{"description":"MSI Afterburner is a graphics card overclocking utility with advanced features.","choco":"msiafterburner","id":"DblInstallMsiafterburner","winget":"Guru3D.Afterburner","category":"Utilities","content":"Afterburner"}','{"description":"AIMP is a feature-rich music player with support for various audio formats, playlists, and customizable user interface.","choco":"aimp","id":"DblInstallAimpmusicplayer","winget":"AIMP.AIMP","category":"Multimedia Tools","content":"AIMP (Music Player)"}','{"description":"Alacritty is a fast, cross-platform, GPU-accelerated terminal emulator.","choco":"alacritty","id":"DblInstallAlacritty","winget":"Alacritty.Alacritty","category":"Utilities","content":"Alacritty"}','{"description":"Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK).","choco":"corretto21jdk","id":"DblInstallAmazoncorretto21lts","winget":"Amazon.Corretto.21.JDK","category":"Development","content":"Amazon Corretto 21 (LTS)"}','{"description":"Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK).","choco":"corretto25jdk","id":"DblInstallAmazoncorretto25lts","winget":"Amazon.Corretto.25.JDK","category":"Development","content":"Amazon Corretto 25 (LTS)"}','{"description":"Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK).","choco":"corretto8jdk","id":"DblInstallAmazoncorretto8lts","winget":"Amazon.Corretto.8.JDK","category":"Development","content":"Amazon Corretto 8 (LTS)"}','{"description":"Android Debug Bridge (ADB) is a versatile command-line tool that lets you communicate with a device.","choco":"googleplatformtools","id":"DblInstallADB","winget":"Google.PlatformTools","category":"Utilities","content":"Android Debug Bridge"}','{"description":"Angry IP Scanner is an open-source and cross-platform network scanner. It is used to scan IP addresses and ports, providing information about network connectivity.","choco":"angryip","id":"DblInstallAngryipscanner","winget":"angryziber.AngryIPScanner","category":"Pro Tools","content":"Angry IP Scanner"}','{"description":"Anki is a spaced repetition flashcard program that makes memorization more efficient.","choco":"anki","id":"DblInstallAnki","winget":"Anki.Anki","category":"Document","content":"Anki"}','{"description":"AnyDesk is a remote desktop software that enables users to access and control computers remotely. It is known for its fast connection and low latency.","choco":"anydesk","id":"DblInstallAnydesk","winget":"AnyDesk.AnyDesk","category":"Utilities","content":"AnyDesk"}','{"description":"Any.do is a task management and to-do list application that helps users organize their tasks, set reminders, and collaborate with others.","choco":"anydo","id":"DblInstallAnydo","winget":"Anydo.Anydo","category":"Utilities","content":"Anydo"}','{"description":"Audacity is a free and open-source audio editing software known for its powerful recording and editing capabilities.","choco":"Audacity","id":"DblInstallAudacity","winget":"Audacity.Audacity","category":"Multimedia Tools","content":"Audacity"}','{"description":"AutoHotkey is a scripting language for Windows that allows users to create custom automation scripts and macros. It is often used for automating repetitive tasks and customizing keyboard shortcuts.","choco":"autohotkey","id":"DblInstallAutohotkey","winget":"autohotkey","category":"Utilities","content":"AutoHotkey"}','{"description":"This utility shows you what programs are configured to run during system bootup or login.","choco":"autoruns","id":"DblInstallAutoruns","winget":"Microsoft.Sysinternals.Autoruns","category":"Microsoft Tools","content":"Autoruns"}','{"description":"AV1 Video Extension provides support for the AV1 video codec in Windows.","choco":null,"id":"DblInstallAV1","winget":"9MVZQVXJBQ9V","category":"Multimedia Tools","content":"AV1 Video Extension"}','{"description":"Battle.net is a launcher for games created and developed by Activision Blizzard","choco":null,"id":"DblInstallBattlenet","winget":"Blizzard.BattleNet","category":"Games","content":"Battle.net"}','{"description":"Betterbird is a fork of Mozilla Thunderbird with additional features and bugfixes.","choco":"betterbird","id":"DblInstallBetterbird","winget":"Betterbird.Betterbird","category":"Communications","content":"Betterbird"}','{"description":"Bitwarden is an open-source password management solution. It allows users to store and manage their passwords in a secure and encrypted vault, accessible across multiple devices.","choco":"bitwarden","id":"DblInstallBitwarden","winget":"Bitwarden.Bitwarden","category":"Utilities","content":"Bitwarden"}','{"description":"Blender is a powerful open-source 3D creation suite, offering modeling, sculpting, animation, and rendering tools.","choco":"blender","id":"DblInstallBlender","winget":"BlenderFoundation.Blender","category":"Multimedia Tools","content":"Blender"}','{"description":"BlueStacks is an Android emulator that lets you run Android apps and games on Windows.","choco":"bluestacks","id":"DblInstallBluestacks","winget":"BlueStack.BlueStacks","category":"Gaming Launchers","content":"Bluestacks"}','{"description":"An Auto-clicker with a few advanced features and generally better performance than popular alternatives.","choco":null,"id":"DblInstallBlurautoclicker","winget":"Blur009.BlurAutoClicker","category":"Utilities","content":"BlurAutoClicker"}','{"description":"Brave is a privacy-focused web browser that blocks ads and trackers, offering a faster and safer browsing experience.","choco":"brave","id":"DblInstallBrave","winget":"Brave.Brave","category":"Browsers","content":"Brave"}','{"description":"Bruno is a local-first API client that stores collections as plain text files for version control and collaboration.","choco":"bruno","id":"DblInstallBruno","winget":"Bruno.Bruno","category":"Development","content":"Bruno"}','{"description":"Bulk Crap Uninstaller is a free and open-source uninstaller utility for Windows. It helps users remove unwanted programs and clean up their system by uninstalling multiple applications at once.","choco":"bulk-crap-uninstaller","id":"DblInstallBulkcrapuninstaller","winget":"Klocman.BulkCrapUninstaller","category":"Utilities","content":"Bulk Crap Uninstaller"}','{"description":"Calibre is a powerful and easy-to-use e-book manager, viewer, and converter.","choco":"calibre","id":"DblInstallCalibre","winget":"calibre.calibre","category":"Multimedia Tools","content":"Calibre"}','{"description":"Cemu is a highly experimental software to emulate Wii U applications on PC.","choco":"cemu","id":"DblInstallCemu","winget":"Cemu.Cemu","category":"Gaming Launchers","content":"Cemu"}','{"description":"The official ChatGPT desktop app for Windows, distributed through the Microsoft Store.","choco":null,"id":"DblInstallChatgptdesktop","winget":"msstore:9NT1R1C2HH7J","category":"Development","content":"ChatGPT Desktop"}','{"description":"Chatterino is a chat client for Twitch chat that offers a clean and customizable interface for a better streaming experience.","choco":"chatterino","id":"DblInstallChatterino","winget":"ChatterinoTeam.Chatterino","category":"Utilities","content":"Chatterino"}','{"description":"Chromium is the open-source project that serves as the foundation for various web browsers, including Chrome.","choco":"chromium","id":"DblInstallChromium","winget":"eloston.ungoogled-chromium","category":"Browsers","content":"Chromium"}','{"description":"Cider is an open-source Apple Music client for Windows.","choco":null,"id":"DblInstallCider","winget":"CiderCollective.Cider","category":"Multimedia Tools","content":"Cider"}','{"description":"Cinebench R23 is a benchmark tool for comparing CPU rendering performance across systems.","choco":null,"id":"DblInstallCinebenchr23","winget":"Maxon.CinebenchR23","category":"Pro Tools","content":"Cinebench R23"}','{"description":"Classic Volume Mixer provides quick access to the classic volume mixer in Windows.","choco":null,"id":"DblInstallClasicMixer","winget":"PopeenCom.ClassicVolumeMixer","category":"Utilities","content":"ClassicVolumeMixer"}','{"description":"Anthropics agentic coding tool for terminal and IDE development workflows.","choco":"claude-code","id":"DblInstallClaudecode","winget":"Anthropic.ClaudeCode","category":"Development","content":"Claude Code"}','{"description":"Anthropics Claude desktop application for focused AI-assisted work and chat.","choco":"claude","id":"DblInstallClaudedesktop","winget":"Anthropic.Claude","category":"Development","content":"Claude Desktop"}','{"description":"WARP is a freemium VPN service provided by Cloudflare. Includes usage of Cloudflares DNS","choco":"warp","id":"DblInstallCloudflarewarp","winget":"Cloudflare.Warp","category":"Utilities","content":"Cloudflare WARP"}','{"description":"CMake is an open-source, cross-platform family of tools designed to build, test and package software.","choco":"cmake","id":"DblInstallCmake","winget":"Kitware.CMake","category":"Development","content":"CMake"}','{"description":"Codex CLI is an OpenAI coding agent that runs locally in your terminal.","choco":"codex","id":"DblInstallCodex","winget":"OpenAI.Codex","category":"Development","content":"Codex"}','{"description":"CPU-Z is a system monitoring and diagnostic tool for Windows. It provides detailed information about the computers hardware components, including the CPU, memory, and motherboard.","choco":"cpu-z","id":"DblInstallCpuz","winget":"CPUID.CPU-Z","category":"Utilities","content":"CPU-Z"}','{"description":"Cryptomator is a free and open-source tool for encrypting cloud storage files.","choco":"cryptomator","id":"DblInstallCryptomator","winget":"Cryptomator.Cryptomator","category":"Utilities","content":"Cryptomator"}','{"description":"Crystal Disk Info is a disk health monitoring tool that provides information about the status and performance of hard drives. It helps users anticipate potential issues and monitor drive health.","choco":"crystaldiskinfo","id":"DblInstallCrystaldiskinfo","winget":"CrystalDewWorld.CrystalDiskInfo","category":"Utilities","content":"Crystal Disk Info"}','{"description":"Crystal Disk Mark is a disk benchmarking tool that measures the read and write speeds of storage devices. It helps users assess the performance of their hard drives and SSDs.","choco":"crystaldiskmark","id":"DblInstallCrystaldiskmark","winget":"CrystalDewWorld.CrystalDiskMark","category":"Utilities","content":"Crystal Disk Mark"}','{"description":"AI-powered code editor (VS Code-based) with agentic coding features and integrated AI assistance for development workflows.","choco":"cursoride","id":"DblInstallCursor","winget":"Anysphere.Cursor","category":"Development","content":"Cursor"}','{"description":"Deskflow is a free and open-source software KVM that lets you share a single keyboard and mouse across multiple computers.","choco":"deskflow","id":"DblInstallDeskflow","winget":"Deskflow.Deskflow","category":"Utilities","content":"Deskflow"}','{"description":"Discord is a popular communication platform with voice, video, and text chat, designed for gamers but used by a wide range of communities.","choco":"discord","id":"DblInstallDiscord","winget":"Discord.Discord","category":"Communications","content":"Discord"}','{"description":"DISMTools is a fast, customizable GUI for the DISM utility, supporting Windows images from Windows 7 onward. It handles installations on any drive, offers project support, and lets users tweak settings like color modes, language, and DISM versions; powered by both native DISM and a managed DISM API.","choco":"dismtools","id":"DblInstallDismtools","winget":"CodingWondersSoftware.DISMTools.Stable","category":"Microsoft Tools","content":"DISMTools"}','{"description":"Display Driver Uninstaller (DDU) is a tool for completely uninstalling graphics drivers from NVIDIA, AMD, and Intel. It is useful for troubleshooting graphics driver-related issues.","choco":"ddu","id":"DblInstallDdu","winget":"Wagnardsoft.DisplayDriverUninstaller","category":"Utilities","content":"Display Driver Uninstaller"}','{"description":"Docker Desktop provides a local environment for building, running, and testing containerized applications on Windows.","choco":"docker-desktop","id":"DblInstallDockerdesktop","winget":"Docker.DockerDesktop","category":"Development","content":"Docker Desktop"}','{"description":"Tiny alternative Discord client with a smaller footprint, snappier startup, themes, plugins and more!","choco":"dorion","id":"DblInstallDorion","winget":"SpikeHD.Dorion","category":"Communications","content":"Dorion"}','{"description":"draw.io is a free online diagramming tool for creating flowcharts, mind maps, and more.","choco":"drawio","id":"DblInstallDrawio","winget":"JGraph.Draw","category":"Utilities","content":"Draw.io"}','{"description":"Dropbox is a cloud storage client for syncing files, sharing content, and keeping documents available across devices.","choco":"dropbox","id":"DblInstallDropbox","winget":"Dropbox.Dropbox","category":"Utilities","content":"Dropbox"}','{"description":"EA App is a platform for accessing and playing Electronic Arts games.","choco":"ea-app","id":"DblInstallEaapp","winget":"ElectronicArts.EADesktop","category":"Gaming Launchers","content":"EA Desktop App"}','{"description":"EarTrumpet is an audio control app for Windows, providing a simple and intuitive interface for managing sound settings.","choco":"eartrumpet","id":"DblInstallEartrumpetaudio","winget":"File-New-Project.EarTrumpet","category":"Multimedia Tools","content":"EarTrumpet (Audio)"}','{"description":"Microsoft Edge is a modern web browser built on Chromium, offering performance, security, and integration with Microsoft services.","choco":"microsoft-edge","id":"DblInstallEdge","winget":"Microsoft.Edge","category":"Browsers","content":"Edge"}','{"description":"Element is a client for Matrix; an open network for secure, decentralized communication.","choco":"element-desktop","id":"DblInstallMatrix","winget":"Element.Element","category":"Communications","content":"Element (Matrix)"}','{"description":"EmulationStation Desktop Edition is a frontend for browsing and launching games from your multi-platform game collection.","choco":null,"id":"DblInstallEmulationstation","winget":"ES-DE.EmulationStation-DE","category":"Gaming Launchers","content":"EmulationStation Desktop Edition"}','{"description":"Ente Auth is a free, cross-platform, end-to-end encrypted authenticator app.","choco":"ente-auth","id":"DblInstallEnteauth","winget":"ente-io.auth-desktop","category":"Utilities","content":"Ente Auth"}','{"description":"Epic Games Launcher is the client for accessing and playing games from the Epic Games Store.","choco":"epicgameslauncher","id":"DblInstallEpicgames","winget":"EpicGames.EpicGamesLauncher","category":"Gaming Launchers","content":"Epic Games Store"}','{"description":"Everything is a search engine that locates files and folders by filename instantly for Windows. Unlike Windows search Everything initially displays every file and folder on your computer (hence the name Everything). You type in a search filter to limit what files and folders are displayed.","choco":"everything","id":"DblInstallEsearch","winget":"oidtools.Everything","category":"Utilities","content":"Everything"}','{"description":"f.lux adjusts the color temperature of your screen to reduce eye strain during nighttime use.","choco":"flux","id":"DblInstallFlux","winget":"flux.flux","category":"Utilities","content":"F.lux"}','{"description":"Fast Node Manager (fnm) is a fast, cross-platform tool for installing and switching between Node.js versions.","choco":"fnm","id":"DblInstallFastnodemanager","winget":"Schniz.fnm","category":"Development","content":"Fast Node Manager"}','{"description":"FFmpeg is a complete, cross-platform solution for recording, converting, and streaming audio and video.","choco":"ffmpeg","id":"DblInstallFFmpeg","winget":"Gyan.FFmpeg","category":"Multimedia Tools","content":"FFmpeg"}','{"description":"Figma is a web-based vector graphics editor and prototyping tool for collaborative design.","choco":"figma","id":"DblInstallFigma","winget":"Figma.Figma","category":"Multimedia Tools","content":"Figma"}','{"description":"Alternative file explorer.","choco":"files","id":"DblInstallFiles","winget":"FilesCommunity.Files","category":"Utilities","content":"Files"}','{"description":"Mozilla Firefox is an open-source web browser known for its customization options, privacy features, and extensions. Firefox ESR (Extended Support Release) receives major updates every 42 weeks with minor updates such as crash fixes, security fixes and policy updates as needed, but at least every four weeks.","choco":"FirefoxESR","id":"DblInstallFirefoxesr","winget":"Mozilla.Firefox.ESR","category":"Browsers","content":"Firefox ESR"}','{"description":"Floorp is an open-source web browser project that aims to provide a simple and fast browsing experience.","choco":"floorp","id":"DblInstallFloorp","winget":"Ablaze.Floorp","category":"Browsers","content":"Floorp"}','{"description":"foobar2000 is a highly customizable and extensible music player for Windows, known for its modular design and advanced features.","choco":"foobar2000","id":"DblInstallFoobar2000musicplayer","winget":"PeterPawlowski.foobar2000","category":"Multimedia Tools","content":"foobar2000 (Music Player)"}','{"description":"Foxit PDF Reader is a free PDF viewer with a familiar ribbon-style interface.","choco":"foxitreader","id":"DblInstallFoxitpdfreader","winget":"Foxit.FoxitReader","category":"Document","content":"Foxit PDF Reader"}','{"description":"GIMP is a versatile open-source raster graphics editor used for tasks such as photo retouching, image editing, and image composition.","choco":"gimp","id":"DblInstallGimpimageeditor","winget":"GIMP.GIMP.3","category":"Multimedia Tools","content":"GIMP (Image Editor)"}','{"description":"Git is a distributed version control system widely used for tracking changes in source code during software development.","choco":"git","id":"DblInstallGit","winget":"Git.Git","category":"Development","content":"Git"}','{"description":"Git Extensions is a graphical Git client for Windows with repository, history, and commit management tools.","choco":"gitextensions","id":"DblInstallGitextensions","winget":"GitExtensionsTeam.GitExtensions","category":"Development","content":"Git Extensions"}','{"description":"GitHub CLI brings pull requests, issues, releases, and other GitHub workflows to the terminal.","choco":"gh","id":"DblInstallGithubcli","winget":"GitHub.cli","category":"Development","content":"GitHub CLI"}','{"description":"GitHub Desktop is a visual Git client that simplifies collaboration on GitHub repositories with an easy-to-use interface.","choco":"git;github-desktop","id":"DblInstallGithubdesktop","winget":"GitHub.GitHubDesktop","category":"Development","content":"GitHub Desktop"}','{"description":"GlazeWM is a tiling window manager for Windows inspired by i3 and Polybar.","choco":"glazewm","id":"DblInstallGlazewm","winget":"glzr-io.glazewm","category":"Utilities","content":"GlazeWM"}','{"description":"Go (or Golang) is a statically typed, compiled programming language designed for simplicity, reliability, and efficiency.","choco":"golang","id":"DblInstallGolang","winget":"GoLang.Go","category":"Development","content":"Go Programming Language"}','{"description":"Godot Engine is a free and open-source game engine for 2D and 3D game development.","choco":"godot --pre","id":"DblInstallGodotEngine","winget":"GodotEngine.GodotEngine","category":"Development","content":"Godot Engine"}','{"description":"GOG Galaxy is a gaming client that offers DRM-free games, additional content, and more.","choco":"goggalaxy","id":"DblInstallGog","winget":"GOG.Galaxy","category":"Gaming Launchers","content":"GOG Galaxy"}','{"description":"Google Chrome is a widely used web browser known for its speed, simplicity, and seamless integration with Google services.","choco":"googlechrome","id":"DblInstallChrome","winget":"Google.Chrome","category":"Browsers","content":"Google Chrome"}','{"description":"File syncing across devices all tied to your Google account.","choco":"googledrive","id":"DblInstallGoogleDrive","winget":"Google.GoogleDrive","category":"Utilities","content":"Google Drive"}','{"description":"GPU-Z provides detailed information about your graphics card and GPU.","choco":"gpu-z","id":"DblInstallGpuz","winget":"TechPowerUp.GPU-Z","category":"Utilities","content":"GPU-Z"}','{"description":"Greenshot is a free and open-source screenshot tool for Windows.","choco":"greenshot","id":"DblInstallGreenshot","winget":"Greenshot.Greenshot","category":"Multimedia Tools","content":"Greenshot"}','{"description":"gsudo is a sudo equivalent for Windows. It allows you to run commands with elevated administrative privileges directly within the current console window.","choco":"gsudo","id":"DblInstallGsudo","winget":"gerardog.gsudo","category":"Utilities","content":"gsudo"}','{"description":"HandBrake is an open-source video transcoder, allowing you to convert video from nearly any format to a selection of widely supported codecs.","choco":"handbrake","id":"DblInstallHandbrake","winget":"HandBrake.HandBrake","category":"Multimedia Tools","content":"Handbrake"}','{"description":"HeidiSQL is a free and open-source database management tool for MySQL, MariaDB, and more.","choco":"heidisql","id":"DblInstallHeidisql","winget":"HeidiSQL.HeidiSQL","category":"Development","content":"HeidiSQL"}','{"description":"Private, fast, and honest web browser.","choco":"helium","id":"DblInstallHelium","winget":"ImputNet.Helium","category":"Browsers","content":"Helium"}','{"description":"Heroic Games Launcher is an open-source alternative game launcher for Epic Games Store.","choco":"heroic-games-launcher","id":"DblInstallHeroic","winget":"HeroicGamesLauncher.HeroicGamesLauncher","category":"Gaming Launchers","content":"Heroic Games Launcher"}','{"description":"The worlds fastest framework for building websites.","choco":"hugo-extended","id":"DblInstallHugo","winget":"Hugo.Hugo.Extended","category":"Utilities","content":"Hugo"}','{"description":"HWiNFO provides comprehensive hardware information and diagnostics for Windows.","choco":"hwinfo","id":"DblInstallHwinfo","winget":"REALiX.HWiNFO","category":"Utilities","content":"HWiNFO"}','{"description":"HWMonitor is a hardware monitoring program that reads PC systems main health sensors.","choco":"hwmonitor","id":"DblInstallHwmonitor","winget":"CPUID.HWMonitor","category":"Pro Tools","content":"HWMonitor"}','{"description":"HxD is a free hex editor that allows you to edit, view, search, and analyze binary files.","choco":"HxD","id":"DblInstallHxD","winget":"MHNexus.HxD","category":"Microsoft Tools","content":"HxD Hex Editor"}','{"description":"HyperX NGENUITY is a configuration software for HyperX peripherals.","choco":null,"id":"DblInstallNGENUITY","winget":"9P1TBXR6QDCX","category":"Utilities","content":"HyperX NGENUITY"}','{"description":"ImageGlass is a versatile image viewer with support for various image formats and a focus on simplicity and speed.","choco":"imageglass","id":"DblInstallImageglass","winget":"DuongDieuPhap.ImageGlass","category":"Multimedia Tools","content":"ImageGlass"}','{"description":"Internet Download Manager is a download manager for accelerating, resuming, and scheduling file downloads.","choco":"internet-download-manager","id":"DblInstallInternetdownloadmanager","winget":"Tonec.InternetDownloadManager","category":"Utilities","content":"Internet Download Manager"}','{"description":"IrfanView is a lightweight, fast, and free image viewer and editor. Supports multiple formats, batch processing, and powerful plugins.","choco":"irfanview","id":"DblInstallIrfanview","winget":"IrfanSkiljan.IrfanView","category":"Multimedia Tools","content":"IrfanView"}','{"description":"Itch.io is a digital distribution platform for indie games and creative projects.","choco":"itch","id":"DblInstallItch","winget":"ItchIo.Itch","category":"Gaming Launchers","content":"itch.io"}','{"description":"iTunes is a media player, media library, and online radio broadcaster application developed by Apple Inc.","choco":"itunes","id":"DblInstallItunes","winget":"Apple.iTunes","category":"Multimedia Tools","content":"iTunes"}','{"description":"Java 11 is a long-term support release of the Java Development Kit.","choco":null,"id":"DblInstallJava11","winget":"EclipseAdoptium.Temurin.11.JRE","category":"Development","content":"Java 11"}','{"description":"Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK).","choco":"corretto8jdk","id":"DblInstallJava8","winget":"Amazon.Corretto.8.JDK","category":"Development","content":"Amazon Corretto 8 (LTS)"}','{"description":"Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK).","choco":"corretto21jdk","id":"DblInstallJava21","winget":"Amazon.Corretto.21.JDK","category":"Development","content":"Amazon Corretto 21 (LTS)"}','{"description":"Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK).","choco":"corretto25jdk","id":"DblInstallJava25","winget":"Amazon.Corretto.25.JDK","category":"Development","content":"Amazon Corretto 25 (LTS)"}','{"description":"JDownloader is a free, open-source download manager that simplifies downloading files from hosting sites.","choco":"jdownloader","id":"DblInstallJdownloader","winget":"AppWork.JDownloader","category":"Utilities","content":"JDownloader"}','{"description":"Jellyfin Media Player is a client application for the Jellyfin media server, providing access to your media library.","choco":"jellyfin-media-player","id":"DblInstallJellyfinmediaplayer","winget":"Jellyfin.JellyfinMediaPlayer","category":"Selfhosted Tools","content":"Jellyfin Media Player"}','{"description":"Jellyfin Server is an open-source media server software, allowing you to organize and stream your media library.","choco":"jellyfin","id":"DblInstallJellyfinserver","winget":"Jellyfin.Server","category":"Selfhosted Tools","content":"Jellyfin Server"}','{"description":"Jetbrains Toolbox is a platform for easy installation and management of JetBrains developer tools.","choco":"jetbrainstoolbox","id":"DblInstallJetbrainstoolbox","winget":"JetBrains.Toolbox","category":"Development","content":"Jetbrains Toolbox"}','{"description":"Joplin is an open-source note-taking and to-do application with synchronization capabilities.","choco":"joplin","id":"DblInstallJoplin","winget":"Joplin.Joplin","category":"Document","content":"Joplin"}','{"description":"JPEGView is a lean, fast and highly configurable viewer/editor for JPEG, BMP, PNG, WEBP, TGA, GIF, JXL, HEIC, HEIF, AVIF, and TIFF images with a minimal GUI.","choco":"jpegview","id":"DblInstallJpegview","winget":"sylikc.JPEGView","category":"Utilities","content":"JPEG View"}','{"description":"K-Lite Codec Pack Standard is a collection of audio and video codecs and related tools, providing essential components for media playback.","choco":"k-litecodecpackstandard","id":"DblInstallKlite","winget":"CodecGuide.K-LiteCodecPack.Standard","category":"Multimedia Tools","content":"K-Lite Codec Pack"}','{"description":"KDE Connect is a tool that enables communication between your Linux desktop and Android device.","choco":"kdeconnect","id":"DblInstallKDEConnect","winget":"KDE.KDEConnect","category":"Utilities","content":"KDE Connect"}','{"description":"KeePassXC is a modern, secure, and open-source password manager that stores and manages your most sensitive information. You can run KeePassXC on Windows, macOS, and Linux systems. KeePassXC is for people with extremely high demands of secure personal data management. It saves many different types of information, such as usernames, passwords, URLs, attachments, and notes in an offline, encrypted file that can be stored in any location, including private and public cloud solutions. For easy identification and management, user-defined titles and icons can be specified for entries. In addition, entries are sorted into customizable groups. An integrated search function allows you to use advanced patterns to easily find any entry in your database. A customizable, fast, and easy-to-use password generator utility allows you to create passwords with any combination of characters or easy to remember passphrases.","choco":"keepassxc","id":"DblInstallKeepass","winget":"KeePassXCTeam.KeePassXC","category":"Utilities","content":"KeePassXC"}','{"description":"Kodi is an open-source media center application that allows you to play and view most videos, music, podcasts, and other digital media files.","choco":"kodi","id":"DblInstallKodi","winget":"XBMCFoundation.Kodi","category":"Multimedia Tools","content":"Kodi"}','{"description":"Simple terminal UI for git commands.","choco":"lazygit","id":"DblInstallLazygit","winget":"JesseDuffield.lazygit","category":"Development","content":"Lazygit"}','{"description":"LibreOffice is a powerful and free office suite, compatible with other major office suites.","choco":"libreoffice-fresh","id":"DblInstallLibreoffice","winget":"TheDocumentFoundation.LibreOffice","category":"Document","content":"LibreOffice"}','{"description":"LibreWolf is a privacy-focused web browser based on Firefox, with additional privacy and security enhancements.","choco":"librewolf","id":"DblInstallLibrewolf","winget":"Librewolf.Librewolf","category":"Browsers","content":"Librewolf"}','{"description":"An open-source cross-platform alternative to AirDrop.","choco":"localsend.install","id":"DblInstallLocalsend","winget":"LocalSend.LocalSend","category":"Selfhosted Tools","content":"LocalSend"}','{"description":"A batteries included environment for the Lua scripting language on Windows.","choco":"lua","id":"DblInstallLua","winget":"rjpcomputing.luaforwindows","category":"Development","content":"Lua"}','{"description":"Medal is a screen recording and sharing app for gamers.","choco":null,"id":"DblInstallMedal","winget":"MedalB.V.Medal","category":"Gaming Launchers","content":"Medal"}','{"description":"Media Player Classic - Home Cinema (MPC-HC) is a free and open-source video and audio player for Windows. MPC-HC is based on the original Guliverkli project and contains many additional features and bug fixes.","choco":"mpc-hc-clsid2","id":"DblInstallMediaplayerclassichomecinema","winget":"clsid2.mpc-hc","category":"Multimedia Tools","content":"Media Player Classic - Home Cinema"}','{"description":"MediaInfo is a tool that provides detailed information about video and audio files.","choco":"mediainfo","id":"DblInstallMediaInfo","winget":"MediaArea.MediaInfo.GUI","category":"Multimedia Tools","content":"MediaInfo"}','{"description":"Microsoft Teams is a collaboration platform that integrates with Office 365 and offers chat, video conferencing, file sharing, and more.","choco":"teams","id":"DblInstallTeams","winget":"Microsoft.Teams","category":"Communications","content":"Microsoft Teams"}','{"description":"Comprehensive free partition manager that performs advanced operations Windows natively cannot, such as merging partitions, converting file systems, and organizing disk capacity.","choco":"minitoolpartitionwizard","id":"DblInstallMinitoolpartitionwizard","winget":"MiniTool.PartitionWizard.Free","category":"Utilities","content":"MiniTool Partition Wizard"}','{"description":"MKVToolNix is a set of tools for creating, altering, and inspecting Matroska (MKV) files.","choco":"mkvtoolnix","id":"DblInstallMKVToolNix","winget":"MoritzBunkus.MKVToolNix","category":"Multimedia Tools","content":"MKVToolNix"}','{"description":"Modrinth App is a desktop application for managing Minecraft mods and modpacks.","choco":"modrinth-app","id":"DblInstallModrinthapp","winget":"Modrinth.ModrinthApp","category":"Games","content":"Modrinth App"}','{"description":"Moonlight/GameStream Client allows you to stream PC games to other devices over your local network.","choco":"moonlight-qt","id":"DblInstallMoonlight","winget":"MoonlightGameStreamingProject.Moonlight","category":"Gaming Launchers","content":"Moonlight Stream Client"}','{"description":"Mozilla Firefox is an open-source web browser known for its customization options, privacy features, and extensions.","choco":"firefox","id":"DblInstallFirefox","winget":"Mozilla.Firefox","category":"Browsers","content":"Mozilla Firefox"}','{"description":"Media Player Classic Qute Theater","choco":"mediainfo","id":"DblInstallMpcqt","winget":"mpc-qt.mpc-qt","category":"Multimedia Tools","content":"mpc-qt"}','{"description":"mpv is a free, open source, and cross-platform media player supporting a wide variety of media formats, codecs, and subtitle types.","choco":"mpvio","id":"DblInstallMpv","winget":"shinchiro.mpv","category":"Multimedia Tools","content":"mpv"}','{"description":"A Tool to Redirect News, Search, Widgets, Weather, and More to your default browser.","choco":"msedgeredirect","id":"DblInstallMsedgeredirect","winget":"rcmaehl.MSEdgeRedirect","category":"Utilities","content":"MSEdgeRedirect"}','{"description":"Mullvad Browser is a privacy-focused web browser, developed in partnership with the Tor Project.","choco":"null","id":"DblInstallMullvad","winget":"MullvadVPN.MullvadBrowser","category":"Browsers","content":"Mullvad Browser"}','{"description":"This is the VPN client software for the Mullvad VPN service.","choco":"mullvad-app","id":"DblInstallMullvadvpn","winget":"MullvadVPN.MullvadVPN","category":"Pro Tools","content":"Mullvad VPN"}','{"description":"MySQL is a popular open-source relational database management system.","choco":"mysql","id":"DblInstallMySQL","winget":"Oracle.MySQL","category":"Development","content":"MySQL"}','{"description":"NanaZip is a fast and efficient file compression and decompression tool.","choco":"nanazip","id":"DblInstallNanazip","winget":"M2Team.NanaZip","category":"Utilities","content":"NanaZip"}','{"description":"NAPS2 is a document scanning application that simplifies the process of creating electronic documents.","choco":"naps2","id":"DblInstallNaps2scanner","winget":"Cyanfish.NAPS2","category":"Document","content":"NAPS2 (Scanner)"}','{"description":"Neovim is a highly extensible text editor and an improvement over the original Vim editor.","choco":"neovim","id":"DblInstallNeovim","winget":"Neovim.Neovim","category":"Document","content":"Neovim"}','{"description":"Neovim Nightly is the bleeding-edge build of the Neovim text editor.","choco":"neovim","id":"DblInstallNeovim","winget":"Neovim.Neovim","category":"Document","content":"Neovim"}','{"description":"NetBird is an open-source alternative comparable to TailScale that can be connected to a self-hosted server.","choco":"netbird","id":"DblInstallNetbird","winget":"Netbird.Netbird","category":"Selfhosted Tools","content":"NetBird"}','{"description":"Nextcloud Desktop is the official desktop client for the Nextcloud file synchronization and sharing platform.","choco":"nextcloud-client","id":"DblInstallNextclouddesktop","winget":"Nextcloud.NextcloudDesktop","category":"Selfhosted Tools","content":"Nextcloud Desktop"}','{"description":"Shell is an expanded context menu tool that adds extra functionality and customization options to the Windows context menu.","choco":"nilesoft-shell","id":"DblInstallNilesoftshell","winget":"Nilesoft.Shell","category":"Utilities","content":"Nilesoft Shell"}','{"description":"Nmap (Network Mapper) is an open-source tool for network exploration and security auditing. It discovers devices on a network and provides information about their ports and services.","choco":"nmap","id":"DblInstallNmap","winget":"Insecure.Nmap","category":"Pro Tools","content":"Nmap"}','{"description":"Node Version Manager (NVM) allows you to install and switch between multiple Node.js versions.","choco":"nvm.install","id":"DblInstallNodemanager","winget":"CoreyButler.NVMforWindows","category":"Development","content":"Node Version Manager (NVM)"}','{"description":"NodeJS is a JavaScript runtime built on Chromes V8 JavaScript engine for building server-side and networking applications.","choco":"nodejs","id":"DblInstallNodejs","winget":"OpenJS.NodeJS","category":"Development","content":"Node.js"}','{"description":"NodeJS LTS provides Long-Term Support releases for stable and reliable server-side JavaScript development.","choco":"nodejs-lts","id":"DblInstallNodejslts","winget":"OpenJS.NodeJS.LTS","category":"Development","content":"Node.js LTS"}','{"description":"nomacs is a free, open-source image viewer, which supports multiple platforms. You can use it for viewing all common image formats, including RAW and .psd images.","choco":"nomacs","id":"DblInstallNomacs","winget":"nomacs.nomacs","category":"Multimedia Tools","content":"nomacs"}','{"description":"Notepad++ is a free, open-source code editor and Notepad replacement with support for multiple languages.","choco":"notepadplusplus","id":"DblInstallNotepadplus","winget":"Notepad++.Notepad++","category":"Document","content":"Notepad"}','{"description":"Notepads is a modern, lightweight text editor for Windows.","choco":null,"id":"DblInstallNotepadsApp","winget":"JackieLiu.NotepadsApp","category":"Document","content":"Notepads"}','{"description":"Notion is an all-in-one workspace for notes, tasks, wikis, and databases.","choco":"notion","id":"DblInstallNotion","winget":"Notion.Notion","category":"Document","content":"Notion"}','{"description":"Integrate updates, drivers, automate Windows and application setup, speedup Windows deployment process and have it all set for the next time.","choco":"ntlite-free","id":"DblInstallNtlite","winget":"Nlitesoft.NTLite","category":"Microsoft Tools","content":"NTLite"}','{"description":"NTop is a network monitoring tool that provides real-time traffic analysis.","choco":"ntop","id":"DblInstallNTop","winget":"gsass1.NTop","category":"Utilities","content":"NTop"}','{"description":"NuGet is a package manager for the .NET framework, enabling developers to manage and share libraries in their .NET applications.","choco":"nuget.commandline","id":"DblInstallNuget","winget":"Microsoft.NuGet","category":"Microsoft Tools","content":"NuGet"}','{"description":"NVCleanstall is a tool designed to customize NVIDIA driver installations, allowing advanced users to control more aspects of the installation process.","choco":null,"id":"DblInstallNvclean","winget":"TechPowerUp.NVCleanstall","category":"Utilities","content":"NVCleanstall"}','{"description":"GeForce NOW is a cloud gaming service that allows you to play high-quality PC games on your device.","choco":"nvidia-geforce-now","id":"DblInstallGeforcenow","winget":"Nvidia.GeforceNOW","category":"Gaming Launchers","content":"NVIDIA GeForce NOW"}','{"description":"OBS Studio is a free and open-source software for video recording and live streaming. It supports real-time video/audio capturing and mixing, making it popular among content creators.","choco":"obs-studio","id":"DblInstallObs","winget":"OBSProject.OBSStudio","category":"Multimedia Tools","content":"OBS Studio"}','{"description":"Obsidian is a powerful note-taking and knowledge management application.","choco":"obsidian","id":"DblInstallObsidian","winget":"Obsidian.Obsidian","category":"Document","content":"Obsidian"}','{"description":"GUI Tool to remove ads from various places around Windows 11","choco":"ofgb","id":"DblInstallOfgbohfrickgoback","winget":"xM4ddy.OFGB","category":"Utilities","content":"OFGB (Oh Frick Go Back)"}','{"description":"Oh My Posh is a cross-platform prompt theme engine for any shell.","choco":"oh-my-posh","id":"DblInstallOhmyposh","winget":"JanDeDobbeleer.OhMyPosh","category":"Development","content":"Oh My Posh (Prompt)"}','{"description":"Okular is a versatile document viewer with advanced features.","choco":"okular","id":"DblInstallOkular","winget":"KDE.Okular","category":"Document","content":"Okular"}','{"description":"OneDrive is a cloud storage service provided by Microsoft, allowing users to store and share files securely across devices.","choco":"onedrive","id":"DblInstallOnedrive","winget":"Microsoft.OneDrive","category":"Microsoft Tools","content":"OneDrive"}','{"description":"ONLYOFFICE Desktop is a comprehensive office suite for document editing and collaboration.","choco":"onlyoffice","id":"DblInstallOnlyoffice","winget":"ONLYOFFICE.DesktopEditors","category":"Document","content":"OnlyOffice Desktop"}','{"description":"A full-fledged autoclicker with two modes of autoclicking, at your dynamic cursor location or at a prespecified location.","choco":"autoclicker","id":"DblInstallOpautoclicker","winget":"OPAutoClicker.OPAutoClicker","category":"Utilities","content":"OPAutoClicker"}','{"description":"OpenRGB is an open-source RGB lighting control software designed to manage and control RGB lighting for various components and peripherals.","choco":"openrgb","id":"DblInstallOpenrgb","winget":"CalcProgrammer1.OpenRGB","category":"Utilities","content":"OpenRGB"}','{"description":"OpenVPN Connect is a VPN client that allows you to connect securely to a VPN server. It provides a secure and encrypted connection for protecting your online privacy.","choco":"openvpn-connect","id":"DblInstallOpenvpnconnect","winget":"OpenVPNTechnologies.OpenVPNConnect","category":"Pro Tools","content":"OpenVPN Connect"}','{"description":"Popular platform for game overlays and companion apps (mod managers, trackers, etc.), widely used by gamers.","choco":"overwolf","id":"DblInstallOverwolf","winget":"Overwolf.CurseForge","category":"Games","content":"Overwolf"}','{"description":"Paint.NET is a free image and photo editing software for Windows. It features an intuitive user interface and supports a wide range of powerful editing tools.","choco":"paint.net","id":"DblInstallPaintnet","winget":"dotPDN.PaintDotNet","category":"Multimedia Tools","content":"Paint.NET"}','{"description":"Parsec is a low-latency, high-quality remote desktop sharing application for collaborating and gaming across devices.","choco":"parsec","id":"DblInstallParsec","winget":"Parsec.Parsec","category":"Utilities","content":"Parsec"}','{"description":"A comprehensive Windows-based software suite and editor for creating, viewing, editing, annotating, and signing PDF files.","choco":"pdfxchangeeditor","id":"DblInstallPdfxchangeeditor","winget":"TrackerSoftware.PDF-XChangeEditor","category":"Document","content":"PDF-XChange Editor"}','{"description":"Free and easy-to-use online/desktop PDF tools that make you more productive","choco":"pdf24","id":"DblInstallPdf24creator","winget":"geeksoftwareGmbH.PDF24Creator","category":"Document","content":"PDF24 Creator"}','{"description":"PDFgear is a piece of full-featured PDF management software for Windows, macOS, and mobile, and its completely free to use.","choco":"pdfgear","id":"DblInstallPdfgear","winget":"PDFgear.PDFgear","category":"Document","content":"PDFgear"}','{"description":"PDFsam Basic is a free and open-source tool for splitting, merging, and rotating PDF files.","choco":"pdfsam","id":"DblInstallPdfsambasic","winget":"PDFsam.PDFsam","category":"Document","content":"PDFsam Basic"}','{"description":"PeaZip is a free, open-source file archiver utility that supports multiple archive formats and provides encryption features.","choco":"peazip","id":"DblInstallPeazip","winget":"Giorgiotani.Peazip","category":"Utilities","content":"PeaZip"}','{"description":"Playnite is an open-source video game library manager with one simple goal: To provide a unified interface for all of your games.","choco":"playnite","id":"DblInstallPlaynite","winget":"Playnite.Playnite","category":"Gaming Launchers","content":"Playnite"}','{"description":"Plex Desktop for Windows is the front end for Plex Media Server.","choco":"plex","id":"DblInstallPlex","winget":"Plex.Plex","category":"Multimedia Tools","content":"Plex Desktop"}','{"description":"Plex Media Server is a media server software that allows you to organize and stream your media library. It supports various media formats and offers a wide range of features.","choco":"plexmediaserver","id":"DblInstallPlexServer","winget":"Plex.PlexMediaServer","category":"Multimedia Tools","content":"Plex Media Server"}','{"description":"pnpm is a fast and disk space efficient package manager for JavaScript and Node.js applications.","choco":"pnpm","id":"DblInstallPnpm","winget":"pnpm.pnpm","category":"Development","content":"pnpm"}','{"description":"Podman is a daemonless container engine for developing, managing, and running containers.","choco":null,"id":"DblInstallPodman","winget":"RedHat.Podman","category":"Development","content":"Podman"}','{"description":"Local Group Policy Editor plus more, for all Windows editions.","choco":null,"id":"DblInstallPolicyplus","winget":"Fleex255.PolicyPlus","category":"Utilities","content":"Policy Plus"}','{"description":"Postbox is a powerful email client for professionals and enthusiasts.","choco":null,"id":"DblInstallPostbox","winget":"Postbox.Postbox","category":"Utilities","content":"Postbox"}','{"description":"Postman is an API platform and desktop client for designing, testing, documenting, and collaborating on APIs.","choco":"postman","id":"DblInstallPostman","winget":"Postman.Postman","category":"Development","content":"Postman"}','{"description":"PowerShell is a task automation framework and scripting language designed for system administrators, offering powerful command-line capabilities.","choco":"powershell-core","id":"DblInstallPowershell","winget":"Microsoft.PowerShell","category":"Microsoft Tools","content":"PowerShell"}','{"description":"PowerToys is a set of utilities for power users to enhance productivity, featuring tools like FancyZones, PowerRename, and more.","choco":"powertoys","id":"DblInstallPowertoys","winget":"Microsoft.PowerToys","category":"Microsoft Tools","content":"PowerToys"}','{"description":"Prism Launcher is an open-source Minecraft launcher with the ability to manage multiple instances, accounts, and mods.","choco":"prismlauncher","id":"DblInstallPrism","winget":"PrismLauncher.PrismLauncher","category":"Gaming Launchers","content":"Prism Launcher"}','{"description":"Process Explorer is a task manager and system monitor.","choco":"procexp","id":"DblInstallProcessExplorer","winget":"Microsoft.Sysinternals.ProcessExplorer","category":"Microsoft Tools","content":"Process Explorer"}','{"description":"Process Lasso is a system optimization and automation tool that improves system responsiveness and stability by adjusting process priorities and CPU affinities.","choco":"processlasso","id":"DblInstallProcesslasso","winget":"BitSum.ProcessLasso","category":"Utilities","content":"Process Lasso"}','{"description":"SysInternals Process Monitor is an advanced monitoring tool that shows real-time file system, registry, and process/thread activity.","choco":"procexp","id":"DblInstallProcessmonitor","winget":"Microsoft.Sysinternals.ProcessMonitor","category":"Microsoft Tools","content":"Process Monitor"}','{"description":"2FA app from Proton to securely sync and backup 2FA codes.","choco":"protonauth","id":"DblInstallProtonauthenticator","winget":"Proton.ProtonAuthenticator","category":"Utilities","content":"Proton Authenticator"}','{"description":"Proton Drive is an end-to-end encrypted Swiss vault for your files that protects your data.","choco":"protondrive","id":"DblInstallProtondrive","winget":"Proton.ProtonDrive","category":"Utilities","content":"Proton Drive"}','{"description":"Proton Mail is an end-to-end encrypted email service by Proton, protecting your privacy with zero-access encryption.","choco":"protonmail","id":"DblInstallProtonmail","winget":"Proton.ProtonMail","category":"Communications","content":"Proton Mail"}','{"description":"Proton Pass is a cloud-based password manager with end-to-end encryption and unique email aliases.","choco":"protonpass","id":"DblInstallProtonpass","winget":"Proton.ProtonPass","category":"Utilities","content":"Proton Pass"}','{"description":"Proton VPN is a no-logs VPN service that protects your privacy online with features like Secure Core and Tor over VPN.","choco":"protonvpn","id":"DblInstallProtonvpn","winget":"Proton.ProtonVPN","category":"Pro Tools","content":"Proton VPN"}','{"description":"Proxyman is a native, high-performance macOS proxy server app for capturing and inspecting HTTP/HTTPS traffic.","choco":"proxyman","id":"DblInstallProxyman","winget":"ProxymanLLC.Proxyman","category":"Utilities","content":"Proxyman"}','{"description":"PuTTY is a free and open-source terminal emulator, serial console, and network file transfer application. It supports various network protocols such as SSH, Telnet, and SCP.","choco":"putty","id":"DblInstallPutty","winget":"PuTTY.PuTTY","category":"Pro Tools","content":"PuTTY"}','{"description":"Python is a versatile programming language used for web development, data analysis, artificial intelligence, and more.","choco":"python","id":"DblInstallPython3","winget":"Python.Python.3.14","category":"Development","content":"Python3"}','{"description":"qBittorrent is a free and open-source BitTorrent client that aims to provide a feature-rich and lightweight alternative to other torrent clients.","choco":"qbittorrent","id":"DblInstallQbittorrent","winget":"qBittorrent.qBittorrent","category":"Utilities","content":"qBittorrent"}','{"description":"QOwnNotes is a free open-source note-taking app with Nextcloud/ownCloud integration.","choco":"qownnotes","id":"DblInstallQownnotes","winget":"pbek.QOwnNotes","category":"Document","content":"QOwnNotes"}','{"description":"QTox is a free and open-source messaging app that prioritizes user privacy and security in its design.","choco":"qtox","id":"DblInstallQtox","winget":"Tox.qTox","category":"Communications","content":"QTox"}','{"description":"Rclone is a command-line program to manage files on cloud storage.","choco":"rclone","id":"DblInstallRclone","winget":"Rclone.Rclone","category":"Utilities","content":"Rclone"}','{"description":"RDCMan manages multiple remote desktop connections. It is useful for managing server labs where you need regular access to each machine such as automated checkin systems and data centers.","choco":"rdcman","id":"DblInstallRdcman","winget":"Microsoft.Sysinternals.RDCMan","category":"Microsoft Tools","content":"RDCMan"}','{"description":"Revo Uninstaller is an advanced uninstaller tool that helps you remove unwanted software and clean up your system.","choco":"revo-uninstaller","id":"DblInstallRevo","winget":"RevoUninstaller.RevoUninstaller","category":"Utilities","content":"Revo Uninstaller"}','{"description":"Roblox is a platform and game creation system that allows users to create and play games developed by the community.","choco":null,"id":"DblInstallRoblox","winget":"Roblox.Roblox","category":"Games","content":"Roblox"}','{"description":"A Ruby language execution environment with a MSYS2 installation.","choco":"ruby","id":"DblInstallRuby","winget":"RubyInstallerTeam.Ruby.4.0","category":"Development","content":"Ruby"}','{"description":"Rufus is a utility that helps format and create bootable USB drives, such as USB keys or pen drives.","choco":"rufus","id":"DblInstallRufus","winget":"Rufus.Rufus","category":"Utilities","content":"Rufus"}','{"description":"Rust is a programming language designed for safety and performance, particularly focused on systems programming.","choco":"rust","id":"DblInstallRust","winget":"Rustlang.Rust.MSVC","category":"Development","content":"Rust"}','{"description":"ShareX is a free and open-source screen capture and file sharing tool. It supports various capture methods and offers advanced features for editing and sharing screenshots.","choco":"sharex","id":"DblInstallSharex","winget":"ShareX.ShareX","category":"Multimedia Tools","content":"ShareX (Screenshots)"}','{"description":"SideQuest is a platform for discovering and managing VR apps for standalone headsets.","choco":null,"id":"DblInstallSideQuest","winget":"SideQuestVR.SideQuest","category":"Gaming Launchers","content":"SideQuestVR"}','{"description":"Signal is a privacy-focused messaging app that offers end-to-end encryption for secure and private communication.","choco":"signal","id":"DblInstallSignal","winget":"OpenWhisperSystems.Signal","category":"Communications","content":"Signal"}','{"description":"SignalRGB lets you control and sync your favorite RGB devices with one free application.","choco":null,"id":"DblInstallSignalrgb","winget":"WhirlwindFX.SignalRgb","category":"Utilities","content":"SignalRGB"}','{"description":"Simplenote is an easy way to keep notes, lists, ideas and more.","choco":"simplenote","id":"DblInstallSimplenote","winget":"Automattic.Simplenote","category":"Document","content":"Simplenote"}','{"description":"Simplewall is a free and open-source firewall application for Windows. It allows users to control and manage the inbound and outbound network traffic of applications.","choco":"simplewall","id":"DblInstallSimplewall","winget":"Henry++.simplewall","category":"Pro Tools","content":"Simplewall"}','{"description":"Slack is a collaboration hub that connects teams and facilitates communication through channels, messaging, and file sharing.","choco":"slack","id":"DblInstallSlack","winget":"SlackTechnologies.Slack","category":"Communications","content":"Slack"}','{"description":"Snappy Driver Installer Origin is a free and open-source driver updater with a vast driver database for Windows.","choco":"sdio","id":"DblInstallSnappydriverinstallerorigin","winget":"GlennDelahoy.SnappyDriverInstallerOrigin","category":"Utilities","content":"Snappy Driver Installer Origin"}','{"description":"Speedtest by Ookla is a tool for measuring internet connection speed.","choco":null,"id":"DblInstallSpeedtest","winget":"Ookla.Speedtest.Desktop","category":"Utilities","content":"Speedtest by Ookla"}','{"description":"Spotify is a digital music service that gives you access to millions of songs.","choco":"spotify","id":"DblInstallSpotify","winget":"9NCBCSZSJRSB","category":"Multimedia Tools","content":"Spotify"}','{"description":"SQL Server 2022 Developer is a free edition of Microsoft SQL Server for development.","choco":null,"id":"DblInstallSQLServer2022","winget":"Microsoft.SQLServer.2022.Developer","category":"Development","content":"SQL Server 2022 Developer"}','{"description":"SQLite is a lightweight, file-based SQL database engine.","choco":null,"id":"DblInstallSQLite","winget":"DBBrowserForSQLite.DBBrowserForSQLite","category":"Development","content":"SQLite"}','{"description":"Starship is a fast, customizable, cross-platform prompt for PowerShell and other shells.","choco":"starship","id":"DblInstallStarshipshellprompt","winget":"Starship.Starship","category":"Development","content":"Starship (Shell Prompt)"}','{"description":"StartAllBack restores and improves Windows taskbar, Start menu, File Explorer, and shell UI behavior.","choco":"StartAllBack","id":"DblInstallStartallback","winget":"StartIsBack.StartAllBack","category":"Utilities","content":"StartAllBack"}','{"description":"Steam is a digital distribution platform for purchasing and playing video games, offering multiplayer gaming, video streaming, and more.","choco":"steam","id":"DblInstallSteam","winget":"Valve.Steam","category":"Gaming Launchers","content":"Steam"}','{"description":"Sublime Text is a sophisticated text editor for code, markup, and prose.","choco":"sublimetext4","id":"DblInstallSublimetext","winget":"SublimeHQ.SublimeText.4","category":"Development","content":"Sublime Text"}','{"description":"Sumatra PDF is a lightweight and fast PDF viewer with minimalistic design.","choco":"sumatrapdf","id":"DblInstallSumatra","winget":"SumatraPDF.SumatraPDF","category":"Document","content":"Sumatra PDF"}','{"description":"Sunshine is a GameStream server that allows you to remotely play PC games on Android devices, offering low-latency streaming.","choco":"sunshine","id":"DblInstallSunshine","winget":"LizardByte.Sunshine","category":"Gaming Launchers","content":"Sunshine Stream Server"}','{"description":"A free, powerful, multi-purpose tool that helps you monitor system resources, debug software and detect malware.","choco":"systeminformer","id":"DblInstallSysteminformer","winget":"WinsiderSS.SystemInformer","category":"Development","content":"System Informer"}','{"description":"The Tailscale client allows you to connect all your devices using WireGuardÂ®, without the hassle. Tailscale makes it as easy as installing an app and signing in.","choco":"tailscale","id":"DblInstallTailscale","winget":"Tailscale.Tailscale","category":"Utilities","content":"Tailscale"}','{"description":"SysInternals TCPView is a network monitoring tool that displays a detailed list of all TCP and UDP endpoints on your system.","choco":"tcpview","id":"DblInstallTcpview","winget":"Microsoft.Sysinternals.TCPView","category":"Microsoft Tools","content":"TCPView"}','{"description":"TEAMSPEAK. YOUR TEAM. YOUR RULES. Use crystal clear sound to communicate with your teammates cross-platform with military-grade security, lag-free performance & unparalleled reliability and uptime.","choco":"teamspeak","id":"DblInstallTeamspeak3","winget":"TeamSpeakSystems.TeamSpeakClient","category":"Communications","content":"TeamSpeak 3"}','{"description":"TEAMSPEAK. YOUR TEAM. YOUR RULES. Use crystal clear sound to communicate with your teammates cross-platform with military-grade security, lag-free performance & unparalleled reliability and uptime.","choco":null,"id":"DblInstallTeamspeak6","winget":"TeamSpeakSystems.TeamSpeakClient.Beta.6","category":"Communications","content":"TeamSpeak 6"}','{"description":"TeamViewer is a popular remote access and support software that allows you to connect to and control remote devices.","choco":"teamviewer9","id":"DblInstallTeamviewer","winget":"TeamViewer.TeamViewer","category":"Utilities","content":"TeamViewer"}','{"description":"Telegram is a cloud-based instant messaging app known for its security features, speed, and simplicity.","choco":"telegram","id":"DblInstallTelegram","winget":"Telegram.TelegramDesktop","category":"Communications","content":"Telegram"}','{"description":"Thorium is a privacy-focused browser based on Chromium.","choco":"thorium","id":"DblInstallThorium","winget":"Alex313031.Thorium","category":"Browsers","content":"Thorium"}','{"description":"Thorium AVX2 is a performance-optimized build of the Thorium browser.","choco":null,"id":"DblInstallThoriumAVX","winget":"Alex313031.Thorium.AVX2","category":"Browsers","content":"Thorium AVX2"}','{"description":"Mozilla Thunderbird is a free and open-source email client, news client, and chat client with advanced features.","choco":"thunderbird","id":"DblInstallThunderbird","winget":"Mozilla.Thunderbird","category":"Utilities","content":"Thunderbird"}','{"description":"TightVNC is a free and open-source remote desktop software that lets you access and control a computer over the network. With its intuitive interface, you can interact with the remote screen as if you were sitting in front of it. You can open files, launch applications, and perform other actions on the remote desktop almost as if you were physically there.","choco":"TightVNC","id":"DblInstallTightvnc","winget":"GlavSoft.TightVNC","category":"Utilities","content":"TightVNC"}','{"description":"Tor Browser is designed for anonymous web browsing, utilizing the Tor network to protect user privacy and security.","choco":"tor-browser","id":"DblInstallTor","winget":"TorProject.TorBrowser","category":"Browsers","content":"Tor Browser"}','{"description":"Total Commander is a file manager for Windows that provides a powerful and intuitive interface for file management.","choco":"TotalCommander","id":"DblInstallTotalcommander","winget":"Ghisler.TotalCommander","category":"Utilities","content":"Total Commander"}','{"description":"TranslucentTB is a tool that allows you to customize the transparency of the Windows Taskbar.","choco":"translucenttb","id":"DblInstallTranslucenttb","winget":"CharlesMilette.TranslucentTB","category":"Utilities","content":"TranslucentTB"}','{"description":"TreeSize Free is a disk space manager that helps you analyze and visualize the space usage on your drives.","choco":"treesizefree","id":"DblInstallTreesizefree","winget":"JAMSoftware.TreeSize.Free","category":"Utilities","content":"TreeSize Free"}','{"description":"TranslucentTB allows you to customize the transparency and appearance of the Windows taskbar.","choco":"translucent-taskbar","id":"DblInstallTtaskbar","winget":"9PF4KZ2VN4W9","category":"Utilities","content":"Ttaskbar"}','{"description":"Ubisoft Connect is Ubisofts digital distribution and online gaming service, providing access to Ubisofts games and services.","choco":null,"id":"DblInstallUbisoft","winget":"Ubisoft.Connect","category":"Gaming Launchers","content":"Ubisoft Connect"}','{"description":"Ungoogled Chromium is a version of Chromium without Googles integration for enhanced privacy and control.","choco":"ungoogled-chromium","id":"DblInstallUngoogled","winget":"eloston.ungoogled-chromium","category":"Browsers","content":"Ungoogled Chromium"}','{"description":"UniGetUI is a GUI for WinGet, Chocolatey, and other Windows CLI package managers.","choco":"wingetui","id":"DblInstallUnigetui","winget":"Devolutions.UniGetUI","category":"Utilities","content":"UniGetUI"}','{"description":"Unity is a powerful game development platform for creating 2D, 3D, augmented reality, and virtual reality games.","choco":"unityhub","id":"DblInstallUnity","winget":"Unity.UnityHub","category":"Development","content":"Unity Game Engine"}','{"description":"uv is a fast Python package and project manager written in Rust.","choco":"uv","id":"DblInstallUv","winget":"astral-sh.uv","category":"Development","content":"uv"}','{"description":"Vagrant builds and manages reproducible virtual machine development environments from declarative configuration.","choco":"vagrant","id":"DblInstallVagrant","winget":"Hashicorp.Vagrant","category":"Development","content":"Vagrant"}','{"description":"Ventoy is an open-source tool for creating bootable USB drives. It supports multiple ISO files on a single USB drive, making it a versatile solution for installing operating systems.","choco":"ventoy","id":"DblInstallVentoy","winget":"Ventoy.Ventoy","category":"Pro Tools","content":"Ventoy"}','{"description":"A cross-platform electron-based desktop app aiming to give you a snappier Discord experience with Vencord pre-installed.","choco":null,"id":"DblInstallVesktop","winget":"Vencord.Vesktop","category":"Communications","content":"Vesktop"}','{"description":"Viber is a free messaging and calling app with features like group chats, video calls, and more.","choco":"viber","id":"DblInstallViber","winget":"Viber.Viber","category":"Communications","content":"Viber"}','{"description":"Virtual Desktop Streamer is a tool that allows you to stream your desktop screen to VR devices.","choco":null,"id":"DblInstallVirtualdesktopstreamer","winget":"VirtualDesktop.Streamer","category":"Games","content":"Virtual Desktop Streamer"}','{"description":"Oracle VirtualBox is a powerful and free open-source virtualization tool for x86 and AMD64/Intel64 architectures.","choco":"virtualbox","id":"DblInstallOVirtualBox","winget":"Oracle.VirtualBox","category":"Utilities","content":"VirtualBox"}','{"description":"Visual C++ 2015-2022 32-bit redistributable package installs runtime components of Visual C++ libraries required to run 32-bit applications.","choco":"vcredist2015","id":"DblInstallvc2015_32","winget":"Microsoft.VCRedist.2015+.x86","category":"Microsoft Tools","content":"Visual C++ 2015-2022 32-bit"}','{"description":"Visual C++ 2015-2022 64-bit redistributable package installs runtime components of Visual C++ libraries required to run 64-bit applications.","choco":"vcredist2015","id":"DblInstallvc2015_64","winget":"Microsoft.VCRedist.2015+.x64","category":"Microsoft Tools","content":"Visual C++ 2015-2022 64-bit"}','{"description":"Visual Studio 2022 is an integrated development environment (IDE) for building, debugging, and deploying applications.","choco":"visualstudio2022community","id":"DblInstallVisualstudio2022","winget":"Microsoft.VisualStudio.2022.Community","category":"Development","content":"Visual Studio 2022"}','{"description":"Visual Studio 2026 is an integrated development environment (IDE) for building, debugging, and deploying applications.","choco":"visualstudio2026community","id":"DblInstallVisualstudio2026","winget":"Microsoft.VisualStudio.Community","category":"Development","content":"Visual Studio 2026"}','{"description":"Visual Studio Code is a free, open-source code editor with support for multiple programming languages.","choco":"vscode","id":"DblInstallCode","winget":"Microsoft.VisualStudioCode","category":"Development","content":"VS Code"}','{"description":"Vivaldi is a highly customizable web browser with a focus on user personalization and productivity features.","choco":"vivaldi","id":"DblInstallVivaldi","winget":"VivaldiTechnologies.Vivaldi","category":"Browsers","content":"Vivaldi"}','{"description":"VLC Media Player is a free and open-source multimedia player that supports a wide range of audio and video formats. It is known for its versatility and cross-platform compatibility.","choco":"vlc","id":"DblInstallVlc","winget":"VideoLAN.VLC","category":"Multimedia Tools","content":"VLC Media Player"}','{"description":"VP9 Video Extensions provides support for the VP9 video codec in Windows.","choco":null,"id":"DblInstallVP9","winget":"9N4D0MSMP0PT","category":"Multimedia Tools","content":"VP9 Video Extensions"}','{"description":"VSCodium is a community-driven, freely-licensed binary distribution of Microsofts VS Code.","choco":"vscodium","id":"DblInstallVscodium","winget":"VSCodium.VSCodium","category":"Development","content":"VS Codium"}','{"description":"Wargaming Game Center is a launcher for Wargaming.net games.","choco":null,"id":"DblInstallWargaming","winget":"Wargaming.GameCenter","category":"Gaming Launchers","content":"Wargaming Game Center"}','{"description":"Waterfox is a fast, privacy-focused web browser based on Firefox, designed to preserve user choice and privacy.","choco":"waterfox","id":"DblInstallWaterfox","winget":"Waterfox.Waterfox","category":"Browsers","content":"Waterfox"}','{"description":"WhatsApp Desktop is the official Windows desktop messaging app from Meta, distributed through the Microsoft Store.","choco":null,"id":"DblInstallWhatsappdesktop","winget":"msstore:9NKSQGP7F2NH","category":"Communications","content":"WhatsApp Desktop"}','{"description":"Windows Terminal is a modern, fast, and efficient terminal application for command-line users, supporting multiple tabs, panes, and more.","choco":"microsoft-windows-terminal","id":"DblInstallTerminal","winget":"Microsoft.WindowsTerminal","category":"Microsoft Tools","content":"Windows Terminal"}','{"description":"WingetUI is a GUI for managing packages with WinGet, Chocolatey, and other package managers.","choco":"wingetui","id":"DblInstallWingetUI","winget":"Devolutions.UniGetUI","category":"Utilities","content":"UniGetUI"}','{"description":"WinMerge is a free and open-source file comparison and merging tool.","choco":"winmerge","id":"DblInstallWinmerge","winget":"WinMerge.WinMerge","category":"Document","content":"WinMerge"}','{"description":"WinRAR is a powerful archive manager that allows you to create, manage, and extract compressed files.","choco":"winrar","id":"DblInstallWinrar","winget":"RARLab.WinRAR","category":"Utilities","content":"WinRAR"}','{"description":"WinSCP is a popular open-source SFTP, FTP, and SCP client for Windows. It allows secure file transfers between a local and a remote computer.","choco":"winscp","id":"DblInstallWinscp","winget":"WinSCP.WinSCP","category":"Pro Tools","content":"WinSCP"}','{"description":"WireGuard is a fast and modern VPN (Virtual Private Network) protocol. It aims to be simpler and more efficient than other VPN protocols, providing secure and reliable connections.","choco":"wireguard","id":"DblInstallWireguard","winget":"WireGuard.WireGuard","category":"Pro Tools","content":"WireGuard"}','{"description":"Wireshark is a widely-used open-source network protocol analyzer. It allows users to capture and analyze network traffic in real-time, providing detailed insights into network activities.","choco":"wireshark","id":"DblInstallWireshark","winget":"WiresharkFoundation.Wireshark","category":"Pro Tools","content":"Wireshark"}','{"description":"Wise Program Uninstaller is the perfect solution for uninstalling Windows programs, allowing you to uninstall applications quickly and completely using its simple and user-friendly interface.","choco":null,"id":"DblInstallWiseprogramuninstallerwisecleaner","winget":"WiseCleaner.WiseProgramUninstaller","category":"Utilities","content":"WiseCleaner Uninstaller"}','{"description":"WizTree is a fast disk space analyzer that helps you quickly find the files and folders consuming the most space on your hard drive.","choco":"wiztree","id":"DblInstallWiztree","winget":"AntibodySoftware.WizTree","category":"Utilities","content":"WizTree"}','{"description":"WPS Office is a free office suite with word processing, spreadsheets, and presentations.","choco":null,"id":"DblInstallWPS","winget":"Kingsoft.WPSOffice","category":"Document","content":"WPS Office"}','{"description":"XEMU is an open-source emulator for the original Microsoft Xbox console.","choco":null,"id":"DblInstallXemu","winget":"xemu-project.xemu","category":"Gaming Launchers","content":"XEMU"}','{"description":"Xournal++ is an open-source handwriting notetaking software with PDF annotation capabilities.","choco":"xournalplusplus","id":"DblInstallXournal","winget":"Xournal++.Xournal++","category":"Document","content":"Xournal++"}','{"description":"Yarn is a fast, reliable, and secure dependency management tool for JavaScript projects.","choco":"yarn","id":"DblInstallYarn","winget":"Yarn.Yarn","category":"Development","content":"Yarn"}','{"description":"yt-dlp is a command-line program for downloading videos from YouTube and other sites.","choco":"yt-dlp","id":"DblInstallYtdlp","winget":"yt-dlp.yt-dlp","category":"Multimedia Tools","content":"yt-dlp"}','{"description":"Zed is a modern, high-performance code editor designed from the ground up for speed and collaboration.","choco":"zed","id":"DblInstallZed","winget":"ZedIndustries.Zed","category":"Development","content":"Zed"}','{"description":"The modern, privacy-focused, performance-driven browser built on Firefox.","choco":"zen-browser","id":"DblInstallZenbrowser","winget":"Zen-Team.Zen-Browser","category":"Browsers","content":"Zen Browser"}','{"description":"Zoom is a popular video conferencing and web conferencing service for online meetings, webinars, and collaborative projects.","choco":"zoom","id":"DblInstallZoom","winget":"Zoom.Zoom","category":"Communications","content":"Zoom"}','{"description":"Zotero is a free, easy-to-use tool to help you collect, organize, cite, and share your research materials.","choco":"zotero","id":"DblInstallZotero","winget":"DigitalScholar.Zotero","category":"Document","content":"Zotero"}')
+$appx = @('{"id":"MicrosoftCorporationIIQuickAssist","name":"MicrosoftCorporationII.QuickAssist"}','{"id":"ClipchampClipchamp","name":"Clipchamp.Clipchamp"}','{"id":"MicrosoftOutlookForWindows","name":"Microsoft.OutlookForWindows"}','{"id":"MicrosoftPowerAutomateDesktop","name":"Microsoft.PowerAutomateDesktop"}','{"id":"MicrosoftTodos","name":"Microsoft.Todos"}','{"id":"MicrosoftAppConnector","name":"Microsoft.AppConnector"}','{"id":"MicrosoftBingFinance","name":"Microsoft.BingFinance"}','{"id":"MicrosoftBingNews","name":"Microsoft.BingNews"}','{"id":"MicrosoftBingSports","name":"Microsoft.BingSports"}','{"id":"MicrosoftBingTranslator","name":"Microsoft.BingTranslator"}','{"id":"MicrosoftBingWeather","name":"Microsoft.BingWeather"}','{"id":"MicrosoftBingFoodAndDrink","name":"Microsoft.BingFoodAndDrink"}','{"id":"MicrosoftBingHealthAndFitness","name":"Microsoft.BingHealthAndFitness"}','{"id":"MicrosoftBingTravel","name":"Microsoft.BingTravel"}','{"id":"MicrosoftMinecraftUWP","name":"Microsoft.MinecraftUWP"}','{"id":"MicrosoftGamingServices","name":"Microsoft.GamingServices"}','{"id":"MicrosoftGetHelp","name":"Microsoft.GetHelp"}','{"id":"MicrosoftGetstarted","name":"Microsoft.Getstarted"}','{"id":"MicrosoftMessaging","name":"Microsoft.Messaging"}','{"id":"MicrosoftMicrosoft3DViewer","name":"Microsoft.Microsoft3DViewer"}','{"id":"MicrosoftMicrosoftSolitaireCollection","name":"Microsoft.MicrosoftSolitaireCollection"}','{"id":"MicrosoftNetworkSpeedTest","name":"Microsoft.NetworkSpeedTest"}','{"id":"MicrosoftNews","name":"Microsoft.News"}','{"id":"MicrosoftOfficeLens","name":"Microsoft.Office.Lens"}','{"id":"MicrosoftOfficeSway","name":"Microsoft.Office.Sway"}','{"id":"MicrosoftOfficeOneNote","name":"Microsoft.Office.OneNote"}','{"id":"MicrosoftOneConnect","name":"Microsoft.OneConnect"}','{"id":"MicrosoftPeople","name":"Microsoft.People"}','{"id":"MicrosoftPrint3D","name":"Microsoft.Print3D"}','{"id":"MicrosoftSkypeApp","name":"Microsoft.SkypeApp"}','{"id":"MicrosoftWallet","name":"Microsoft.Wallet"}','{"id":"MicrosoftWhiteboard","name":"Microsoft.Whiteboard"}','{"id":"MicrosoftWindowsAlarms","name":"Microsoft.WindowsAlarms"}','{"id":"microsoftwindowscommunicationsapps","name":"microsoft.windowscommunicationsapps"}','{"id":"MicrosoftWindowsFeedbackHub","name":"Microsoft.WindowsFeedbackHub"}','{"id":"MicrosoftWindowsMaps","name":"Microsoft.WindowsMaps"}','{"id":"MicrosoftWindowsPhone","name":"Microsoft.WindowsPhone"}','{"id":"MicrosoftWindowsSoundRecorder","name":"Microsoft.WindowsSoundRecorder"}','{"id":"MicrosoftXboxApp","name":"Microsoft.XboxApp"}','{"id":"MicrosoftGamingApp","name":"Microsoft.GamingApp"}','{"id":"MicrosoftConnectivityStore","name":"Microsoft.ConnectivityStore"}','{"id":"MicrosoftCommsPhone","name":"Microsoft.CommsPhone"}','{"id":"MicrosoftScreenSketch","name":"Microsoft.ScreenSketch"}','{"id":"MicrosoftXboxTCUI","name":"Microsoft.Xbox.TCUI"}','{"id":"MicrosoftXboxGameOverlay","name":"Microsoft.XboxGameOverlay"}','{"id":"MicrosoftXboxGamingOverlay","name":"Microsoft.XboxGamingOverlay"}','{"id":"MicrosoftXboxGameCallableUI","name":"Microsoft.XboxGameCallableUI"}','{"id":"MicrosoftXboxSpeechToTextOverlay","name":"Microsoft.XboxSpeechToTextOverlay"}','{"id":"MicrosoftXboxIdentityProvider","name":"Microsoft.XboxIdentityProvider"}','{"id":"MicrosoftMixedRealityPortal","name":"Microsoft.MixedReality.Portal"}','{"id":"MicrosoftYourPhone","name":"Microsoft.YourPhone"}','{"id":"MicrosoftZuneMusic","name":"Microsoft.ZuneMusic"}','{"id":"MicrosoftZuneVideo","name":"Microsoft.ZuneVideo"}','{"id":"MicrosoftGetstarted","name":"Microsoft.Getstarted"}','{"id":"MicrosoftFamily","name":"Microsoft.Family"}','{"id":"MicrosoftMicrosoftOfficeHub","name":"Microsoft.MicrosoftOfficeHub"}','{"id":"MicrosoftMicrosoftStickyNotes","name":"Microsoft.MicrosoftStickyNotes"}','{"id":"EclipseManager","name":"*EclipseManager*"}','{"id":"ActiproSoftwareLLC","name":"*ActiproSoftwareLLC*"}','{"id":"AdobePhotoshopExpress","name":"*AdobeSystemsIncorporated.AdobePhotoshopExpress*"}','{"id":"DuolingoLearnLanguagesforFree","name":"*Duolingo-LearnLanguagesforFree*"}','{"id":"PandoraMediaInc","name":"*PandoraMediaInc*"}','{"id":"CandyCrush","name":"*CandyCrush*"}','{"id":"BubbleWitch3Saga","name":"*BubbleWitch3Saga*"}','{"id":"Wunderlist","name":"*Wunderlist*"}','{"id":"Flipboard","name":"*Flipboard*"}','{"id":"Twitter","name":"*Twitter*"}','{"id":"Facebook","name":"*Facebook*"}','{"id":"RoyalRevolt","name":"*Royal Revolt*"}','{"id":"Sway","name":"*Sway*"}','{"id":"SpeedTest","name":"*Speed Test*"}','{"id":"Dolby","name":"*Dolby*"}','{"id":"Viber","name":"*Viber*"}','{"id":"ACGMediaPlayer","name":"*ACGMediaPlayer*"}','{"id":"Netflix","name":"*Netflix*"}','{"id":"OneCalendar","name":"*OneCalendar*"}','{"id":"LinkedInforWindows","name":"*LinkedInforWindows*"}','{"id":"HiddenCityMysteryofShadows","name":"*HiddenCityMysteryofShadows*"}','{"id":"Hulu","name":"*Hulu*"}','{"id":"HiddenCity","name":"*HiddenCity*"}','{"id":"AdobePhotoshopExpress","name":"*AdobePhotoshopExpress*"}','{"id":"HotspotShieldFreeVPN","name":"*HotspotShieldFreeVPN*"}','{"id":"MicrosoftAdvertisingXaml","name":"*Microsoft.Advertising.Xaml*"}','{"id":"WindowsDevHome","name":"*Windows.DevHome*"}')
 # Embedded from tweaks.json
 $tweaks = @'
 {
@@ -3674,6 +3674,2277 @@ $configuration = @'
 }
 '@ | ConvertFrom-Json
 
+# Embedded from applications.json
+$applications = @'
+[
+    {
+        "id":  "DblInstallDotnet6",
+        "category":  "Microsoft Tools",
+        "content":  ".NET Desktop Runtime 6",
+        "winget":  "Microsoft.DotNet.DesktopRuntime.6",
+        "choco":  "dotnet-6.0-runtime",
+        "description":  ".NET Desktop Runtime 6 is a runtime environment required for running applications developed with .NET 6."
+    },
+    {
+        "id":  "DblInstallDotnet7",
+        "category":  "Microsoft Tools",
+        "content":  ".NET 7 Desktop Runtime",
+        "winget":  "Microsoft.DotNet.DesktopRuntime.7",
+        "choco":  "dotnet-7.0-runtime",
+        "description":  ".NET Desktop Runtime 7 is a runtime environment required for running applications developed with .NET 7."
+    },
+    {
+        "id":  "DblInstallDotnet8",
+        "category":  "Microsoft Tools",
+        "content":  ".NET 8 Desktop Runtime",
+        "winget":  "Microsoft.DotNet.DesktopRuntime.8",
+        "choco":  "dotnet-8.0-runtime",
+        "description":  ".NET Desktop Runtime 8 is a runtime environment required for running applications developed with .NET 8."
+    },
+    {
+        "id":  "DblInstallDotnet9",
+        "category":  "Microsoft Tools",
+        "content":  ".NET 9 Desktop Runtime",
+        "winget":  "Microsoft.DotNet.DesktopRuntime.9",
+        "choco":  "dotnet-9.0-runtime",
+        "description":  ".NET Desktop Runtime 9 is a runtime environment required for running applications developed with .NET 9."
+    },
+    {
+        "id":  "DblInstallDotnet10",
+        "category":  "Microsoft Tools",
+        "content":  ".NET 10 Desktop Runtime",
+        "winget":  "Microsoft.DotNet.DesktopRuntime.10",
+        "choco":  "dotnet-10.0-runtime",
+        "description":  ".NET Desktop Runtime 10 is a runtime environment required for running applications developed with .NET 10."
+    },
+    {
+        "id":  "DblInstall1Password",
+        "category":  "Utilities",
+        "content":  "1Password",
+        "winget":  "AgileBits.1Password",
+        "choco":  "1password",
+        "description":  "1Password is a password manager that allows you to store and manage your passwords securely."
+    },
+    {
+        "id":  "DblInstall7zip",
+        "category":  "Utilities",
+        "content":  "7-zip",
+        "winget":  "7zip.7zip",
+        "choco":  "7zip",
+        "description":  "7-Zip is a free and open-source file archiver utility. It supports several compression formats and provides a high compression ratio, making it a popular choice for file compression."
+    },
+    {
+        "id":  "DblInstallAdobe",
+        "category":  "Document",
+        "content":  "Adobe",
+        "winget":  "Adobe.Acrobat.Reader.64-bit",
+        "choco":  "adobereader",
+        "description":  "Adobe Acrobat Reader is a free PDF viewer with essential features for viewing, printing, and annotating PDF documents."
+    },
+    {
+        "id":  "DblInstallAdvancedipscanner",
+        "category":  "Pro Tools",
+        "content":  "Advanced IP Scanner",
+        "winget":  "Famatech.AdvancedIPScanner",
+        "choco":  "advanced-ip-scanner",
+        "description":  "Advanced IP Scanner is a fast and easy-to-use network scanner. It is designed to analyze LAN networks and provides information about connected devices."
+    },
+    {
+        "id":  "DblInstallMsiafterburner",
+        "category":  "Utilities",
+        "content":  "Afterburner",
+        "winget":  "Guru3D.Afterburner",
+        "choco":  "msiafterburner",
+        "description":  "MSI Afterburner is a graphics card overclocking utility with advanced features."
+    },
+    {
+        "id":  "DblInstallAimpmusicplayer",
+        "category":  "Multimedia Tools",
+        "content":  "AIMP (Music Player)",
+        "winget":  "AIMP.AIMP",
+        "choco":  "aimp",
+        "description":  "AIMP is a feature-rich music player with support for various audio formats, playlists, and customizable user interface."
+    },
+    {
+        "id":  "DblInstallAlacritty",
+        "category":  "Utilities",
+        "content":  "Alacritty",
+        "winget":  "Alacritty.Alacritty",
+        "choco":  "alacritty",
+        "description":  "Alacritty is a fast, cross-platform, GPU-accelerated terminal emulator."
+    },
+    {
+        "id":  "DblInstallAmazoncorretto21lts",
+        "category":  "Development",
+        "content":  "Amazon Corretto 21 (LTS)",
+        "winget":  "Amazon.Corretto.21.JDK",
+        "choco":  "corretto21jdk",
+        "description":  "Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK)."
+    },
+    {
+        "id":  "DblInstallAmazoncorretto25lts",
+        "category":  "Development",
+        "content":  "Amazon Corretto 25 (LTS)",
+        "winget":  "Amazon.Corretto.25.JDK",
+        "choco":  "corretto25jdk",
+        "description":  "Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK)."
+    },
+    {
+        "id":  "DblInstallAmazoncorretto8lts",
+        "category":  "Development",
+        "content":  "Amazon Corretto 8 (LTS)",
+        "winget":  "Amazon.Corretto.8.JDK",
+        "choco":  "corretto8jdk",
+        "description":  "Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK)."
+    },
+    {
+        "id":  "DblInstallADB",
+        "category":  "Utilities",
+        "content":  "Android Debug Bridge",
+        "winget":  "Google.PlatformTools",
+        "choco":  "googleplatformtools",
+        "description":  "Android Debug Bridge (ADB) is a versatile command-line tool that lets you communicate with a device."
+    },
+    {
+        "id":  "DblInstallAngryipscanner",
+        "category":  "Pro Tools",
+        "content":  "Angry IP Scanner",
+        "winget":  "angryziber.AngryIPScanner",
+        "choco":  "angryip",
+        "description":  "Angry IP Scanner is an open-source and cross-platform network scanner. It is used to scan IP addresses and ports, providing information about network connectivity."
+    },
+    {
+        "id":  "DblInstallAnki",
+        "category":  "Document",
+        "content":  "Anki",
+        "winget":  "Anki.Anki",
+        "choco":  "anki",
+        "description":  "Anki is a spaced repetition flashcard program that makes memorization more efficient."
+    },
+    {
+        "id":  "DblInstallAnydesk",
+        "category":  "Utilities",
+        "content":  "AnyDesk",
+        "winget":  "AnyDesk.AnyDesk",
+        "choco":  "anydesk",
+        "description":  "AnyDesk is a remote desktop software that enables users to access and control computers remotely. It is known for its fast connection and low latency."
+    },
+    {
+        "id":  "DblInstallAnydo",
+        "category":  "Utilities",
+        "content":  "Anydo",
+        "winget":  "Anydo.Anydo",
+        "choco":  "anydo",
+        "description":  "Any.do is a task management and to-do list application that helps users organize their tasks, set reminders, and collaborate with others."
+    },
+    {
+        "id":  "DblInstallAudacity",
+        "category":  "Multimedia Tools",
+        "content":  "Audacity",
+        "winget":  "Audacity.Audacity",
+        "choco":  "Audacity",
+        "description":  "Audacity is a free and open-source audio editing software known for its powerful recording and editing capabilities."
+    },
+    {
+        "id":  "DblInstallAutohotkey",
+        "category":  "Utilities",
+        "content":  "AutoHotkey",
+        "winget":  "autohotkey",
+        "choco":  "autohotkey",
+        "description":  "AutoHotkey is a scripting language for Windows that allows users to create custom automation scripts and macros. It is often used for automating repetitive tasks and customizing keyboard shortcuts."
+    },
+    {
+        "id":  "DblInstallAutoruns",
+        "category":  "Microsoft Tools",
+        "content":  "Autoruns",
+        "winget":  "Microsoft.Sysinternals.Autoruns",
+        "choco":  "autoruns",
+        "description":  "This utility shows you what programs are configured to run during system bootup or login."
+    },
+    {
+        "id":  "DblInstallAV1",
+        "category":  "Multimedia Tools",
+        "content":  "AV1 Video Extension",
+        "winget":  "9MVZQVXJBQ9V",
+        "choco":  null,
+        "description":  "AV1 Video Extension provides support for the AV1 video codec in Windows."
+    },
+    {
+        "id":  "DblInstallBattlenet",
+        "category":  "Games",
+        "content":  "Battle.net",
+        "winget":  "Blizzard.BattleNet",
+        "choco":  null,
+        "description":  "Battle.net is a launcher for games created and developed by Activision Blizzard"
+    },
+    {
+        "id":  "DblInstallBetterbird",
+        "category":  "Communications",
+        "content":  "Betterbird",
+        "winget":  "Betterbird.Betterbird",
+        "choco":  "betterbird",
+        "description":  "Betterbird is a fork of Mozilla Thunderbird with additional features and bugfixes."
+    },
+    {
+        "id":  "DblInstallBitwarden",
+        "category":  "Utilities",
+        "content":  "Bitwarden",
+        "winget":  "Bitwarden.Bitwarden",
+        "choco":  "bitwarden",
+        "description":  "Bitwarden is an open-source password management solution. It allows users to store and manage their passwords in a secure and encrypted vault, accessible across multiple devices."
+    },
+    {
+        "id":  "DblInstallBlender",
+        "category":  "Multimedia Tools",
+        "content":  "Blender",
+        "winget":  "BlenderFoundation.Blender",
+        "choco":  "blender",
+        "description":  "Blender is a powerful open-source 3D creation suite, offering modeling, sculpting, animation, and rendering tools."
+    },
+    {
+        "id":  "DblInstallBluestacks",
+        "category":  "Gaming Launchers",
+        "content":  "Bluestacks",
+        "winget":  "BlueStack.BlueStacks",
+        "choco":  "bluestacks",
+        "description":  "BlueStacks is an Android emulator that lets you run Android apps and games on Windows."
+    },
+    {
+        "id":  "DblInstallBlurautoclicker",
+        "category":  "Utilities",
+        "content":  "BlurAutoClicker",
+        "winget":  "Blur009.BlurAutoClicker",
+        "choco":  null,
+        "description":  "An Auto-clicker with a few advanced features and generally better performance than popular alternatives."
+    },
+    {
+        "id":  "DblInstallBrave",
+        "category":  "Browsers",
+        "content":  "Brave",
+        "winget":  "Brave.Brave",
+        "choco":  "brave",
+        "description":  "Brave is a privacy-focused web browser that blocks ads and trackers, offering a faster and safer browsing experience."
+    },
+    {
+        "id":  "DblInstallBruno",
+        "category":  "Development",
+        "content":  "Bruno",
+        "winget":  "Bruno.Bruno",
+        "choco":  "bruno",
+        "description":  "Bruno is a local-first API client that stores collections as plain text files for version control and collaboration."
+    },
+    {
+        "id":  "DblInstallBulkcrapuninstaller",
+        "category":  "Utilities",
+        "content":  "Bulk Crap Uninstaller",
+        "winget":  "Klocman.BulkCrapUninstaller",
+        "choco":  "bulk-crap-uninstaller",
+        "description":  "Bulk Crap Uninstaller is a free and open-source uninstaller utility for Windows. It helps users remove unwanted programs and clean up their system by uninstalling multiple applications at once."
+    },
+    {
+        "id":  "DblInstallCalibre",
+        "category":  "Multimedia Tools",
+        "content":  "Calibre",
+        "winget":  "calibre.calibre",
+        "choco":  "calibre",
+        "description":  "Calibre is a powerful and easy-to-use e-book manager, viewer, and converter."
+    },
+    {
+        "id":  "DblInstallCemu",
+        "category":  "Gaming Launchers",
+        "content":  "Cemu",
+        "winget":  "Cemu.Cemu",
+        "choco":  "cemu",
+        "description":  "Cemu is a highly experimental software to emulate Wii U applications on PC."
+    },
+    {
+        "id":  "DblInstallChatgptdesktop",
+        "category":  "Development",
+        "content":  "ChatGPT Desktop",
+        "winget":  "msstore:9NT1R1C2HH7J",
+        "choco":  null,
+        "description":  "The official ChatGPT desktop app for Windows, distributed through the Microsoft Store."
+    },
+    {
+        "id":  "DblInstallChatterino",
+        "category":  "Utilities",
+        "content":  "Chatterino",
+        "winget":  "ChatterinoTeam.Chatterino",
+        "choco":  "chatterino",
+        "description":  "Chatterino is a chat client for Twitch chat that offers a clean and customizable interface for a better streaming experience."
+    },
+    {
+        "id":  "DblInstallChromium",
+        "category":  "Browsers",
+        "content":  "Chromium",
+        "winget":  "eloston.ungoogled-chromium",
+        "choco":  "chromium",
+        "description":  "Chromium is the open-source project that serves as the foundation for various web browsers, including Chrome."
+    },
+    {
+        "id":  "DblInstallCider",
+        "category":  "Multimedia Tools",
+        "content":  "Cider",
+        "winget":  "CiderCollective.Cider",
+        "choco":  null,
+        "description":  "Cider is an open-source Apple Music client for Windows."
+    },
+    {
+        "id":  "DblInstallCinebenchr23",
+        "category":  "Pro Tools",
+        "content":  "Cinebench R23",
+        "winget":  "Maxon.CinebenchR23",
+        "choco":  null,
+        "description":  "Cinebench R23 is a benchmark tool for comparing CPU rendering performance across systems."
+    },
+    {
+        "id":  "DblInstallClasicMixer",
+        "category":  "Utilities",
+        "content":  "ClassicVolumeMixer",
+        "winget":  "PopeenCom.ClassicVolumeMixer",
+        "choco":  null,
+        "description":  "Classic Volume Mixer provides quick access to the classic volume mixer in Windows."
+    },
+    {
+        "id":  "DblInstallClaudecode",
+        "category":  "Development",
+        "content":  "Claude Code",
+        "winget":  "Anthropic.ClaudeCode",
+        "choco":  "claude-code",
+        "description":  "Anthropics agentic coding tool for terminal and IDE development workflows."
+    },
+    {
+        "id":  "DblInstallClaudedesktop",
+        "category":  "Development",
+        "content":  "Claude Desktop",
+        "winget":  "Anthropic.Claude",
+        "choco":  "claude",
+        "description":  "Anthropics Claude desktop application for focused AI-assisted work and chat."
+    },
+    {
+        "id":  "DblInstallCloudflarewarp",
+        "category":  "Utilities",
+        "content":  "Cloudflare WARP",
+        "winget":  "Cloudflare.Warp",
+        "choco":  "warp",
+        "description":  "WARP is a freemium VPN service provided by Cloudflare. Includes usage of Cloudflares DNS"
+    },
+    {
+        "id":  "DblInstallCmake",
+        "category":  "Development",
+        "content":  "CMake",
+        "winget":  "Kitware.CMake",
+        "choco":  "cmake",
+        "description":  "CMake is an open-source, cross-platform family of tools designed to build, test and package software."
+    },
+    {
+        "id":  "DblInstallCodex",
+        "category":  "Development",
+        "content":  "Codex",
+        "winget":  "OpenAI.Codex",
+        "choco":  "codex",
+        "description":  "Codex CLI is an OpenAI coding agent that runs locally in your terminal."
+    },
+    {
+        "id":  "DblInstallCpuz",
+        "category":  "Utilities",
+        "content":  "CPU-Z",
+        "winget":  "CPUID.CPU-Z",
+        "choco":  "cpu-z",
+        "description":  "CPU-Z is a system monitoring and diagnostic tool for Windows. It provides detailed information about the computers hardware components, including the CPU, memory, and motherboard."
+    },
+    {
+        "id":  "DblInstallCryptomator",
+        "category":  "Utilities",
+        "content":  "Cryptomator",
+        "winget":  "Cryptomator.Cryptomator",
+        "choco":  "cryptomator",
+        "description":  "Cryptomator is a free and open-source tool for encrypting cloud storage files."
+    },
+    {
+        "id":  "DblInstallCrystaldiskinfo",
+        "category":  "Utilities",
+        "content":  "Crystal Disk Info",
+        "winget":  "CrystalDewWorld.CrystalDiskInfo",
+        "choco":  "crystaldiskinfo",
+        "description":  "Crystal Disk Info is a disk health monitoring tool that provides information about the status and performance of hard drives. It helps users anticipate potential issues and monitor drive health."
+    },
+    {
+        "id":  "DblInstallCrystaldiskmark",
+        "category":  "Utilities",
+        "content":  "Crystal Disk Mark",
+        "winget":  "CrystalDewWorld.CrystalDiskMark",
+        "choco":  "crystaldiskmark",
+        "description":  "Crystal Disk Mark is a disk benchmarking tool that measures the read and write speeds of storage devices. It helps users assess the performance of their hard drives and SSDs."
+    },
+    {
+        "id":  "DblInstallCursor",
+        "category":  "Development",
+        "content":  "Cursor",
+        "winget":  "Anysphere.Cursor",
+        "choco":  "cursoride",
+        "description":  "AI-powered code editor (VS Code-based) with agentic coding features and integrated AI assistance for development workflows."
+    },
+    {
+        "id":  "DblInstallDeskflow",
+        "category":  "Utilities",
+        "content":  "Deskflow",
+        "winget":  "Deskflow.Deskflow",
+        "choco":  "deskflow",
+        "description":  "Deskflow is a free and open-source software KVM that lets you share a single keyboard and mouse across multiple computers."
+    },
+    {
+        "id":  "DblInstallDiscord",
+        "category":  "Communications",
+        "content":  "Discord",
+        "winget":  "Discord.Discord",
+        "choco":  "discord",
+        "description":  "Discord is a popular communication platform with voice, video, and text chat, designed for gamers but used by a wide range of communities."
+    },
+    {
+        "id":  "DblInstallDismtools",
+        "category":  "Microsoft Tools",
+        "content":  "DISMTools",
+        "winget":  "CodingWondersSoftware.DISMTools.Stable",
+        "choco":  "dismtools",
+        "description":  "DISMTools is a fast, customizable GUI for the DISM utility, supporting Windows images from Windows 7 onward. It handles installations on any drive, offers project support, and lets users tweak settings like color modes, language, and DISM versions; powered by both native DISM and a managed DISM API."
+    },
+    {
+        "id":  "DblInstallDdu",
+        "category":  "Utilities",
+        "content":  "Display Driver Uninstaller",
+        "winget":  "Wagnardsoft.DisplayDriverUninstaller",
+        "choco":  "ddu",
+        "description":  "Display Driver Uninstaller (DDU) is a tool for completely uninstalling graphics drivers from NVIDIA, AMD, and Intel. It is useful for troubleshooting graphics driver-related issues."
+    },
+    {
+        "id":  "DblInstallDockerdesktop",
+        "category":  "Development",
+        "content":  "Docker Desktop",
+        "winget":  "Docker.DockerDesktop",
+        "choco":  "docker-desktop",
+        "description":  "Docker Desktop provides a local environment for building, running, and testing containerized applications on Windows."
+    },
+    {
+        "id":  "DblInstallDorion",
+        "category":  "Communications",
+        "content":  "Dorion",
+        "winget":  "SpikeHD.Dorion",
+        "choco":  "dorion",
+        "description":  "Tiny alternative Discord client with a smaller footprint, snappier startup, themes, plugins and more!"
+    },
+    {
+        "id":  "DblInstallDrawio",
+        "category":  "Utilities",
+        "content":  "Draw.io",
+        "winget":  "JGraph.Draw",
+        "choco":  "drawio",
+        "description":  "draw.io is a free online diagramming tool for creating flowcharts, mind maps, and more."
+    },
+    {
+        "id":  "DblInstallDropbox",
+        "category":  "Utilities",
+        "content":  "Dropbox",
+        "winget":  "Dropbox.Dropbox",
+        "choco":  "dropbox",
+        "description":  "Dropbox is a cloud storage client for syncing files, sharing content, and keeping documents available across devices."
+    },
+    {
+        "id":  "DblInstallEaapp",
+        "category":  "Gaming Launchers",
+        "content":  "EA Desktop App",
+        "winget":  "ElectronicArts.EADesktop",
+        "choco":  "ea-app",
+        "description":  "EA App is a platform for accessing and playing Electronic Arts games."
+    },
+    {
+        "id":  "DblInstallEartrumpetaudio",
+        "category":  "Multimedia Tools",
+        "content":  "EarTrumpet (Audio)",
+        "winget":  "File-New-Project.EarTrumpet",
+        "choco":  "eartrumpet",
+        "description":  "EarTrumpet is an audio control app for Windows, providing a simple and intuitive interface for managing sound settings."
+    },
+    {
+        "id":  "DblInstallEdge",
+        "category":  "Browsers",
+        "content":  "Edge",
+        "winget":  "Microsoft.Edge",
+        "choco":  "microsoft-edge",
+        "description":  "Microsoft Edge is a modern web browser built on Chromium, offering performance, security, and integration with Microsoft services."
+    },
+    {
+        "id":  "DblInstallMatrix",
+        "category":  "Communications",
+        "content":  "Element (Matrix)",
+        "winget":  "Element.Element",
+        "choco":  "element-desktop",
+        "description":  "Element is a client for Matrix; an open network for secure, decentralized communication."
+    },
+    {
+        "id":  "DblInstallEmulationstation",
+        "category":  "Gaming Launchers",
+        "content":  "EmulationStation Desktop Edition",
+        "winget":  "ES-DE.EmulationStation-DE",
+        "choco":  null,
+        "description":  "EmulationStation Desktop Edition is a frontend for browsing and launching games from your multi-platform game collection."
+    },
+    {
+        "id":  "DblInstallEnteauth",
+        "category":  "Utilities",
+        "content":  "Ente Auth",
+        "winget":  "ente-io.auth-desktop",
+        "choco":  "ente-auth",
+        "description":  "Ente Auth is a free, cross-platform, end-to-end encrypted authenticator app."
+    },
+    {
+        "id":  "DblInstallEpicgames",
+        "category":  "Gaming Launchers",
+        "content":  "Epic Games Store",
+        "winget":  "EpicGames.EpicGamesLauncher",
+        "choco":  "epicgameslauncher",
+        "description":  "Epic Games Launcher is the client for accessing and playing games from the Epic Games Store."
+    },
+    {
+        "id":  "DblInstallEsearch",
+        "category":  "Utilities",
+        "content":  "Everything",
+        "winget":  "oidtools.Everything",
+        "choco":  "everything",
+        "description":  "Everything is a search engine that locates files and folders by filename instantly for Windows. Unlike Windows search Everything initially displays every file and folder on your computer (hence the name Everything). You type in a search filter to limit what files and folders are displayed."
+    },
+    {
+        "id":  "DblInstallFlux",
+        "category":  "Utilities",
+        "content":  "F.lux",
+        "winget":  "flux.flux",
+        "choco":  "flux",
+        "description":  "f.lux adjusts the color temperature of your screen to reduce eye strain during nighttime use."
+    },
+    {
+        "id":  "DblInstallFastnodemanager",
+        "category":  "Development",
+        "content":  "Fast Node Manager",
+        "winget":  "Schniz.fnm",
+        "choco":  "fnm",
+        "description":  "Fast Node Manager (fnm) is a fast, cross-platform tool for installing and switching between Node.js versions."
+    },
+    {
+        "id":  "DblInstallFFmpeg",
+        "category":  "Multimedia Tools",
+        "content":  "FFmpeg",
+        "winget":  "Gyan.FFmpeg",
+        "choco":  "ffmpeg",
+        "description":  "FFmpeg is a complete, cross-platform solution for recording, converting, and streaming audio and video."
+    },
+    {
+        "id":  "DblInstallFigma",
+        "category":  "Multimedia Tools",
+        "content":  "Figma",
+        "winget":  "Figma.Figma",
+        "choco":  "figma",
+        "description":  "Figma is a web-based vector graphics editor and prototyping tool for collaborative design."
+    },
+    {
+        "id":  "DblInstallFiles",
+        "category":  "Utilities",
+        "content":  "Files",
+        "winget":  "FilesCommunity.Files",
+        "choco":  "files",
+        "description":  "Alternative file explorer."
+    },
+    {
+        "id":  "DblInstallFirefoxesr",
+        "category":  "Browsers",
+        "content":  "Firefox ESR",
+        "winget":  "Mozilla.Firefox.ESR",
+        "choco":  "FirefoxESR",
+        "description":  "Mozilla Firefox is an open-source web browser known for its customization options, privacy features, and extensions. Firefox ESR (Extended Support Release) receives major updates every 42 weeks with minor updates such as crash fixes, security fixes and policy updates as needed, but at least every four weeks."
+    },
+    {
+        "id":  "DblInstallFloorp",
+        "category":  "Browsers",
+        "content":  "Floorp",
+        "winget":  "Ablaze.Floorp",
+        "choco":  "floorp",
+        "description":  "Floorp is an open-source web browser project that aims to provide a simple and fast browsing experience."
+    },
+    {
+        "id":  "DblInstallFoobar2000musicplayer",
+        "category":  "Multimedia Tools",
+        "content":  "foobar2000 (Music Player)",
+        "winget":  "PeterPawlowski.foobar2000",
+        "choco":  "foobar2000",
+        "description":  "foobar2000 is a highly customizable and extensible music player for Windows, known for its modular design and advanced features."
+    },
+    {
+        "id":  "DblInstallFoxitpdfreader",
+        "category":  "Document",
+        "content":  "Foxit PDF Reader",
+        "winget":  "Foxit.FoxitReader",
+        "choco":  "foxitreader",
+        "description":  "Foxit PDF Reader is a free PDF viewer with a familiar ribbon-style interface."
+    },
+    {
+        "id":  "DblInstallGimpimageeditor",
+        "category":  "Multimedia Tools",
+        "content":  "GIMP (Image Editor)",
+        "winget":  "GIMP.GIMP.3",
+        "choco":  "gimp",
+        "description":  "GIMP is a versatile open-source raster graphics editor used for tasks such as photo retouching, image editing, and image composition."
+    },
+    {
+        "id":  "DblInstallGit",
+        "category":  "Development",
+        "content":  "Git",
+        "winget":  "Git.Git",
+        "choco":  "git",
+        "description":  "Git is a distributed version control system widely used for tracking changes in source code during software development."
+    },
+    {
+        "id":  "DblInstallGitextensions",
+        "category":  "Development",
+        "content":  "Git Extensions",
+        "winget":  "GitExtensionsTeam.GitExtensions",
+        "choco":  "gitextensions",
+        "description":  "Git Extensions is a graphical Git client for Windows with repository, history, and commit management tools."
+    },
+    {
+        "id":  "DblInstallGithubcli",
+        "category":  "Development",
+        "content":  "GitHub CLI",
+        "winget":  "GitHub.cli",
+        "choco":  "gh",
+        "description":  "GitHub CLI brings pull requests, issues, releases, and other GitHub workflows to the terminal."
+    },
+    {
+        "id":  "DblInstallGithubdesktop",
+        "category":  "Development",
+        "content":  "GitHub Desktop",
+        "winget":  "GitHub.GitHubDesktop",
+        "choco":  "git;github-desktop",
+        "description":  "GitHub Desktop is a visual Git client that simplifies collaboration on GitHub repositories with an easy-to-use interface."
+    },
+    {
+        "id":  "DblInstallGlazewm",
+        "category":  "Utilities",
+        "content":  "GlazeWM",
+        "winget":  "glzr-io.glazewm",
+        "choco":  "glazewm",
+        "description":  "GlazeWM is a tiling window manager for Windows inspired by i3 and Polybar."
+    },
+    {
+        "id":  "DblInstallGolang",
+        "category":  "Development",
+        "content":  "Go Programming Language",
+        "winget":  "GoLang.Go",
+        "choco":  "golang",
+        "description":  "Go (or Golang) is a statically typed, compiled programming language designed for simplicity, reliability, and efficiency."
+    },
+    {
+        "id":  "DblInstallGodotEngine",
+        "category":  "Development",
+        "content":  "Godot Engine",
+        "winget":  "GodotEngine.GodotEngine",
+        "choco":  "godot --pre",
+        "description":  "Godot Engine is a free and open-source game engine for 2D and 3D game development."
+    },
+    {
+        "id":  "DblInstallGog",
+        "category":  "Gaming Launchers",
+        "content":  "GOG Galaxy",
+        "winget":  "GOG.Galaxy",
+        "choco":  "goggalaxy",
+        "description":  "GOG Galaxy is a gaming client that offers DRM-free games, additional content, and more."
+    },
+    {
+        "id":  "DblInstallChrome",
+        "category":  "Browsers",
+        "content":  "Google Chrome",
+        "winget":  "Google.Chrome",
+        "choco":  "googlechrome",
+        "description":  "Google Chrome is a widely used web browser known for its speed, simplicity, and seamless integration with Google services."
+    },
+    {
+        "id":  "DblInstallGoogleDrive",
+        "category":  "Utilities",
+        "content":  "Google Drive",
+        "winget":  "Google.GoogleDrive",
+        "choco":  "googledrive",
+        "description":  "File syncing across devices all tied to your Google account."
+    },
+    {
+        "id":  "DblInstallGpuz",
+        "category":  "Utilities",
+        "content":  "GPU-Z",
+        "winget":  "TechPowerUp.GPU-Z",
+        "choco":  "gpu-z",
+        "description":  "GPU-Z provides detailed information about your graphics card and GPU."
+    },
+    {
+        "id":  "DblInstallGreenshot",
+        "category":  "Multimedia Tools",
+        "content":  "Greenshot",
+        "winget":  "Greenshot.Greenshot",
+        "choco":  "greenshot",
+        "description":  "Greenshot is a free and open-source screenshot tool for Windows."
+    },
+    {
+        "id":  "DblInstallGsudo",
+        "category":  "Utilities",
+        "content":  "gsudo",
+        "winget":  "gerardog.gsudo",
+        "choco":  "gsudo",
+        "description":  "gsudo is a sudo equivalent for Windows. It allows you to run commands with elevated administrative privileges directly within the current console window."
+    },
+    {
+        "id":  "DblInstallHandbrake",
+        "category":  "Multimedia Tools",
+        "content":  "Handbrake",
+        "winget":  "HandBrake.HandBrake",
+        "choco":  "handbrake",
+        "description":  "HandBrake is an open-source video transcoder, allowing you to convert video from nearly any format to a selection of widely supported codecs."
+    },
+    {
+        "id":  "DblInstallHeidisql",
+        "category":  "Development",
+        "content":  "HeidiSQL",
+        "winget":  "HeidiSQL.HeidiSQL",
+        "choco":  "heidisql",
+        "description":  "HeidiSQL is a free and open-source database management tool for MySQL, MariaDB, and more."
+    },
+    {
+        "id":  "DblInstallHelium",
+        "category":  "Browsers",
+        "content":  "Helium",
+        "winget":  "ImputNet.Helium",
+        "choco":  "helium",
+        "description":  "Private, fast, and honest web browser."
+    },
+    {
+        "id":  "DblInstallHeroic",
+        "category":  "Gaming Launchers",
+        "content":  "Heroic Games Launcher",
+        "winget":  "HeroicGamesLauncher.HeroicGamesLauncher",
+        "choco":  "heroic-games-launcher",
+        "description":  "Heroic Games Launcher is an open-source alternative game launcher for Epic Games Store."
+    },
+    {
+        "id":  "DblInstallHugo",
+        "category":  "Utilities",
+        "content":  "Hugo",
+        "winget":  "Hugo.Hugo.Extended",
+        "choco":  "hugo-extended",
+        "description":  "The worlds fastest framework for building websites."
+    },
+    {
+        "id":  "DblInstallHwinfo",
+        "category":  "Utilities",
+        "content":  "HWiNFO",
+        "winget":  "REALiX.HWiNFO",
+        "choco":  "hwinfo",
+        "description":  "HWiNFO provides comprehensive hardware information and diagnostics for Windows."
+    },
+    {
+        "id":  "DblInstallHwmonitor",
+        "category":  "Pro Tools",
+        "content":  "HWMonitor",
+        "winget":  "CPUID.HWMonitor",
+        "choco":  "hwmonitor",
+        "description":  "HWMonitor is a hardware monitoring program that reads PC systems main health sensors."
+    },
+    {
+        "id":  "DblInstallHxD",
+        "category":  "Microsoft Tools",
+        "content":  "HxD Hex Editor",
+        "winget":  "MHNexus.HxD",
+        "choco":  "HxD",
+        "description":  "HxD is a free hex editor that allows you to edit, view, search, and analyze binary files."
+    },
+    {
+        "id":  "DblInstallNGENUITY",
+        "category":  "Utilities",
+        "content":  "HyperX NGENUITY",
+        "winget":  "9P1TBXR6QDCX",
+        "choco":  null,
+        "description":  "HyperX NGENUITY is a configuration software for HyperX peripherals."
+    },
+    {
+        "id":  "DblInstallImageglass",
+        "category":  "Multimedia Tools",
+        "content":  "ImageGlass",
+        "winget":  "DuongDieuPhap.ImageGlass",
+        "choco":  "imageglass",
+        "description":  "ImageGlass is a versatile image viewer with support for various image formats and a focus on simplicity and speed."
+    },
+    {
+        "id":  "DblInstallInternetdownloadmanager",
+        "category":  "Utilities",
+        "content":  "Internet Download Manager",
+        "winget":  "Tonec.InternetDownloadManager",
+        "choco":  "internet-download-manager",
+        "description":  "Internet Download Manager is a download manager for accelerating, resuming, and scheduling file downloads."
+    },
+    {
+        "id":  "DblInstallIrfanview",
+        "category":  "Multimedia Tools",
+        "content":  "IrfanView",
+        "winget":  "IrfanSkiljan.IrfanView",
+        "choco":  "irfanview",
+        "description":  "IrfanView is a lightweight, fast, and free image viewer and editor. Supports multiple formats, batch processing, and powerful plugins."
+    },
+    {
+        "id":  "DblInstallItch",
+        "category":  "Gaming Launchers",
+        "content":  "itch.io",
+        "winget":  "ItchIo.Itch",
+        "choco":  "itch",
+        "description":  "Itch.io is a digital distribution platform for indie games and creative projects."
+    },
+    {
+        "id":  "DblInstallItunes",
+        "category":  "Multimedia Tools",
+        "content":  "iTunes",
+        "winget":  "Apple.iTunes",
+        "choco":  "itunes",
+        "description":  "iTunes is a media player, media library, and online radio broadcaster application developed by Apple Inc."
+    },
+    {
+        "id":  "DblInstallJava11",
+        "category":  "Development",
+        "content":  "Java 11",
+        "winget":  "EclipseAdoptium.Temurin.11.JRE",
+        "choco":  null,
+        "description":  "Java 11 is a long-term support release of the Java Development Kit."
+    },
+    {
+        "id":  "DblInstallJava8",
+        "category":  "Development",
+        "content":  "Amazon Corretto 8 (LTS)",
+        "winget":  "Amazon.Corretto.8.JDK",
+        "choco":  "corretto8jdk",
+        "description":  "Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK)."
+    },
+    {
+        "id":  "DblInstallJava21",
+        "category":  "Development",
+        "content":  "Amazon Corretto 21 (LTS)",
+        "winget":  "Amazon.Corretto.21.JDK",
+        "choco":  "corretto21jdk",
+        "description":  "Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK)."
+    },
+    {
+        "id":  "DblInstallJava25",
+        "category":  "Development",
+        "content":  "Amazon Corretto 25 (LTS)",
+        "winget":  "Amazon.Corretto.25.JDK",
+        "choco":  "corretto25jdk",
+        "description":  "Amazon Corretto is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK)."
+    },
+    {
+        "id":  "DblInstallJdownloader",
+        "category":  "Utilities",
+        "content":  "JDownloader",
+        "winget":  "AppWork.JDownloader",
+        "choco":  "jdownloader",
+        "description":  "JDownloader is a free, open-source download manager that simplifies downloading files from hosting sites."
+    },
+    {
+        "id":  "DblInstallJellyfinmediaplayer",
+        "category":  "Selfhosted Tools",
+        "content":  "Jellyfin Media Player",
+        "winget":  "Jellyfin.JellyfinMediaPlayer",
+        "choco":  "jellyfin-media-player",
+        "description":  "Jellyfin Media Player is a client application for the Jellyfin media server, providing access to your media library."
+    },
+    {
+        "id":  "DblInstallJellyfinserver",
+        "category":  "Selfhosted Tools",
+        "content":  "Jellyfin Server",
+        "winget":  "Jellyfin.Server",
+        "choco":  "jellyfin",
+        "description":  "Jellyfin Server is an open-source media server software, allowing you to organize and stream your media library."
+    },
+    {
+        "id":  "DblInstallJetbrainstoolbox",
+        "category":  "Development",
+        "content":  "Jetbrains Toolbox",
+        "winget":  "JetBrains.Toolbox",
+        "choco":  "jetbrainstoolbox",
+        "description":  "Jetbrains Toolbox is a platform for easy installation and management of JetBrains developer tools."
+    },
+    {
+        "id":  "DblInstallJoplin",
+        "category":  "Document",
+        "content":  "Joplin",
+        "winget":  "Joplin.Joplin",
+        "choco":  "joplin",
+        "description":  "Joplin is an open-source note-taking and to-do application with synchronization capabilities."
+    },
+    {
+        "id":  "DblInstallJpegview",
+        "category":  "Utilities",
+        "content":  "JPEG View",
+        "winget":  "sylikc.JPEGView",
+        "choco":  "jpegview",
+        "description":  "JPEGView is a lean, fast and highly configurable viewer/editor for JPEG, BMP, PNG, WEBP, TGA, GIF, JXL, HEIC, HEIF, AVIF, and TIFF images with a minimal GUI."
+    },
+    {
+        "id":  "DblInstallKlite",
+        "category":  "Multimedia Tools",
+        "content":  "K-Lite Codec Pack",
+        "winget":  "CodecGuide.K-LiteCodecPack.Standard",
+        "choco":  "k-litecodecpackstandard",
+        "description":  "K-Lite Codec Pack Standard is a collection of audio and video codecs and related tools, providing essential components for media playback."
+    },
+    {
+        "id":  "DblInstallKDEConnect",
+        "category":  "Utilities",
+        "content":  "KDE Connect",
+        "winget":  "KDE.KDEConnect",
+        "choco":  "kdeconnect",
+        "description":  "KDE Connect is a tool that enables communication between your Linux desktop and Android device."
+    },
+    {
+        "id":  "DblInstallKeepass",
+        "category":  "Utilities",
+        "content":  "KeePassXC",
+        "winget":  "KeePassXCTeam.KeePassXC",
+        "choco":  "keepassxc",
+        "description":  "KeePassXC is a modern, secure, and open-source password manager that stores and manages your most sensitive information. You can run KeePassXC on Windows, macOS, and Linux systems. KeePassXC is for people with extremely high demands of secure personal data management. It saves many different types of information, such as usernames, passwords, URLs, attachments, and notes in an offline, encrypted file that can be stored in any location, including private and public cloud solutions. For easy identification and management, user-defined titles and icons can be specified for entries. In addition, entries are sorted into customizable groups. An integrated search function allows you to use advanced patterns to easily find any entry in your database. A customizable, fast, and easy-to-use password generator utility allows you to create passwords with any combination of characters or easy to remember passphrases."
+    },
+    {
+        "id":  "DblInstallKodi",
+        "category":  "Multimedia Tools",
+        "content":  "Kodi",
+        "winget":  "XBMCFoundation.Kodi",
+        "choco":  "kodi",
+        "description":  "Kodi is an open-source media center application that allows you to play and view most videos, music, podcasts, and other digital media files."
+    },
+    {
+        "id":  "DblInstallLazygit",
+        "category":  "Development",
+        "content":  "Lazygit",
+        "winget":  "JesseDuffield.lazygit",
+        "choco":  "lazygit",
+        "description":  "Simple terminal UI for git commands."
+    },
+    {
+        "id":  "DblInstallLibreoffice",
+        "category":  "Document",
+        "content":  "LibreOffice",
+        "winget":  "TheDocumentFoundation.LibreOffice",
+        "choco":  "libreoffice-fresh",
+        "description":  "LibreOffice is a powerful and free office suite, compatible with other major office suites."
+    },
+    {
+        "id":  "DblInstallLibrewolf",
+        "category":  "Browsers",
+        "content":  "Librewolf",
+        "winget":  "Librewolf.Librewolf",
+        "choco":  "librewolf",
+        "description":  "LibreWolf is a privacy-focused web browser based on Firefox, with additional privacy and security enhancements."
+    },
+    {
+        "id":  "DblInstallLocalsend",
+        "category":  "Selfhosted Tools",
+        "content":  "LocalSend",
+        "winget":  "LocalSend.LocalSend",
+        "choco":  "localsend.install",
+        "description":  "An open-source cross-platform alternative to AirDrop."
+    },
+    {
+        "id":  "DblInstallLua",
+        "category":  "Development",
+        "content":  "Lua",
+        "winget":  "rjpcomputing.luaforwindows",
+        "choco":  "lua",
+        "description":  "A batteries included environment for the Lua scripting language on Windows."
+    },
+    {
+        "id":  "DblInstallMedal",
+        "category":  "Gaming Launchers",
+        "content":  "Medal",
+        "winget":  "MedalB.V.Medal",
+        "choco":  null,
+        "description":  "Medal is a screen recording and sharing app for gamers."
+    },
+    {
+        "id":  "DblInstallMediaplayerclassichomecinema",
+        "category":  "Multimedia Tools",
+        "content":  "Media Player Classic - Home Cinema",
+        "winget":  "clsid2.mpc-hc",
+        "choco":  "mpc-hc-clsid2",
+        "description":  "Media Player Classic - Home Cinema (MPC-HC) is a free and open-source video and audio player for Windows. MPC-HC is based on the original Guliverkli project and contains many additional features and bug fixes."
+    },
+    {
+        "id":  "DblInstallMediaInfo",
+        "category":  "Multimedia Tools",
+        "content":  "MediaInfo",
+        "winget":  "MediaArea.MediaInfo.GUI",
+        "choco":  "mediainfo",
+        "description":  "MediaInfo is a tool that provides detailed information about video and audio files."
+    },
+    {
+        "id":  "DblInstallTeams",
+        "category":  "Communications",
+        "content":  "Microsoft Teams",
+        "winget":  "Microsoft.Teams",
+        "choco":  "teams",
+        "description":  "Microsoft Teams is a collaboration platform that integrates with Office 365 and offers chat, video conferencing, file sharing, and more."
+    },
+    {
+        "id":  "DblInstallMinitoolpartitionwizard",
+        "category":  "Utilities",
+        "content":  "MiniTool Partition Wizard",
+        "winget":  "MiniTool.PartitionWizard.Free",
+        "choco":  "minitoolpartitionwizard",
+        "description":  "Comprehensive free partition manager that performs advanced operations Windows natively cannot, such as merging partitions, converting file systems, and organizing disk capacity."
+    },
+    {
+        "id":  "DblInstallMKVToolNix",
+        "category":  "Multimedia Tools",
+        "content":  "MKVToolNix",
+        "winget":  "MoritzBunkus.MKVToolNix",
+        "choco":  "mkvtoolnix",
+        "description":  "MKVToolNix is a set of tools for creating, altering, and inspecting Matroska (MKV) files."
+    },
+    {
+        "id":  "DblInstallModrinthapp",
+        "category":  "Games",
+        "content":  "Modrinth App",
+        "winget":  "Modrinth.ModrinthApp",
+        "choco":  "modrinth-app",
+        "description":  "Modrinth App is a desktop application for managing Minecraft mods and modpacks."
+    },
+    {
+        "id":  "DblInstallMoonlight",
+        "category":  "Gaming Launchers",
+        "content":  "Moonlight Stream Client",
+        "winget":  "MoonlightGameStreamingProject.Moonlight",
+        "choco":  "moonlight-qt",
+        "description":  "Moonlight/GameStream Client allows you to stream PC games to other devices over your local network."
+    },
+    {
+        "id":  "DblInstallFirefox",
+        "category":  "Browsers",
+        "content":  "Mozilla Firefox",
+        "winget":  "Mozilla.Firefox",
+        "choco":  "firefox",
+        "description":  "Mozilla Firefox is an open-source web browser known for its customization options, privacy features, and extensions."
+    },
+    {
+        "id":  "DblInstallMpcqt",
+        "category":  "Multimedia Tools",
+        "content":  "mpc-qt",
+        "winget":  "mpc-qt.mpc-qt",
+        "choco":  "mediainfo",
+        "description":  "Media Player Classic Qute Theater"
+    },
+    {
+        "id":  "DblInstallMpv",
+        "category":  "Multimedia Tools",
+        "content":  "mpv",
+        "winget":  "shinchiro.mpv",
+        "choco":  "mpvio",
+        "description":  "mpv is a free, open source, and cross-platform media player supporting a wide variety of media formats, codecs, and subtitle types."
+    },
+    {
+        "id":  "DblInstallMsedgeredirect",
+        "category":  "Utilities",
+        "content":  "MSEdgeRedirect",
+        "winget":  "rcmaehl.MSEdgeRedirect",
+        "choco":  "msedgeredirect",
+        "description":  "A Tool to Redirect News, Search, Widgets, Weather, and More to your default browser."
+    },
+    {
+        "id":  "DblInstallMullvad",
+        "category":  "Browsers",
+        "content":  "Mullvad Browser",
+        "winget":  "MullvadVPN.MullvadBrowser",
+        "choco":  "null",
+        "description":  "Mullvad Browser is a privacy-focused web browser, developed in partnership with the Tor Project."
+    },
+    {
+        "id":  "DblInstallMullvadvpn",
+        "category":  "Pro Tools",
+        "content":  "Mullvad VPN",
+        "winget":  "MullvadVPN.MullvadVPN",
+        "choco":  "mullvad-app",
+        "description":  "This is the VPN client software for the Mullvad VPN service."
+    },
+    {
+        "id":  "DblInstallMySQL",
+        "category":  "Development",
+        "content":  "MySQL",
+        "winget":  "Oracle.MySQL",
+        "choco":  "mysql",
+        "description":  "MySQL is a popular open-source relational database management system."
+    },
+    {
+        "id":  "DblInstallNanazip",
+        "category":  "Utilities",
+        "content":  "NanaZip",
+        "winget":  "M2Team.NanaZip",
+        "choco":  "nanazip",
+        "description":  "NanaZip is a fast and efficient file compression and decompression tool."
+    },
+    {
+        "id":  "DblInstallNaps2scanner",
+        "category":  "Document",
+        "content":  "NAPS2 (Scanner)",
+        "winget":  "Cyanfish.NAPS2",
+        "choco":  "naps2",
+        "description":  "NAPS2 is a document scanning application that simplifies the process of creating electronic documents."
+    },
+    {
+        "id":  "DblInstallNeovim",
+        "category":  "Document",
+        "content":  "Neovim",
+        "winget":  "Neovim.Neovim",
+        "choco":  "neovim",
+        "description":  "Neovim is a highly extensible text editor and an improvement over the original Vim editor."
+    },
+    {
+        "id":  "DblInstallNeovim",
+        "category":  "Document",
+        "content":  "Neovim",
+        "winget":  "Neovim.Neovim",
+        "choco":  "neovim",
+        "description":  "Neovim Nightly is the bleeding-edge build of the Neovim text editor."
+    },
+    {
+        "id":  "DblInstallNetbird",
+        "category":  "Selfhosted Tools",
+        "content":  "NetBird",
+        "winget":  "Netbird.Netbird",
+        "choco":  "netbird",
+        "description":  "NetBird is an open-source alternative comparable to TailScale that can be connected to a self-hosted server."
+    },
+    {
+        "id":  "DblInstallNextclouddesktop",
+        "category":  "Selfhosted Tools",
+        "content":  "Nextcloud Desktop",
+        "winget":  "Nextcloud.NextcloudDesktop",
+        "choco":  "nextcloud-client",
+        "description":  "Nextcloud Desktop is the official desktop client for the Nextcloud file synchronization and sharing platform."
+    },
+    {
+        "id":  "DblInstallNilesoftshell",
+        "category":  "Utilities",
+        "content":  "Nilesoft Shell",
+        "winget":  "Nilesoft.Shell",
+        "choco":  "nilesoft-shell",
+        "description":  "Shell is an expanded context menu tool that adds extra functionality and customization options to the Windows context menu."
+    },
+    {
+        "id":  "DblInstallNmap",
+        "category":  "Pro Tools",
+        "content":  "Nmap",
+        "winget":  "Insecure.Nmap",
+        "choco":  "nmap",
+        "description":  "Nmap (Network Mapper) is an open-source tool for network exploration and security auditing. It discovers devices on a network and provides information about their ports and services."
+    },
+    {
+        "id":  "DblInstallNodemanager",
+        "category":  "Development",
+        "content":  "Node Version Manager (NVM)",
+        "winget":  "CoreyButler.NVMforWindows",
+        "choco":  "nvm.install",
+        "description":  "Node Version Manager (NVM) allows you to install and switch between multiple Node.js versions."
+    },
+    {
+        "id":  "DblInstallNodejs",
+        "category":  "Development",
+        "content":  "Node.js",
+        "winget":  "OpenJS.NodeJS",
+        "choco":  "nodejs",
+        "description":  "NodeJS is a JavaScript runtime built on Chromes V8 JavaScript engine for building server-side and networking applications."
+    },
+    {
+        "id":  "DblInstallNodejslts",
+        "category":  "Development",
+        "content":  "Node.js LTS",
+        "winget":  "OpenJS.NodeJS.LTS",
+        "choco":  "nodejs-lts",
+        "description":  "NodeJS LTS provides Long-Term Support releases for stable and reliable server-side JavaScript development."
+    },
+    {
+        "id":  "DblInstallNomacs",
+        "category":  "Multimedia Tools",
+        "content":  "nomacs",
+        "winget":  "nomacs.nomacs",
+        "choco":  "nomacs",
+        "description":  "nomacs is a free, open-source image viewer, which supports multiple platforms. You can use it for viewing all common image formats, including RAW and .psd images."
+    },
+    {
+        "id":  "DblInstallNotepadplus",
+        "category":  "Document",
+        "content":  "Notepad",
+        "winget":  "Notepad++.Notepad++",
+        "choco":  "notepadplusplus",
+        "description":  "Notepad++ is a free, open-source code editor and Notepad replacement with support for multiple languages."
+    },
+    {
+        "id":  "DblInstallNotepadsApp",
+        "category":  "Document",
+        "content":  "Notepads",
+        "winget":  "JackieLiu.NotepadsApp",
+        "choco":  null,
+        "description":  "Notepads is a modern, lightweight text editor for Windows."
+    },
+    {
+        "id":  "DblInstallNotion",
+        "category":  "Document",
+        "content":  "Notion",
+        "winget":  "Notion.Notion",
+        "choco":  "notion",
+        "description":  "Notion is an all-in-one workspace for notes, tasks, wikis, and databases."
+    },
+    {
+        "id":  "DblInstallNtlite",
+        "category":  "Microsoft Tools",
+        "content":  "NTLite",
+        "winget":  "Nlitesoft.NTLite",
+        "choco":  "ntlite-free",
+        "description":  "Integrate updates, drivers, automate Windows and application setup, speedup Windows deployment process and have it all set for the next time."
+    },
+    {
+        "id":  "DblInstallNTop",
+        "category":  "Utilities",
+        "content":  "NTop",
+        "winget":  "gsass1.NTop",
+        "choco":  "ntop",
+        "description":  "NTop is a network monitoring tool that provides real-time traffic analysis."
+    },
+    {
+        "id":  "DblInstallNuget",
+        "category":  "Microsoft Tools",
+        "content":  "NuGet",
+        "winget":  "Microsoft.NuGet",
+        "choco":  "nuget.commandline",
+        "description":  "NuGet is a package manager for the .NET framework, enabling developers to manage and share libraries in their .NET applications."
+    },
+    {
+        "id":  "DblInstallNvclean",
+        "category":  "Utilities",
+        "content":  "NVCleanstall",
+        "winget":  "TechPowerUp.NVCleanstall",
+        "choco":  null,
+        "description":  "NVCleanstall is a tool designed to customize NVIDIA driver installations, allowing advanced users to control more aspects of the installation process."
+    },
+    {
+        "id":  "DblInstallGeforcenow",
+        "category":  "Gaming Launchers",
+        "content":  "NVIDIA GeForce NOW",
+        "winget":  "Nvidia.GeforceNOW",
+        "choco":  "nvidia-geforce-now",
+        "description":  "GeForce NOW is a cloud gaming service that allows you to play high-quality PC games on your device."
+    },
+    {
+        "id":  "DblInstallObs",
+        "category":  "Multimedia Tools",
+        "content":  "OBS Studio",
+        "winget":  "OBSProject.OBSStudio",
+        "choco":  "obs-studio",
+        "description":  "OBS Studio is a free and open-source software for video recording and live streaming. It supports real-time video/audio capturing and mixing, making it popular among content creators."
+    },
+    {
+        "id":  "DblInstallObsidian",
+        "category":  "Document",
+        "content":  "Obsidian",
+        "winget":  "Obsidian.Obsidian",
+        "choco":  "obsidian",
+        "description":  "Obsidian is a powerful note-taking and knowledge management application."
+    },
+    {
+        "id":  "DblInstallOfgbohfrickgoback",
+        "category":  "Utilities",
+        "content":  "OFGB (Oh Frick Go Back)",
+        "winget":  "xM4ddy.OFGB",
+        "choco":  "ofgb",
+        "description":  "GUI Tool to remove ads from various places around Windows 11"
+    },
+    {
+        "id":  "DblInstallOhmyposh",
+        "category":  "Development",
+        "content":  "Oh My Posh (Prompt)",
+        "winget":  "JanDeDobbeleer.OhMyPosh",
+        "choco":  "oh-my-posh",
+        "description":  "Oh My Posh is a cross-platform prompt theme engine for any shell."
+    },
+    {
+        "id":  "DblInstallOkular",
+        "category":  "Document",
+        "content":  "Okular",
+        "winget":  "KDE.Okular",
+        "choco":  "okular",
+        "description":  "Okular is a versatile document viewer with advanced features."
+    },
+    {
+        "id":  "DblInstallOnedrive",
+        "category":  "Microsoft Tools",
+        "content":  "OneDrive",
+        "winget":  "Microsoft.OneDrive",
+        "choco":  "onedrive",
+        "description":  "OneDrive is a cloud storage service provided by Microsoft, allowing users to store and share files securely across devices."
+    },
+    {
+        "id":  "DblInstallOnlyoffice",
+        "category":  "Document",
+        "content":  "OnlyOffice Desktop",
+        "winget":  "ONLYOFFICE.DesktopEditors",
+        "choco":  "onlyoffice",
+        "description":  "ONLYOFFICE Desktop is a comprehensive office suite for document editing and collaboration."
+    },
+    {
+        "id":  "DblInstallOpautoclicker",
+        "category":  "Utilities",
+        "content":  "OPAutoClicker",
+        "winget":  "OPAutoClicker.OPAutoClicker",
+        "choco":  "autoclicker",
+        "description":  "A full-fledged autoclicker with two modes of autoclicking, at your dynamic cursor location or at a prespecified location."
+    },
+    {
+        "id":  "DblInstallOpenrgb",
+        "category":  "Utilities",
+        "content":  "OpenRGB",
+        "winget":  "CalcProgrammer1.OpenRGB",
+        "choco":  "openrgb",
+        "description":  "OpenRGB is an open-source RGB lighting control software designed to manage and control RGB lighting for various components and peripherals."
+    },
+    {
+        "id":  "DblInstallOpenvpnconnect",
+        "category":  "Pro Tools",
+        "content":  "OpenVPN Connect",
+        "winget":  "OpenVPNTechnologies.OpenVPNConnect",
+        "choco":  "openvpn-connect",
+        "description":  "OpenVPN Connect is a VPN client that allows you to connect securely to a VPN server. It provides a secure and encrypted connection for protecting your online privacy."
+    },
+    {
+        "id":  "DblInstallOverwolf",
+        "category":  "Games",
+        "content":  "Overwolf",
+        "winget":  "Overwolf.CurseForge",
+        "choco":  "overwolf",
+        "description":  "Popular platform for game overlays and companion apps (mod managers, trackers, etc.), widely used by gamers."
+    },
+    {
+        "id":  "DblInstallPaintnet",
+        "category":  "Multimedia Tools",
+        "content":  "Paint.NET",
+        "winget":  "dotPDN.PaintDotNet",
+        "choco":  "paint.net",
+        "description":  "Paint.NET is a free image and photo editing software for Windows. It features an intuitive user interface and supports a wide range of powerful editing tools."
+    },
+    {
+        "id":  "DblInstallParsec",
+        "category":  "Utilities",
+        "content":  "Parsec",
+        "winget":  "Parsec.Parsec",
+        "choco":  "parsec",
+        "description":  "Parsec is a low-latency, high-quality remote desktop sharing application for collaborating and gaming across devices."
+    },
+    {
+        "id":  "DblInstallPdfxchangeeditor",
+        "category":  "Document",
+        "content":  "PDF-XChange Editor",
+        "winget":  "TrackerSoftware.PDF-XChangeEditor",
+        "choco":  "pdfxchangeeditor",
+        "description":  "A comprehensive Windows-based software suite and editor for creating, viewing, editing, annotating, and signing PDF files."
+    },
+    {
+        "id":  "DblInstallPdf24creator",
+        "category":  "Document",
+        "content":  "PDF24 Creator",
+        "winget":  "geeksoftwareGmbH.PDF24Creator",
+        "choco":  "pdf24",
+        "description":  "Free and easy-to-use online/desktop PDF tools that make you more productive"
+    },
+    {
+        "id":  "DblInstallPdfgear",
+        "category":  "Document",
+        "content":  "PDFgear",
+        "winget":  "PDFgear.PDFgear",
+        "choco":  "pdfgear",
+        "description":  "PDFgear is a piece of full-featured PDF management software for Windows, macOS, and mobile, and its completely free to use."
+    },
+    {
+        "id":  "DblInstallPdfsambasic",
+        "category":  "Document",
+        "content":  "PDFsam Basic",
+        "winget":  "PDFsam.PDFsam",
+        "choco":  "pdfsam",
+        "description":  "PDFsam Basic is a free and open-source tool for splitting, merging, and rotating PDF files."
+    },
+    {
+        "id":  "DblInstallPeazip",
+        "category":  "Utilities",
+        "content":  "PeaZip",
+        "winget":  "Giorgiotani.Peazip",
+        "choco":  "peazip",
+        "description":  "PeaZip is a free, open-source file archiver utility that supports multiple archive formats and provides encryption features."
+    },
+    {
+        "id":  "DblInstallPlaynite",
+        "category":  "Gaming Launchers",
+        "content":  "Playnite",
+        "winget":  "Playnite.Playnite",
+        "choco":  "playnite",
+        "description":  "Playnite is an open-source video game library manager with one simple goal: To provide a unified interface for all of your games."
+    },
+    {
+        "id":  "DblInstallPlex",
+        "category":  "Multimedia Tools",
+        "content":  "Plex Desktop",
+        "winget":  "Plex.Plex",
+        "choco":  "plex",
+        "description":  "Plex Desktop for Windows is the front end for Plex Media Server."
+    },
+    {
+        "id":  "DblInstallPlexServer",
+        "category":  "Multimedia Tools",
+        "content":  "Plex Media Server",
+        "winget":  "Plex.PlexMediaServer",
+        "choco":  "plexmediaserver",
+        "description":  "Plex Media Server is a media server software that allows you to organize and stream your media library. It supports various media formats and offers a wide range of features."
+    },
+    {
+        "id":  "DblInstallPnpm",
+        "category":  "Development",
+        "content":  "pnpm",
+        "winget":  "pnpm.pnpm",
+        "choco":  "pnpm",
+        "description":  "pnpm is a fast and disk space efficient package manager for JavaScript and Node.js applications."
+    },
+    {
+        "id":  "DblInstallPodman",
+        "category":  "Development",
+        "content":  "Podman",
+        "winget":  "RedHat.Podman",
+        "choco":  null,
+        "description":  "Podman is a daemonless container engine for developing, managing, and running containers."
+    },
+    {
+        "id":  "DblInstallPolicyplus",
+        "category":  "Utilities",
+        "content":  "Policy Plus",
+        "winget":  "Fleex255.PolicyPlus",
+        "choco":  null,
+        "description":  "Local Group Policy Editor plus more, for all Windows editions."
+    },
+    {
+        "id":  "DblInstallPostbox",
+        "category":  "Utilities",
+        "content":  "Postbox",
+        "winget":  "Postbox.Postbox",
+        "choco":  null,
+        "description":  "Postbox is a powerful email client for professionals and enthusiasts."
+    },
+    {
+        "id":  "DblInstallPostman",
+        "category":  "Development",
+        "content":  "Postman",
+        "winget":  "Postman.Postman",
+        "choco":  "postman",
+        "description":  "Postman is an API platform and desktop client for designing, testing, documenting, and collaborating on APIs."
+    },
+    {
+        "id":  "DblInstallPowershell",
+        "category":  "Microsoft Tools",
+        "content":  "PowerShell",
+        "winget":  "Microsoft.PowerShell",
+        "choco":  "powershell-core",
+        "description":  "PowerShell is a task automation framework and scripting language designed for system administrators, offering powerful command-line capabilities."
+    },
+    {
+        "id":  "DblInstallPowertoys",
+        "category":  "Microsoft Tools",
+        "content":  "PowerToys",
+        "winget":  "Microsoft.PowerToys",
+        "choco":  "powertoys",
+        "description":  "PowerToys is a set of utilities for power users to enhance productivity, featuring tools like FancyZones, PowerRename, and more."
+    },
+    {
+        "id":  "DblInstallPrism",
+        "category":  "Gaming Launchers",
+        "content":  "Prism Launcher",
+        "winget":  "PrismLauncher.PrismLauncher",
+        "choco":  "prismlauncher",
+        "description":  "Prism Launcher is an open-source Minecraft launcher with the ability to manage multiple instances, accounts, and mods."
+    },
+    {
+        "id":  "DblInstallProcessExplorer",
+        "category":  "Microsoft Tools",
+        "content":  "Process Explorer",
+        "winget":  "Microsoft.Sysinternals.ProcessExplorer",
+        "choco":  "procexp",
+        "description":  "Process Explorer is a task manager and system monitor."
+    },
+    {
+        "id":  "DblInstallProcesslasso",
+        "category":  "Utilities",
+        "content":  "Process Lasso",
+        "winget":  "BitSum.ProcessLasso",
+        "choco":  "processlasso",
+        "description":  "Process Lasso is a system optimization and automation tool that improves system responsiveness and stability by adjusting process priorities and CPU affinities."
+    },
+    {
+        "id":  "DblInstallProcessmonitor",
+        "category":  "Microsoft Tools",
+        "content":  "Process Monitor",
+        "winget":  "Microsoft.Sysinternals.ProcessMonitor",
+        "choco":  "procexp",
+        "description":  "SysInternals Process Monitor is an advanced monitoring tool that shows real-time file system, registry, and process/thread activity."
+    },
+    {
+        "id":  "DblInstallProtonauthenticator",
+        "category":  "Utilities",
+        "content":  "Proton Authenticator",
+        "winget":  "Proton.ProtonAuthenticator",
+        "choco":  "protonauth",
+        "description":  "2FA app from Proton to securely sync and backup 2FA codes."
+    },
+    {
+        "id":  "DblInstallProtondrive",
+        "category":  "Utilities",
+        "content":  "Proton Drive",
+        "winget":  "Proton.ProtonDrive",
+        "choco":  "protondrive",
+        "description":  "Proton Drive is an end-to-end encrypted Swiss vault for your files that protects your data."
+    },
+    {
+        "id":  "DblInstallProtonmail",
+        "category":  "Communications",
+        "content":  "Proton Mail",
+        "winget":  "Proton.ProtonMail",
+        "choco":  "protonmail",
+        "description":  "Proton Mail is an end-to-end encrypted email service by Proton, protecting your privacy with zero-access encryption."
+    },
+    {
+        "id":  "DblInstallProtonpass",
+        "category":  "Utilities",
+        "content":  "Proton Pass",
+        "winget":  "Proton.ProtonPass",
+        "choco":  "protonpass",
+        "description":  "Proton Pass is a cloud-based password manager with end-to-end encryption and unique email aliases."
+    },
+    {
+        "id":  "DblInstallProtonvpn",
+        "category":  "Pro Tools",
+        "content":  "Proton VPN",
+        "winget":  "Proton.ProtonVPN",
+        "choco":  "protonvpn",
+        "description":  "Proton VPN is a no-logs VPN service that protects your privacy online with features like Secure Core and Tor over VPN."
+    },
+    {
+        "id":  "DblInstallProxyman",
+        "category":  "Utilities",
+        "content":  "Proxyman",
+        "winget":  "ProxymanLLC.Proxyman",
+        "choco":  "proxyman",
+        "description":  "Proxyman is a native, high-performance macOS proxy server app for capturing and inspecting HTTP/HTTPS traffic."
+    },
+    {
+        "id":  "DblInstallPutty",
+        "category":  "Pro Tools",
+        "content":  "PuTTY",
+        "winget":  "PuTTY.PuTTY",
+        "choco":  "putty",
+        "description":  "PuTTY is a free and open-source terminal emulator, serial console, and network file transfer application. It supports various network protocols such as SSH, Telnet, and SCP."
+    },
+    {
+        "id":  "DblInstallPython3",
+        "category":  "Development",
+        "content":  "Python3",
+        "winget":  "Python.Python.3.14",
+        "choco":  "python",
+        "description":  "Python is a versatile programming language used for web development, data analysis, artificial intelligence, and more."
+    },
+    {
+        "id":  "DblInstallQbittorrent",
+        "category":  "Utilities",
+        "content":  "qBittorrent",
+        "winget":  "qBittorrent.qBittorrent",
+        "choco":  "qbittorrent",
+        "description":  "qBittorrent is a free and open-source BitTorrent client that aims to provide a feature-rich and lightweight alternative to other torrent clients."
+    },
+    {
+        "id":  "DblInstallQownnotes",
+        "category":  "Document",
+        "content":  "QOwnNotes",
+        "winget":  "pbek.QOwnNotes",
+        "choco":  "qownnotes",
+        "description":  "QOwnNotes is a free open-source note-taking app with Nextcloud/ownCloud integration."
+    },
+    {
+        "id":  "DblInstallQtox",
+        "category":  "Communications",
+        "content":  "QTox",
+        "winget":  "Tox.qTox",
+        "choco":  "qtox",
+        "description":  "QTox is a free and open-source messaging app that prioritizes user privacy and security in its design."
+    },
+    {
+        "id":  "DblInstallRclone",
+        "category":  "Utilities",
+        "content":  "Rclone",
+        "winget":  "Rclone.Rclone",
+        "choco":  "rclone",
+        "description":  "Rclone is a command-line program to manage files on cloud storage."
+    },
+    {
+        "id":  "DblInstallRdcman",
+        "category":  "Microsoft Tools",
+        "content":  "RDCMan",
+        "winget":  "Microsoft.Sysinternals.RDCMan",
+        "choco":  "rdcman",
+        "description":  "RDCMan manages multiple remote desktop connections. It is useful for managing server labs where you need regular access to each machine such as automated checkin systems and data centers."
+    },
+    {
+        "id":  "DblInstallRevo",
+        "category":  "Utilities",
+        "content":  "Revo Uninstaller",
+        "winget":  "RevoUninstaller.RevoUninstaller",
+        "choco":  "revo-uninstaller",
+        "description":  "Revo Uninstaller is an advanced uninstaller tool that helps you remove unwanted software and clean up your system."
+    },
+    {
+        "id":  "DblInstallRoblox",
+        "category":  "Games",
+        "content":  "Roblox",
+        "winget":  "Roblox.Roblox",
+        "choco":  null,
+        "description":  "Roblox is a platform and game creation system that allows users to create and play games developed by the community."
+    },
+    {
+        "id":  "DblInstallRuby",
+        "category":  "Development",
+        "content":  "Ruby",
+        "winget":  "RubyInstallerTeam.Ruby.4.0",
+        "choco":  "ruby",
+        "description":  "A Ruby language execution environment with a MSYS2 installation."
+    },
+    {
+        "id":  "DblInstallRufus",
+        "category":  "Utilities",
+        "content":  "Rufus",
+        "winget":  "Rufus.Rufus",
+        "choco":  "rufus",
+        "description":  "Rufus is a utility that helps format and create bootable USB drives, such as USB keys or pen drives."
+    },
+    {
+        "id":  "DblInstallRust",
+        "category":  "Development",
+        "content":  "Rust",
+        "winget":  "Rustlang.Rust.MSVC",
+        "choco":  "rust",
+        "description":  "Rust is a programming language designed for safety and performance, particularly focused on systems programming."
+    },
+    {
+        "id":  "DblInstallSharex",
+        "category":  "Multimedia Tools",
+        "content":  "ShareX (Screenshots)",
+        "winget":  "ShareX.ShareX",
+        "choco":  "sharex",
+        "description":  "ShareX is a free and open-source screen capture and file sharing tool. It supports various capture methods and offers advanced features for editing and sharing screenshots."
+    },
+    {
+        "id":  "DblInstallSideQuest",
+        "category":  "Gaming Launchers",
+        "content":  "SideQuestVR",
+        "winget":  "SideQuestVR.SideQuest",
+        "choco":  null,
+        "description":  "SideQuest is a platform for discovering and managing VR apps for standalone headsets."
+    },
+    {
+        "id":  "DblInstallSignal",
+        "category":  "Communications",
+        "content":  "Signal",
+        "winget":  "OpenWhisperSystems.Signal",
+        "choco":  "signal",
+        "description":  "Signal is a privacy-focused messaging app that offers end-to-end encryption for secure and private communication."
+    },
+    {
+        "id":  "DblInstallSignalrgb",
+        "category":  "Utilities",
+        "content":  "SignalRGB",
+        "winget":  "WhirlwindFX.SignalRgb",
+        "choco":  null,
+        "description":  "SignalRGB lets you control and sync your favorite RGB devices with one free application."
+    },
+    {
+        "id":  "DblInstallSimplenote",
+        "category":  "Document",
+        "content":  "Simplenote",
+        "winget":  "Automattic.Simplenote",
+        "choco":  "simplenote",
+        "description":  "Simplenote is an easy way to keep notes, lists, ideas and more."
+    },
+    {
+        "id":  "DblInstallSimplewall",
+        "category":  "Pro Tools",
+        "content":  "Simplewall",
+        "winget":  "Henry++.simplewall",
+        "choco":  "simplewall",
+        "description":  "Simplewall is a free and open-source firewall application for Windows. It allows users to control and manage the inbound and outbound network traffic of applications."
+    },
+    {
+        "id":  "DblInstallSlack",
+        "category":  "Communications",
+        "content":  "Slack",
+        "winget":  "SlackTechnologies.Slack",
+        "choco":  "slack",
+        "description":  "Slack is a collaboration hub that connects teams and facilitates communication through channels, messaging, and file sharing."
+    },
+    {
+        "id":  "DblInstallSnappydriverinstallerorigin",
+        "category":  "Utilities",
+        "content":  "Snappy Driver Installer Origin",
+        "winget":  "GlennDelahoy.SnappyDriverInstallerOrigin",
+        "choco":  "sdio",
+        "description":  "Snappy Driver Installer Origin is a free and open-source driver updater with a vast driver database for Windows."
+    },
+    {
+        "id":  "DblInstallSpeedtest",
+        "category":  "Utilities",
+        "content":  "Speedtest by Ookla",
+        "winget":  "Ookla.Speedtest.Desktop",
+        "choco":  null,
+        "description":  "Speedtest by Ookla is a tool for measuring internet connection speed."
+    },
+    {
+        "id":  "DblInstallSpotify",
+        "category":  "Multimedia Tools",
+        "content":  "Spotify",
+        "winget":  "9NCBCSZSJRSB",
+        "choco":  "spotify",
+        "description":  "Spotify is a digital music service that gives you access to millions of songs."
+    },
+    {
+        "id":  "DblInstallSQLServer2022",
+        "category":  "Development",
+        "content":  "SQL Server 2022 Developer",
+        "winget":  "Microsoft.SQLServer.2022.Developer",
+        "choco":  null,
+        "description":  "SQL Server 2022 Developer is a free edition of Microsoft SQL Server for development."
+    },
+    {
+        "id":  "DblInstallSQLite",
+        "category":  "Development",
+        "content":  "SQLite",
+        "winget":  "DBBrowserForSQLite.DBBrowserForSQLite",
+        "choco":  null,
+        "description":  "SQLite is a lightweight, file-based SQL database engine."
+    },
+    {
+        "id":  "DblInstallStarshipshellprompt",
+        "category":  "Development",
+        "content":  "Starship (Shell Prompt)",
+        "winget":  "Starship.Starship",
+        "choco":  "starship",
+        "description":  "Starship is a fast, customizable, cross-platform prompt for PowerShell and other shells."
+    },
+    {
+        "id":  "DblInstallStartallback",
+        "category":  "Utilities",
+        "content":  "StartAllBack",
+        "winget":  "StartIsBack.StartAllBack",
+        "choco":  "StartAllBack",
+        "description":  "StartAllBack restores and improves Windows taskbar, Start menu, File Explorer, and shell UI behavior."
+    },
+    {
+        "id":  "DblInstallSteam",
+        "category":  "Gaming Launchers",
+        "content":  "Steam",
+        "winget":  "Valve.Steam",
+        "choco":  "steam",
+        "description":  "Steam is a digital distribution platform for purchasing and playing video games, offering multiplayer gaming, video streaming, and more."
+    },
+    {
+        "id":  "DblInstallSublimetext",
+        "category":  "Development",
+        "content":  "Sublime Text",
+        "winget":  "SublimeHQ.SublimeText.4",
+        "choco":  "sublimetext4",
+        "description":  "Sublime Text is a sophisticated text editor for code, markup, and prose."
+    },
+    {
+        "id":  "DblInstallSumatra",
+        "category":  "Document",
+        "content":  "Sumatra PDF",
+        "winget":  "SumatraPDF.SumatraPDF",
+        "choco":  "sumatrapdf",
+        "description":  "Sumatra PDF is a lightweight and fast PDF viewer with minimalistic design."
+    },
+    {
+        "id":  "DblInstallSunshine",
+        "category":  "Gaming Launchers",
+        "content":  "Sunshine Stream Server",
+        "winget":  "LizardByte.Sunshine",
+        "choco":  "sunshine",
+        "description":  "Sunshine is a GameStream server that allows you to remotely play PC games on Android devices, offering low-latency streaming."
+    },
+    {
+        "id":  "DblInstallSysteminformer",
+        "category":  "Development",
+        "content":  "System Informer",
+        "winget":  "WinsiderSS.SystemInformer",
+        "choco":  "systeminformer",
+        "description":  "A free, powerful, multi-purpose tool that helps you monitor system resources, debug software and detect malware."
+    },
+    {
+        "id":  "DblInstallTailscale",
+        "category":  "Utilities",
+        "content":  "Tailscale",
+        "winget":  "Tailscale.Tailscale",
+        "choco":  "tailscale",
+        "description":  "The Tailscale client allows you to connect all your devices using WireGuardÂ®, without the hassle. Tailscale makes it as easy as installing an app and signing in."
+    },
+    {
+        "id":  "DblInstallTcpview",
+        "category":  "Microsoft Tools",
+        "content":  "TCPView",
+        "winget":  "Microsoft.Sysinternals.TCPView",
+        "choco":  "tcpview",
+        "description":  "SysInternals TCPView is a network monitoring tool that displays a detailed list of all TCP and UDP endpoints on your system."
+    },
+    {
+        "id":  "DblInstallTeamspeak3",
+        "category":  "Communications",
+        "content":  "TeamSpeak 3",
+        "winget":  "TeamSpeakSystems.TeamSpeakClient",
+        "choco":  "teamspeak",
+        "description":  "TEAMSPEAK. YOUR TEAM. YOUR RULES. Use crystal clear sound to communicate with your teammates cross-platform with military-grade security, lag-free performance \u0026 unparalleled reliability and uptime."
+    },
+    {
+        "id":  "DblInstallTeamspeak6",
+        "category":  "Communications",
+        "content":  "TeamSpeak 6",
+        "winget":  "TeamSpeakSystems.TeamSpeakClient.Beta.6",
+        "choco":  null,
+        "description":  "TEAMSPEAK. YOUR TEAM. YOUR RULES. Use crystal clear sound to communicate with your teammates cross-platform with military-grade security, lag-free performance \u0026 unparalleled reliability and uptime."
+    },
+    {
+        "id":  "DblInstallTeamviewer",
+        "category":  "Utilities",
+        "content":  "TeamViewer",
+        "winget":  "TeamViewer.TeamViewer",
+        "choco":  "teamviewer9",
+        "description":  "TeamViewer is a popular remote access and support software that allows you to connect to and control remote devices."
+    },
+    {
+        "id":  "DblInstallTelegram",
+        "category":  "Communications",
+        "content":  "Telegram",
+        "winget":  "Telegram.TelegramDesktop",
+        "choco":  "telegram",
+        "description":  "Telegram is a cloud-based instant messaging app known for its security features, speed, and simplicity."
+    },
+    {
+        "id":  "DblInstallThorium",
+        "category":  "Browsers",
+        "content":  "Thorium",
+        "winget":  "Alex313031.Thorium",
+        "choco":  "thorium",
+        "description":  "Thorium is a privacy-focused browser based on Chromium."
+    },
+    {
+        "id":  "DblInstallThoriumAVX",
+        "category":  "Browsers",
+        "content":  "Thorium AVX2",
+        "winget":  "Alex313031.Thorium.AVX2",
+        "choco":  null,
+        "description":  "Thorium AVX2 is a performance-optimized build of the Thorium browser."
+    },
+    {
+        "id":  "DblInstallThunderbird",
+        "category":  "Utilities",
+        "content":  "Thunderbird",
+        "winget":  "Mozilla.Thunderbird",
+        "choco":  "thunderbird",
+        "description":  "Mozilla Thunderbird is a free and open-source email client, news client, and chat client with advanced features."
+    },
+    {
+        "id":  "DblInstallTightvnc",
+        "category":  "Utilities",
+        "content":  "TightVNC",
+        "winget":  "GlavSoft.TightVNC",
+        "choco":  "TightVNC",
+        "description":  "TightVNC is a free and open-source remote desktop software that lets you access and control a computer over the network. With its intuitive interface, you can interact with the remote screen as if you were sitting in front of it. You can open files, launch applications, and perform other actions on the remote desktop almost as if you were physically there."
+    },
+    {
+        "id":  "DblInstallTor",
+        "category":  "Browsers",
+        "content":  "Tor Browser",
+        "winget":  "TorProject.TorBrowser",
+        "choco":  "tor-browser",
+        "description":  "Tor Browser is designed for anonymous web browsing, utilizing the Tor network to protect user privacy and security."
+    },
+    {
+        "id":  "DblInstallTotalcommander",
+        "category":  "Utilities",
+        "content":  "Total Commander",
+        "winget":  "Ghisler.TotalCommander",
+        "choco":  "TotalCommander",
+        "description":  "Total Commander is a file manager for Windows that provides a powerful and intuitive interface for file management."
+    },
+    {
+        "id":  "DblInstallTranslucenttb",
+        "category":  "Utilities",
+        "content":  "TranslucentTB",
+        "winget":  "CharlesMilette.TranslucentTB",
+        "choco":  "translucenttb",
+        "description":  "TranslucentTB is a tool that allows you to customize the transparency of the Windows Taskbar."
+    },
+    {
+        "id":  "DblInstallTreesizefree",
+        "category":  "Utilities",
+        "content":  "TreeSize Free",
+        "winget":  "JAMSoftware.TreeSize.Free",
+        "choco":  "treesizefree",
+        "description":  "TreeSize Free is a disk space manager that helps you analyze and visualize the space usage on your drives."
+    },
+    {
+        "id":  "DblInstallTtaskbar",
+        "category":  "Utilities",
+        "content":  "Ttaskbar",
+        "winget":  "9PF4KZ2VN4W9",
+        "choco":  "translucent-taskbar",
+        "description":  "TranslucentTB allows you to customize the transparency and appearance of the Windows taskbar."
+    },
+    {
+        "id":  "DblInstallUbisoft",
+        "category":  "Gaming Launchers",
+        "content":  "Ubisoft Connect",
+        "winget":  "Ubisoft.Connect",
+        "choco":  null,
+        "description":  "Ubisoft Connect is Ubisofts digital distribution and online gaming service, providing access to Ubisofts games and services."
+    },
+    {
+        "id":  "DblInstallUngoogled",
+        "category":  "Browsers",
+        "content":  "Ungoogled Chromium",
+        "winget":  "eloston.ungoogled-chromium",
+        "choco":  "ungoogled-chromium",
+        "description":  "Ungoogled Chromium is a version of Chromium without Googles integration for enhanced privacy and control."
+    },
+    {
+        "id":  "DblInstallUnigetui",
+        "category":  "Utilities",
+        "content":  "UniGetUI",
+        "winget":  "Devolutions.UniGetUI",
+        "choco":  "wingetui",
+        "description":  "UniGetUI is a GUI for WinGet, Chocolatey, and other Windows CLI package managers."
+    },
+    {
+        "id":  "DblInstallUnity",
+        "category":  "Development",
+        "content":  "Unity Game Engine",
+        "winget":  "Unity.UnityHub",
+        "choco":  "unityhub",
+        "description":  "Unity is a powerful game development platform for creating 2D, 3D, augmented reality, and virtual reality games."
+    },
+    {
+        "id":  "DblInstallUv",
+        "category":  "Development",
+        "content":  "uv",
+        "winget":  "astral-sh.uv",
+        "choco":  "uv",
+        "description":  "uv is a fast Python package and project manager written in Rust."
+    },
+    {
+        "id":  "DblInstallVagrant",
+        "category":  "Development",
+        "content":  "Vagrant",
+        "winget":  "Hashicorp.Vagrant",
+        "choco":  "vagrant",
+        "description":  "Vagrant builds and manages reproducible virtual machine development environments from declarative configuration."
+    },
+    {
+        "id":  "DblInstallVentoy",
+        "category":  "Pro Tools",
+        "content":  "Ventoy",
+        "winget":  "Ventoy.Ventoy",
+        "choco":  "ventoy",
+        "description":  "Ventoy is an open-source tool for creating bootable USB drives. It supports multiple ISO files on a single USB drive, making it a versatile solution for installing operating systems."
+    },
+    {
+        "id":  "DblInstallVesktop",
+        "category":  "Communications",
+        "content":  "Vesktop",
+        "winget":  "Vencord.Vesktop",
+        "choco":  null,
+        "description":  "A cross-platform electron-based desktop app aiming to give you a snappier Discord experience with Vencord pre-installed."
+    },
+    {
+        "id":  "DblInstallViber",
+        "category":  "Communications",
+        "content":  "Viber",
+        "winget":  "Viber.Viber",
+        "choco":  "viber",
+        "description":  "Viber is a free messaging and calling app with features like group chats, video calls, and more."
+    },
+    {
+        "id":  "DblInstallVirtualdesktopstreamer",
+        "category":  "Games",
+        "content":  "Virtual Desktop Streamer",
+        "winget":  "VirtualDesktop.Streamer",
+        "choco":  null,
+        "description":  "Virtual Desktop Streamer is a tool that allows you to stream your desktop screen to VR devices."
+    },
+    {
+        "id":  "DblInstallOVirtualBox",
+        "category":  "Utilities",
+        "content":  "VirtualBox",
+        "winget":  "Oracle.VirtualBox",
+        "choco":  "virtualbox",
+        "description":  "Oracle VirtualBox is a powerful and free open-source virtualization tool for x86 and AMD64/Intel64 architectures."
+    },
+    {
+        "id":  "DblInstallvc2015_32",
+        "category":  "Microsoft Tools",
+        "content":  "Visual C++ 2015-2022 32-bit",
+        "winget":  "Microsoft.VCRedist.2015+.x86",
+        "choco":  "vcredist2015",
+        "description":  "Visual C++ 2015-2022 32-bit redistributable package installs runtime components of Visual C++ libraries required to run 32-bit applications."
+    },
+    {
+        "id":  "DblInstallvc2015_64",
+        "category":  "Microsoft Tools",
+        "content":  "Visual C++ 2015-2022 64-bit",
+        "winget":  "Microsoft.VCRedist.2015+.x64",
+        "choco":  "vcredist2015",
+        "description":  "Visual C++ 2015-2022 64-bit redistributable package installs runtime components of Visual C++ libraries required to run 64-bit applications."
+    },
+    {
+        "id":  "DblInstallVisualstudio2022",
+        "category":  "Development",
+        "content":  "Visual Studio 2022",
+        "winget":  "Microsoft.VisualStudio.2022.Community",
+        "choco":  "visualstudio2022community",
+        "description":  "Visual Studio 2022 is an integrated development environment (IDE) for building, debugging, and deploying applications."
+    },
+    {
+        "id":  "DblInstallVisualstudio2026",
+        "category":  "Development",
+        "content":  "Visual Studio 2026",
+        "winget":  "Microsoft.VisualStudio.Community",
+        "choco":  "visualstudio2026community",
+        "description":  "Visual Studio 2026 is an integrated development environment (IDE) for building, debugging, and deploying applications."
+    },
+    {
+        "id":  "DblInstallCode",
+        "category":  "Development",
+        "content":  "VS Code",
+        "winget":  "Microsoft.VisualStudioCode",
+        "choco":  "vscode",
+        "description":  "Visual Studio Code is a free, open-source code editor with support for multiple programming languages."
+    },
+    {
+        "id":  "DblInstallVivaldi",
+        "category":  "Browsers",
+        "content":  "Vivaldi",
+        "winget":  "VivaldiTechnologies.Vivaldi",
+        "choco":  "vivaldi",
+        "description":  "Vivaldi is a highly customizable web browser with a focus on user personalization and productivity features."
+    },
+    {
+        "id":  "DblInstallVlc",
+        "category":  "Multimedia Tools",
+        "content":  "VLC Media Player",
+        "winget":  "VideoLAN.VLC",
+        "choco":  "vlc",
+        "description":  "VLC Media Player is a free and open-source multimedia player that supports a wide range of audio and video formats. It is known for its versatility and cross-platform compatibility."
+    },
+    {
+        "id":  "DblInstallVP9",
+        "category":  "Multimedia Tools",
+        "content":  "VP9 Video Extensions",
+        "winget":  "9N4D0MSMP0PT",
+        "choco":  null,
+        "description":  "VP9 Video Extensions provides support for the VP9 video codec in Windows."
+    },
+    {
+        "id":  "DblInstallVscodium",
+        "category":  "Development",
+        "content":  "VS Codium",
+        "winget":  "VSCodium.VSCodium",
+        "choco":  "vscodium",
+        "description":  "VSCodium is a community-driven, freely-licensed binary distribution of Microsofts VS Code."
+    },
+    {
+        "id":  "DblInstallWargaming",
+        "category":  "Gaming Launchers",
+        "content":  "Wargaming Game Center",
+        "winget":  "Wargaming.GameCenter",
+        "choco":  null,
+        "description":  "Wargaming Game Center is a launcher for Wargaming.net games."
+    },
+    {
+        "id":  "DblInstallWaterfox",
+        "category":  "Browsers",
+        "content":  "Waterfox",
+        "winget":  "Waterfox.Waterfox",
+        "choco":  "waterfox",
+        "description":  "Waterfox is a fast, privacy-focused web browser based on Firefox, designed to preserve user choice and privacy."
+    },
+    {
+        "id":  "DblInstallWhatsappdesktop",
+        "category":  "Communications",
+        "content":  "WhatsApp Desktop",
+        "winget":  "msstore:9NKSQGP7F2NH",
+        "choco":  null,
+        "description":  "WhatsApp Desktop is the official Windows desktop messaging app from Meta, distributed through the Microsoft Store."
+    },
+    {
+        "id":  "DblInstallTerminal",
+        "category":  "Microsoft Tools",
+        "content":  "Windows Terminal",
+        "winget":  "Microsoft.WindowsTerminal",
+        "choco":  "microsoft-windows-terminal",
+        "description":  "Windows Terminal is a modern, fast, and efficient terminal application for command-line users, supporting multiple tabs, panes, and more."
+    },
+    {
+        "id":  "DblInstallWingetUI",
+        "category":  "Utilities",
+        "content":  "UniGetUI",
+        "winget":  "Devolutions.UniGetUI",
+        "choco":  "wingetui",
+        "description":  "WingetUI is a GUI for managing packages with WinGet, Chocolatey, and other package managers."
+    },
+    {
+        "id":  "DblInstallWinmerge",
+        "category":  "Document",
+        "content":  "WinMerge",
+        "winget":  "WinMerge.WinMerge",
+        "choco":  "winmerge",
+        "description":  "WinMerge is a free and open-source file comparison and merging tool."
+    },
+    {
+        "id":  "DblInstallWinrar",
+        "category":  "Utilities",
+        "content":  "WinRAR",
+        "winget":  "RARLab.WinRAR",
+        "choco":  "winrar",
+        "description":  "WinRAR is a powerful archive manager that allows you to create, manage, and extract compressed files."
+    },
+    {
+        "id":  "DblInstallWinscp",
+        "category":  "Pro Tools",
+        "content":  "WinSCP",
+        "winget":  "WinSCP.WinSCP",
+        "choco":  "winscp",
+        "description":  "WinSCP is a popular open-source SFTP, FTP, and SCP client for Windows. It allows secure file transfers between a local and a remote computer."
+    },
+    {
+        "id":  "DblInstallWireguard",
+        "category":  "Pro Tools",
+        "content":  "WireGuard",
+        "winget":  "WireGuard.WireGuard",
+        "choco":  "wireguard",
+        "description":  "WireGuard is a fast and modern VPN (Virtual Private Network) protocol. It aims to be simpler and more efficient than other VPN protocols, providing secure and reliable connections."
+    },
+    {
+        "id":  "DblInstallWireshark",
+        "category":  "Pro Tools",
+        "content":  "Wireshark",
+        "winget":  "WiresharkFoundation.Wireshark",
+        "choco":  "wireshark",
+        "description":  "Wireshark is a widely-used open-source network protocol analyzer. It allows users to capture and analyze network traffic in real-time, providing detailed insights into network activities."
+    },
+    {
+        "id":  "DblInstallWiseprogramuninstallerwisecleaner",
+        "category":  "Utilities",
+        "content":  "WiseCleaner Uninstaller",
+        "winget":  "WiseCleaner.WiseProgramUninstaller",
+        "choco":  null,
+        "description":  "Wise Program Uninstaller is the perfect solution for uninstalling Windows programs, allowing you to uninstall applications quickly and completely using its simple and user-friendly interface."
+    },
+    {
+        "id":  "DblInstallWiztree",
+        "category":  "Utilities",
+        "content":  "WizTree",
+        "winget":  "AntibodySoftware.WizTree",
+        "choco":  "wiztree",
+        "description":  "WizTree is a fast disk space analyzer that helps you quickly find the files and folders consuming the most space on your hard drive."
+    },
+    {
+        "id":  "DblInstallWPS",
+        "category":  "Document",
+        "content":  "WPS Office",
+        "winget":  "Kingsoft.WPSOffice",
+        "choco":  null,
+        "description":  "WPS Office is a free office suite with word processing, spreadsheets, and presentations."
+    },
+    {
+        "id":  "DblInstallXemu",
+        "category":  "Gaming Launchers",
+        "content":  "XEMU",
+        "winget":  "xemu-project.xemu",
+        "choco":  null,
+        "description":  "XEMU is an open-source emulator for the original Microsoft Xbox console."
+    },
+    {
+        "id":  "DblInstallXournal",
+        "category":  "Document",
+        "content":  "Xournal++",
+        "winget":  "Xournal++.Xournal++",
+        "choco":  "xournalplusplus",
+        "description":  "Xournal++ is an open-source handwriting notetaking software with PDF annotation capabilities."
+    },
+    {
+        "id":  "DblInstallYarn",
+        "category":  "Development",
+        "content":  "Yarn",
+        "winget":  "Yarn.Yarn",
+        "choco":  "yarn",
+        "description":  "Yarn is a fast, reliable, and secure dependency management tool for JavaScript projects."
+    },
+    {
+        "id":  "DblInstallYtdlp",
+        "category":  "Multimedia Tools",
+        "content":  "yt-dlp",
+        "winget":  "yt-dlp.yt-dlp",
+        "choco":  "yt-dlp",
+        "description":  "yt-dlp is a command-line program for downloading videos from YouTube and other sites."
+    },
+    {
+        "id":  "DblInstallZed",
+        "category":  "Development",
+        "content":  "Zed",
+        "winget":  "ZedIndustries.Zed",
+        "choco":  "zed",
+        "description":  "Zed is a modern, high-performance code editor designed from the ground up for speed and collaboration."
+    },
+    {
+        "id":  "DblInstallZenbrowser",
+        "category":  "Browsers",
+        "content":  "Zen Browser",
+        "winget":  "Zen-Team.Zen-Browser",
+        "choco":  "zen-browser",
+        "description":  "The modern, privacy-focused, performance-driven browser built on Firefox."
+    },
+    {
+        "id":  "DblInstallZoom",
+        "category":  "Communications",
+        "content":  "Zoom",
+        "winget":  "Zoom.Zoom",
+        "choco":  "zoom",
+        "description":  "Zoom is a popular video conferencing and web conferencing service for online meetings, webinars, and collaborative projects."
+    },
+    {
+        "id":  "DblInstallZotero",
+        "category":  "Document",
+        "content":  "Zotero",
+        "winget":  "DigitalScholar.Zotero",
+        "choco":  "zotero",
+        "description":  "Zotero is a free, easy-to-use tool to help you collect, organize, cite, and share your research materials."
+    }
+]
+
+'@ | ConvertFrom-Json
+
 
 if ($SmokeTest) {
     Write-Host "Running smoke test..." -ForegroundColor Cyan
@@ -4025,6 +6296,7 @@ $sync = @{
         preset = $preset
         feature = $feature
         configuration = $configuration
+        applications = $applications
     }
 }
 
@@ -4987,6 +7259,7 @@ function Invoke-APPX {
         $name = $program.content
         $winget = $program.winget
         $choco = $program.choco
+        $description = $program.description
 
         $checkBox = $psform.FindName("$id")
         if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($id)) {
@@ -5003,6 +7276,7 @@ function Invoke-APPX {
             Name = $name
             Winget = $winget
             Choco = $choco
+            description = $description
             IsChecked = $isChecked
         }
     }
@@ -5313,10 +7587,7 @@ function Invoke-ClearProgramsButton {
     $matchingProgram = Invoke-APPX | Where-Object { $_.IsChecked}
 
     foreach ($program in $matchingProgram) {
-        $checkBox = $psform.FindName($program.Id)
-        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($program.Id)) {
-            $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
-        }
+        $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
         if ($checkBox) {
             $checkBox.IsChecked = $false
         }
@@ -5362,14 +7633,12 @@ function Invoke-getInstallButton {
             $matchingProgram = Invoke-APPX | Where-Object { $_.Winget -eq $package.PackageIdentifier }
 
             if ($matchingProgram -ne $null) {
-                $checkBox = $psform.FindName($matchingProgram.Id)
-                if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($matchingProgram.Id)) {
-                    $checkBox = $script:DynamicAppCheckBoxes[$matchingProgram.Id]
-                }
+                $checkBox = $script:DynamicAppCheckBoxes[$matchingProgram.Id]
                 if ($checkBox -and $checkBox.IsEnabled) {
                     $checkBox.IsChecked = $true
                 }
             }
+
         }
     } catch {
         Write-Warning "Failed to process winget packages: $_"
@@ -5386,10 +7655,7 @@ function Invoke-getInstallButton {
             foreach ($package in $xml.packages.package) {
                 $matchingProgram = Invoke-APPX | Where-Object { $_.Choco -eq $package.id }
                 if ($matchingProgram -ne $null) {
-                    $checkBox = $psform.FindName($matchingProgram.Id)
-                    if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($matchingProgram.Id)) {
-                        $checkBox = $script:DynamicAppCheckBoxes[$matchingProgram.Id]
-                    }
+                    $checkBox = $script:DynamicAppCheckBoxes[$matchingProgram.Id]
                     if ($checkBox -and $checkBox.IsEnabled) {
                         $checkBox.IsChecked = $true
                     }
@@ -5414,10 +7680,7 @@ function Invoke-installButton {
     $matchingProgram = Invoke-APPX
     $packageManager = $script:SelectedPackageManager
     foreach ($program in $matchingProgram) {
-        $checkBox = $psform.FindName($program.Id)
-        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($program.Id)) {
-            $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
-        }
+        $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
         $isChecked = $checkBox.IsChecked
         $isEnabled = $checkBox.IsEnabled
 
@@ -5488,13 +7751,13 @@ function Invoke-ToggleDevPreset {
 
     $matchingProgram = Invoke-APPX
     foreach ($program in $matchingProgram) {
-        $checkBox = $psform.FindName($program.Id)
+        $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
         $isChecked = $checkBox.IsChecked
 
         if ($checkBox.IsChecked -eq $false -and @(
             "Githubdesktop", "Nodemanager", "Java8", "Ohmyposh",
             "Python3", "Postman", "Ruby", "Visualstudio2022", "Code",
-            "Dotnet3", "Dotnet5", "Dotnet6", "Dotnet7",
+            "Dotnet6", "Dotnet7", "Dotnet8", "Dotnet9", "Dotnet10",
             "Powershell", "vc2015_64", "vc2015_32", "Terminal",
             "Thorium", "Discord", "Slack", "Teams", "Zoom",
             "Steam", "Greenshot", "Imageglass", "Klite", "Spotify", "Vlc",
@@ -5520,12 +7783,12 @@ function Invoke-ToggleGamingPreset {
 
     $matchingProgram = Invoke-APPX
     foreach ($program in $matchingProgram) {
-        $checkBox = $psform.FindName($program.Id)
+        $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
         $isChecked = $checkBox.IsChecked
 
         if ($checkBox.IsChecked -eq $false -and @(
-            "Git", "Dotnet3", "Dotnet5", "Dotnet6",
-            "Dotnet7", "vc2015_64", "vc2015_32", "Thorium",
+            "Dotnet6", "Dotnet7", "Dotnet8", "Dotnet9", "Dotnet10",
+            "Git", "vc2015_64", "vc2015_32", "Thorium",
             "Discord", "Eaapp", "Epicgames", "Steam",
             "Ubisoft", "Greenshot", "Imageglass", "Obs", "Spotify",
             "Vlc", "Notepadplus", "Sumatra", "7zip", "Cpuz",
@@ -5549,7 +7812,7 @@ function Invoke-ToggleLitePreset {
 
     $matchingProgram = Invoke-APPX
     foreach ($program in $matchingProgram) {
-        $checkBox = $psform.FindName($program.Id)
+        $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
         $isChecked = $checkBox.IsChecked
 
         if ($checkBox.IsChecked -eq $false -and @(
@@ -5575,10 +7838,7 @@ function Invoke-UninstallButton {
     $matchingProgram = Invoke-APPX
     $packageManager = $script:SelectedPackageManager
     foreach ($program in $matchingProgram) {
-        $checkBox = $psform.FindName($program.Id)
-        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($program.Id)) {
-            $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
-        }
+        $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
         $isChecked = $checkBox.IsChecked
         $isEnabled = $checkBox.IsEnabled
 
@@ -5605,10 +7865,7 @@ function Invoke-UpgradeButton {
     $matchingProgram = Invoke-APPX
     $packageManager = $script:SelectedPackageManager
     foreach ($program in $matchingProgram) {
-        $checkBox = $psform.FindName($program.Id)
-        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($program.Id)) {
-            $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
-        }
+        $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
         $isChecked = $checkBox.IsChecked
         $isEnabled = $checkBox.IsEnabled
 
@@ -7780,27 +10037,21 @@ function Invoke-ApplyConfigFile {
     }
 
     # Install apps
-    if ($config.PSObject.Properties.Name -contains 'installedApps' -and $config.installedApps) {
+    if ($config.PSObject.Properties.Name -contains 'packageManager' -and $config.PSObject.Properties.Name -contains 'installApps' -and $config.installApps) {
         Write-Host "Installing applications..." -ForegroundColor.Yellow
-        
-        # Install winget packages
-        if ($config.installedApps.PSObject.Properties.Name -contains 'winget') {
-            foreach ($packageId in $config.installedApps.winget) {
-                Write-Host "  Installing winget package: $packageId" -ForegroundColor.Gray
-                $matchingProgram = Invoke-APPX | Where-Object { $_.Winget -eq $packageId }
+        $packageManager = $config.packageManager
+        foreach ($appId in $config.installApps.PSObject.Properties.Name) {
+            if ($config.installApps.$appId -eq $true) {
+                Write-Host "  Installing app: $appId via $packageManager" -ForegroundColor.Gray
+                $matchingProgram = Invoke-APPX | Where-Object { $_.Id -eq $appId }
                 if ($matchingProgram -ne $null) {
-                    Invoke-ManageInstall -PackageManger "winget" -manage "Installing" -program $matchingProgram -PackageName $packageId
-                }
-            }
-        }
-
-        # Install choco packages
-        if ($config.installedApps.PSObject.Properties.Name -contains 'choco') {
-            foreach ($packageId in $config.installedApps.choco) {
-                Write-Host "  Installing choco package: $packageId" -ForegroundColor.Gray
-                $matchingProgram = Invoke-APPX | Where-Object { $_.Choco -eq $packageId }
-                if ($matchingProgram -ne $null) {
-                    Invoke-ManageInstall -PackageManger "choco" -manage "Installing" -program $matchingProgram -PackageName $packageId
+                    $packageName = switch ($packageManager) {
+                        "choco" { $matchingProgram.Choco }
+                        default { $matchingProgram.Winget }
+                    }
+                    if ($packageName) {
+                        Invoke-ManageInstall -PackageManger $packageManager -manage "Installing" -program $matchingProgram -PackageName $packageName
+                    }
                 }
             }
         }
@@ -7852,30 +10103,23 @@ function Invoke-ExportConfig {
 
     $config = @{}
 
-    # Export installed apps
-    $config.installedApps = @{ winget = @(); choco = @() }
-    try {
-        $wingetExportPath = Join-Path $env:TEMP "wingetPackage.json"
-        $exportResult = winget export -o $wingetExportPath 2>&1
-        if ($LASTEXITCODE -eq 0 -and (Test-Path $wingetExportPath)) {
-            $jsonObject = Get-Content -Raw -Path $wingetExportPath -ErrorAction Stop | ConvertFrom-Json
-            foreach ($package in $jsonObject.Sources.Packages) {
-                $config.installedApps.winget += $package.PackageIdentifier
-            }
+    # Export checked apps
+    $installApps = @{}
+    if ($wpf_PkgMgrWinget.IsChecked) {
+        $packageManager = "winget"
+    } elseif ($wpf_PkgMgrChoco.IsChecked) {
+        $packageManager = "choco"
+    } else {
+        $packageManager = "winget"
+    }
+    foreach ($appId in $script:DynamicAppCheckBoxes.Keys) {
+        $checkBox = $script:DynamicAppCheckBoxes[$appId]
+        if ($checkBox -and $checkBox.IsChecked) {
+            $installApps[$appId] = $true
         }
-    } catch { Write-Warning "Failed to export winget packages: $_" }
-
-    try {
-        if (Get-Command -Name choco -ErrorAction SilentlyContinue) {
-            $chocoExportPath = Join-Path $env:TEMP "chocoPackage.json"
-            choco export -o $chocoExportPath -ErrorAction Stop | Out-Null
-            $chocoObject = Get-Content -Path $chocoExportPath -ErrorAction Stop
-            $xml = [xml]$chocoObject
-            foreach ($package in $xml.packages.package) {
-                $config.installedApps.choco += $package.id
-            }
-        }
-    } catch { Write-Warning "Failed to export choco packages: $_" }
+    }
+    $config.packageManager = $packageManager
+    $config.installApps = $installApps
 
     # Export checked tweaks
     $config.tweaks = @{}
@@ -8328,6 +10572,7 @@ foreach ($program in $programs) {
     $cbox.Margin = New-Object System.Windows.Thickness(8, 5, 8, 5)
     $cbox.FontSize = 11
     $cbox.FontFamily = New-Object System.Windows.Media.FontFamily("Gadugi")
+    $cbox.tooltip = $program.description
 
     $scaleTransform = New-Object System.Windows.Media.ScaleTransform
     $scaleTransform.ScaleX = 1.5

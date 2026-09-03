@@ -28,23 +28,21 @@ iwr -useb vukilis.com/win11dev | iex
 
 If you are having TLS 1.2 Issues or You cannot find or resolve `vukilis.com/win11deb` then run with the following 
 command:
+
 ```
 [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12;iex(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/win11deb.ps1')
+```
 
 ## What Script Do?
 - **Info**
   > Shows system information
 - **Install**
-  > Install applications from winget, choco and pip.
+  > Install applications from winget and choco.
 - **Debloat**
   > Removes unnecessary preinstalled apps.
 - **Optimization**
-  > Optimizes Windows and reduces running processes  
+  > Optimizes Windows and reduces running processes
   > Has different presets
-- **Services**
-  > Sets services to disabled or manual  
-  > Has three modes - recommended, gaming, normal  
-  > Shows services status
 - **Updates**
   > Fixes the default Windows update scheme  
   > Reset Windows Update to factory settings  

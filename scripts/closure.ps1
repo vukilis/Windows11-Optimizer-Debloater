@@ -67,6 +67,7 @@ foreach ($program in $programs) {
     $cbox.Margin = New-Object System.Windows.Thickness(8, 5, 8, 5)
     $cbox.FontSize = 11
     $cbox.FontFamily = New-Object System.Windows.Media.FontFamily("Gadugi")
+    $cbox.tooltip = $program.description
 
     $scaleTransform = New-Object System.Windows.Media.ScaleTransform
     $scaleTransform.ScaleX = 1.5

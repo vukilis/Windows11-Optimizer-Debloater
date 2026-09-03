@@ -80,7 +80,8 @@ $jsonFiles = @(
     ".\config\tweaks.json",
     ".\config\preset.json",
     ".\config\feature.json",
-    ".\config\configuration.json"
+    ".\config\configuration.json",
+    ".\config\applications.json"
     # add more here...
 )
 

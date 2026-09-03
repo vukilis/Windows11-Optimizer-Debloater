@@ -9,10 +9,7 @@ function Invoke-installButton {
     $matchingProgram = Invoke-APPX
     $packageManager = $script:SelectedPackageManager
     foreach ($program in $matchingProgram) {
-        $checkBox = $psform.FindName($program.Id)
-        if (-not $checkBox -and $script:DynamicAppCheckBoxes.ContainsKey($program.Id)) {
-            $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
-        }
+        $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
         $isChecked = $checkBox.IsChecked
         $isEnabled = $checkBox.IsEnabled
 

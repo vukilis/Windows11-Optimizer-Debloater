@@ -11,12 +11,12 @@ function Invoke-ToggleGamingPreset {
 
     $matchingProgram = Invoke-APPX
     foreach ($program in $matchingProgram) {
-        $checkBox = $psform.FindName($program.Id)
+        $checkBox = $script:DynamicAppCheckBoxes[$program.Id]
         $isChecked = $checkBox.IsChecked
 
         if ($checkBox.IsChecked -eq $false -and @(
-            "Git", "Dotnet3", "Dotnet5", "Dotnet6",
-            "Dotnet7", "vc2015_64", "vc2015_32", "Thorium",
+            "Dotnet6", "Dotnet7", "Dotnet8", "Dotnet9", "Dotnet10",
+            "Git", "vc2015_64", "vc2015_32", "Thorium",
             "Discord", "Eaapp", "Epicgames", "Steam",
             "Ubisoft", "Greenshot", "Imageglass", "Obs", "Spotify",
             "Vlc", "Notepadplus", "Sumatra", "7zip", "Cpuz",

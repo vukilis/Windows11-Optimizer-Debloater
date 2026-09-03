@@ -247,6 +247,7 @@ $sync = @{
         preset = $preset
         feature = $feature
         configuration = $configuration
+        applications = $applications
     }
 }
 

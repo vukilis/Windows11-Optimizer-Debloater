@@ -6,30 +6,23 @@ function Invoke-ExportConfig {
 
     $config = @{}
 
-    # Export installed apps
-    $config.installedApps = @{ winget = @(); choco = @() }
-    try {
-        $wingetExportPath = Join-Path $env:TEMP "wingetPackage.json"
-        $exportResult = winget export -o $wingetExportPath 2>&1
-        if ($LASTEXITCODE -eq 0 -and (Test-Path $wingetExportPath)) {
-            $jsonObject = Get-Content -Raw -Path $wingetExportPath -ErrorAction Stop | ConvertFrom-Json
-            foreach ($package in $jsonObject.Sources.Packages) {
-                $config.installedApps.winget += $package.PackageIdentifier
-            }
+    # Export checked apps
+    $installApps = @{}
+    if ($wpf_PkgMgrWinget.IsChecked) {
+        $packageManager = "winget"
+    } elseif ($wpf_PkgMgrChoco.IsChecked) {
+        $packageManager = "choco"
+    } else {
+        $packageManager = "winget"
+    }
+    foreach ($appId in $script:DynamicAppCheckBoxes.Keys) {
+        $checkBox = $script:DynamicAppCheckBoxes[$appId]
+        if ($checkBox -and $checkBox.IsChecked) {
+            $installApps[$appId] = $true
         }
-    } catch { Write-Warning "Failed to export winget packages: $_" }
-
-    try {
-        if (Get-Command -Name choco -ErrorAction SilentlyContinue) {
-            $chocoExportPath = Join-Path $env:TEMP "chocoPackage.json"
-            choco export -o $chocoExportPath -ErrorAction Stop | Out-Null
-            $chocoObject = Get-Content -Path $chocoExportPath -ErrorAction Stop
-            $xml = [xml]$chocoObject
-            foreach ($package in $xml.packages.package) {
-                $config.installedApps.choco += $package.id
-            }
-        }
-    } catch { Write-Warning "Failed to export choco packages: $_" }
+    }
+    $config.packageManager = $packageManager
+    $config.installApps = $installApps
 
     # Export checked tweaks
     $config.tweaks = @{}
