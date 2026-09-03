@@ -33,4 +33,4 @@ Add-Type -AssemblyName PresentationFramework
 
 Start-Transcript $ENV:TEMP\win11deb.log -Append
 
-$ScriptVersion = "4.0 - 28.08.2026"
+$ScriptVersion = "4.0 - 03.09.2026"
