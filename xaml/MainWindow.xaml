@@ -1163,6 +1163,7 @@
                             Margin="5,0,10,0" ToolTip="Reset Search" VerticalAlignment="Center" Padding="5,0,0,0"
                         Style="{StaticResource ResetButtonStyle}"
                         Tag="{StaticResource ResetIcon}"/>
+                <Button Name="ImportButton" Style="{DynamicResource ButtonStyle}" Content="Import" ForceCursor="true" Cursor="Hand" Height="34" Width="80" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,0,0" ToolTip="Import configuration from JSON"/>
                 <Button Name="ExportButton" Style="{DynamicResource ButtonStyle}" Content="Export" ForceCursor="true" Cursor="Hand" Height="34" Width="80" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,0,0" ToolTip="Export configuration to JSON"/>
             </StackPanel>
         </DockPanel>
