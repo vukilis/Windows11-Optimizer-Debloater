@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Windows11_Optimizer_Debloater"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xml:lang="en-GB"
         mc:Ignorable="d"
         Background="#333333"
@@ -876,70 +877,8 @@
         </Style>
 
         <!-- The "reset icons" -->
-        <Geometry x:Key="ResetIcon">F1 M 38,20.5833C 42.9908,20.5833 47.4912,22.6825 50.6667,26.046L 50.6667,17.4167L 55.4166,22.1667L 55.4167,34.8333L 42.75,34.8333L 38,30.0833L 46.8512,30.0833C 44.6768,27.6539 41.517,26.125 38,26.125C 31.9785,26.125 27.0037,30.6068 26.2296,36.4167L 20.6543,36.4167C 21.4543,27.5397 28.9148,20.5833 38,20.5833 Z M 38,49.875C 44.0215,49.875 48.9963,45.3932 49.7703,39.5833L 55.3457,39.5833C 54.5457,48.4603 47.0852,55.4167 38,55.4167C 33.0092,55.4167 28.5088,53.3175 25.3333,49.954L 25.3333,58.5833L 20.5833,53.8333L 20.5833,41.1667L 33.25,41.1667L 38,45.9167L 29.1487,45.9167C 31.3231,48.3461 34.483,49.875 38,49.875 Z</Geometry>
-        <Geometry x:Key="RefreshIcon">M 17.65 6.35C 16.2 4.9 14.21 4 12 4 c -4.42 0 -7.99 3.58 -7.99 8 s 3.57 8 7.99 8 c 3.73 0 6.84 -2.55 7.73 -6 h -2.08 c -0.82 2.33 -3.04 4 -5.65 4 c -3.31 0 -6 -2.69 -6 -6 s 2.69 -6 6 -6 c 1.66 0 3.14 0.69 4.22 1.78 L 13 11 h 7 V 4 l -2.35 2.35 z</Geometry>
-        <Style x:Key="ResetButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="OverridesDefaultStyle" Value="True"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#fac664"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="4,2"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-                            <Border Grid.RowSpan="2"
-                                        x:Name="border" 
-                                        BorderBrush="{TemplateBinding BorderBrush}" 
-                                        BorderThickness="{TemplateBinding BorderThickness}" 
-                                        Background="{TemplateBinding Background}" 
-                                        SnapsToDevicePixels="true"/>
-
-                            <Path   x:Name="ButtonIcon"
-                                    Stretch="Uniform"
-                                      Data="{TemplateBinding Tag}"
-                                      Fill="#777777"
-                                      Margin="{TemplateBinding Padding}"
-                                      Height="32"/>
-
-                            <ContentPresenter Grid.Row="1"
-                                                  x:Name="contentPresenter" 
-                                                  Focusable="False"                                               
-                                                  Margin="{TemplateBinding Padding}" 
-                                                  RecognizesAccessKey="True" 
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-
-                        </Grid>
-
-                        <ControlTemplate.Triggers>
-
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Fill" 
-                                        TargetName="ButtonIcon" 
-                                        Value="#a69f6c"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Fill" 
-                                        TargetName="ButtonIcon" 
-                                        Value="#fac664"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <Geometry x:Key="ResetIcon">M 24.17 21.34 L 35.51 32.68 L 24.17 44.02 L 26.99 46.84 L 38.33 35.5 L 49.67 46.84 L 52.49 44.02 L 41.15 32.68 L 52.49 21.34 L 49.67 18.52 L 38.33 29.86 L 26.99 18.52 Z</Geometry>        <Geometry x:Key="RefreshIcon">M 17.65 6.35C 16.2 4.9 14.21 4 12 4 c -4.42 0 -7.99 3.58 -7.99 8 s 3.57 8 7.99 8 c 3.73 0 6.84 -2.55 7.73 -6 h -2.08 c -0.82 2.33 -3.04 4 -5.65 4 c -3.31 0 -6 -2.69 -6 -6 s 2.69 -6 6 -6 c 1.66 0 3.14 0.69 4.22 1.78 L 13 11 h 7 V 4 l -2.35 2.35 z</Geometry>
+        <Geometry x:Key="SearchIcon">M11.5 2C6.81 2 3 5.81 3 10.5c0 2.05.74 3.93 1.97 5.39l-2.28 2.28c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l2.28-2.28C7.57 18.26 9.45 19 11.5 19 16.19 19 20 15.19 20 10.5S16.19 2 11.5 2zm0 2c3.59 0 6.5 2.91 6.5 6.5s-2.91 6.5-6.5 6.5S5 14.09 5 10.5 7.91 4 11.5 4z</Geometry>
     </Window.Resources>
     <Grid Background="#2d2d30" ShowGridLines="False" Name="MainGrid" Width="Auto" Height="Auto" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
@@ -1149,20 +1088,45 @@
                 </ToggleButton.Content>
             </RadioButton>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
-                <TextBox 
-                        Name="CheckboxFilter" VerticalContentAlignment="Center" Margin="0,0,0,0" ToolTip="Type app name to filter application list below. Press Reset Button to reset the filter"
-                        Height="34" Width="200" Padding="5,0,0,0"
-                        Foreground="#a69f6c" Background="#2d2d30" FontSize="18">
-                    <TextBox.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="7"/>
+                <Border Background="#2d2d30" CornerRadius="7" Height="34" Width="200" ToolTip="Type app name to filter application list below. Press Reset Button to reset the filter" Margin="0,0,0,0">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsChecked, ElementName=Tab2BT}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
                         </Style>
-                    </TextBox.Resources> Search
-                </TextBox>
-                <Button Name="ResetButton" HorizontalAlignment="Right" BorderThickness="0" VerticalContentAlignment="Center"
-                            Margin="5,0,10,0" ToolTip="Reset Search" VerticalAlignment="Center" Padding="5,0,0,0"
-                        Style="{StaticResource ResetButtonStyle}"
-                        Tag="{StaticResource ResetIcon}"/>
+                    </Border.Style>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0" 
+                                Name="CheckboxFilter" 
+                                VerticalContentAlignment="Center" 
+                                Background="Transparent" 
+                                BorderThickness="0"
+                                Foreground="#a69f6c" 
+                                CaretBrush="#a69f6c"
+                                FontSize="18" 
+                                Padding="8,0,0,0"/>
+
+                        <Path Grid.Column="1" 
+                            Name="SearchIconPath"
+                            Data="{StaticResource SearchIcon}" 
+                            Stretch="Uniform" 
+                            Fill="#a69f6c" 
+                            Width="16" Height="16" 
+                            Margin="0,0,8,0" 
+                            VerticalAlignment="Center"
+                            Cursor="Hand">
+                        </Path>
+                    </Grid>
+                </Border>
                 <Button Name="ImportButton" Style="{DynamicResource ButtonStyle}" Content="Import" ForceCursor="true" Cursor="Hand" Height="34" Width="80" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,0,0" ToolTip="Import configuration from JSON"/>
                 <Button Name="ExportButton" Style="{DynamicResource ButtonStyle}" Content="Export" ForceCursor="true" Cursor="Hand" Height="34" Width="80" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,0,0" ToolTip="Export configuration to JSON"/>
             </StackPanel>

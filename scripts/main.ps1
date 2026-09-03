@@ -380,7 +380,6 @@ $script:ButtonActions = @{
     'wpf_DblUninstall'     = { Invoke-UninstallButton }
     'wpf_DblUpgrade'       = { Invoke-UpgradeButton }
     'wpf_DblClearPrograms' = { Invoke-ClearProgramsButton }
-    'wpf_ResetButton'      = { Invoke-ResetButton }
     'wpf_DblChocoInstall'  = { Invoke-ChocoInstall }
     'wpf_DblChocoUpgrade'  = { Invoke-ChocoUpgrade }
     'wpf_DblChocoUninstall' = { Invoke-ChocoUninstall }
@@ -475,7 +474,7 @@ function Invoke-Tabs {
         }
     }
 
-    $isVisible = if ($TabSearchItem.isSelected) {"Visible"} else {"Collapsed"}; $wpf_CheckboxFilter.Visibility = $isVisible; $wpf_ResetButton.Visibility = $isVisible
+    $isVisible = if ($TabSearchItem.isSelected) {"Visible"} else {"Collapsed"}; $wpf_CheckboxFilter.Visibility = $isVisible
 }
 Invoke-Tabs "wpf_Tab1BT"
 
