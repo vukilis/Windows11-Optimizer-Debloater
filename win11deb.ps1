@@ -5918,7 +5918,7 @@ if (-not $xamlFile -or -not (Test-Path $xamlFile)) {
 if (Test-Path $xamlFile) {
     $inputXAML = Get-Content -Path $xamlFile -Raw
 } else {
-    $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/xaml/MainWindow.xaml")
+    $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml")
 }
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
@@ -10366,7 +10366,7 @@ function Invoke-ShortcutApp {
             $ArgumentsToSourceExe = "$powershell $IRM"
             $DestinationName = "Win11Deb.lnk"
             
-            $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/icon.ico"
+            $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/icon.ico"
             $destinationPath = "$env:SystempRoot\win11deb.ico"
 
             # Check if the file already exists

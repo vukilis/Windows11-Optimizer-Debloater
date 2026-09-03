@@ -20,7 +20,7 @@ function Invoke-ShortcutApp {
             $ArgumentsToSourceExe = "$powershell $IRM"
             $DestinationName = "Win11Deb.lnk"
             
-            $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/icon.ico"
+            $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/icon.ico"
             $destinationPath = "$env:SystempRoot\win11deb.ico"
 
             # Check if the file already exists
