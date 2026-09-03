@@ -301,3 +301,7 @@ Write-output '
 
 Get-Content .\scripts\closure.ps1 | Out-File ./$scriptname -Append -Encoding UTF8
 
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+$content = [System.IO.File]::ReadAllText($scriptname, [System.Text.Encoding]::UTF8)
+[System.IO.File]::WriteAllText($scriptname, $content, $utf8NoBom)
+
