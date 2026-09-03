@@ -7,7 +7,7 @@
     Version        : 4.0
 #>
 
-#requires -Version 7.0
+#requires -Version 5.1
 Set-StrictMode -Version Latest
 
 # Self-elevate if not running as administrator

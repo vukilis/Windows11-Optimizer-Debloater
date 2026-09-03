@@ -879,6 +879,9 @@
         <!-- The "reset icons" -->
         <Geometry x:Key="ResetIcon">M 24.17 21.34 L 35.51 32.68 L 24.17 44.02 L 26.99 46.84 L 38.33 35.5 L 49.67 46.84 L 52.49 44.02 L 41.15 32.68 L 52.49 21.34 L 49.67 18.52 L 38.33 29.86 L 26.99 18.52 Z</Geometry>        <Geometry x:Key="RefreshIcon">M 17.65 6.35C 16.2 4.9 14.21 4 12 4 c -4.42 0 -7.99 3.58 -7.99 8 s 3.57 8 7.99 8 c 3.73 0 6.84 -2.55 7.73 -6 h -2.08 c -0.82 2.33 -3.04 4 -5.65 4 c -3.31 0 -6 -2.69 -6 -6 s 2.69 -6 6 -6 c 1.66 0 3.14 0.69 4.22 1.78 L 13 11 h 7 V 4 l -2.35 2.35 z</Geometry>
         <Geometry x:Key="SearchIcon">M11.5 2C6.81 2 3 5.81 3 10.5c0 2.05.74 3.93 1.97 5.39l-2.28 2.28c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l2.28-2.28C7.57 18.26 9.45 19 11.5 19 16.19 19 20 15.19 20 10.5S16.19 2 11.5 2zm0 2c3.59 0 6.5 2.91 6.5 6.5s-2.91 6.5-6.5 6.5S5 14.09 5 10.5 7.91 4 11.5 4z</Geometry>
+        <Geometry x:Key="MinimizeIcon">M 6 11 L 18 11 L 18 13 L 6 13 Z</Geometry>
+        <Geometry x:Key="MaximizeIcon">M 5 5 L 19 5 L 19 19 L 5 19 Z</Geometry>
+        <Geometry x:Key="CloseIcon">M 7 7 L 17 17 M 17 7 L 7 17</Geometry>
     </Window.Resources>
     <Grid Background="#2d2d30" ShowGridLines="False" Name="MainGrid" Width="Auto" Height="Auto" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
@@ -907,11 +910,15 @@
                 <ToggleButton Name="ToggleDarkMode" Style="{StaticResource DarkTheme}" Cursor="Hand" Margin="2.5,0"/>
                 <ToggleButton x:Name="AboutButton" Background="Purple" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" ToolTip="About" Style="{StaticResource AboutButtonStyle}" Tag="{StaticResource AboutIcon}"/>
                 <!-- Minimize Button -->
-                <Button Name="MinButton" Content="−" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" FontSize="16" FontWeight="Bold" ToolTip="Minimize">
+                <Button Name="MinButton" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" ToolTip="Minimize">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="BackgroundBorder" Background="Yellow" BorderBrush="#1f1f21" BorderThickness="0" CornerRadius="7">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Viewbox Width="16" Height="16">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="{StaticResource MinimizeIcon}" Stroke="#1f1f21" StrokeThickness="3"/>
+                                    </Canvas>
+                                </Viewbox>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
@@ -923,11 +930,15 @@
                 </Button>
 
                 <!-- Maximize Button -->
-                <Button Name="MaxButton" Content="◻" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" FontSize="16" FontWeight="Bold" ToolTip="Maximize">
+                <Button Name="MaxButton" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0" Cursor="Hand" ToolTip="Maximize">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="BackgroundBorder" Background="green" BorderBrush="#1f1f21" BorderThickness="0" CornerRadius="7">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Viewbox Width="16" Height="16">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="{StaticResource MaximizeIcon}" Stroke="#1f1f21" StrokeThickness="3"/>
+                                    </Canvas>
+                                </Viewbox>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
@@ -938,11 +949,15 @@
                     </Button.Template>
                 </Button>
                 <!-- Close Button -->
-                <Button Name="CloseButton" Content="✕" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0,10,0" Cursor="Hand" FontSize="16" FontWeight="Bold" ToolTip="Close">
+                <Button Name="CloseButton" Foreground="#1f1f21" Width="22" Height="22" Margin="5,0,10,0" Cursor="Hand" ToolTip="Close">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="BackgroundBorder" Background="red" BorderBrush="#1f1f21" BorderThickness="0" CornerRadius="7">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Viewbox Width="16" Height="16">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="{StaticResource CloseIcon}" Stroke="#1f1f21" StrokeThickness="3"/>
+                                    </Canvas>
+                                </Viewbox>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">

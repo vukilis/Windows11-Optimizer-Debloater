@@ -22,7 +22,7 @@ param (
     [string]$Config
 )
 
-#requires -Version 7.0
+#requires -Version 5.1
 Set-StrictMode -Version Latest
 ' | Out-File ./$scriptname -Append -Encoding UTF8
 

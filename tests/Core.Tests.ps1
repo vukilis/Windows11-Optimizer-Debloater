@@ -1,4 +1,4 @@
-#requires -Version 7.0
+#requires -Version 5.1
 Set-StrictMode -Version Latest
 
 Describe "Config Validation" {
