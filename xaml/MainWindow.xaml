@@ -1366,6 +1366,8 @@
                                 <StackPanel x:Name="CategoryCommunicationsPanel"/>
                                 <Label Content="Gaming Launchers" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
                                 <StackPanel x:Name="CategoryGamingLaunchersPanel"/>
+                                <Label Content="Pro Tools" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                <StackPanel x:Name="CategoryProToolsPanel"/>
                             </StackPanel>
                         </Border>
                         <StackPanel Margin="15,0,10,10" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center">
@@ -1405,6 +1407,8 @@
                                 <StackPanel x:Name="CategoryDocumentPanel"/>
                                 <Label Content="Multimedia Tools" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
                                 <StackPanel x:Name="CategoryMultimediaToolsPanel"/>
+                                <Label Content="Selfhosted Tools" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                <StackPanel x:Name="CategorySelfhostedPanel"/>
                             </StackPanel>
                         </Border>
                         <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="4">
