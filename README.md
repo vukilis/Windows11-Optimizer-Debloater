@@ -32,8 +32,7 @@ Apply a predefined configuration without manual selection:
 Save the exported configuration from the GUI to a file, for example `config.json`, then run following commands:
 
 ```powershell
-& ([ScriptBlock]::Create((irm https://vukilis.com/win11deb)))
- -Config .\config.json
+& ([ScriptBlock]::Create((irm https://vukilis.com/win11deb))) -Config .\config.json
 ```
 
 ---
