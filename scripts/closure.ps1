@@ -40,8 +40,10 @@ $categoryPanels = @{
     "Browsers"           = $wpf_CategoryBrowsersPanel
     "Communications"     = $wpf_CategoryCommunicationsPanel
     "Gaming Launchers"   = $wpf_CategoryGamingLaunchersPanel
+    "Pro Tools"          = $wpf_CategoryProToolsPanel
     "Document"           = $wpf_CategoryDocumentPanel
     "Multimedia Tools"   = $wpf_CategoryMultimediaToolsPanel
+    "Selfhosted Tools"   = $wpf_CategorySelfhostedPanel
     "Utilities"          = $wpf_CategoryUtilitiesPanel
 }
 
