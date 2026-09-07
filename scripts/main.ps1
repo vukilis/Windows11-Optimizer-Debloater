@@ -281,6 +281,7 @@ function Invoke-ToggleButtons {
         "wpf_SettingsButton" { Invoke-SettingsButton }
         "wpf_megaPresetButton" { Invoke-ToggleMegaPreset }
         "wpf_fastPresetButton" {Invoke-ToggleFastPreset}
+        "wpf_CategoryFilter*" { }
 
         default {
             $toggleName = $ToggleButton -replace '^wpf_', ''

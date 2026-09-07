@@ -6185,6 +6185,7 @@ function Invoke-ToggleButtons {
         "wpf_SettingsButton" { Invoke-SettingsButton }
         "wpf_megaPresetButton" { Invoke-ToggleMegaPreset }
         "wpf_fastPresetButton" {Invoke-ToggleFastPreset}
+        "wpf_CategoryFilter*" { }
 
         default {
             $toggleName = $ToggleButton -replace '^wpf_', ''
@@ -10526,6 +10527,17 @@ if ($psVersion.Major -eq 7 -and $psVersion.Minor -ge 1) {
     Write-Host "You are running a different version of PowerShell. Versions from 1.0 to 5.0 not supported!" -ForegroundColor Red
 }
 
+if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Host "################################################################################################" -ForegroundColor Red
+    Write-Host "Not running as administrator. Please run the script as an administrator!" -ForegroundColor Red
+    Write-Host "If you continue to use as non-admin user, it will result to script creates unexpected behaviour!" -ForegroundColor Red
+    Write-Host "################################################################################################" -ForegroundColor Red
+
+    $wpf_ElevatorStatus.Visibility = "Visible"
+    $wpf_ElevatorStatus.Background = "red"
+    $wpf_ElevatorMode.Content = "Not running as administrator. Please run the script as an administrator!!!"
+} 
+
 # If -Config is provided, apply config and exit without GUI
 if ($Config) {
     $script:HeadlessMode = $true
@@ -10550,6 +10562,18 @@ $psform.Add_Loaded({
 $script:DynamicAppCheckBoxes = @{}
 $script:DynamicAppChocoSupport = @{}
 $script:SelectedPackageManager = "winget"
+
+function Update-SelectedAppsCount {
+    $count = 0
+    foreach ($cb in $script:DynamicAppCheckBoxes.Values) {
+        if ($cb.IsChecked -eq $true) {
+            $count++
+        }
+    }
+    if ($wpf_SelectedAppsCount) {
+        $wpf_SelectedAppsCount.Content = $count.ToString()
+    }
+}
 
 $categoryPanels = @{
     "Development"        = $wpf_CategoryDevelopmentPanel
@@ -10583,7 +10607,7 @@ foreach ($program in $programs) {
     $cbox.HorizontalAlignment = "Left"
     $cbox.Width = "auto"
     $cbox.Cursor = [System.Windows.Input.Cursors]::Hand
-    $cbox.Margin = New-Object System.Windows.Thickness(8, 5, 8, 5)
+    $cbox.Margin = New-Object System.Windows.Thickness(4)
     $cbox.FontSize = 11
     $cbox.FontFamily = New-Object System.Windows.Media.FontFamily("Gadugi")
     $cbox.tooltip = $program.description
@@ -10592,6 +10616,9 @@ foreach ($program in $programs) {
     $scaleTransform.ScaleX = 1.5
     $scaleTransform.ScaleY = 1.5
     $cbox.LayoutTransform = $scaleTransform
+
+    $cbox.Add_Checked({ Update-SelectedAppsCount })
+    $cbox.Add_Unchecked({ Update-SelectedAppsCount })
 
     $panel.Children.Add($cbox) | Out-Null
     $script:DynamicAppCheckBoxes[$program.id] = $cbox
@@ -10628,6 +10655,93 @@ foreach ($cat in $categoryToggleMap.Keys) {
     }.GetNewClosure()
     
     $header.Add_MouseLeftButtonUp($handler)
+}
+
+$categoryHeaders = @{
+    "Development"        = $wpf_HeaderDevelopment
+    "Microsoft Tools"    = $wpf_HeaderMicrosoftTools
+    "Browsers"           = $wpf_HeaderBrowsers
+    "Communications"     = $wpf_HeaderCommunications
+    "Gaming Launchers"   = $wpf_HeaderGamingLaunchers
+    "Pro Tools"          = $wpf_HeaderProTools
+    "Document"           = $wpf_HeaderDocument
+    "Multimedia Tools"   = $wpf_HeaderMultimediaTools
+    "Selfhosted Tools"   = $wpf_HeaderSelfhosted
+    "Utilities"          = $wpf_HeaderUtilities
+}
+
+$categoryFilterMap = @{
+    "All"                = $wpf_CategoryFilterAll
+    "Development"        = $wpf_CategoryFilterDevelopment
+    "Microsoft Tools"    = $wpf_CategoryFilterMicrosoftTools
+    "Browsers"           = $wpf_CategoryFilterBrowsers
+    "Communications"     = $wpf_CategoryFilterCommunications
+    "Gaming Launchers"   = $wpf_CategoryFilterGamingLaunchers
+    "Pro Tools"          = $wpf_CategoryFilterProTools
+    "Document"           = $wpf_CategoryFilterDocument
+    "Multimedia Tools"   = $wpf_CategoryFilterMultimediaTools
+    "Selfhosted Tools"   = $wpf_CategoryFilterSelfhosted
+    "Utilities"          = $wpf_CategoryFilterUtilities
+}
+
+$script:isUpdating = $false
+
+foreach ($filter in $categoryFilterMap.Keys) {
+    $btn = $categoryFilterMap[$filter]
+
+    $handler = {
+        param($sender, $e)
+
+        if ($script:isUpdating) { return }
+        $script:isUpdating = $true
+
+        try {
+            if ($sender.IsChecked) {
+                if ($filter -eq "All") {
+                    foreach ($otherKey in $categoryFilterMap.Keys) {
+                        if ($otherKey -ne "All") {
+                            $categoryFilterMap[$otherKey].IsChecked = $false
+                        }
+                    }
+                } else {
+                    $categoryFilterMap["All"].IsChecked = $false
+                    foreach ($otherKey in $categoryFilterMap.Keys) {
+                        if ($otherKey -ne $filter -and $otherKey -ne "All") {
+                            $categoryFilterMap[$otherKey].IsChecked = $false
+                        }
+                    }
+                }
+            } else {
+                $anyChecked = $false
+                foreach ($key in $categoryFilterMap.Keys) {
+                    if ($categoryFilterMap[$key].IsChecked) {
+                        $anyChecked = $true
+                        break
+                    }
+                }
+                if (-not $anyChecked) {
+                    $categoryFilterMap["All"].IsChecked = $true
+                }
+            }
+
+            $allIsChecked = $categoryFilterMap["All"].IsChecked
+            foreach ($cat in $categoryPanels.Keys) {
+                if ($allIsChecked -or ($categoryFilterMap.ContainsKey($cat) -and $categoryFilterMap[$cat].IsChecked)) {
+                    $categoryPanels[$cat].Visibility = [System.Windows.Visibility]::Visible
+                    $categoryHeaders[$cat].Visibility = [System.Windows.Visibility]::Visible
+                } else {
+                    $categoryPanels[$cat].Visibility = [System.Windows.Visibility]::Collapsed
+                    $categoryHeaders[$cat].Visibility = [System.Windows.Visibility]::Collapsed
+                }
+            }
+        }
+        finally {
+            $script:isUpdating = $false
+        }
+    }.GetNewClosure()
+
+    $btn.Add_Checked($handler)
+    $btn.Add_Unchecked($handler)
 }
 
 $wpf_PkgMgrWinget.Add_Checked({

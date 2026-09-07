@@ -11,7 +11,7 @@
         Title="Windows11-OptimizerDebloater" 
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        Height="586" 
+        Height="643" 
         Width="1490">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" CornerRadius="10"/>
@@ -623,6 +623,34 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+        <Style x:Key="CategoryFilterTabStyle" TargetType="ToggleButton">
+            <Setter Property="Foreground" Value="#a69f6c"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="#252528"/>
+            <Setter Property="BorderBrush" Value="#FFF4AB51"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,3"/>
+            <Setter Property="Margin" Value="3,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="ToggleButton.IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#3a3a3d"/>
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter Property="Background" Value="#FFF4AB51"/>
+                    <Setter Property="Foreground" Value="#1f1f21"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style x:Key="ComboBoxTextBoxStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Template">
@@ -1330,242 +1358,258 @@
                 </TabItem>
                 <TabItem Header="INSTALL" Visibility="Collapsed" Name="Tab2">
                     <Grid Background="#2d2d30">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height=".10*"/>
-                            <RowDefinition Height=".90*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1,1,1,1" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
-                            <Grid Width="Auto" Grid.Row="0" Grid.Column="0" Margin="2">
-                                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                                    <Label Content="CHOCO:" FontSize="14" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51"/>
-                                    <Button x:Name="DblChocoInstall" Content="INSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,0,0"/>
-                                    <Button x:Name="DblChocoUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,0,0"/>
-                                    <Button x:Name="DblChocoUninstall" Content="UNINSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,0,0"/>
+                        <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="0">
+                            <Grid Margin="10,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="0,0,20,0">
+                                    <Label Content="CHOCO:" FontSize="13" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51" VerticalAlignment="Center"/>
+                                    <Button x:Name="DblChocoInstall" Content="INSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="28" Width="90" BorderThickness="0" FontWeight="Bold" Margin="0,0,5,0"/>
+                                    <Button x:Name="DblChocoUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="28" Width="90" BorderThickness="0" FontWeight="Bold" Margin="0,0,5,0"/>
+                                    <Button x:Name="DblChocoUninstall" Content="UNINSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="28" Width="90" BorderThickness="0" FontWeight="Bold"/>
                                 </StackPanel>
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="1">
-                                    <Label Content="Microsoft Store:" FontSize="14" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51"/>
-                                    <Button x:Name="DblMsStoreFix" Content="FIX" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,0,0"/>
+                                <Border Grid.Column="1" Width="1" Background="#FFF4AB51" Margin="0,0,20,0" VerticalAlignment="Stretch" Opacity="0.6"/>
+                                <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="0,0,20,0">
+                                    <Label Content="MS STORE:" FontSize="13" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51" VerticalAlignment="Center"/>
+                                    <Button x:Name="DblMsStoreFix" Content="FIX" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="28" Width="90" BorderThickness="0" FontWeight="Bold"/>
                                 </StackPanel>
-                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Margin="0,0,10,0">
-                                    <Label Content="PACKAGE MANAGER:" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" Foreground="#FFF4AB51"/>
-                                    <RadioButton x:Name="PkgMgrWinget"
-                                        Content="Winget"
-                                        IsChecked="True"
-                                        Style="{StaticResource LargeRadioButton}"
-                                        Margin="0,0,14,0"/>
-                                    <RadioButton x:Name="PkgMgrChoco"
-                                        Content="Choco"
-                                        Style="{StaticResource LargeRadioButton}"
-                                        Margin="0,0,18,0"/>
-                                    <Label Content="WINGET:" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" Foreground="#FFF4AB51"/>
-                                    <Button x:Name="DblWingetFix" Content="FIX" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,2,0" ToolTip="If you encounter a problem with Winget, you can fix Winget with Choco."/>
+                                <Border Grid.Column="3" Width="1" Background="#FFF4AB51" Margin="0,0,20,0" VerticalAlignment="Stretch" Opacity="0.6"/>
+                                <StackPanel Orientation="Horizontal" Grid.Column="4" HorizontalAlignment="Right">
+                                    <Label Content="WINGET:" FontSize="13" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51" VerticalAlignment="Center"/>
+                                    <Button x:Name="DblWingetFix" Content="FIX" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="28" Width="90" BorderThickness="0" FontWeight="Bold" ToolTip="If you encounter a problem with Winget, you can fix Winget with Choco."/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Column="6" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <Label Content="SELECTED APPS:" FontSize="13" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51" VerticalAlignment="Center"/>
+                                    <Label x:Name="SelectedAppsCount" Content="0" FontSize="13" FontWeight="Bold" Margin="5,0" Foreground="#a69f6c" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
-                        <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="0">
-                            <StackPanel Margin="10">
-                                <Border Name="HeaderDevelopment" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,0,5,5">
-                                    <Grid>
+                        <Grid Grid.Row="1" Margin="5,5,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="260"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0" Margin="0,0,5,0">
+                                <StackPanel Margin="10" VerticalAlignment="Top">
+                                    <Label Content="ACTIONS" FontSize="14" FontWeight="Bold" Foreground="#FFF4AB51" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                                    <Button x:Name="DblInstall" Content="INSTALL/UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Width="140" Height="26" BorderThickness="0" FontWeight="Bold" Margin="0,0,0,8"/>
+                                    <Button x:Name="DblUninstall" Content="UNINSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Width="140" Height="26" BorderThickness="0" FontWeight="Bold" Margin="0,0,0,8"/>
+                                    <Button x:Name="DblUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Width="140" Height="26" BorderThickness="0" FontWeight="Bold" Margin="0,0,0,8"/>
+                                    <Button x:Name="DblGetInstalled" Content="SHOW INSTALLED" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Width="140" Height="26" BorderThickness="0" FontWeight="Bold" Margin="0,0,0,8"/>
+                                    <Button x:Name="DblClearPrograms" Content="CLEAR SELECTION" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Width="140" Height="26" BorderThickness="0" FontWeight="Bold" Margin="0,0,0,16"/>
+                                    <Separator Background="#FFF4AB51" Margin="0,0,0,12" Height="1"/>
+                                    <Label Content="PACKAGE MANAGER" FontSize="14" FontWeight="Bold" Foreground="#FFF4AB51" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                                    <Grid HorizontalAlignment="Center" Margin="0,0,0,10">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="16"/>
+                                            <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <Label Content="Development" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
-                                        <Path Grid.Column="1" Name="ArrowDevelopment" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
-                                            <Path.RenderTransform>
-                                                <RotateTransform Angle="0"/>
-                                            </Path.RenderTransform>
-                                        </Path>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <RadioButton x:Name="PkgMgrWinget" Content="WINGET" Grid.Column="0" Grid.Row="0" IsChecked="True" Style="{StaticResource LargeRadioButton}" VerticalAlignment="Center" Margin="0,0,0,10"/>
+                                        <RadioButton x:Name="PkgMgrChoco" Content="CHOCOLATEY" Grid.Column="0" Grid.Row="1" Style="{StaticResource LargeRadioButton}" VerticalAlignment="Center"/>
                                     </Grid>
-                                </Border>
-                                <StackPanel x:Name="CategoryDevelopmentPanel"/>
-                                <Border Name="HeaderMicrosoftTools" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,10,5,5">
-                                    <Grid>
+                                    <Separator Background="#FFF4AB51" Margin="0,0,0,12" Height="1"/>
+                                    <Label Content="PRESETS" FontSize="14" FontWeight="Bold" Foreground="#FFF4AB51" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                                    <Grid HorizontalAlignment="Center" Margin="0,0,0,10">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="16"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <Label Content="Microsoft Tools" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
-                                        <Path Grid.Column="1" Name="ArrowMicrosoftTools" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
-                                            <Path.RenderTransform>
-                                                <RotateTransform Angle="0"/>
-                                            </Path.RenderTransform>
-                                        </Path>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Content="LITE" Foreground="#FFF" FontWeight="Bold" FontSize="13" FontFamily="Gadugi" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <CheckBox Name="ToggleLitePreset" Grid.Column="1" Grid.Row="0" Style="{StaticResource ToggleSwitchStyleGreen}" Cursor="Hand" VerticalAlignment="Center"/>
+                                        <Label Content="DEV" Foreground="#FFF" FontWeight="Bold" FontSize="13" FontFamily="Gadugi" VerticalAlignment="Center" Margin="0,0,6,0" Grid.Row="1"/>
+                                        <CheckBox Name="ToggleDevPreset" Grid.Column="1" Grid.Row="1" Style="{StaticResource ToggleSwitchStylePurple}" Cursor="Hand" VerticalAlignment="Center"/>
+                                        <Label Content="GAMING" Foreground="#FFF" FontWeight="Bold" FontSize="13" FontFamily="Gadugi" VerticalAlignment="Center" Margin="0,0,6,0" Grid.Row="2"/>
+                                        <CheckBox Name="ToggleGamingPreset" Grid.Column="1" Grid.Row="2" Style="{StaticResource ToggleSwitchStyleBlue}" Cursor="Hand" VerticalAlignment="Center"/>
                                     </Grid>
-                                </Border>
-                                <StackPanel x:Name="CategoryMicrosoftToolsPanel"/>
-                            </StackPanel>
-                        </Border>
-                        <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="1">
-                            <StackPanel Margin="10">
-                                <Border Name="HeaderBrowsers" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,0,5,5">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="16"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Content="Browsers" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
-                                        <Path Grid.Column="1" Name="ArrowBrowsers" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
-                                            <Path.RenderTransform>
-                                                <RotateTransform Angle="0"/>
-                                            </Path.RenderTransform>
-                                        </Path>
-                                    </Grid>
-                                </Border>
-                                <StackPanel x:Name="CategoryBrowsersPanel"/>
-                                <Border Name="HeaderCommunications" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,10,5,5">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="16"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Content="Communications" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
-                                        <Path Grid.Column="1" Name="ArrowCommunications" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
-                                            <Path.RenderTransform>
-                                                <RotateTransform Angle="0"/>
-                                            </Path.RenderTransform>
-                                        </Path>
-                                    </Grid>
-                                </Border>
-                                <StackPanel x:Name="CategoryCommunicationsPanel"/>
-                                <Border Name="HeaderGamingLaunchers" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,10,5,5">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="16"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Content="Gaming Launchers" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
-                                        <Path Grid.Column="1" Name="ArrowGamingLaunchers" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
-                                            <Path.RenderTransform>
-                                                <RotateTransform Angle="0"/>
-                                            </Path.RenderTransform>
-                                        </Path>
-                                    </Grid>
-                                </Border>
-                                <StackPanel x:Name="CategoryGamingLaunchersPanel"/>
-                                <Border Name="HeaderProTools" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,10,5,5">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="16"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Content="Pro Tools" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
-                                        <Path Grid.Column="1" Name="ArrowProTools" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
-                                            <Path.RenderTransform>
-                                                <RotateTransform Angle="0"/>
-                                            </Path.RenderTransform>
-                                        </Path>
-                                    </Grid>
-                                </Border>
-                                <StackPanel x:Name="CategoryProToolsPanel"/>
-                            </StackPanel>
-                        </Border>
-                        <StackPanel Margin="15,0,10,10" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center">
-                            <Label Content="Lite Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,0,0,5"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                <CheckBox Name="ToggleLitePreset" Style="{StaticResource ToggleSwitchStyleGreen}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                <Label Content="On" Foreground="#2eb50d" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                            </StackPanel>
-                            <Label Content="Dev Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#ca35de" Margin="0,0,0,5"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                <CheckBox Name="ToggleDevPreset" Style="{StaticResource ToggleSwitchStylePurple}" Cursor="Hand" Margin="2.5,0"/>
-                                <Label Content="On" Foreground="#ca35de" FontWeight="UltraBold" FontSize="14" FontFamily="Gadugi"/>
-                            </StackPanel>
-                            <Label Content="Gaming Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#66c0f4 " Margin="0,0,0,5"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                <CheckBox Name="ToggleGamingPreset" Style="{StaticResource ToggleSwitchStyleBlue}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                <Label Content="On" Foreground="#66c0f4 " FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,10,0,5" HorizontalAlignment="Center">
-                                <Button x:Name="DblInstall" Content="INSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="40" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,2,0"/>
-                                <Button x:Name="DblGetInstalled" Content="INSTALLED" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="40" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="2,0,0,0"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5" HorizontalAlignment="Center">
-                                <Button x:Name="DblUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="40" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,2,0"/>
-                                <Button x:Name="DblUninstall" Content="UNINSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="40" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="2,0,0,0"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="-30,0,0,5" HorizontalAlignment="Center" Grid.ColumnSpan="2">
-                                <Button x:Name="DblClearPrograms" Content="CLEAR SELECTION" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="25" Width="204" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="30,0,0,0"/>
-                            </StackPanel>
-                        </StackPanel>
-                        <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="3">
-                            <StackPanel Margin="10">
-                                <Border Name="HeaderDocument" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,0,5,5">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="16"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Content="Document" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
-                                        <Path Grid.Column="1" Name="ArrowDocument" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
-                                            <Path.RenderTransform>
-                                                <RotateTransform Angle="0"/>
-                                            </Path.RenderTransform>
-                                        </Path>
-                                    </Grid>
-                                </Border>
-                                <StackPanel x:Name="CategoryDocumentPanel"/>
-                                <Border Name="HeaderMultimediaTools" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,10,5,5">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="16"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Content="Multimedia Tools" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
-                                        <Path Grid.Column="1" Name="ArrowMultimediaTools" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
-                                            <Path.RenderTransform>
-                                                <RotateTransform Angle="0"/>
-                                            </Path.RenderTransform>
-                                        </Path>
-                                    </Grid>
-                                </Border>
-                                <StackPanel x:Name="CategoryMultimediaToolsPanel"/>
-                                <Border Name="HeaderSelfhosted" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,10,5,5">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="16"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Content="Selfhosted Tools" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
-                                        <Path Grid.Column="1" Name="ArrowSelfhosted" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
-                                            <Path.RenderTransform>
-                                                <RotateTransform Angle="0"/>
-                                            </Path.RenderTransform>
-                                        </Path>
-                                    </Grid>
-                                </Border>
-                                <StackPanel x:Name="CategorySelfhostedPanel"/>
-                            </StackPanel>
-                        </Border>
-                        <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="4">
-                            <StackPanel Margin="10">
-                                <Border Name="HeaderUtilities" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,0,5,5">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="16"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Content="Utilities" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
-                                        <Path Grid.Column="1" Name="ArrowUtilities" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
-                                            <Path.RenderTransform>
-                                                <RotateTransform Angle="0"/>
-                                            </Path.RenderTransform>
-                                        </Path>
-                                    </Grid>
-                                </Border>
-                                <StackPanel x:Name="CategoryUtilitiesPanel"/>
-                            </StackPanel>
-                        </Border>
+                                </StackPanel>
+                            </Border>
+                            <Border CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="1" Margin="5,0,0,0">
+                                <StackPanel Margin="10" VerticalAlignment="Top">
+                                        <WrapPanel Margin="0,0,0,12" HorizontalAlignment="Center" Name="CategoryFilterBar">
+                                            <ToggleButton Name="CategoryFilterAll" Content="All" IsChecked="True" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterDevelopment" Content="Development" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterMicrosoftTools" Content="Microsoft Tools" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterBrowsers" Content="Browsers" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterCommunications" Content="Communications" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterGamingLaunchers" Content="Gaming Launchers" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterProTools" Content="Pro Tools" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterDocument" Content="Document" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterMultimediaTools" Content="Multimedia Tools" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterSelfhosted" Content="Selfhosted Tools" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterUtilities" Content="Utilities" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                        </WrapPanel>
+                                        <Border Name="HeaderDevelopment" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="DEVELOPMENT" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowDevelopment" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryDevelopmentPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderMicrosoftTools" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="MICROSOFT TOOLS" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowMicrosoftTools" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryMicrosoftToolsPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderBrowsers" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="BROWSERS" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowBrowsers" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryBrowsersPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderCommunications" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="COMMUNICATIONS" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowCommunications" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryCommunicationsPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderGamingLaunchers" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="GAMING LAUNCHERS" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowGamingLaunchers" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryGamingLaunchersPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderProTools" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="PRO TOOLS" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowProTools" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryProToolsPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderDocument" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="DOCUMENT" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowDocument" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryDocumentPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderMultimediaTools" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="MULTIMEDIA TOOLS" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowMultimediaTools" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryMultimediaToolsPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderSelfhosted" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="SELFHOSTED TOOLS" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowSelfhosted" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategorySelfhostedPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderUtilities" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="UTILITIES" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowUtilities" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryUtilitiesPanel" Margin="0,0,0,0" Columns="4"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
                     </Grid>
                 </TabItem>
                 <TabItem Header="DEBLOAT" Visibility="Collapsed" Name="Tab3">
