@@ -81,6 +81,38 @@ foreach ($program in $programs) {
     $script:DynamicAppChocoSupport[$program.id] = ($program.choco -ne $null -and $program.choco -ne '')
 }
 
+# Category toggle handlers
+$categoryToggleMap = @{
+    "Development"        = @{ Header = $wpf_HeaderDevelopment;        Arrow = $wpf_ArrowDevelopment;        Panel = $wpf_CategoryDevelopmentPanel }
+    "Microsoft Tools"    = @{ Header = $wpf_HeaderMicrosoftTools;    Arrow = $wpf_ArrowMicrosoftTools;    Panel = $wpf_CategoryMicrosoftToolsPanel }
+    "Browsers"           = @{ Header = $wpf_HeaderBrowsers;           Arrow = $wpf_ArrowBrowsers;           Panel = $wpf_CategoryBrowsersPanel }
+    "Communications"     = @{ Header = $wpf_HeaderCommunications;     Arrow = $wpf_ArrowCommunications;     Panel = $wpf_CategoryCommunicationsPanel }
+    "Gaming Launchers"   = @{ Header = $wpf_HeaderGamingLaunchers;   Arrow = $wpf_ArrowGamingLaunchers;   Panel = $wpf_CategoryGamingLaunchersPanel }
+    "Pro Tools"          = @{ Header = $wpf_HeaderProTools;          Arrow = $wpf_ArrowProTools;          Panel = $wpf_CategoryProToolsPanel }
+    "Document"           = @{ Header = $wpf_HeaderDocument;           Arrow = $wpf_ArrowDocument;           Panel = $wpf_CategoryDocumentPanel }
+    "Multimedia Tools"   = @{ Header = $wpf_HeaderMultimediaTools;   Arrow = $wpf_ArrowMultimediaTools;   Panel = $wpf_CategoryMultimediaToolsPanel }
+    "Selfhosted Tools"   = @{ Header = $wpf_HeaderSelfhosted;       Arrow = $wpf_ArrowSelfhosted;       Panel = $wpf_CategorySelfhostedPanel }
+    "Utilities"          = @{ Header = $wpf_HeaderUtilities;          Arrow = $wpf_ArrowUtilities;          Panel = $wpf_CategoryUtilitiesPanel }
+}
+
+foreach ($cat in $categoryToggleMap.Keys) {
+    $header = $categoryToggleMap[$cat].Header
+    $arrow = $categoryToggleMap[$cat].Arrow
+    $panel = $categoryToggleMap[$cat].Panel
+    
+    $handler = {
+        if ($panel.Visibility -eq [System.Windows.Visibility]::Visible) {
+            $panel.Visibility = [System.Windows.Visibility]::Collapsed
+            $arrow.RenderTransform = [System.Windows.Media.RotateTransform]::new(180)
+        } else {
+            $panel.Visibility = [System.Windows.Visibility]::Visible
+            $arrow.RenderTransform = [System.Windows.Media.RotateTransform]::new(0)
+        }
+    }.GetNewClosure()
+    
+    $header.Add_MouseLeftButtonUp($handler)
+}
+
 $wpf_PkgMgrWinget.Add_Checked({
     $script:SelectedPackageManager = "winget"
     foreach ($program in $programs) {

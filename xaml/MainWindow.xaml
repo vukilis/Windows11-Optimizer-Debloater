@@ -1370,22 +1370,100 @@
                             </Grid>
                         </Border>
                         <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="0">
-                            <StackPanel Margin="10,0,10,10">
-                                <Label Content="Development" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                            <StackPanel Margin="10">
+                                <Border Name="HeaderDevelopment" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,0,5,5">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="16"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="Development" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                        <Path Grid.Column="1" Name="ArrowDevelopment" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <RotateTransform Angle="0"/>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Grid>
+                                </Border>
                                 <StackPanel x:Name="CategoryDevelopmentPanel"/>
-                                <Label Content="Microsoft Tools" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                <Border Name="HeaderMicrosoftTools" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,10,5,5">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="16"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="Microsoft Tools" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                        <Path Grid.Column="1" Name="ArrowMicrosoftTools" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <RotateTransform Angle="0"/>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Grid>
+                                </Border>
                                 <StackPanel x:Name="CategoryMicrosoftToolsPanel"/>
                             </StackPanel>
                         </Border>
                         <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="1">
-                            <StackPanel Margin="10,0,10,10">
-                                <Label Content="Browsers" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                            <StackPanel Margin="10">
+                                <Border Name="HeaderBrowsers" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,0,5,5">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="16"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="Browsers" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                        <Path Grid.Column="1" Name="ArrowBrowsers" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <RotateTransform Angle="0"/>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Grid>
+                                </Border>
                                 <StackPanel x:Name="CategoryBrowsersPanel"/>
-                                <Label Content="Communications" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                <Border Name="HeaderCommunications" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,10,5,5">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="16"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="Communications" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                        <Path Grid.Column="1" Name="ArrowCommunications" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <RotateTransform Angle="0"/>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Grid>
+                                </Border>
                                 <StackPanel x:Name="CategoryCommunicationsPanel"/>
-                                <Label Content="Gaming Launchers" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                <Border Name="HeaderGamingLaunchers" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,10,5,5">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="16"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="Gaming Launchers" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                        <Path Grid.Column="1" Name="ArrowGamingLaunchers" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <RotateTransform Angle="0"/>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Grid>
+                                </Border>
                                 <StackPanel x:Name="CategoryGamingLaunchersPanel"/>
-                                <Label Content="Pro Tools" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                <Border Name="HeaderProTools" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,10,5,5">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="16"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="Pro Tools" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                        <Path Grid.Column="1" Name="ArrowProTools" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <RotateTransform Angle="0"/>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Grid>
+                                </Border>
                                 <StackPanel x:Name="CategoryProToolsPanel"/>
                             </StackPanel>
                         </Border>
@@ -1421,18 +1499,70 @@
                             </StackPanel>
                         </StackPanel>
                         <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="3">
-                            <StackPanel Margin="10,0,10,10">
-                                <Label Content="Document" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                            <StackPanel Margin="10">
+                                <Border Name="HeaderDocument" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,0,5,5">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="16"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="Document" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                        <Path Grid.Column="1" Name="ArrowDocument" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <RotateTransform Angle="0"/>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Grid>
+                                </Border>
                                 <StackPanel x:Name="CategoryDocumentPanel"/>
-                                <Label Content="Multimedia Tools" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                <Border Name="HeaderMultimediaTools" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,10,5,5">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="16"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="Multimedia Tools" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                        <Path Grid.Column="1" Name="ArrowMultimediaTools" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <RotateTransform Angle="0"/>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Grid>
+                                </Border>
                                 <StackPanel x:Name="CategoryMultimediaToolsPanel"/>
-                                <Label Content="Selfhosted Tools" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                                <Border Name="HeaderSelfhosted" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,10,5,5">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="16"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="Selfhosted Tools" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                        <Path Grid.Column="1" Name="ArrowSelfhosted" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <RotateTransform Angle="0"/>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Grid>
+                                </Border>
                                 <StackPanel x:Name="CategorySelfhostedPanel"/>
                             </StackPanel>
                         </Border>
                         <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="4">
-                            <StackPanel Margin="10,0,10,10">
-                                <Label Content="Utilities" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
+                            <StackPanel Margin="10">
+                                <Border Name="HeaderUtilities" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="5,0,5,5">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="16"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="Utilities" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                        <Path Grid.Column="1" Name="ArrowUtilities" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <RotateTransform Angle="0"/>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Grid>
+                                </Border>
                                 <StackPanel x:Name="CategoryUtilitiesPanel"/>
                             </StackPanel>
                         </Border>
