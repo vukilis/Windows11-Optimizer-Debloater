@@ -1622,13 +1622,13 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0" Height="490" VerticalAlignment="Top">
+                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0" Height="550" VerticalAlignment="Top">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
                                 <StackPanel Name="GetDebloat" SnapsToDevicePixels="True" VerticalAlignment="Top" HorizontalAlignment="Left">
                                 </StackPanel>
                             </ScrollViewer>
                         </Border>
-                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="1" Height="490" VerticalAlignment="Top">
+                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="1" Height="550" VerticalAlignment="Top">
                             <Grid Background="Transparent">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -1658,7 +1658,7 @@
                                 </WrapPanel>
                             </Grid>
                         </Border>
-                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="2" Height="490" VerticalAlignment="Top">
+                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="2" Height="550" VerticalAlignment="Top">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
                                 <StackPanel Name="SetDebloat" SnapsToDevicePixels="True" VerticalAlignment="Top" HorizontalAlignment="Left">
                                 </StackPanel>
@@ -2263,12 +2263,12 @@
                             <ColumnDefinition Width=".33*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height=".90*"/>
+                            <RowDefinition Height=".10*"/>
                         </Grid.RowDefinitions>
                         <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0" Grid.Row="0" Grid.RowSpan="1">
                             <StackPanel SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="10">
-                                <Button Name="Updatesdefault" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Restore Defaults" Cursor="Hand" Margin="0,0,0,5" Padding="10" HorizontalAlignment="Center"/>
+                                <Button Name="Updatesdefault" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Restore Defaults" Cursor="Hand" Margin="0,30,0,5" Padding="10" HorizontalAlignment="Center"/>
                                 <TextBlock Text="Return control to Windows"
                                     HorizontalAlignment="Center"
                                     FontSize="18"
@@ -2311,7 +2311,7 @@
                         </Border>
                         <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="0" Grid.RowSpan="1">
                             <StackPanel SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="10">
-                                <Button Name="Updatessecurity" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Apply Recommended" Cursor="Hand" Padding="10" HorizontalAlignment="Center"/>
+                                <Button Name="Updatessecurity" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Apply Recommended" Cursor="Hand" Margin="0,30,0,0" Padding="10" HorizontalAlignment="Center"/>
                                 <TextBlock Text="Balanced security and stability"
                                     HorizontalAlignment="Center"
                                     FontSize="18"
@@ -2359,7 +2359,7 @@
                         </Border>
                         <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="3" Grid.Row="0" Grid.RowSpan="1">
                             <StackPanel SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="10">
-                                <Button Name="Updatesdisable" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Background="#FF9E5050" Content="Disable Updates" Cursor="Hand" Padding="10" HorizontalAlignment="Center"/>
+                                <Button Name="Updatesdisable" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Background="#FF9E5050" Content="Disable Updates" Cursor="Hand" Margin="0,30,0,0" Padding="10" HorizontalAlignment="Center"/>
                                 <TextBlock Text="Advanced use only!"
                                     HorizontalAlignment="Center"
                                     FontSize="18"
