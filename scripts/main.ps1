@@ -115,6 +115,28 @@ function Invoke-BuyMeAKofi {
     Start-Process "https://ko-fi.com/vukilis"
 }
 
+function Invoke-SponsorPayPal {
+    <#
+    .SYNOPSIS
+        Open SponsorPayPal link
+
+    .PARAMETER Button
+    #>
+
+    Start-Process "https://www.paypal.com/paypalme/vuklekic"
+}
+
+function Invoke-SponsorGithub {
+    <#
+    .SYNOPSIS
+        Open SponsorGithub link
+
+    .PARAMETER Button
+    #>
+
+    Start-Process "https://github.com/sponsors/vukilis"
+}
+
 $dragging = $false
 $psform.Add_MouseLeftButtonDown({
     $dragging = $true
@@ -259,6 +281,7 @@ function Invoke-ToggleButtons {
         "wpf_SettingsButton" { Invoke-SettingsButton }
         "wpf_megaPresetButton" { Invoke-ToggleMegaPreset }
         "wpf_fastPresetButton" {Invoke-ToggleFastPreset}
+        "wpf_CategoryFilter*" { }
 
         default {
             $toggleName = $ToggleButton -replace '^wpf_', ''
@@ -341,6 +364,8 @@ $script:ButtonActions = @{
     'wpf_MaxButton'        = { Invoke-MaxButton }
     'wpf_buymeacoffee'     = { Invoke-BuyMeACoffee }
     'wpf_buymeakofi'       = { Invoke-BuyMeAKofi }
+    'wpf_sponsorpaypall'   = { Invoke-SponsorPayPal }
+    'wpf_sponsorgithub'    = { Invoke-SponsorGithub }
     'wpf_SelectDebloat'    = { Invoke-SelectApplication }
     'wpf_SelectDebloatAll' = { Invoke-SelectApplicationAll }
     'wpf_UnselectDebloatAll' = { Invoke-UnselectApplicationAll }

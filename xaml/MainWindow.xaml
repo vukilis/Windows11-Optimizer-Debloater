@@ -11,7 +11,7 @@
         Title="Windows11-OptimizerDebloater" 
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        Height="586" 
+        Height="643" 
         Width="1490">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" CornerRadius="10"/>
@@ -624,6 +624,34 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="CategoryFilterTabStyle" TargetType="ToggleButton">
+            <Setter Property="Foreground" Value="#a69f6c"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="#252528"/>
+            <Setter Property="BorderBrush" Value="#FFF4AB51"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,3"/>
+            <Setter Property="Margin" Value="3,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="ToggleButton.IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#3a3a3d"/>
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter Property="Background" Value="#FFF4AB51"/>
+                    <Setter Property="Foreground" Value="#1f1f21"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="ComboBoxTextBoxStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -1146,68 +1174,87 @@
                 <Button Name="ExportButton" Style="{DynamicResource ButtonStyle}" Content="Export" ForceCursor="true" Cursor="Hand" Height="34" Width="80" FontSize="12" FontFamily="Helvetica" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,0,0" ToolTip="Export configuration to JSON"/>
             </StackPanel>
         </DockPanel>
-        <Grid Background="Transparent" Panel.ZIndex="1" Grid.Row="2" ShowGridLines="False" Name="AboutGrid" Width="Auto" Height="360" HorizontalAlignment="Center" Visibility="Collapsed" SnapsToDevicePixels="True">
-            <Border CornerRadius="7" Background="#1f1f21" Height="360" BorderBrush="Purple" BorderThickness="1,1,1,1" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Grid Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid Background="Transparent" Panel.ZIndex="1" Grid.Row="2" ShowGridLines="False" Name="AboutGrid" HorizontalAlignment="Center" Visibility="Collapsed" SnapsToDevicePixels="True">
+            <Border CornerRadius="12" Background="#1f1f21" BorderBrush="#FF5B3CAA" BorderThickness="1" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="32">
+                <Grid Width="Auto" HorizontalAlignment="Center" MaxWidth="820">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <WrapPanel Margin="5,5" Orientation="Vertical" HorizontalAlignment="Center" Width="auto" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                        <StackPanel Width="auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                            <Image Height="50" Width="100" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
-                            <Label Content="Windows11 Optimizer&amp;Debloater" Foreground="#FFF4AB51" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,5,5,0"></Label>
-                            <Label Name="CurrentScriptVersion" Foreground="#a69f6c" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="5,0"></Label>
+                    
+                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,24">
+                        <Image Height="56" Width="112" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png" Margin="0,0,16,0"/>
+                        <StackPanel VerticalAlignment="Center">
+                            <Label Content="Windows11 Optimizer&amp;Debloater" Foreground="#FFF4AB51" FontSize="16" FontWeight="Bold" Margin="0"/>
+                            <Label Name="CurrentScriptVersion" Foreground="#a69f6c" FontSize="13" FontWeight="Bold" Margin="0,4,0,0"/>
                         </StackPanel>
-                    </WrapPanel>
-                    <WrapPanel Orientation="Vertical" HorizontalAlignment="Left" Width="auto" Margin="5,5" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True">
-                            <TextBlock Foreground="#6ec2b7" FontSize="14" FontWeight="Bold" Margin="5,5" TextWrapping="WrapWithOverflow" TextAlignment="Justify">Author: <TextBlock Foreground="#6e99c2">Vuk1lis</TextBlock></TextBlock>
-                            <TextBlock Foreground="#6ec2b7" FontSize="14" FontWeight="Bold" Margin="5,5" TextWrapping="WrapWithOverflow" TextAlignment="Justify">
-                                <Run Text="{Binding LoadsCount}" />GitHub: <Run Text="{Binding BrokerLoadsCount}" />
-                                <Hyperlink Name="GitHubHyperlink" TextDecorations="None" Foreground="#6e99c2" NavigateUri="https://github.com/vukilis">https://github.com/vukilis</Hyperlink>
-                            </TextBlock>
-                            <TextBlock Foreground="#6ec2b7" FontSize="14" FontWeight="Bold" Margin="5,5" TextWrapping="WrapWithOverflow" TextAlignment="Justify">
-                                <Run Text="{Binding LoadsCount}" />Website: <Run Text="{Binding BrokerLoadsCount}" />
-                                <Hyperlink Name="WebsiteHyperlink" TextDecorations="None" Foreground="#6e99c2" NavigateUri="https://vukilis.com/">https://vukilis.com/</Hyperlink>
-                            </TextBlock>
-                            <TextBlock Foreground="#6ec2b7" FontSize="14" FontWeight="Bold" Margin="5,5" TextWrapping="WrapWithOverflow" TextAlignment="Justify">
-                                <Run Text="{Binding LoadsCount}" />Support Me: <Run Text="{Binding BrokerLoadsCount}" />
-                            </TextBlock>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True">
-                        <!-- Buy Me A Coffee Button -->
-                            <Button Name="buymeacoffee" Width="Auto" Height="auto" Margin="10,0,0,0" Cursor="Hand" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Left" Background="#FF813F" BorderBrush="Transparent">
-                                <Button.Content>
-                                    <TextBlock VerticalAlignment="Center" TextAlignment="Center">
-                                        <InlineUIContainer>
-                                            <Image Width="96" Height="24" Source="https://cdn.buymeacoffee.com/buttons/default-orange.png"/>
-                                        </InlineUIContainer>
+                    </StackPanel>
+                    
+                    <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Height="1" Fill="#333333" Margin="0,0,0,24" HorizontalAlignment="Stretch"/>
+                    
+                    <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical" Margin="0,0,24,0">
+                        <TextBlock Foreground="#6ec2b7" FontSize="14" FontWeight="Bold" Margin="0,0,0,12" TextWrapping="Wrap">
+                            <Run Text="Author: "/>
+                            <Run Text="Vuk1lis" Foreground="#6e99c2"/>
+                        </TextBlock>
+                        <TextBlock Foreground="#6ec2b7" FontSize="14" FontWeight="Bold" Margin="0,0,0,12" TextWrapping="Wrap">
+                            <Run Text="GitHub: "/>
+                            <Hyperlink Name="GitHubHyperlink" TextDecorations="None" Foreground="#6e99c2" NavigateUri="https://github.com/vukilis">https://github.com/vukilis</Hyperlink>
+                        </TextBlock>
+                        <TextBlock Foreground="#6ec2b7" FontSize="14" FontWeight="Bold" Margin="0,0,0,12" TextWrapping="Wrap">
+                            <Run Text="Website: "/>
+                            <Hyperlink Name="WebsiteHyperlink" TextDecorations="None" Foreground="#6e99c2" NavigateUri="https://vukilis.com/">https://vukilis.com/</Hyperlink>
+                        </TextBlock>
+                        <TextBlock Foreground="#6ec2b7" FontSize="14" FontWeight="Bold" Margin="0,0,0,16" TextWrapping="Wrap">
+                            <Run Text="Support Me:"/>
+                        </TextBlock>
+                        
+                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Button Name="buymeacoffee" Height="34" Padding="12,5" Margin="0,0,10,10" Cursor="Hand" Style="{DynamicResource ButtonStyle}" Background="#26292B" BorderBrush="Transparent">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Width="16" Height="16" Source="https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/buy-me-a-coffee.webp" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                    <TextBlock VerticalAlignment="Center" FontSize="12" Foreground="White">
+                                        <Run Text="Buy Me a Coffee"/>
                                     </TextBlock>
-                                </Button.Content>
+                                </StackPanel>
                             </Button>
-                            <Button Name="buymeakofi" Width="100" Height="Auto" Margin="10,0,0,0" Cursor="Hand" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Left" Background="#26292B" BorderBrush="Transparent">
-                                <Button.Content>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <Image Width="24" Height="24" Source="https://storage.ko-fi.com/cdn/logomarkLogo.png" VerticalAlignment="Center"/>
-                                        <TextBlock VerticalAlignment="Center" FontSize="14" Foreground="White" Margin="5,0,0,0">
-                                            <Run Text="Ko-fi"/>
-                                        </TextBlock>
-                                    </StackPanel>
-                                </Button.Content>
+                            <Button Name="buymeakofi" Height="34" Padding="12,5" Margin="0,0,10,10" Cursor="Hand" Style="{DynamicResource ButtonStyle}" Background="#26292B" BorderBrush="Transparent">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Width="16" Height="16" Source="https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/ko-fi.webp" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                    <TextBlock VerticalAlignment="Center" FontSize="12" Foreground="White">
+                                        <Run Text="Ko-fi"/>
+                                    </TextBlock>
+                                </StackPanel>
                             </Button>
-                        </StackPanel>
-
-                        </StackPanel>
-                    </WrapPanel>
-                    <WrapPanel Orientation="Vertical" HorizontalAlignment="Right" Width="auto" VerticalAlignment="Top"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1">
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True">
-                            <TextBlock FontSize="14" FontFamily="Helvetica" FontWeight="Bold" TextWrapping="WrapWithOverflow" Margin="10,6" TextAlignment="Justify" MaxWidth="300" Foreground="#6ec2b7">This Utility show basic system information, install programs, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates. Makes your Windows more stable and faster!</TextBlock>
-                        </StackPanel>
-                    </WrapPanel>
+                            <Button Name="sponsorpaypall" Height="34" Padding="12,5" Margin="0,0,10,10" Cursor="Hand" Style="{DynamicResource ButtonStyle}" Background="#26292B" BorderBrush="Transparent">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Width="16" Height="16" Source="https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/paypal.webp" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                    <TextBlock VerticalAlignment="Center" FontSize="12" Foreground="White">
+                                        <Run Text="PayPal"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button Name="sponsorgithub" Height="34" Padding="12,5" Margin="0,0,0,10" Cursor="Hand" Style="{DynamicResource ButtonStyle}" Background="#26292B" BorderBrush="Transparent">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Width="16" Height="16" Source="https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/github.webp" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                    <TextBlock VerticalAlignment="Center" FontSize="12" Foreground="White">
+                                        <Run Text="GitHub"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </WrapPanel>
+                    </StackPanel>
+                    
+                    <Border Grid.Row="2" Grid.Column="1" Background="#252528" CornerRadius="8" Padding="16">
+                        <TextBlock FontSize="13" FontFamily="Helvetica" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Justify" Foreground="#8ec2b7" LineHeight="20">
+                            Your all-in-one Windows 11 Utility. View hardware and OS info, install essential apps, remove bloatware, apply performance tweaks and presets, fix Windows Update, and manage system configs. Everything to keep your system fast, stable, and under your control.
+                        </TextBlock>
+                    </Border>
                 </Grid>
             </Border>
         </Grid>
@@ -1220,203 +1267,350 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height=".10*"/>
-                            <RowDefinition Height=".90*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Margin="10">
-                            <Label Name="pcName" Content="Welcome $NAME" FontSize="24"  HorizontalAlignment="Center" Style="{StaticResource chfont}" Foreground="#FFFAC664" FontWeight="Bold"/>
-                        </StackPanel>
-                        <Border Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width=".50*"/>
-                                    <ColumnDefinition Width=".50*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height=".50*"/>
-                                    <RowDefinition Height=".50*"/>
-                                </Grid.RowDefinitions>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="40,0,0,0">
-                                    <TextBlock FontSize="16" FontFamily="Helvetica" Margin="10" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" FontWeight="Bold">HARDWARE<LineBreak/>INFO</TextBlock>
-                                </StackPanel>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="20,0,0,0">
-                                    <Label Content="CPU:" FontSize="16"  Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                    <Label Content="GPU:" FontSize="16"  Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                    <Label Content="RAM:" FontSize="16"  Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                    <Label Content="MB:" FontSize="16"  Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                </StackPanel>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="80,0,0,0">
-                                    <Label Name="cpuInfo" Content="aaa" FontSize="16"  Style="{StaticResource chfont}" Foreground="#FFDEE39B"/>
-                                    <!--<Label Name="gpuInfo" Content="" FontSize="16"  HorizontalAlignment="Left" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />-->
-                                    <ComboBox x:Name="gpuInfo" Width="auto" FontSize="16" HorizontalAlignment="Left" ForceCursor="true" Cursor="Hand" FontWeight="Bold" SelectedIndex="0" Foreground="#1f1f21"/>
-                                    <Label Name="ramInfo" Content="aaa" FontSize="16"  Style="{StaticResource chfont}" Foreground="#FFDEE39B"/>
-                                    <Label Name="mbInfo" Content="aa" FontSize="16"  Style="{StaticResource chfont}" Foreground="#FFDEE39B"/>
-                                </StackPanel>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="40,0,0,0">
-                                    <TextBlock FontSize="16" FontFamily="Helvetica" Margin="20,0,20,0" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" FontWeight="Bold">OS<LineBreak/>INFO</TextBlock>
-                                </StackPanel>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="20,0,0,0">
-                                    <Label Content="NAME:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                    <Label Content="BUILD:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                    <Label Content="INSTALLED:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                    <Label Content="LICENCE:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" />
-                                </StackPanel>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="120,0,0,0">
-                                    <Label Name="osInfo" Content="aaaaa" FontSize="16" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                    <Label Name="verInfo" Content="aaa" FontSize="16" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                    <Label Name="installTimeInfo" Content="aaa" FontSize="16" Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                    <Label Name="licenceInfo" Content="aaa" FontSize="16"  Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                </StackPanel>
-                            </Grid>
+                        <Border Grid.Row="0" Grid.ColumnSpan="2" Margin="10,5,10,5" CornerRadius="10" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True">
+                            <Label Name="pcName" Content="Welcome $NAME" FontSize="26" HorizontalAlignment="Center" Style="{StaticResource chfont}" Foreground="#FFFAC664" FontWeight="Bold" Padding="15,10"/>
                         </Border>
-                        <Border Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width=".50*"/>
-                                    <ColumnDefinition Width=".50*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height=".50*"/>
-                                    <RowDefinition Height=".50*"/>
-                                </Grid.RowDefinitions>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="20,0,0,0">
-                                    <TextBlock FontSize="16" FontFamily="Helvetica" Margin="20,0,20,0" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" FontWeight="Bold">DISK<LineBreak/>INFO</TextBlock>
-                                </StackPanel>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="20,0,0,0">
-                                    <Label Content="SELECT DISK:" FontSize="16"  Style="{StaticResource chfont}" Foreground="#FFDEE39B"/>
-                                    <Label Content="STATUS:" FontSize="16"  Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                    <Label Content="STYLE:" FontSize="16"  Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                </StackPanel>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="140,0,0,0">
-                                    <ComboBox x:Name="diskNameInfo" Text="Select Disk" IsEditable="True" IsReadOnly="True" Width="auto" ForceCursor="true" Cursor="Hand" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" SelectedIndex="-1" Foreground="#1f1f21"/>
-                                    <Label Name="diskStatus" Content="" FontSize="16"  Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                    <Label Name="diskStyle" Content="" FontSize="16"  Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                </StackPanel>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="20,0,0,0">
-                                    <TextBlock FontSize="16" FontFamily="Helvetica" Margin="20,0,20,0" TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="#FFFAC664" FontWeight="Bold">DISK<LineBreak/>SIZE</TextBlock>
-                                </StackPanel>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="20,0,0,0">
-                                    <Label Content="SELECT DISK:" FontSize="16"  Style="{StaticResource chfont}" Foreground="#FFDEE39B"/>
-                                    <Label Content="DISK SIZE:" FontSize="16"  Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                    <Label Content="FREE SIZE:" FontSize="16"  Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                </StackPanel>
-                                <StackPanel SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="140,0,0,0">
-                                    <ComboBox x:Name="diskName" Text="Select Disk" IsEditable="True" IsReadOnly="True" Width="auto" ForceCursor="true" Cursor="Hand" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" SelectedIndex="-1" Foreground="#1f1f21"/>
-                                    <Label Name="diskMaxSize" Content="" FontSize="16"  Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                    <Label Name="diskFreeSize" Content="" FontSize="16"  Style="{StaticResource chfont}" Foreground="#FFDEE39B" />
-                                </StackPanel>
-                            </Grid>
+                        <Border Grid.Column="0" Grid.Row="1" Margin="10,5,10,0" CornerRadius="10" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True">
+                            <StackPanel Margin="20">
+                                <Label Content="HARDWARE" FontSize="18" FontWeight="Bold" Foreground="#FFF4AB51" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                                <Grid Margin="0,0,0,20">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,15,0">
+                                        <Label Content="CPU:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" Margin="0,0,0,8"/>
+                                        <Label Content="GPU:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" Margin="0,0,0,8"/>
+                                        <Label Content="RAM:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" Margin="0,0,0,8"/>
+                                        <Label Content="MB:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <Label Name="cpuInfo" Content="aaa" FontSize="16" Style="{StaticResource chfont}" Foreground="#a69f6c" Margin="0,0,0,8"/>
+                                        <ComboBox x:Name="gpuInfo" Width="Auto" FontSize="14" HorizontalAlignment="Left" ForceCursor="true" Cursor="Hand" FontWeight="Bold" SelectedIndex="0" Foreground="#1f1f21" Margin="0,0,0,8"/>
+                                        <Label Name="ramInfo" Content="aaa" FontSize="16" Style="{StaticResource chfont}" Foreground="#a69f6c" Margin="0,0,0,8"/>
+                                        <Label Name="mbInfo" Content="aa" FontSize="16" Style="{StaticResource chfont}" Foreground="#a69f6c"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Rectangle Height="1" Fill="#333333" Margin="0,0,0,20"/>
+                                <Label Content="OS INFO" FontSize="18" FontWeight="Bold" Foreground="#FFF4AB51" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,15,0">
+                                        <Label Content="NAME:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" Margin="0,0,0,8"/>
+                                        <Label Content="BUILD:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" Margin="0,0,0,8"/>
+                                        <Label Content="INSTALLED:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" Margin="0,0,0,8"/>
+                                        <Label Content="LICENCE:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <Label Name="osInfo" Content="aaaaa" FontSize="16" Style="{StaticResource chfont}" Foreground="#a69f6c" Margin="0,0,0,8"/>
+                                        <Label Name="verInfo" Content="aaa" FontSize="16" Style="{StaticResource chfont}" Foreground="#a69f6c" Margin="0,0,0,8"/>
+                                        <Label Name="installTimeInfo" Content="aaa" FontSize="16" Style="{StaticResource chfont}" Foreground="#a69f6c" Margin="0,0,0,8"/>
+                                        <Label Name="licenceInfo" Content="aaa" FontSize="16" Style="{StaticResource chfont}" Foreground="#a69f6c"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Grid.Row="1" Margin="10,5,10,0" CornerRadius="10" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True">
+                            <StackPanel Margin="20">
+                                <Label Content="DISK INFO" FontSize="18" FontWeight="Bold" Foreground="#FFF4AB51" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                                <Grid Margin="0,0,0,20">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,15,0">
+                                        <Label Content="SELECT DISK:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" Margin="0,0,0,8"/>
+                                        <Label Content="STATUS:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" Margin="0,0,0,8"/>
+                                        <Label Content="STYLE:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#110f109b"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="0,0,15,0">
+                                        <ComboBox x:Name="diskNameInfo" Text="Select Disk" IsEditable="True" IsReadOnly="True" Width="Auto" ForceCursor="true" Cursor="Hand" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" SelectedIndex="-1" Foreground="#1f1f21" Margin="0,0,0,10"/>
+                                        <Label Name="diskStatus" Content="" FontSize="16" Style="{StaticResource chfont}" Foreground="#a69f6c" Margin="0,0,0,10"/>
+                                        <Label Name="diskStyle" Content="" FontSize="16" Style="{StaticResource chfont}" Foreground="#a69f6c"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Rectangle Height="1" Fill="#333333" Margin="0,35,0,20"/>
+                                <Label Content="DISK SIZE" FontSize="18" FontWeight="Bold" Foreground="#FFF4AB51" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,15,0">
+                                        <Label Content="SELECT DISK:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" Margin="0,0,0,8"/>
+                                        <Label Content="DISK SIZE:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B" Margin="0,0,0,8"/>
+                                        <Label Content="FREE SIZE:" FontSize="16" Style="{StaticResource chfont}" FontWeight="Bold" Foreground="#FFDEE39B"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <ComboBox x:Name="diskName" Text="Select Disk" IsEditable="True" IsReadOnly="True" Width="Auto" ForceCursor="true" Cursor="Hand" FontSize="16" HorizontalAlignment="Left" FontWeight="Bold" SelectedIndex="-1" Foreground="#1f1f21" Margin="0,0,0,10"/>
+                                        <Label Name="diskMaxSize" Content="" FontSize="16" Style="{StaticResource chfont}" Foreground="#a69f6c" Margin="0,0,0,10"/>
+                                        <Label Name="diskFreeSize" Content="" FontSize="16" Style="{StaticResource chfont}" Foreground="#a69f6c"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
                         </Border>
                     </Grid>
                 </TabItem>
                 <TabItem Header="INSTALL" Visibility="Collapsed" Name="Tab2">
                     <Grid Background="#2d2d30">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height=".10*"/>
-                            <RowDefinition Height=".90*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1,1,1,1" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
-                            <Grid Width="Auto" Grid.Row="0" Grid.Column="0" Margin="2">
-                                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                                    <Label Content="CHOCO:" FontSize="14" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51"/>
-                                    <Button x:Name="DblChocoInstall" Content="INSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,0,0"/>
-                                    <Button x:Name="DblChocoUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,0,0"/>
-                                    <Button x:Name="DblChocoUninstall" Content="UNINSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,0,0"/>
+                        <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="0">
+                            <Grid Margin="10,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="0,0,20,0">
+                                    <Label Content="CHOCO:" FontSize="13" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51" VerticalAlignment="Center"/>
+                                    <Button x:Name="DblChocoInstall" Content="INSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="28" Width="90" BorderThickness="0" FontWeight="Bold" Margin="0,0,5,0"/>
+                                    <Button x:Name="DblChocoUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="28" Width="90" BorderThickness="0" FontWeight="Bold" Margin="0,0,5,0"/>
+                                    <Button x:Name="DblChocoUninstall" Content="UNINSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="28" Width="90" BorderThickness="0" FontWeight="Bold"/>
                                 </StackPanel>
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="1">
-                                    <Label Content="Microsoft Store:" FontSize="14" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51"/>
-                                    <Button x:Name="DblMsStoreFix" Content="FIX" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,0,0"/>
+                                <Border Grid.Column="1" Width="1" Background="#FFF4AB51" Margin="0,0,20,0" VerticalAlignment="Stretch" Opacity="0.6"/>
+                                <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="0,0,20,0">
+                                    <Label Content="MS STORE:" FontSize="13" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51" VerticalAlignment="Center"/>
+                                    <Button x:Name="DblMsStoreFix" Content="FIX" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="28" Width="90" BorderThickness="0" FontWeight="Bold"/>
                                 </StackPanel>
-                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Width="Auto" Background="#1f1f21" SnapsToDevicePixels="True" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Margin="0,0,10,0">
-                                    <Label Content="PACKAGE MANAGER:" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" Foreground="#FFF4AB51"/>
-                                    <RadioButton x:Name="PkgMgrWinget"
-                                        Content="Winget"
-                                        IsChecked="True"
-                                        Style="{StaticResource LargeRadioButton}"
-                                        Margin="0,0,14,0"/>
-                                    <RadioButton x:Name="PkgMgrChoco"
-                                        Content="Choco"
-                                        Style="{StaticResource LargeRadioButton}"
-                                        Margin="0,0,18,0"/>
-                                    <Label Content="WINGET:" FontSize="14" FontWeight="Bold" Margin="0,0,5,0" Foreground="#FFF4AB51"/>
-                                    <Button x:Name="DblWingetFix" Content="FIX" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="20" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="5,0,2,0" ToolTip="If you encounter a problem with Winget, you can fix Winget with Choco."/>
+                                <Border Grid.Column="3" Width="1" Background="#FFF4AB51" Margin="0,0,20,0" VerticalAlignment="Stretch" Opacity="0.6"/>
+                                <StackPanel Orientation="Horizontal" Grid.Column="4" HorizontalAlignment="Right">
+                                    <Label Content="WINGET:" FontSize="13" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51" VerticalAlignment="Center"/>
+                                    <Button x:Name="DblWingetFix" Content="FIX" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="28" Width="90" BorderThickness="0" FontWeight="Bold" ToolTip="If you encounter a problem with Winget, you can fix Winget with Choco."/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Column="6" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <Label Content="SELECTED APPS:" FontSize="13" FontWeight="Bold" Margin="5,0" Foreground="#FFF4AB51" VerticalAlignment="Center"/>
+                                    <Label x:Name="SelectedAppsCount" Content="0" FontSize="13" FontWeight="Bold" Margin="5,0" Foreground="#a69f6c" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
-                        <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="0">
-                            <StackPanel Margin="10,0,10,10">
-                                <Label Content="Development" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
-                                <StackPanel x:Name="CategoryDevelopmentPanel"/>
-                                <Label Content="Microsoft Tools" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
-                                <StackPanel x:Name="CategoryMicrosoftToolsPanel"/>
-                            </StackPanel>
-                        </Border>
-                        <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="1">
-                            <StackPanel Margin="10,0,10,10">
-                                <Label Content="Browsers" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
-                                <StackPanel x:Name="CategoryBrowsersPanel"/>
-                                <Label Content="Communications" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
-                                <StackPanel x:Name="CategoryCommunicationsPanel"/>
-                                <Label Content="Gaming Launchers" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
-                                <StackPanel x:Name="CategoryGamingLaunchersPanel"/>
-                                <Label Content="Pro Tools" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
-                                <StackPanel x:Name="CategoryProToolsPanel"/>
-                            </StackPanel>
-                        </Border>
-                        <StackPanel Margin="15,0,10,10" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center">
-                            <Label Content="Lite Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#2eb50d" Margin="0,0,0,5"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                <CheckBox Name="ToggleLitePreset" Style="{StaticResource ToggleSwitchStyleGreen}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                <Label Content="On" Foreground="#2eb50d" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                            </StackPanel>
-                            <Label Content="Dev Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#ca35de" Margin="0,0,0,5"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                <CheckBox Name="ToggleDevPreset" Style="{StaticResource ToggleSwitchStylePurple}" Cursor="Hand" Margin="2.5,0"/>
-                                <Label Content="On" Foreground="#ca35de" FontWeight="UltraBold" FontSize="14" FontFamily="Gadugi"/>
-                            </StackPanel>
-                            <Label Content="Gaming Preset" HorizontalAlignment="Center" FontSize="14" FontFamily="Gadugi" Foreground="#66c0f4 " Margin="0,0,0,5"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                                <Label Content="Off" Foreground="#FFF" FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                                <CheckBox Name="ToggleGamingPreset" Style="{StaticResource ToggleSwitchStyleBlue}" ForceCursor="true" Cursor="Hand" Margin="2.5,0"/>
-                                <Label Content="On" Foreground="#66c0f4 " FontWeight="Bold" FontSize="14" FontFamily="Gadugi"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,10,0,5" HorizontalAlignment="Center">
-                                <Button x:Name="DblInstall" Content="INSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="40" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,2,0"/>
-                                <Button x:Name="DblGetInstalled" Content="INSTALLED" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="40" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="2,0,0,0"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5" HorizontalAlignment="Center">
-                                <Button x:Name="DblUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="40" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="0,0,2,0"/>
-                                <Button x:Name="DblUninstall" Content="UNINSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}"  Height="40" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="2,0,0,0"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="-30,0,0,5" HorizontalAlignment="Center" Grid.ColumnSpan="2">
-                                <Button x:Name="DblClearPrograms" Content="CLEAR SELECTION" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="25" Width="204" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="30,0,0,0"/>
-                            </StackPanel>
-                        </StackPanel>
-                        <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="3">
-                            <StackPanel Margin="10,0,10,10">
-                                <Label Content="Document" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
-                                <StackPanel x:Name="CategoryDocumentPanel"/>
-                                <Label Content="Multimedia Tools" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
-                                <StackPanel x:Name="CategoryMultimediaToolsPanel"/>
-                                <Label Content="Selfhosted Tools" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
-                                <StackPanel x:Name="CategorySelfhostedPanel"/>
-                            </StackPanel>
-                        </Border>
-                        <Border Margin="5,5,0,5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="4">
-                            <StackPanel Margin="10,0,10,10">
-                                <Label Content="Utilities" FontSize="18" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Center" Foreground="#FFF4AB51"/>
-                                <StackPanel x:Name="CategoryUtilitiesPanel"/>
-                            </StackPanel>
-                        </Border>
+                        <Grid Grid.Row="1" Margin="5,5,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="260"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0" Margin="0,0,5,0">
+                                <StackPanel Margin="10" VerticalAlignment="Top">
+                                    <Label Content="ACTIONS" FontSize="14" FontWeight="Bold" Foreground="#FFF4AB51" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                                    <Button x:Name="DblInstall" Content="INSTALL/UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Width="140" Height="26" BorderThickness="0" FontWeight="Bold" Margin="0,0,0,8"/>
+                                    <Button x:Name="DblUninstall" Content="UNINSTALL" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Width="140" Height="26" BorderThickness="0" FontWeight="Bold" Margin="0,0,0,8"/>
+                                    <Button x:Name="DblUpgrade" Content="UPGRADE" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Width="140" Height="26" BorderThickness="0" FontWeight="Bold" Margin="0,0,0,8"/>
+                                    <Button x:Name="DblGetInstalled" Content="SHOW INSTALLED" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Width="140" Height="26" BorderThickness="0" FontWeight="Bold" Margin="0,0,0,8"/>
+                                    <Button x:Name="DblClearPrograms" Content="CLEAR SELECTION" Cursor="Hand" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Width="140" Height="26" BorderThickness="0" FontWeight="Bold" Margin="0,0,0,16"/>
+                                    <Separator Background="#FFF4AB51" Margin="0,0,0,12" Height="1"/>
+                                    <Label Content="PACKAGE MANAGER" FontSize="14" FontWeight="Bold" Foreground="#FFF4AB51" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                                    <Grid HorizontalAlignment="Center" Margin="0,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <RadioButton x:Name="PkgMgrWinget" Content="WINGET" Grid.Column="0" Grid.Row="0" IsChecked="True" Style="{StaticResource LargeRadioButton}" VerticalAlignment="Center" Margin="0,0,0,10"/>
+                                        <RadioButton x:Name="PkgMgrChoco" Content="CHOCOLATEY" Grid.Column="0" Grid.Row="1" Style="{StaticResource LargeRadioButton}" VerticalAlignment="Center"/>
+                                    </Grid>
+                                    <Separator Background="#FFF4AB51" Margin="0,0,0,12" Height="1"/>
+                                    <Label Content="PRESETS" FontSize="14" FontWeight="Bold" Foreground="#FFF4AB51" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                                    <Grid HorizontalAlignment="Center" Margin="0,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Content="LITE" Foreground="#FFF" FontWeight="Bold" FontSize="13" FontFamily="Gadugi" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <CheckBox Name="ToggleLitePreset" Grid.Column="1" Grid.Row="0" Style="{StaticResource ToggleSwitchStyleGreen}" Cursor="Hand" VerticalAlignment="Center"/>
+                                        <Label Content="DEV" Foreground="#FFF" FontWeight="Bold" FontSize="13" FontFamily="Gadugi" VerticalAlignment="Center" Margin="0,0,6,0" Grid.Row="1"/>
+                                        <CheckBox Name="ToggleDevPreset" Grid.Column="1" Grid.Row="1" Style="{StaticResource ToggleSwitchStylePurple}" Cursor="Hand" VerticalAlignment="Center"/>
+                                        <Label Content="GAMING" Foreground="#FFF" FontWeight="Bold" FontSize="13" FontFamily="Gadugi" VerticalAlignment="Center" Margin="0,0,6,0" Grid.Row="2"/>
+                                        <CheckBox Name="ToggleGamingPreset" Grid.Column="1" Grid.Row="2" Style="{StaticResource ToggleSwitchStyleBlue}" Cursor="Hand" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                            <Border CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="1" Margin="5,0,0,0">
+                                <StackPanel Margin="10" VerticalAlignment="Top">
+                                        <WrapPanel Margin="0,0,0,12" HorizontalAlignment="Center" Name="CategoryFilterBar">
+                                            <ToggleButton Name="CategoryFilterAll" Content="All" IsChecked="True" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterDevelopment" Content="Development" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterMicrosoftTools" Content="Microsoft Tools" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterBrowsers" Content="Browsers" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterCommunications" Content="Communications" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterGamingLaunchers" Content="Gaming Launchers" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterProTools" Content="Pro Tools" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterDocument" Content="Document" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterMultimediaTools" Content="Multimedia Tools" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterSelfhosted" Content="Selfhosted Tools" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                            <ToggleButton Name="CategoryFilterUtilities" Content="Utilities" Cursor="Hand" Style="{StaticResource CategoryFilterTabStyle}"/>
+                                        </WrapPanel>
+                                        <Border Name="HeaderDevelopment" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="DEVELOPMENT" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowDevelopment" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryDevelopmentPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderMicrosoftTools" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="MICROSOFT TOOLS" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowMicrosoftTools" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryMicrosoftToolsPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderBrowsers" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="BROWSERS" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowBrowsers" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryBrowsersPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderCommunications" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="COMMUNICATIONS" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowCommunications" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryCommunicationsPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderGamingLaunchers" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="GAMING LAUNCHERS" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowGamingLaunchers" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryGamingLaunchersPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderProTools" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="PRO TOOLS" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowProTools" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryProToolsPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderDocument" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="DOCUMENT" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowDocument" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryDocumentPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderMultimediaTools" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="MULTIMEDIA TOOLS" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowMultimediaTools" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryMultimediaToolsPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderSelfhosted" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="SELFHOSTED TOOLS" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowSelfhosted" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategorySelfhostedPanel" Margin="0,0,0,10" Columns="4"/>
+                                    <Border Name="HeaderUtilities" Cursor="Hand" Background="#2a2a2d" CornerRadius="4" Padding="6,3" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="16"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="UTILITIES" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFF4AB51"/>
+                                            <Path Grid.Column="1" Name="ArrowUtilities" Data="M 0 0 L 6 6 L 12 0" Stroke="#FFF4AB51" StrokeThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="12" Height="8" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <UniformGrid x:Name="CategoryUtilitiesPanel" Margin="0,0,0,0" Columns="4"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
                     </Grid>
                 </TabItem>
                 <TabItem Header="DEBLOAT" Visibility="Collapsed" Name="Tab3">
@@ -1429,13 +1623,13 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0" Height="490" VerticalAlignment="Top">
+                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0" Height="550" VerticalAlignment="Top">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
                                 <StackPanel Name="GetDebloat" SnapsToDevicePixels="True" VerticalAlignment="Top" HorizontalAlignment="Left">
                                 </StackPanel>
                             </ScrollViewer>
                         </Border>
-                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="1" Height="490" VerticalAlignment="Top">
+                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="1" Height="550" VerticalAlignment="Top">
                             <Grid Background="Transparent">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -1465,7 +1659,7 @@
                                 </WrapPanel>
                             </Grid>
                         </Border>
-                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="2" Height="490" VerticalAlignment="Top">
+                        <Border Margin="5,5,5,0" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="2" Height="550" VerticalAlignment="Top">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
                                 <StackPanel Name="SetDebloat" SnapsToDevicePixels="True" VerticalAlignment="Top" HorizontalAlignment="Left">
                                 </StackPanel>
@@ -2070,12 +2264,12 @@
                             <ColumnDefinition Width=".33*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height=".90*"/>
+                            <RowDefinition Height=".10*"/>
                         </Grid.RowDefinitions>
                         <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="0" Grid.Row="0" Grid.RowSpan="1">
                             <StackPanel SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="10">
-                                <Button Name="Updatesdefault" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Restore Defaults" Cursor="Hand" Margin="0,0,0,5" Padding="10" HorizontalAlignment="Center"/>
+                                <Button Name="Updatesdefault" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Restore Defaults" Cursor="Hand" Margin="0,30,0,5" Padding="10" HorizontalAlignment="Center"/>
                                 <TextBlock Text="Return control to Windows"
                                     HorizontalAlignment="Center"
                                     FontSize="18"
@@ -2118,7 +2312,7 @@
                         </Border>
                         <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="0" Grid.RowSpan="1">
                             <StackPanel SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="10">
-                                <Button Name="Updatessecurity" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Apply Recommended" Cursor="Hand" Padding="10" HorizontalAlignment="Center"/>
+                                <Button Name="Updatessecurity" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Content="Apply Recommended" Cursor="Hand" Margin="0,30,0,0" Padding="10" HorizontalAlignment="Center"/>
                                 <TextBlock Text="Balanced security and stability"
                                     HorizontalAlignment="Center"
                                     FontSize="18"
@@ -2166,7 +2360,7 @@
                         </Border>
                         <Border Margin="5" CornerRadius="7" Background="#1f1f21" BorderBrush="#FFF4AB51" BorderThickness="1" SnapsToDevicePixels="True" Grid.Column="3" Grid.Row="0" Grid.RowSpan="1">
                             <StackPanel SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="10">
-                                <Button Name="Updatesdisable" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Background="#FF9E5050" Content="Disable Updates" Cursor="Hand" Padding="10" HorizontalAlignment="Center"/>
+                                <Button Name="Updatesdisable" FontSize="16" FontFamily="Helvetica" Height="40" Style="{DynamicResource ButtonStyle}" Background="#FF9E5050" Content="Disable Updates" Cursor="Hand" Margin="0,30,0,0" Padding="10" HorizontalAlignment="Center"/>
                                 <TextBlock Text="Advanced use only!"
                                     HorizontalAlignment="Center"
                                     FontSize="18"

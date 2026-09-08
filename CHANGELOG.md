@@ -8,6 +8,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [4.1] - 2026-09-08
+
+### Added
+
+- Category filtering system in the INSTALL tab with tab-style filter buttons for all app categories, plus automatic fallback to the All category when a filter is deselected.
+- Selected apps counter in the INSTALL tab toolbar that updates in real time as apps are checked or unchecked.
+- Sponsor/support buttons in the About panel for Buy Me a Coffee, Ko-fi, PayPal, and GitHub.
+- Collapsible category headers with animated chevron indicators in the INSTALL tab app list.
+
+### Changed
+
+- Redesigned INFO tab with a modern two-card layout, larger typography, and cleaner spacing for hardware, OS, and disk information sections.
+- Redesigned INSTALL tab layout: top toolbar now groups CHOCO, MS Store, and Winget fix actions with visual separators; left sidebar consolidates actions, package manager selection, and presets; app categories display in a scrollable right panel with a category filter bar.
+- Increased font sizes across the INFO tab for improved readability.
+- Replaced character-based category arrows with vector Path chevrons to eliminate font-dependent rendering issues.
+- Tightened checkbox margins in category app grids for denser, more compact presentation.
+
 ## [4.0] - 2026-09-03
 
 ### Added
