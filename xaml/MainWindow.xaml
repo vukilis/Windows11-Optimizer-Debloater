@@ -998,7 +998,7 @@
             </StackPanel>
         </Grid>
         <DockPanel Background="#1f1f21" x:Name="DockerPanel" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Grid.Row="1" Width="Auto">
-            <Image Height="70" Width="70" Name="Icon" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"/>
+            <Image Height="70" Width="50" Name="Icon" SnapsToDevicePixels="True" Margin="10,0,10,0" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-gold.png"/>
             <RadioButton IsChecked="True" HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}" Foreground="#fac664" FontWeight="Bold" Name="Tab1BT" Margin="0,0,5,0">
                 <RadioButton.Background>
                     <LinearGradientBrush EndPoint="-1,1" StartPoint="4,0" SpreadMethod="Pad">
@@ -1175,7 +1175,7 @@
             </StackPanel>
         </DockPanel>
         <Grid Background="Transparent" Panel.ZIndex="1" Grid.Row="2" ShowGridLines="False" Name="AboutGrid" HorizontalAlignment="Center" Visibility="Collapsed" SnapsToDevicePixels="True">
-            <Border CornerRadius="12" Background="#1f1f21" BorderBrush="#FF5B3CAA" BorderThickness="1" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="32">
+            <Border CornerRadius="12" Background="#1f1f21" BorderBrush="#FF5B3CAA" BorderThickness="1" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="32,10,32,10" Width="Auto" Height="Auto">
                 <Grid Width="Auto" HorizontalAlignment="Center" MaxWidth="820">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -1187,8 +1187,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     
-                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,24">
-                        <Image Height="56" Width="112" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png" Margin="0,0,16,0"/>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Height="128" Width="128" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-gold.png"/>
                         <StackPanel VerticalAlignment="Center">
                             <Label Content="Windows11 Optimizer&amp;Debloater" Foreground="#FFF4AB51" FontSize="16" FontWeight="Bold" Margin="0"/>
                             <Label Name="CurrentScriptVersion" Foreground="#a69f6c" FontSize="13" FontWeight="Bold" Margin="0,4,0,0"/>

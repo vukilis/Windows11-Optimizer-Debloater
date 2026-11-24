@@ -603,7 +603,7 @@ function Art {
 # Get-Variable wpf_*
 # Function to download a file
 
-$downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"
+$downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-gold.png"
 $destinationPath = Join-Path $env:TEMP "win11deb_logo.png"
 
 # Check if the file already exists
