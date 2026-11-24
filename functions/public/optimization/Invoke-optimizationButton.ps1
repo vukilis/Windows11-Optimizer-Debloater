@@ -35,7 +35,7 @@ function Invoke-OptimizationButton {
                 }
                 foreach ($task in $tweak.ScheduledTask) {
                     try {
-                        Set-ScheduledTask -Name $task.Name -State $task.State
+                        Set-ScheduledTaskState -Name $task.Name -State $task.State
                     } catch {
                         Write-Warning "Failed to set scheduled task '$($task.Name)' to $($task.State): $_"
                     }

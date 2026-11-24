@@ -33,7 +33,7 @@ function Invoke-OptimizationUndo {
                 Write-Host "ScheduledTask: Revert the $($tweak.Content) to the default settings!" -ForegroundColor Yellow
                 foreach ($task in $tweak.ScheduledTask) {
                     try {
-                        Set-ScheduledTask -Name $task.Name -State $task.OriginalState
+                        Set-ScheduledTaskState -Name $task.Name -State $task.OriginalState
                     } catch {
                         Write-Warning "Failed to set scheduled task '$($task.Name)' to $($task.OriginalState): $_"
                     }
