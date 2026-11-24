@@ -42,7 +42,7 @@ function Invoke-ApplyConfigFile {
                     if ($tweak.PSObject.Properties.Name -contains 'ScheduledTask' -and $tweak.ScheduledTask) {
                         foreach ($task in $tweak.ScheduledTask) {
                             try {
-                                Set-ScheduledTask -Name $task.Name -State $task.State
+                                Set-ScheduledTaskState -Name $task.Name -State $task.State
                             } catch {
                                 Write-Warning "Failed to set scheduled task '$($task.Name)' to $($task.State): $_"
                             }
@@ -87,7 +87,7 @@ function Invoke-ApplyConfigFile {
         Write-Host "Applying features..." -ForegroundColor Yellow
         foreach ($featureName in $config.features.PSObject.Properties.Name) {
             if ($config.features.$featureName -eq $true) {
-                Write-Host "  Applying feature: $featureName" -ForegroundColor.Gray
+                Write-Host "  Applying feature: $featureName" -ForegroundColor Gray
                 $feature = $sync.configs.feature.$featureName
                 if ($feature) {
                     switch ($feature.Type) {

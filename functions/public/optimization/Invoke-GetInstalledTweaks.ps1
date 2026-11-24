@@ -35,10 +35,25 @@ function Invoke-GetInstalledTweaks {
         # Check scheduled task tweaks
         if (-not $isApplied -and $tweak.PSObject.Properties.Name -contains 'ScheduledTask' -and $tweak.ScheduledTask) {
             $allTasksMatch = $true
+            $matchedTasks = 0
             foreach ($task in $tweak.ScheduledTask) {
                 try {
-                    $scheduledTask = Get-ScheduledTask -TaskName $task.Name -ErrorAction SilentlyContinue
-                    if ($scheduledTask -and $scheduledTask.State -ne $task.State) {
+                    $taskName = Split-Path -Path $task.Name -Leaf
+                    $taskFolder = Split-Path -Path $task.Name -Parent
+                    if ([string]::IsNullOrWhiteSpace($taskFolder)) {
+                        $taskPath = "\"
+                    } else {
+                        $taskPath = "\" + $taskFolder.Trim("\") + "\"
+                    }
+
+                    $scheduledTask = Get-ScheduledTask -TaskPath $taskPath -TaskName $taskName -ErrorAction SilentlyContinue
+                    # Tasks differ between Windows builds, skip the ones that are not present
+                    if (-not $scheduledTask) {
+                        continue
+                    }
+
+                    $matchedTasks++
+                    if ($scheduledTask.State -ne $task.State) {
                         $allTasksMatch = $false
                         break
                     }
@@ -47,7 +62,7 @@ function Invoke-GetInstalledTweaks {
                     break
                 }
             }
-            if ($allTasksMatch) {
+            if ($allTasksMatch -and $matchedTasks -gt 0) {
                 $isApplied = $true
             }
         }
