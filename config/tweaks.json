@@ -45,6 +45,11 @@
         "OriginalState": "Enabled"
       },
       {
+        "Name": "Microsoft\\Windows\\Application Experience\\Microsoft Compatibility Appraiser Exp",
+        "State": "Disabled",
+        "OriginalState": "Enabled"
+      },
+      {
         "Name": "Microsoft\\Windows\\Application Experience\\ProgramDataUpdater",
         "State": "Disabled",
         "OriginalState": "Enabled"

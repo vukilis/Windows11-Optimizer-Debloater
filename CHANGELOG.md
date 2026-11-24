@@ -8,6 +8,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [Unreleased]
+
+### Fixed
+
+- `-Config` headless mode now disables the telemetry scheduled tasks. The internal helper was renamed from `Set-ScheduledTask` to `Set-ScheduledTaskState` because PowerShell replaced it with the `ScheduledTasks` module cmdlet as soon as the module was auto-loaded, making every call after the first one fail.
+- `Set-ScheduledTaskState` now splits the task path into `-TaskPath` and `-TaskName`, which the `Disable-ScheduledTask`/`Enable-ScheduledTask` cmdlets require, and skips tasks that do not exist on the current Windows build instead of failing.
+- `Set-RestorePoint` now creates the restore point when no restore point exists yet. Under `Set-StrictMode -Version Latest` the previous implementation threw while enumerating restore points and silently skipped `Checkpoint-Computer`.
+- `Invoke-GetInstalledTweaks` now detects scheduled-task tweaks that use a folder path and no longer reports tweaks as applied when all of their tasks are missing.
+- Fixed invalid `-ForegroundColor.Gray` syntax when `-Config` applies features.
+- Added the `Microsoft Compatibility Appraiser Exp` task (Windows 11 24H2) to the telemetry tweak.
+
 ## [4.1] - 2026-09-08
 
 ### Added
