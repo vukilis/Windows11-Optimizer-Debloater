@@ -608,7 +608,7 @@ function Art {
 # Function to download a file
 
 $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-gold.png"
-$destinationPath = Join-Path $env:TEMP "win11deb_logo.png"
+$destinationPath = Join-Path $env:TEMP "win11deb-logo.png"
 
 # Check if the file already exists
 if (-not (Test-Path $destinationPath)) {
