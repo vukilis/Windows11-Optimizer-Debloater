@@ -11,7 +11,8 @@
 This Utility show basic system information, install programs, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates.
 
 
-![Screenshot of the application in the tray menu and the Discord status](https://vukilis.com/_astro/optimization.COTsG0EB_Z2cuC2F.webp)
+![Screenshot of the application in the tray menu and the Discord status](https://vukilis.com/_astro/optimization.C2pZLGxZ_2fMiWd.webp)
+
 
 ## Usage:
 
