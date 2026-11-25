@@ -415,8 +415,8 @@ $script:ButtonActions = @{
     'wpf_DblWingetFix'     = { Invoke-FixesWinget }
     'wpf_DblMsStoreFix'    = { Invoke-MsStoreFix }
     'wpf_ShortcutApp'      = {
-        $iconType = "Gold"
-        if ($wpf_ShortcutAppBlueIcon.IsChecked -eq $true) { $iconType = "Blue" }
+        $iconType = "Light"
+        if ($wpf_ShortcutAppDarkIcon.IsChecked -eq $true) { $iconType = "Dark" }
         Invoke-ShortcutApp -ShortcutToAdd "Win11Deb" -IconType $iconType
     }
     'wpf_FixesNetwork'     = { Invoke-FixesNetwork }
@@ -607,7 +607,7 @@ function Art {
 # Get-Variable wpf_*
 # Function to download a file
 
-$downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-gold.png"
+$downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-light.png"
 $destinationPath = Join-Path $env:TEMP "win11deb-logo.png"
 
 # Check if the file already exists

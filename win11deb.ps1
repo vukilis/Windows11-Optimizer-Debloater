@@ -6324,8 +6324,8 @@ $script:ButtonActions = @{
     'wpf_DblWingetFix'     = { Invoke-FixesWinget }
     'wpf_DblMsStoreFix'    = { Invoke-MsStoreFix }
     'wpf_ShortcutApp'      = {
-        $iconType = "Gold"
-        if ($wpf_ShortcutAppBlueIcon.IsChecked -eq $true) { $iconType = "Blue" }
+        $iconType = "Light"
+        if ($wpf_ShortcutAppDarkIcon.IsChecked -eq $true) { $iconType = "Dark" }
         Invoke-ShortcutApp -ShortcutToAdd "Win11Deb" -IconType $iconType
     }
     'wpf_FixesNetwork'     = { Invoke-FixesNetwork }
@@ -6516,8 +6516,8 @@ function Art {
 # Get-Variable wpf_*
 # Function to download a file
 
-$downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-gold.png"
-$destinationPath = Join-Path $env:TEMP "win11deb_logo.png"
+$downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-light.png"
+$destinationPath = Join-Path $env:TEMP "win11deb-logo.png"
 
 # Check if the file already exists
 if (-not (Test-Path $destinationPath)) {
@@ -10463,13 +10463,13 @@ function Invoke-ShortcutApp {
         The name of the shortcut to add
 
     .PARAMETER IconType
-        The icon type to use (Blue or Gold).
+        The icon type to use (Dark or Light).
 
     #>
     param(
         $ShortcutToAdd,
-        [ValidateSet("Blue", "Gold")]
-        [string]$IconType = "Gold"
+        [ValidateSet("Dark", "Light")]
+        [string]$IconType = "Light"
     )
 
         $iconPath = $null
@@ -10482,13 +10482,13 @@ function Invoke-ShortcutApp {
             $DestinationName = "Win11Deb.lnk"
 
             switch ($IconType) {
-                "Blue" {
+                "Dark" {
                     $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/icon.ico"
-                    $destinationPath = "$env:SystempRoot\win11deb.ico"
+                    $destinationPath = "$env:SystempRoot\win11deb-dark.ico"
                 }
-                "Gold" {
-                    $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/icon-gold.ico"
-                    $destinationPath = "$env:SystempRoot\win11deb-gold.ico"
+                "Light" {
+                    $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/icon-light.ico"
+                    $destinationPath = "$env:SystempRoot\win11deb-light.ico"
                 }
             }
 

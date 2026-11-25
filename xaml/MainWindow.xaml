@@ -228,7 +228,7 @@
         <Style x:Key="chfont" TargetType="Label">
             <Setter Property="FontFamily" Value="fonts/MesloLGSRegular.ttf #MesloLGS NF"/>
         </Style>
-        <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
+<Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
             <Setter Property="SnapsToDevicePixels" Value="true"/>
             <Setter Property="Background" Value="#a69f6c"/>
             <Setter Property="BorderBrush" Value="#fac664"/>
@@ -243,7 +243,7 @@
                                     <Border x:Name="Border" Background="#444444" BorderBrush="#a69f6c" BorderThickness="1" CornerRadius="10"/>
                                     <Path x:Name="CheckMark" Stroke="#a69f6c" StrokeThickness="3" SnapsToDevicePixels="False" Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" 
                                           Margin="-4.5,-4.5,-4.5,-4.5" ClipToBounds="False" StrokeEndLineCap="Round" StrokeStartLineCap="Round"
-                                            
+                                          
                                           RenderTransformOrigin="0.5, 0.5">
                                         <Path.RenderTransform>
                                             <ScaleTransform ScaleX="0.58" ScaleY="0.57"/>
@@ -272,6 +272,50 @@
                             </Trigger>
                         </ControlTemplate.Triggers>
 
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="OptimizationRadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="#D8D0A0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <StackPanel Orientation="Horizontal">
+                            <Grid Width="20"
+                                Height="20"
+                                Margin="0,0,7,0">
+
+                                <!-- Outer circle -->
+                                <Ellipse Stroke="{TemplateBinding Foreground}"
+                                        StrokeThickness="2"
+                                        Fill="Transparent"/>
+
+                                <!-- Inner dot -->
+                                <Ellipse x:Name="Dot"
+                                        Width="10"
+                                        Height="10"
+                                        Fill="{TemplateBinding Foreground}"
+                                        Visibility="Collapsed"/>
+
+                            </Grid>
+
+                            <ContentPresenter VerticalAlignment="Center"
+                                            RecognizesAccessKey="True"/>
+
+                        </StackPanel>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Dot" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="Dot" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -998,7 +1042,7 @@
             </StackPanel>
         </Grid>
         <DockPanel Background="#1f1f21" x:Name="DockerPanel" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Grid.Row="1" Width="Auto">
-            <Image Height="70" Width="50" Name="Icon" SnapsToDevicePixels="True" Margin="10,0,10,0" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-gold.png"/>
+            <Image Height="70" Width="50" Name="Icon" SnapsToDevicePixels="True" Margin="10,0,10,0" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-light.png"/>
             <RadioButton IsChecked="True" HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}" Foreground="#fac664" FontWeight="Bold" Name="Tab1BT" Margin="0,0,5,0">
                 <RadioButton.Background>
                     <LinearGradientBrush EndPoint="-1,1" StartPoint="4,0" SpreadMethod="Pad">
@@ -1188,7 +1232,7 @@
                     </Grid.ColumnDefinitions>
                     
                     <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Image Height="128" Width="128" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-gold.png"/>
+                        <Image Height="128" Width="128" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-light.png"/>
                         <StackPanel VerticalAlignment="Center">
                             <Label Content="Windows11 Optimizer&amp;Debloater" Foreground="#FFF4AB51" FontSize="16" FontWeight="Bold" Margin="0"/>
                             <Label Name="CurrentScriptVersion" Foreground="#a69f6c" FontSize="13" FontWeight="Bold" Margin="0,4,0,0"/>
@@ -2489,8 +2533,8 @@
                                     <StackPanel Margin="0,5" Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
                                         <Button Name="ShortcutApp" Content="Create Win11Deb Shortcut" Cursor="Hand" Margin="5,0" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220"/>
                                         <StackPanel Orientation="Horizontal" Margin="15,0,0,0" VerticalAlignment="Center">
-                                            <RadioButton Name="ShortcutAppBlueIcon" Content="Blue Icon" FontSize="14" FontFamily="Helvetica" Foreground="#66c0f4" Margin="0,0,10,0" Cursor="Hand" GroupName="ShortcutAppIcon"/>
-                                            <RadioButton Name="ShortcutAppGoldIcon" Content="Gold Icon" FontSize="14" FontFamily="Helvetica" Foreground="#fac664" Cursor="Hand" GroupName="ShortcutAppIcon" IsChecked="True"/>
+                                            <RadioButton Name="ShortcutAppDarkIcon" Content="Dark Icon" FontSize="14" FontFamily="Helvetica" Foreground="#66c0f4" Margin="0,0,10,0" Cursor="Hand" GroupName="ShortcutAppIcon" Style="{StaticResource OptimizationRadioButtonStyle}"/>
+                                            <RadioButton Name="ShortcutAppLightIcon" Content="Light Icon" FontSize="14" FontFamily="Helvetica" Foreground="#fac664" Cursor="Hand" GroupName="ShortcutAppIcon" IsChecked="True" Style="{StaticResource OptimizationRadioButtonStyle}"/>
                                         </StackPanel>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
