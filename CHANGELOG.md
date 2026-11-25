@@ -8,6 +8,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **display performance tweak** - shows incorrect settings, but visually it's correct, after restart computer it shows how need to be.
 
+## [4.3] - 2026-11-25
+
+### Added
+
+- Replace hardcoded branch strings with a `$branch` variable in asset URLs to improve maintainability and allow for easier branch switching.
+- Shortcut creation: added `dark/light` icon radio buttons next to **Create Win11Deb Shortcut** button.
+
+### Changed
+
+- Redesigned (assets): add new icon and logo images - `dark` and `light` version.
+- `Invoke-ShortcutApp` now accepts -IconType parameter (Dark saves as `win11deb-dark.ico`, Light saves as `win11deb-light.ico`).
+
 ## [4.2] - 2026-11-24
 
 ### Fixed
