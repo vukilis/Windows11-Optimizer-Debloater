@@ -2488,6 +2488,10 @@
                                     </StackPanel>
                                     <StackPanel Margin="0,5" Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
                                         <Button Name="ShortcutApp" Content="Create Win11Deb Shortcut" Cursor="Hand" Margin="5,0" HorizontalAlignment="Left" FontSize="16" FontFamily="Helvetica" Style="{DynamicResource ButtonStyle}" Height="30" Width="220"/>
+                                        <StackPanel Orientation="Horizontal" Margin="15,0,0,0" VerticalAlignment="Center">
+                                            <RadioButton Name="ShortcutAppBlueIcon" Content="Blue Icon" FontSize="14" FontFamily="Helvetica" Foreground="#66c0f4" Margin="0,0,10,0" Cursor="Hand" GroupName="ShortcutAppIcon"/>
+                                            <RadioButton Name="ShortcutAppGoldIcon" Content="Gold Icon" FontSize="14" FontFamily="Helvetica" Foreground="#fac664" Cursor="Hand" GroupName="ShortcutAppIcon" IsChecked="True"/>
+                                        </StackPanel>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" SnapsToDevicePixels="True" HorizontalAlignment="Left">
                                         <Label Content="Fixes &amp; Backups:" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left" Foreground="#FFDEE39B"/>

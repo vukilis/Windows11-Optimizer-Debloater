@@ -414,7 +414,11 @@ $script:ButtonActions = @{
     'wpf_DblChocoUninstall' = { Invoke-ChocoUninstall }
     'wpf_DblWingetFix'     = { Invoke-FixesWinget }
     'wpf_DblMsStoreFix'    = { Invoke-MsStoreFix }
-    'wpf_ShortcutApp'      = { Invoke-ShortcutApp -ShortcutToAdd "Win11Deb" }
+    'wpf_ShortcutApp'      = {
+        $iconType = "Gold"
+        if ($wpf_ShortcutAppBlueIcon.IsChecked -eq $true) { $iconType = "Blue" }
+        Invoke-ShortcutApp -ShortcutToAdd "Win11Deb" -IconType $iconType
+    }
     'wpf_FixesNetwork'     = { Invoke-FixesNetwork }
     'wpf_FixesSound'       = { Invoke-FixesSound }
     'wpf_RegistryBackup'   = { Invoke-RegistryBackup }

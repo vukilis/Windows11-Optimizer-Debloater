@@ -8,8 +8,15 @@ function Invoke-ShortcutApp {
     .PARAMETER ShortcutToAdd
         The name of the shortcut to add
 
+    .PARAMETER IconType
+        The icon type to use (Blue or Gold).
+
     #>
-    param($ShortcutToAdd)
+    param(
+        $ShortcutToAdd,
+        [ValidateSet("Blue", "Gold")]
+        [string]$IconType = "Gold"
+    )
 
         $iconPath = $null
         Switch ($ShortcutToAdd) {
@@ -19,19 +26,27 @@ function Invoke-ShortcutApp {
             $Powershell = '-NoProfile -ExecutionPolicy Bypass'
             $ArgumentsToSourceExe = "$powershell $IRM"
             $DestinationName = "Win11Deb.lnk"
-            
-            $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/icon-gold.ico"
-            $destinationPath = "$env:SystempRoot\win11deb.ico"
+
+            switch ($IconType) {
+                "Blue" {
+                    $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/icon.ico"
+                    $destinationPath = "$env:SystempRoot\win11deb.ico"
+                }
+                "Gold" {
+                    $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/icon-gold.ico"
+                    $destinationPath = "$env:SystempRoot\win11deb-gold.ico"
+                }
+            }
 
             # Check if the file already exists
-            if (-not (Test-Path -Path "$env:SystempRoot\win11deb.ico")) {
+            if (-not (Test-Path -Path $destinationPath)) {
                 # File does not exist, download it
                 Invoke-WebRequest -Uri $downloadUrl -OutFile $destinationPath
                 Write-Host "File downloaded to: $destinationPath" -ForegroundColor Green
             } else {
                 Write-Host "File already exists at: $destinationPath" -ForegroundColor Magenta
-            }     
-            $iconPath = "$env:SystempRoot\win11deb.ico"
+            }
+            $iconPath = $destinationPath
         }
     }
 
@@ -68,4 +83,3 @@ Shortcut for $ShortcutToAdd has been saved to $($FileBrowser.FileName)
 " -ch DarkRed
     }
 }
-
