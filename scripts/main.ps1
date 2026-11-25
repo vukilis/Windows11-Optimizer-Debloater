@@ -1,4 +1,5 @@
 $ErrorActionPreference = 'SilentlyContinue'
+$branch = "main"
 $xamlFile = $null
 
 if ($PSScriptRoot) {
@@ -14,7 +15,7 @@ if (-not $xamlFile -or -not (Test-Path $xamlFile)) {
 if (Test-Path $xamlFile) {
     $inputXAML = Get-Content -Path $xamlFile -Raw
 } else {
-    $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/xaml/MainWindow.xaml")
+    $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/$branch/xaml/MainWindow.xaml")
 }
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
@@ -50,6 +51,8 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
 }
 
 $wpf_AppVersion.Content = "Version: $ScriptVersion"
+$wpf_Icon.Source = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/$branch/logo-light.png"
+$wpf_LogoAbout.Source = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/$branch/logo-light.png"
 
 function Invoke-CloseButton {
     <#
@@ -414,7 +417,11 @@ $script:ButtonActions = @{
     'wpf_DblChocoUninstall' = { Invoke-ChocoUninstall }
     'wpf_DblWingetFix'     = { Invoke-FixesWinget }
     'wpf_DblMsStoreFix'    = { Invoke-MsStoreFix }
-    'wpf_ShortcutApp'      = { Invoke-ShortcutApp -ShortcutToAdd "Win11Deb" }
+    'wpf_ShortcutApp'      = {
+        $iconType = "Light"
+        if ($wpf_ShortcutAppDarkIcon.IsChecked -eq $true) { $iconType = "Dark" }
+        Invoke-ShortcutApp -ShortcutToAdd "Win11Deb" -IconType $iconType
+    }
     'wpf_FixesNetwork'     = { Invoke-FixesNetwork }
     'wpf_FixesSound'       = { Invoke-FixesSound }
     'wpf_RegistryBackup'   = { Invoke-RegistryBackup }
@@ -603,8 +610,8 @@ function Art {
 # Get-Variable wpf_*
 # Function to download a file
 
-$downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/logo.png"
-$destinationPath = Join-Path $env:TEMP "win11deb_logo.png"
+$downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/$branch/logo-light.png"
+$destinationPath = Join-Path $env:TEMP "win11deb-logo.png"
 
 # Check if the file already exists
 if (-not (Test-Path $destinationPath)) {

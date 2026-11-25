@@ -8,30 +8,43 @@ function Invoke-ShortcutApp {
     .PARAMETER ShortcutToAdd
         The name of the shortcut to add
 
+    .PARAMETER IconType
+        The icon type to use (Dark or Light).
+
     #>
-    param($ShortcutToAdd)
+    param(
+        $ShortcutToAdd,
+        [ValidateSet("Dark", "Light")]
+        [string]$IconType = "Light"
+    )
 
         $iconPath = $null
         Switch ($ShortcutToAdd) {
         "Win11Deb" {
             $SourceExe = "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
-            $IRM = 'irm https://dub.sh/win11deb | iex'
+            $IRM = 'irm https://vukilis.com/win11deb | iex'
             $Powershell = '-NoProfile -ExecutionPolicy Bypass'
             $ArgumentsToSourceExe = "$powershell $IRM"
             $DestinationName = "Win11Deb.lnk"
-            
-            $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/icon.ico"
-            $destinationPath = "$env:SystempRoot\win11deb.ico"
 
-            # Check if the file already exists
-            if (-not (Test-Path -Path "$env:SystempRoot\win11deb.ico")) {
+            switch ($IconType) {
+                "Dark" {
+                    $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/$branch/icon.ico"
+                    $destinationPath = "$env:SystemRoot\win11deb-dark.ico"
+                }
+                "Light" {
+                    $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/$branch/icon-light.ico"
+                    $destinationPath = "$env:SystemRoot\win11deb-light.ico"
+                }
+            }
+            if (-not (Test-Path -Path $destinationPath)) {
                 # File does not exist, download it
                 Invoke-WebRequest -Uri $downloadUrl -OutFile $destinationPath
                 Write-Host "File downloaded to: $destinationPath" -ForegroundColor Green
             } else {
                 Write-Host "File already exists at: $destinationPath" -ForegroundColor Magenta
-            }     
-            $iconPath = "$env:SystempRoot\win11deb.ico"
+            }
+            $iconPath = $destinationPath
         }
     }
 
@@ -68,4 +81,3 @@ Shortcut for $ShortcutToAdd has been saved to $($FileBrowser.FileName)
 " -ch DarkRed
     }
 }
-
