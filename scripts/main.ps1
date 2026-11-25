@@ -51,6 +51,8 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
 }
 
 $wpf_AppVersion.Content = "Version: $ScriptVersion"
+$wpf_Icon.Source = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/$branch/logo-light.png"
+$wpf_LogoAbout.Source = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/$branch/logo-light.png"
 
 function Invoke-CloseButton {
     <#

@@ -1042,7 +1042,7 @@
             </StackPanel>
         </Grid>
         <DockPanel Background="#1f1f21" x:Name="DockerPanel" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Grid.Row="1" Width="Auto">
-            <Image Height="70" Width="50" Name="Icon" SnapsToDevicePixels="True" Margin="10,0,10,0" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-light.png"/>
+            <Image Height="70" Width="50" Name="Icon" SnapsToDevicePixels="True" Margin="10,0,10,0"/>
             <RadioButton IsChecked="True" HorizontalAlignment="Left" Height="40" Width="110" FontFamily="Helvetica" Cursor="Hand" Style="{DynamicResource TabButtonStyle}" Foreground="#fac664" FontWeight="Bold" Name="Tab1BT" Margin="0,0,5,0">
                 <RadioButton.Background>
                     <LinearGradientBrush EndPoint="-1,1" StartPoint="4,0" SpreadMethod="Pad">
@@ -1232,7 +1232,7 @@
                     </Grid.ColumnDefinitions>
                     
                     <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Image Height="128" Width="128" HorizontalAlignment="Center" SnapsToDevicePixels="True" Source="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-light.png"/>
+                        <Image Name="LogoAbout" Height="128" Width="128" HorizontalAlignment="Center" SnapsToDevicePixels="True"/>
                         <StackPanel VerticalAlignment="Center">
                             <Label Content="Windows11 Optimizer&amp;Debloater" Foreground="#FFF4AB51" FontSize="16" FontWeight="Bold" Margin="0"/>
                             <Label Name="CurrentScriptVersion" Foreground="#a69f6c" FontSize="13" FontWeight="Bold" Margin="0,4,0,0"/>
