@@ -29,11 +29,11 @@ function Invoke-ShortcutApp {
 
             switch ($IconType) {
                 "Dark" {
-                    $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/icon.ico"
+                    $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/$branch/icon.ico"
                     $destinationPath = "$env:SystempRoot\win11deb-dark.ico"
                 }
                 "Light" {
-                    $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/icon-light.ico"
+                    $downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/$branch/icon-light.ico"
                     $destinationPath = "$env:SystempRoot\win11deb-light.ico"
                 }
             }

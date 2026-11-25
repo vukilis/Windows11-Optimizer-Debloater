@@ -1,5 +1,6 @@
 $ErrorActionPreference = 'SilentlyContinue'
 $xamlFile = $null
+$branch = "dev"
 
 if ($PSScriptRoot) {
     $xamlFile = Join-Path $PSScriptRoot "..\xaml\MainWindow.xaml"
@@ -14,7 +15,7 @@ if (-not $xamlFile -or -not (Test-Path $xamlFile)) {
 if (Test-Path $xamlFile) {
     $inputXAML = Get-Content -Path $xamlFile -Raw
 } else {
-    $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/xaml/MainWindow.xaml")
+    $inputXAML = (new-object Net.WebClient).DownloadString("https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/$branch/xaml/MainWindow.xaml")
 }
 $inputXAML=$inputXAML -replace 'mc:Ignorable="d"', '' -replace 'x:N', "N" -replace '^<Win.*', '<Window'
 
@@ -607,7 +608,7 @@ function Art {
 # Get-Variable wpf_*
 # Function to download a file
 
-$downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/dev/logo-light.png"
+$downloadUrl = "https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/$branch/logo-light.png"
 $destinationPath = Join-Path $env:TEMP "win11deb-logo.png"
 
 # Check if the file already exists
